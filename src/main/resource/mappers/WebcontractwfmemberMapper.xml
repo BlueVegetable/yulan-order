@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.WebcontractwfmemberDao">
+    <resultMap id="WebcontractwfmemberMap" type="Webcontractwfmember" >
+        <result column="roleId" property="roleId" />
+        <result column="cYear" property="cYear" />
+        <result column="wfUserId" property="wfUserId" />
+        <result column="bindUserName" property="bindUserName"/>
+        <result column="disabled" property="disabled"/>
+    </resultMap>
+    <select id="getAllwebcontractwfmemberbyyear"  resultMap="WebcontractwfmemberMap">
+        select * from(
+        select rownum rm, t.*  from webcontractwfmember t where 1=1
+        <if test="year!=null">
+            and cyear=#{year}
+        </if>
+        <if test="wfUserId!=null">
+            and wfUserId like  '%'||#{wfUserId}||'%'
+        </if>
+
+        ) tm where rm &gt;= #{start} and rm &lt;= #{number }
+    </select>
+
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        select count(CYEAR) from webcontractwfmember where 1=1
+        <if test="year!=null">
+            and CYEAR = #{year}
+        </if>
+        <if test="wfUserId!=null">
+            and wfUserId like  '%'||#{wfUserId}||'%'
+        </if>
+
+    </select>
+
+    <resultMap id="roleList" type="java.util.HashMap" >
+        <result column="id" property="name" />
+        <result column="descp" property="id" />
+    </resultMap>
+    <select id="getAllroles" parameterType="java.util.Map" resultMap="roleList">
+        select id,descp from WEBCONTRACTWFROLE
+    </select>
+
+    <select id="checkUser" parameterType="String" resultType="String">
+        select REALNAME from WEB_USER WHERE LOGINNAME=#{userId}
+    </select>
+
+    <select id="gateRoleName" parameterType="String" resultType="Webcontractwfrole">
+        select DESCP from WEBCONTRACTWFROLE WHERE ID=#{roleId}
+    </select>
+
+    <update id="update" parameterType="Webcontractwfmember" >
+         update WEBCONTRACTWFMEMBER set bindUserId=#{bindUserId,jdbcType=VARCHAR}, bindUserName=#{bindUserName,jdbcType=VARCHAR},disabled=#{disabled} where wfUserId=#{wfUserId}
+    </update>
+
+    <insert id="add" parameterType="Webcontractwfmember">
+        insert into WEBCONTRACTWFMEMBER values (#{roleId},#{cYear,jdbcType=DECIMAL},#{wfUserId},#{bindUserId,jdbcType=VARCHAR}
+        ,#{bindUserName,jdbcType=VARCHAR},#{disabled,jdbcType=DECIMAL})
+    </insert>
+
+    <delete id="delete" >
+        delete from WEBCONTRACTWFMEMBER where wfUserId=#{wfUserId} and cYear=#{cYear}
+    </delete>
+
+
+
+
+
+</mapper>

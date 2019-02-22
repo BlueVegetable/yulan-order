@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.ItemDao" >
+
+    <resultMap id="ItemMap" type="com.yulan.pojo.Item" >
+        <id column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+        <result column="OLD_ITEM_NO" property="oldItemNo" jdbcType="VARCHAR" />
+        <result column="ITEM_VERSION" property="itemVersion" jdbcType="VARCHAR" />
+        <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
+        <result column="NOTE" property="note" jdbcType="VARCHAR" />
+        <result column="SALE_ID" property="saleId" jdbcType="VARCHAR" />
+        <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+        <result column="USE_ID" property="useId" jdbcType="VARCHAR" />
+        <result column="PRODUCT_BRAND" property="productBrand" jdbcType="VARCHAR" />
+        <result column="PRODUCT_FLAG" property="productFlag" jdbcType="VARCHAR" />
+        <result column="ITEM_FLAG" property="itemFlag" jdbcType="VARCHAR" />
+        <result column="ITEM_DZ" property="itemDz" jdbcType="VARCHAR" />
+        <result column="FIX_TYPE" property="fixType" jdbcType="VARCHAR" />
+        <result column="FIX_GRADE" property="fixGrade" jdbcType="DECIMAL" />
+        <result column="RZ_STYLE" property="rzStyle" jdbcType="VARCHAR" />
+        <result column="RZ_GRADE" property="rzGrade" jdbcType="VARCHAR" />
+        <result column="HIGH_JIA" property="highJia" jdbcType="DECIMAL" />
+        <result column="WBH_FLAG" property="wbhFlag" jdbcType="VARCHAR" />
+        <result column="DELETE_FLAG" property="deleteFlag" jdbcType="VARCHAR" />
+        <result column="ML_MODIFY_FLAG" property="mlModifyFlag" jdbcType="VARCHAR" />
+        <result column="WIDTH_HH" property="widthHh" jdbcType="DECIMAL" />
+        <result column="HIGH_HH" property="highHh" jdbcType="DECIMAL" />
+        <result column="DUIHUA" property="duihua" jdbcType="OTHER" />
+        <result column="OAO" property="oao" jdbcType="VARCHAR" />
+        <result column="SALE_PRICE" property="salePrice" jdbcType="DECIMAL" />
+        <result column="PRICE_SALE" property="priceSale" jdbcType="DECIMAL" />
+        <result column="PRICE_FX" property="priceFx" jdbcType="DECIMAL" />
+        <result column="PRICE_HOME" property="priceHome" jdbcType="DECIMAL" />
+        <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
+        <association property="itemType" javaType="com.yulan.pojo.ItemType"
+                     resultMap="ItemResultMap"/>
+    </resultMap>
+
+    <resultMap type="com.yulan.pojo.ItemType" id="ItemResultMap" >
+            <id column="ITEM_TYPE" property="itemType" jdbcType="VARCHAR" />
+            <result column="bnote" property="note" jdbcType="VARCHAR" />
+            <result column="PRO_TYPE" property="proType" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="StockShowMap" type="com.yulan.pojo.StockShow">
+        <id column="STOCK_NO" property="stockNo" jdbcType="VARCHAR" />
+        <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
+        <result column="QTY" property="qty" jdbcType="DECIMAL" />
+        <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getWallpaperInfo" resultMap="ItemMap">
+        select a.*, b.item_type, b.note bnote, b.pro_type from ITEM a,ITEM_TYPE b where a.product_type = b.item_type
+        and b.pro_type in ('qiang','support','other')
+        and a.sale_id in ('A','B','D')
+        and ( a.ITEM_NO = #{paperType} or a.OLD_ITEM_NO = #{paperType})
+    </select>
+
+    <select id="getProductVersion" resultType="String">
+       select PRODUCTVERSION_NAME from PRODUCT_VERSION t where PRODUCTVERSION_ID = #{itemVersion}
+    </select>
+
+    <select id="getProductBrand" resultType="String">
+        select t.brand_name from BRAND_TYPE t where t.brand_id = #{productBrand}
+    </select>
+
+    <select id="userBrandAuthority" resultType="String">
+        select 'Y' from v_customer_brand a,item b  where a.brand = b.product_brand
+        and a.customer_code = #{CID}
+        and b.item_no = #{ITEM_NO}
+
+    </select>
+
+    <select id="getStockShow" resultMap="StockShowMap">
+      select sf.stock_no,sf.batch_no,sf.qty,sf.item_no from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0
+    </select>
+
+     <select id="getMLInfo" resultMap="ItemMap">
+         select * from item t where t.product_type in ('ML' , 'MLP')
+     </select>
+
+    <select id="getXHBInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('XHB')
+    </select>
+
+    <select id="getPJBInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('PJB')
+    </select>
+
+    <select id="getBZInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('BZ')
+    </select>
+
+    <select id="getGHInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('GH')
+    </select>
+
+    <select id="getTCInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('TC')
+    </select>
+
+    <select id="getOtherInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('TU','DT')
+    </select>
+
+</mapper>

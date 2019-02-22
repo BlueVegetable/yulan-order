@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.Ctm_orderDao">
+
+    <sql id="Base_Column_List_H" >
+    ORDER_NO, CUSTOMER_CODE, CUSTOMER_CODE2, CURRENCY_ID, LINKPERSON, TELEPHONE, STATUS_ID,
+    DELIVERY_TYPE, DELIVERY_NOTES, POST_ADDRESS, NOTES, to_char(DATE_CRE,'yyyy-MM-dd HH:mm:ss') DATE_CRE, OPERATOR, to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE,
+    PERSON_UPDATE, CONTRACT_NO, PERSON_ACCEPT, to_char(DATE_ACCEPT,'yyyy-MM-dd HH:mm:ss') DATE_ACCEPT, YULAN_NOTES, to_char(WEB_TJ_TIME,'yyyy-MM-dd HH:mm:ss') WEB_TJ_TIME,
+    DATE_DEAL, FLAG, USER_NO, PROJECT_NO, CUSTOMER_CODE_O2O, ORDER_FLAG, POST_ADDRESS_MODIFIED,
+    DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
+    INVOICE_TITLE, WL_CONTACTS, WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
+    BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-MM-dd HH:mm:ss') OAO_TIME
+  </sql>
+    <sql id="Base_Column_List_B" >
+    ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, to_char(DATE_DELIVER,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER,
+    to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE, NOTES, STATUS_ID, DISCOUNT, DISCOUNT_FLAG, CURTAIN_KS, CURTAIN_ROOM_NAME,
+    CURTAIN_ROOM_ID, CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT, CURTAIN_HEIGHT2,
+    CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
+    ML_NON_STANDARD, CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,to_char(DATE_DELIVER_KF,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_KF,to_char(DATE_DELIVER_NB,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_NB,
+    to_char(DATE_DELIVER_FH,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_FH
+  </sql>
+
+    <select id="getOrders" resultType="Map">
+        select * from (
+        select rownum rn,l.* from
+        (select * from
+        (select b.brand_name,h.* from
+        (select t.note,c.*  from
+        (select o.*,i.product_type,i.product_brand from ctm_order_detail d,CTM_ORDER o, item i
+        where o.order_no=d.order_no and d.item_no=i.item_no and o.customer_code=#{cid})c,item_type t
+        where c.product_type=t.item_type)h,BRAND_TYPE b
+        where h.product_brand=b.brand_id)p
+
+        where 1=1
+        <if test="state_id!=null">
+            and STATUS_ID=#{state_id}
+        </if>
+        <if test="find!=null">
+            and order_no like  '%'||#{find}||'%'
+        </if>
+
+        ) l
+        where rownum &lt;= #{number})
+        where rn &gt;=#{start}
+
+    </select>
+
+    <select id="getOrdersH" resultType="Map">
+        select
+        <include refid="Base_Column_List_H" />
+
+        from (
+        select rownum rn,l.* from
+        (select * from CTM_ORDER t where t.customer_code=#{cid}
+            <if test="state_id!=null">
+                and STATUS_ID=#{state_id}
+            </if>
+            <if test="find!=null">
+                and order_no like  '%'||#{find}||'%'
+            </if>
+        order by t.WEB_TJ_TIME DESC
+        ) l
+        where rownum &lt;= #{number})
+        where rn &gt;=#{start}
+
+    </select>
+
+    <select id="getOrdersB" resultType="Map">
+        select b.brand_name,h.* from
+        (select t.note,c.*  from
+        (select
+        <include refid="Base_Column_List_B" />,
+        i.product_type,i.product_brand from ctm_order_detail d ,item i
+        where d.order_no=#{order_no} and d.item_no=i.item_no )c,item_type t
+        where c.product_type=t.item_type)h,BRAND_TYPE b
+        where h.product_brand=b.brand_id
+
+    </select>
+
+    <select id="countOrders" resultType="Integer">
+        select count(*) from
+        (select o.*,d.item_no from ctm_order_detail d,CTM_ORDER o where o.order_no=d.order_no and o.customer_code=#{cid} ) c
+        where 1=1
+        <if test="state_id!=null">
+            and c.STATUS_ID=#{state_id}
+        </if>
+        <if test="find!=null">
+            and c.order_no like  '%'||#{find}||'%'
+        </if>
+
+    </select>
+
+    <select id="countOrdersH" resultType="Integer">
+        select count(*) from CTM_ORDER t where t.customer_code=#{cid}
+        <if test="state_id!=null">
+            and STATUS_ID=#{state_id}
+        </if>
+        <if test="find!=null">
+            and order_no like  '%'||#{find}||'%'
+        </if>
+
+    </select>
+
+</mapper>

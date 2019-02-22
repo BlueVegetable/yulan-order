@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CustomerInfoCardDao">
+    <resultMap id="CustomerInfoCardMap" type="CustomerInfoCard" >
+        <result column="GROUPID" property="groupid" jdbcType="VARCHAR" />
+        <result column="DELETED" property="deleted" jdbcType="DECIMAL" />
+        <result column="ERPCOPYED" property="erpcopyed" jdbcType="DECIMAL" />
+        <result column="CONTRACTYEAR" property="contractyear" jdbcType="DECIMAL" />
+        <result column="CID" property="cid" jdbcType="VARCHAR" />
+        <result column="CNAME" property="cname" jdbcType="VARCHAR" />
+        <result column="MARKET" property="market" jdbcType="VARCHAR" />
+        <result column="MARKETNAME" property="marketname" jdbcType="VARCHAR" />
+        <result column="SUBMARKET" property="submarket" jdbcType="VARCHAR" />
+        <result column="SUBMARKETNAME" property="submarketname" jdbcType="VARCHAR" />
+        <result column="MARKETMANAGER" property="marketmanager" jdbcType="VARCHAR" />
+        <result column="MARKETMANAGERNAME" property="marketmanagername" jdbcType="VARCHAR" />
+        <result column="SUBMARKETMANAGER" property="submarketmanager" jdbcType="VARCHAR" />
+        <result column="SUBMARKETMANAGERNAME" property="submarketmanagername" jdbcType="VARCHAR" />
+        <result column="MANAGERPOSITION" property="managerposition" jdbcType="VARCHAR" />
+        <result column="X_DISTRICT" property="xDistrict" jdbcType="VARCHAR" />
+        <result column="X_AREA_DISTRICT_2" property="xAreaDistrict2" jdbcType="VARCHAR" />
+        <result column="X_AREA_DISTRICT_3" property="xAreaDistrict3" jdbcType="VARCHAR" />
+        <result column="DISTRICT_TEXT" property="districtText" jdbcType="VARCHAR" />
+        <result column="AREA_DISTRICT_2_TEXT" property="areaDistrict2Text" jdbcType="VARCHAR" />
+        <result column="AREA_DISTRICT_3_TEXT" property="areaDistrict3Text" jdbcType="VARCHAR" />
+        <result column="X_JURIDIC_PERSON" property="xJuridicPerson" jdbcType="VARCHAR" />
+        <result column="JURIDIC_PERSON_HANDSET" property="juridicPersonHandset" jdbcType="VARCHAR" />
+        <result column="X_OFFICE_TEL" property="xOfficeTel" jdbcType="VARCHAR" />
+        <result column="X_HANDSET" property="xHandset" jdbcType="VARCHAR" />
+        <result column="X_EMAIL" property="xEmail" jdbcType="VARCHAR" />
+        <result column="X_FAX" property="xFax" jdbcType="VARCHAR" />
+        <result column="QQ" property="qq" jdbcType="VARCHAR" />
+        <result column="X_POST_ADDRESS" property="xPostAddress" jdbcType="VARCHAR" />
+        <result column="X_ZIP_CODE" property="xZipCode" jdbcType="VARCHAR" />
+        <result column="X_OFFICE_TEL_1" property="xOfficeTel1" jdbcType="VARCHAR" />
+        <result column="X_HANDSET_2" property="xHandset2" jdbcType="VARCHAR" />
+        <result column="X_DELIVERY_ADRESS" property="xDeliveryAdress" jdbcType="VARCHAR" />
+        <result column="FAX_WL" property="faxWl" jdbcType="VARCHAR" />
+        <result column="ZIP_CODE_WL" property="zipCodeWl" jdbcType="VARCHAR" />
+        <result column="TX_AGENT_NAME" property="txAgentName" jdbcType="VARCHAR" />
+        <result column="WL_AGENT_NAME" property="wlAgentName" jdbcType="VARCHAR" />
+        <result column="PREFEREDBRAND" property="preferedbrand" jdbcType="VARCHAR" />
+        <result column="CURRENT_PRODUCT" property="currentProduct" jdbcType="VARCHAR" />
+        <result column="SHOP_AREA" property="shopArea" jdbcType="DECIMAL" />
+        <result column="INVOICE_TYPE" property="invoiceType" jdbcType="VARCHAR" />
+        <result column="IS_GENERALTAXPAYER" property="isGeneraltaxpayer" jdbcType="VARCHAR" />
+        <result column="ACCOUNT1_NAME" property="account1Name" jdbcType="VARCHAR" />
+        <result column="ACCOUNT1_BANK" property="account1Bank" jdbcType="VARCHAR" />
+        <result column="ACCOUNT1" property="account1" jdbcType="VARCHAR" />
+        <result column="ACCOUNT2_NAME" property="account2Name" jdbcType="VARCHAR" />
+        <result column="ACCOUNT2_BANK" property="account2Bank" jdbcType="VARCHAR" />
+        <result column="ACCOUNT2" property="account2" jdbcType="VARCHAR" />
+        <result column="ACCOUNT3_NAME" property="account3Name" jdbcType="VARCHAR" />
+        <result column="ACCOUNT3_BANK" property="account3Bank" jdbcType="VARCHAR" />
+        <result column="ACCOUNT3" property="account3" jdbcType="VARCHAR" />
+        <result column="FILE_1_IDCARD" property="file1Idcard" jdbcType="VARCHAR" />
+        <result column="FILE_1_OP" property="file1Op" jdbcType="VARCHAR" />
+        <result column="FILE_2_BUSINESSLICENSE" property="file2Businesslicense" jdbcType="VARCHAR" />
+        <result column="FILE_2_OP" property="file2Op" jdbcType="VARCHAR" />
+        <result column="FILE_3_ORGCODE" property="file3Orgcode" jdbcType="VARCHAR" />
+        <result column="FILE_3_OP" property="file3Op" jdbcType="VARCHAR" />
+        <result column="FILE_4_GTQC" property="file4Gtqc" jdbcType="VARCHAR" />
+        <result column="FILE_4_OP" property="file4Op" jdbcType="VARCHAR" />
+        <result column="STATE" property="state" jdbcType="VARCHAR" />
+        <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+        <result column="FILE_5_IDCARD_BG" property="file5IdcardBg" jdbcType="VARCHAR" />
+        <result column="FILE_5_OP" property="file5Op" jdbcType="VARCHAR" />
+        <result column="BUSIENT_TYPE" property="busientType" jdbcType="VARCHAR" />
+        <result column="ACCOUNT1_LOCATION" property="account1Location" jdbcType="VARCHAR" />
+        <result column="ACCOUNT2_LOCATION" property="account2Location" jdbcType="VARCHAR" />
+        <result column="FILE_1_IDCARD_NO" property="file1IdcardNo" jdbcType="VARCHAR" />
+        <result column="FILE_2_BUSINESSLICENSE_NO" property="file2BusinesslicenseNo" jdbcType="VARCHAR" />
+        <result column="FILE_2_BUSINESSLICENSE_END" property="file2BusinesslicenseEnd" jdbcType="VARCHAR" />
+        <result column="FILE_3_ORGCODE_NO" property="file3OrgcodeNo" jdbcType="VARCHAR" />
+        <result column="FILE_4_GTQC_NO" property="file4GtqcNo" jdbcType="VARCHAR" />
+        <result column="ACCOUNT1_MEMO" property="account1Memo" jdbcType="VARCHAR" />
+        <result column="ACCOUNT2_MEMO" property="account2Memo" jdbcType="VARCHAR" />
+        <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+        <result column="FILE_2_BUSINESSLICENSE_NOEND" property="file2BusinesslicenseNoend" jdbcType="DECIMAL" />
+        <result column="HAS_PUBLIC_ACCOUNT" property="hasPublicAccount" jdbcType="VARCHAR" />
+        <result column="UPDATE_FLAG" property="updateFlag" jdbcType="VARCHAR" />
+        <result column="SYS_2017_STATE_CHANGE_OLD" property="sys2017StateChangeOld" jdbcType="VARCHAR" />
+        <result column="SYS_2017_STATE_CHANGE_LOG" property="sys2017StateChangeLog" jdbcType="VARCHAR" />
+        <result column="SYS_2017_STATE_CHANGE_TS" property="sys2017StateChangeTs" jdbcType="TIMESTAMP" />
+        <result column="INV_ADDRESS" property="invAddress" jdbcType="VARCHAR" />
+        <result column="INV_TELEPHONE" property="invTelephone" jdbcType="VARCHAR" />
+        <result column="INV_BANKNAME" property="invBankname" jdbcType="VARCHAR" />
+        <result column="INV_BANMACCOUNT" property="invBanmaccount" jdbcType="VARCHAR" />
+        <result column="INV_REQUIREMENT" property="invRequirement" jdbcType="VARCHAR" />
+        <result column="INV_REQUIREMENT_TS" property="invRequirementTs" jdbcType="TIMESTAMP" />
+        <result column="INV_REQUIREMENT_LIST" property="invRequirementList" jdbcType="VARCHAR" />
+        <result column="INV_NOTNEED_TS" property="invNotneedTs" jdbcType="TIMESTAMP" />
+        <result column="INV_NOTNEED_IP" property="invNotneedIp" jdbcType="VARCHAR" />
+        <result column="CUSTOMERENTITYTYPEX" property="customerentitytypex" jdbcType="CHAR" />
+        <result column="LEGALCHECKED" property="legalchecked" jdbcType="DECIMAL" />
+        <result column="CNAME_NEW" property="cnameNew" jdbcType="VARCHAR" />
+        <result column="RECIPE_TARGET_MB" property="recipeTargetMb" jdbcType="VARCHAR" />
+        <result column="VAT_INVOICE_FLAG" property="vatInvoiceFlag" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="addCustomerInfoCard" parameterType="CustomerInfoCard">
+    insert into CUSTOMERINFOCARD (GROUPID, DELETED, ERPCOPYED,
+      CONTRACTYEAR, CID, CNAME,
+      MARKET, MARKETNAME, SUBMARKET,
+      SUBMARKETNAME, MARKETMANAGER, MARKETMANAGERNAME,
+      SUBMARKETMANAGER, SUBMARKETMANAGERNAME,
+      MANAGERPOSITION, X_DISTRICT, X_AREA_DISTRICT_2,
+      X_AREA_DISTRICT_3, DISTRICT_TEXT, AREA_DISTRICT_2_TEXT,
+      AREA_DISTRICT_3_TEXT, X_JURIDIC_PERSON, JURIDIC_PERSON_HANDSET,
+      X_OFFICE_TEL, X_HANDSET, X_EMAIL,
+      X_FAX, QQ, X_POST_ADDRESS,
+      X_ZIP_CODE, X_OFFICE_TEL_1, X_HANDSET_2,
+      X_DELIVERY_ADRESS, FAX_WL, ZIP_CODE_WL,
+      TX_AGENT_NAME, WL_AGENT_NAME, PREFEREDBRAND,
+      CURRENT_PRODUCT, SHOP_AREA, INVOICE_TYPE,
+      IS_GENERALTAXPAYER, ACCOUNT1_NAME, ACCOUNT1_BANK,
+      ACCOUNT1, ACCOUNT2_NAME, ACCOUNT2_BANK,
+      ACCOUNT2, ACCOUNT3_NAME, ACCOUNT3_BANK,
+      ACCOUNT3, FILE_1_IDCARD, FILE_1_OP,
+      FILE_2_BUSINESSLICENSE, FILE_2_OP, FILE_3_ORGCODE,
+      FILE_3_OP, FILE_4_GTQC, FILE_4_OP,
+      STATE, MEMO, FILE_5_IDCARD_BG,
+      FILE_5_OP, BUSIENT_TYPE, ACCOUNT1_LOCATION,
+      ACCOUNT2_LOCATION, FILE_1_IDCARD_NO, FILE_2_BUSINESSLICENSE_NO,
+      FILE_2_BUSINESSLICENSE_END, FILE_3_ORGCODE_NO,
+      FILE_4_GTQC_NO, ACCOUNT1_MEMO, ACCOUNT2_MEMO,
+      FLAG, FILE_2_BUSINESSLICENSE_NOEND, HAS_PUBLIC_ACCOUNT,
+      UPDATE_FLAG, SYS_2017_STATE_CHANGE_OLD, SYS_2017_STATE_CHANGE_LOG,
+      SYS_2017_STATE_CHANGE_TS, INV_ADDRESS, INV_TELEPHONE,
+      INV_BANKNAME, INV_BANMACCOUNT, INV_REQUIREMENT,
+      INV_REQUIREMENT_TS, INV_REQUIREMENT_LIST,
+      INV_NOTNEED_TS, INV_NOTNEED_IP, CUSTOMERENTITYTYPEX,
+      LEGALCHECKED, CNAME_NEW, RECIPE_TARGET_MB
+      )
+    values (#{groupid,jdbcType=VARCHAR}, #{deleted,jdbcType=DECIMAL}, #{erpcopyed,jdbcType=DECIMAL},
+      #{contractyear,jdbcType=DECIMAL}, #{cid,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR},
+      #{market,jdbcType=VARCHAR}, #{marketname,jdbcType=VARCHAR}, #{submarket,jdbcType=VARCHAR},
+      #{submarketname,jdbcType=VARCHAR}, #{marketmanager,jdbcType=VARCHAR}, #{marketmanagername,jdbcType=VARCHAR},
+      #{submarketmanager,jdbcType=VARCHAR}, #{submarketmanagername,jdbcType=VARCHAR},
+      #{managerposition,jdbcType=VARCHAR}, #{xDistrict,jdbcType=VARCHAR}, #{xAreaDistrict2,jdbcType=VARCHAR},
+      #{xAreaDistrict3,jdbcType=VARCHAR}, #{districtText,jdbcType=VARCHAR}, #{areaDistrict2Text,jdbcType=VARCHAR},
+      #{areaDistrict3Text,jdbcType=VARCHAR}, #{xJuridicPerson,jdbcType=VARCHAR}, #{juridicPersonHandset,jdbcType=VARCHAR},
+      #{xOfficeTel,jdbcType=VARCHAR}, #{xHandset,jdbcType=VARCHAR}, #{xEmail,jdbcType=VARCHAR},
+      #{xFax,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{xPostAddress,jdbcType=VARCHAR},
+      #{xZipCode,jdbcType=VARCHAR}, #{xOfficeTel1,jdbcType=VARCHAR}, #{xHandset2,jdbcType=VARCHAR},
+      #{xDeliveryAdress,jdbcType=VARCHAR}, #{faxWl,jdbcType=VARCHAR}, #{zipCodeWl,jdbcType=VARCHAR},
+      #{txAgentName,jdbcType=VARCHAR}, #{wlAgentName,jdbcType=VARCHAR}, #{preferedbrand,jdbcType=VARCHAR},
+      #{currentProduct,jdbcType=VARCHAR}, #{shopArea,jdbcType=DECIMAL}, #{invoiceType,jdbcType=VARCHAR},
+      #{isGeneraltaxpayer,jdbcType=VARCHAR}, #{account1Name,jdbcType=VARCHAR}, #{account1Bank,jdbcType=VARCHAR},
+      #{account1,jdbcType=VARCHAR}, #{account2Name,jdbcType=VARCHAR}, #{account2Bank,jdbcType=VARCHAR},
+      #{account2,jdbcType=VARCHAR}, #{account3Name,jdbcType=VARCHAR}, #{account3Bank,jdbcType=VARCHAR},
+      #{account3,jdbcType=VARCHAR}, #{file1Idcard,jdbcType=VARCHAR}, #{file1Op,jdbcType=VARCHAR},
+      #{file2Businesslicense,jdbcType=VARCHAR}, #{file2Op,jdbcType=VARCHAR}, #{file3Orgcode,jdbcType=VARCHAR},
+      #{file3Op,jdbcType=VARCHAR}, #{file4Gtqc,jdbcType=VARCHAR}, #{file4Op,jdbcType=VARCHAR},
+      #{state,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{file5IdcardBg,jdbcType=VARCHAR},
+      #{file5Op,jdbcType=VARCHAR}, #{busientType,jdbcType=VARCHAR}, #{account1Location,jdbcType=VARCHAR},
+      #{account2Location,jdbcType=VARCHAR}, #{file1IdcardNo,jdbcType=VARCHAR}, #{file2BusinesslicenseNo,jdbcType=VARCHAR},
+      #{file2BusinesslicenseEnd,jdbcType=VARCHAR}, #{file3OrgcodeNo,jdbcType=VARCHAR},
+      #{file4GtqcNo,jdbcType=VARCHAR}, #{account1Memo,jdbcType=VARCHAR}, #{account2Memo,jdbcType=VARCHAR},
+      #{flag,jdbcType=VARCHAR}, #{file2BusinesslicenseNoend,jdbcType=DECIMAL}, #{hasPublicAccount,jdbcType=VARCHAR},
+      #{updateFlag,jdbcType=VARCHAR}, #{sys2017StateChangeOld,jdbcType=VARCHAR}, #{sys2017StateChangeLog,jdbcType=VARCHAR},
+      #{sys2017StateChangeTs,jdbcType=TIMESTAMP}, #{invAddress,jdbcType=VARCHAR}, #{invTelephone,jdbcType=VARCHAR},
+      #{invBankname,jdbcType=VARCHAR}, #{invBanmaccount,jdbcType=VARCHAR}, #{invRequirement,jdbcType=VARCHAR},
+      #{invRequirementTs,jdbcType=TIMESTAMP}, #{invRequirementList,jdbcType=VARCHAR},
+      #{invNotneedTs,jdbcType=TIMESTAMP}, #{invNotneedIp,jdbcType=VARCHAR}, #{customerentitytypex,jdbcType=CHAR},
+      #{legalchecked,jdbcType=DECIMAL}, #{cnameNew,jdbcType=VARCHAR}, #{recipeTargetMb,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>
