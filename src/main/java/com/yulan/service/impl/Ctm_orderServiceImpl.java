@@ -53,4 +53,16 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         return map;
     }
+
+    @Override
+    public Map getOrderB_content(String order_no, String item_no) throws UnsupportedEncodingException {
+        Map<String,Object> map=ctm_orderDao.getOrderB_content(order_no,item_no);
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (entry.getValue() instanceof String) {
+                String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                entry.setValue(origin);
+            }
+        }
+        return map ;
+    }
 }
