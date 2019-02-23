@@ -50,6 +50,10 @@
     </resultMap>
 
 
+    <select id="getItemByItemNO" parameterType="String" resultType="Item">
+        select * from item where ITEM_NO = #{itemNO}
+    </select>
+
     <select id="getWallpaperInfo" resultMap="ItemMap">
         select a.*, b.item_type, b.note bnote, b.pro_type from ITEM a,ITEM_TYPE b where a.product_type = b.item_type
         and b.pro_type in ('qiang','support','other')

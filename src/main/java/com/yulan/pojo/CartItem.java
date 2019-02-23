@@ -1,14 +1,16 @@
 package com.yulan.pojo;
 
-import java.math.BigInteger;
+import java.util.List;
 import java.util.Objects;
 
 public class CartItem {
 
 	private String cartItemId;
-	private Item item;
-	private BigInteger quantity;
-	private String cartID;
+	private String commodityType;
+	private String activityGroupType;
+	private String productGroupType;
+	private List<Commodity> commodities;
+ 	private String cartId;
 
 	public String getCartItemId() {
 		return this.cartItemId;
@@ -18,28 +20,44 @@ public class CartItem {
 		this.cartItemId=cartItemId;
 	}
 
-	public Item getItem() {
-		return item;
+	public String getCommodityType() {
+		return this.commodityType;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public void setCommodityType(String commodityType) {
+		this.commodityType=commodityType;
 	}
 
-	public BigInteger getQuantity() {
-		return this.quantity;
+	public String getActivityGroupType() {
+		return this.activityGroupType;
 	}
 
-	public void setQuantity(BigInteger quantity) {
-		this.quantity=quantity;
+	public void setActivityGroupType(String activityGroupType) {
+		this.activityGroupType=activityGroupType;
 	}
 
-	public String getCartID() {
-		return cartID;
+	public String getProductGroupType() {
+		return this.productGroupType;
 	}
 
-	public void setCartID(String cartID) {
-		this.cartID = cartID;
+	public void setProductGroupType(String productGroupType) {
+		this.productGroupType=productGroupType;
+	}
+
+	public List<Commodity> getCommodities() {
+		return commodities;
+	}
+
+	public void setCommodities(List<Commodity> commodities) {
+		this.commodities = commodities;
+	}
+
+	public String getCartId() {
+		return this.cartId;
+	}
+
+	public void setCartId(String cartId) {
+		this.cartId=cartId;
 	}
 
 	@Override
@@ -48,13 +66,27 @@ public class CartItem {
 		if (!(o instanceof CartItem)) return false;
 		CartItem cartItem = (CartItem) o;
 		return Objects.equals(getCartItemId(), cartItem.getCartItemId()) &&
-				Objects.equals(getItem(), cartItem.getItem()) &&
-				Objects.equals(getQuantity(), cartItem.getQuantity()) &&
-				Objects.equals(getCartID(), cartItem.getCartID());
+				Objects.equals(getCommodityType(), cartItem.getCommodityType()) &&
+				Objects.equals(getActivityGroupType(), cartItem.getActivityGroupType()) &&
+				Objects.equals(getProductGroupType(), cartItem.getProductGroupType()) &&
+				Objects.equals(getCommodities(), cartItem.getCommodities()) &&
+				Objects.equals(getCartId(), cartItem.getCartId());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getCartItemId(), getItem(), getQuantity(), getCartID());
+		return Objects.hash(getCartItemId(), getCommodityType(), getActivityGroupType(), getProductGroupType(), getCommodities(), getCartId());
+	}
+
+	@Override
+	public String toString() {
+		return "CartItem{" +
+				"cartItemId='" + cartItemId + '\'' +
+				", commodityType='" + commodityType + '\'' +
+				", activityGroupType='" + activityGroupType + '\'' +
+				", productGroupType='" + productGroupType + '\'' +
+				", commodities=" + commodities +
+				", cartId='" + cartId + '\'' +
+				'}';
 	}
 }

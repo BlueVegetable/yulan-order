@@ -1,21 +1,14 @@
 package com.yulan.pojo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Cart {
 
 	private String cartId;
-	private List<CartItem> cartItems;
 	private String customerId;
-
-	public Cart() {
-
-	}
-
-	public Cart(String customerId) {
-		this.customerId = customerId;
-	}
+	private Map<String, List<CartItem>> cartItems;
 
 	public String getCartId() {
 		return this.cartId;
@@ -33,11 +26,11 @@ public class Cart {
 		this.customerId=customerId;
 	}
 
-	public List<CartItem> getCartItems() {
+	public Map<String, List<CartItem>> getCartItems() {
 		return cartItems;
 	}
 
-	public void setCartItems(List<CartItem> cartItems) {
+	public void setCartItems(Map<String, List<CartItem>> cartItems) {
 		this.cartItems = cartItems;
 	}
 
@@ -46,13 +39,22 @@ public class Cart {
 		if (this == o) return true;
 		if (!(o instanceof Cart)) return false;
 		Cart cart = (Cart) o;
-		return getCartId().equals(cart.getCartId()) &&
-				Objects.equals(getCartItems(), cart.getCartItems()) &&
-				getCustomerId().equals(cart.getCustomerId());
+		return Objects.equals(getCartId(), cart.getCartId()) &&
+				Objects.equals(getCustomerId(), cart.getCustomerId()) &&
+				Objects.equals(getCartItems(), cart.getCartItems());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getCartId(), getCartItems(), getCustomerId());
+		return Objects.hash(getCartId(), getCustomerId(), getCartItems());
+	}
+
+	@Override
+	public String toString() {
+		return "Cart{" +
+				"cartId='" + cartId + '\'' +
+				", customerId='" + customerId + '\'' +
+				", cartItems=" + cartItems +
+				'}';
 	}
 }

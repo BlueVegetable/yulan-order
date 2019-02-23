@@ -6,12 +6,12 @@ public interface CartService {
 
 	boolean addCart(Cart cart);
 
-	boolean deleteCartByID(int cartID);
+	boolean existCart(String CID);
 
-	Cart getCartByID(int cartID);
+	Cart getSimpleCartByID(String cartID);
 
-	Cart getCartByCustomerID(String customerId);
+	Cart getSimpleCartByCID(String CID);
 
-	boolean updateCart(Cart cart);
+	Cart getCartByCID(String CID);
 
 }

@@ -8,11 +8,11 @@ public interface CartItemService {
 
 	boolean addCartItem(CartItem cartItem);
 
-	boolean deleteCartItemByID(int cartItemID);
+	boolean deleteCartItemByID(String cartItemID);
 
-	CartItem getCartItemByID(int cartItemID);
+	CartItem getCartItemByID(String cartItemID);
 
-	List<CartItem> getCartItems(String itemId,String cartID);
+	List<CartItem> getCartItems(String cartID, String commodityType);
 
 	boolean updateCartItem(CartItem cartItem);
 
