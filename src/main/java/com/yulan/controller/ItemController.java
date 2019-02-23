@@ -49,10 +49,27 @@ public class ItemController {
      */
     @RequestMapping(value = "getSoftDecorationInfo")
     @ResponseBody
-    public Map getSoftDecorationInfo(@RequestBody Map<String,Object> data){
+    public Map getSoftDecorationInfo(@RequestBody Map<String,Object> data)throws IOException{
         Map map = new HashMap();
+        String cid = (String)data.get("cid");
         String itemType = (String)data.get("itemType");
+        map = itemService.getSoftDecorationInfo(itemType,cid);
+        return map;
+    }
 
+    /**
+     * 软装单个产品模糊查询
+     * @param data
+     * @return
+     */
+    @RequestMapping(value = "getSoftInfoSingle")
+    @ResponseBody
+    public Map getSoftInfoSingle(@RequestBody Map<String,Object> data)throws IOException{
+        Map map = new HashMap();
+        String cid = (String)data.get("cid");
+        String itemType = (String)data.get("itemType");
+        String itemNo = (String)data.get("itemNo");
+        map = itemService.getSoftInfoSingle(itemType,cid,itemNo);
         return map;
     }
 
