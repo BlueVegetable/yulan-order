@@ -37,6 +37,7 @@ public class ItemServiceImpl implements ItemService {
                 item.getItemType().setNote(stringUtil.getUtf8(item.getItemType().getNote()));
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
                 map.put("data",item);
                 map.put("code",0);
             }
@@ -125,8 +126,17 @@ public class ItemServiceImpl implements ItemService {
             Item item = itemList.get(i);
             if(null != item.getNote()){
                 item.setNote(stringUtil.getUtf8(item.getNote()));
-
             }
+            if(null != item.getItemVersion()) {
+                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+            }
+            if(null != item.getProductBrand()) {
+                item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+            }
+            if(null != item.getRzStyle()) {
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+            }
+
         }
 
         if(null == itemList || itemList.size() == 0){

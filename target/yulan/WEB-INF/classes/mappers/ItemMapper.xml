@@ -89,7 +89,7 @@
      </select>
 
     <select id="getMLSingle" resultMap="ItemMap">
-          select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          select b.* from v_customer_brand a,item b
           where a.brand = b.product_brand
           and a.customer_code = #{cid}
           and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -104,7 +104,7 @@
     </select>
 
     <select id="getXHBSingle" resultMap="ItemMap">
-       select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+       select b.* from v_customer_brand a,item b
           where a.brand = b.product_brand
           and a.customer_code = #{cid}
           and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -119,7 +119,7 @@
     </select>
 
     <select id="getPJBSingle" resultMap="ItemMap">
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.* from v_customer_brand a,item b
           where a.brand = b.product_brand
           and a.customer_code = #{cid}
           and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -134,7 +134,7 @@
     </select>
 
     <select id="getBZSingle" resultMap="ItemMap">
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.* from v_customer_brand a,item b
           where a.brand = b.product_brand
           and a.customer_code = #{cid}
           and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -149,7 +149,7 @@
     </select>
 
     <select id="getGHSingle" resultMap="ItemMap">
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.* from v_customer_brand a,item b
           where a.brand = b.product_brand
           and a.customer_code = #{cid}
           and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -164,7 +164,7 @@
     </select>
 
     <select id="getTCSingle" resultMap="ItemMap">
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.* from v_customer_brand a,item b
           where a.brand = b.product_brand
           and a.customer_code = #{cid}
           and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -180,7 +180,7 @@
     </select>
 
     <select id="getOtherSingle" resultMap="ItemMap">
-         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+         select b.* from v_customer_brand a,item b
           where a.brand = b.product_brand
           and a.customer_code = #{cid}
           and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')

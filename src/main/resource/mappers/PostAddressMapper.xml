@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.PostAddressDao" >
+    <resultMap id="PostAddressMap" type="com.yulan.pojo.PostAddress" >
+        <result column="CID" property="cid" jdbcType="VARCHAR" />
+        <result column="POST_ADDRESS" property="postAddress" jdbcType="VARCHAR" />
+        <result column="WL_CONTACTS" property="wlContacts" jdbcType="VARCHAR" />
+        <result column="WL_TEL" property="wlTel" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <insert id="addAddress" parameterType="com.yulan.pojo.PostAddress" >
+        insert into POST_ADDRESS (CID, POST_ADDRESS, WL_CONTACTS, WL_TEL)
+        values (#{cid,jdbcType=VARCHAR}, #{postAddress,jdbcType=VARCHAR}, #{wlContacts,jdbcType=VARCHAR},
+      #{wlTel,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updatePostAddress" parameterType="com.yulan.pojo.PostAddress" >
+        update POST_ADDRESS
+        <set >
+            <if test="postAddress != null" >
+                POST_ADDRESS = #{postAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="wlContacts != null" >
+                WL_CONTACTS = #{wlContacts,jdbcType=VARCHAR},
+            </if>
+            <if test="wlTel != null" >
+                WL_TEL = #{wlTel,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where CID = #{cid,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getPostAddress" resultMap="PostAddressMap">
+        select * from POST_ADDRESS t where t.cid = #{CID}
+    </select>
+
+
+</mapper>
