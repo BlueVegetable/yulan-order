@@ -80,5 +80,32 @@
       and sf.qty >0
     </select>
 
+     <select id="getMLInfo" resultMap="ItemMap">
+         select * from item t where t.product_type in ('ML' , 'MLP')
+     </select>
+
+    <select id="getXHBInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('XHB')
+    </select>
+
+    <select id="getPJBInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('PJB')
+    </select>
+
+    <select id="getBZInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('BZ')
+    </select>
+
+    <select id="getGHInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('GH')
+    </select>
+
+    <select id="getTCInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('TC')
+    </select>
+
+    <select id="getOtherInfo" resultMap="ItemMap">
+        select * from item t where t.product_type in ('TU','DT')
+    </select>
 
 </mapper>
