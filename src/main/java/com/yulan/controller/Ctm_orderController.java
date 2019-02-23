@@ -1,6 +1,7 @@
 package com.yulan.controller;
 
 import com.yulan.service.Ctm_orderService;
+import com.yulan.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class Ctm_orderController {
     @Autowired
     private Ctm_orderService ctm_orderService;
+    private Response response;
 
     @RequestMapping("getOrders")
     @ResponseBody
@@ -48,6 +50,17 @@ public class Ctm_orderController {
 
 
         return map;
+    }
+
+    @RequestMapping("getOrder_content")
+    @ResponseBody
+    public Map getOrder_content(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
+        String order_no = (String)m.get("order_no");
+        String item_no = m.get("item_no").toString();
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderB_content(order_no,item_no));
+
+
+
     }
 
 }

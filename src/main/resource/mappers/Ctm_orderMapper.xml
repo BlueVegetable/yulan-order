@@ -12,7 +12,7 @@
     BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-MM-dd HH:mm:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND
   </sql>
     <sql id="Base_Column_List_B" >
-    ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, to_char(DATE_DELIVER,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER,
+    ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-MM-dd HH:mm:ss'),' ') DATE_DELIVER,
     to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE, NOTES, STATUS_ID, DISCOUNT, DISCOUNT_FLAG, CURTAIN_KS, CURTAIN_ROOM_NAME,
     CURTAIN_ROOM_ID, CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT, CURTAIN_HEIGHT2,
     CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
@@ -73,7 +73,7 @@
         (select t.note,c.*  from
         (select
         <include refid="Base_Column_List_B" />,
-        i.product_type,i.product_brand from ctm_order_detail d ,item i
+        i.product_type,i.product_brand from item i, ctm_order_detail d
         where d.order_no=#{order_no} and d.item_no=i.item_no )c,item_type t
         where c.product_type=t.item_type)h,BRAND_TYPE b
         where h.product_brand=b.brand_id
@@ -101,6 +101,18 @@
         <if test="find!=null">
             and order_no like  '%'||#{find}||'%'
         </if>
+
+    </select>
+
+    <select id="getOrderB_content" resultType="Map">
+        select b.brand_name,h.* from
+        (select t.note,c.*  from
+        (select
+        <include refid="Base_Column_List_B" />,
+        i.product_type,i.product_brand from item i, ctm_order_detail d
+        where d.order_no=#{order_no} and d.item_no=#{item_on} and d.item_no=i.item_no  )c,item_type t
+        where c.product_type=t.item_type)h,BRAND_TYPE b
+        where h.product_brand=b.brand_id
 
     </select>
 
