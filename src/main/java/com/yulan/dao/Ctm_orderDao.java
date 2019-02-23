@@ -1,5 +1,6 @@
 package com.yulan.dao;
 
+import com.yulan.pojo.Sal_promotion;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public interface Ctm_orderDao {
     //获取订单头
     List<Map<String,Object>> getOrdersH(@Param("start")Integer start, @Param("number") Integer number,
                                        @Param("cid")String cid, @Param("state_id")String state_id,
-                                       @Param("find")String find);
+                                       @Param("find")String find,@Param("beginTime") String beginTime,
+                                        @Param("finishTime") String finishTime );
     //获取订单具体内容
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
     Integer countOrdersH(@Param("cid")String cid,@Param("state_id")String state_id,
@@ -30,5 +32,11 @@ public interface Ctm_orderDao {
      * 获取订单详情
      */
     Map<String,Object> getOrderB_content(@Param("order_no")String order_no,@Param("item_on")String item_no);
+
+    /**
+     * 获取订单页面活动内容
+     */
+    Sal_promotion getPromotion(@Param("order_type") String order_type);
+
 
 }
