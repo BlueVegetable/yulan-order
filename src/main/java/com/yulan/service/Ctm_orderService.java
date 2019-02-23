@@ -5,4 +5,6 @@ import java.util.Map;
 
 public interface Ctm_orderService {
    Map getOrders(Integer st,Integer number,String cid,String state_id,String find) throws UnsupportedEncodingException;
+
+   Map getOrderB_content(String order_no,String item_no) throws UnsupportedEncodingException;
 }
