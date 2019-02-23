@@ -1,12 +1,14 @@
 package com.yulan.service.impl;
 
 import com.yulan.dao.Ctm_orderDao;
+import com.yulan.pojo.Sal_promotion;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +21,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
     @Override
-    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find) throws UnsupportedEncodingException {
+    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime) throws UnsupportedEncodingException {
         Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find);
+        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime);
         List<Map<String,Object>> data=new ArrayList<>();
         map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find));
         for (Map<String,Object> m:list) {
@@ -64,5 +66,30 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             }
         }
         return map ;
+    }
+
+    @Override
+    public Map getPromotion(List<Map<String, Object>> list) {
+        Map<String,Object> map=new HashMap<>();
+        List<Map<String,Object>> data=new ArrayList<>();
+        for (Map<String, Object> m:list){
+            BigDecimal promotion_cost=BigDecimal.valueOf(0.0);
+            BigDecimal num=BigDecimal.valueOf((int)m.get("num"));
+            String order_type=m.get("order_type").toString();
+            BigDecimal prime_cost= BigDecimal.valueOf((int) m.get("prime_cost"));
+            Sal_promotion sal_promotion=ctm_orderDao.getPromotion(order_type);
+            BigDecimal discount=sal_promotion.getDiscount();
+            BigDecimal price=sal_promotion.getPrice();
+            if (discount!=null){
+                promotion_cost= discount.multiply(prime_cost).setScale(2);//乘法保留两位小数
+            }else{
+                promotion_cost= price.multiply(num).setScale(2);
+            }
+            m.put("promotion_cost",promotion_cost);
+            data.add(m);
+
+        }
+        map.put("data",data);
+        return map;
     }
 }
