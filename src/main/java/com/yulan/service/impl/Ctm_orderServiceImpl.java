@@ -25,7 +25,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         Map<String,Object> map=new HashMap<>();
         List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime);
         List<Map<String,Object>> data=new ArrayList<>();
-        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find));
+        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime));
         for (Map<String,Object> m:list) {
 
             for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码
@@ -91,5 +91,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
         map.put("data",data);
         return map;
+    }
+
+    @Override
+    public BigDecimal getResidemoney(String cid) {
+        return ctm_orderDao.getResidemoney(cid);
     }
 }
