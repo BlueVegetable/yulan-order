@@ -61,6 +61,9 @@
             <if test="find!=null">
                 and order_no like  '%'||#{find}||'%'
             </if>
+            <if test="beginTime!=null">
+                and web_tj_time between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
+            </if>
         order by t.WEB_TJ_TIME DESC
         ) l
         where rownum &lt;= #{number})
@@ -114,6 +117,18 @@
         where c.product_type=t.item_type)h,BRAND_TYPE b
         where h.product_brand=b.brand_id
 
+    </select>
+
+    <select id="getPromotion" resultType="Sal_promotion">
+        select
+          CUSTOMER_CODE, CUSTOMER_TYPE, ORDER_TYPE,
+      ORDER_NAME, ITEM_NO, ITEM_VERSION,
+      PRODUCT_TYPE, PRODUCT_BRAND, TYPE,
+      DISCOUNT, PRICE, FALG_FL,
+      QTY_ORDER, QTY_USE, FLAG_XH,
+      FLAG_ZX, USE_ID,to_char(DATE_START,'yyyy-MM-dd') DATE_START,
+      to_char(DATE_END,'yyyy-MM-dd')DATE_END, GROUP_TYPE
+         from SAL_PROMOTION t where t.ORDER_TYPE=#{order_type}
     </select>
 
 </mapper>
