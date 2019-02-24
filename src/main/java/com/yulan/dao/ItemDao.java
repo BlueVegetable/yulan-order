@@ -18,6 +18,8 @@ public interface ItemDao {
     //客户品牌查询权限
     String userBrandAuthority(@Param("CID") String cid, @Param("ITEM_NO") String itemNo);
 
+    String getUnit(@Param("unit") String unit);
+
     List<StockShow> getStockShow(@Param("ITEM_NO")String itemNo);
     //面料
     List<Item> getMLInfo(@Param("cid") String cid);
@@ -47,4 +49,5 @@ public interface ItemDao {
     List<Item> getOtherInfo(@Param("cid") String cid);
 
     List<Item> getOtherSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+
 }

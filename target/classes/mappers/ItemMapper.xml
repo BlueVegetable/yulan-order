@@ -191,4 +191,8 @@
           and b.product_type in ('TU','DT')
     </select>
 
+    <select id="getUnit" resultType="String">
+          select t.note from UNIT t where t.unit = #{unit}
+    </select>
+
 </mapper>

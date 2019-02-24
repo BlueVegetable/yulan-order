@@ -40,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
                 map.put("code",1);
             }else{
                 item.getItemType().setNote(stringUtil.getUtf8(item.getItemType().getNote()));
+                item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
@@ -139,6 +140,9 @@ public class ItemServiceImpl implements ItemService {
             }
             if(null != item.getRzStyle()) {
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+            }
+            if(null != item.getUnit()){
+                item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
             }
 
         }
