@@ -88,7 +88,6 @@ public class ItemServiceImpl implements ItemService {
             Item item = itemList.get(i);
             if(null != item.getNote()){
                 item.setNote(stringUtil.getUtf8(item.getNote()));
-
             }
         }
 

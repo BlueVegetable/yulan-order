@@ -9,7 +9,7 @@
     </resultMap>
 
 
-    <insert id="addAddress" parameterType="com.yulan.pojo.PostAddress" >
+    <insert id="addPostAddress" parameterType="com.yulan.pojo.PostAddress" >
         insert into POST_ADDRESS (CID, POST_ADDRESS, WL_CONTACTS, WL_TEL)
         values (#{cid,jdbcType=VARCHAR}, #{postAddress,jdbcType=VARCHAR}, #{wlContacts,jdbcType=VARCHAR},
       #{wlTel,jdbcType=VARCHAR})
