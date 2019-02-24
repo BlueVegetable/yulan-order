@@ -2,7 +2,6 @@ import com.yulan.dao.CartDao;
 import com.yulan.dao.CartItemDao;
 import com.yulan.dao.CommodityDao;
 import com.yulan.dao.ItemDao;
-import com.yulan.pojo.CartItem;
 import com.yulan.service.ItemService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,12 +40,13 @@ public class ItemTest {
 //        item.setItemNo("DNRF517501");
 //        commodity.setItem(item);
 //        commodityDao.addCommodity(commodity);
-        CartItem cartItem = new CartItem();
-        cartItem.setCartItemId("000");
-        cartItem.setCartId("1550916381149d7b178658d1d47568fe42656598c2706");
-        cartItem.setActivityGroupType("A");
-        cartItem.setCommodityType("curtain");
-        cartItem.setProductGroupType("B");
-        cartItemDao.addCartItem(cartItem);
+//        CartItem cartItem = new CartItem();
+//        cartItem.setCartItemId("000");
+//        cartItem.setCartId("1550916381149d7b178658d1d47568fe42656598c2706");
+//        cartItem.setActivityGroupType("A");
+//        cartItem.setCommodityType("curtain");
+//        cartItem.setProductGroupType("B");
+//        cartItemDao.addCartItem(cartItem);
+        System.out.println("da");
     }
 }

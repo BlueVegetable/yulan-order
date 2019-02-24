@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +99,14 @@ public class Ctm_orderController {
         String cid = (String)m.get("cid");
 
         return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getResidemoney(cid));
+    }
+
+    /**
+     * 订单结算
+     */
+    @RequestMapping("orderCount")
+    @ResponseBody
+    public Map orderCount(@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
+        return  ctm_orderService.orderCount(m);
     }
 }

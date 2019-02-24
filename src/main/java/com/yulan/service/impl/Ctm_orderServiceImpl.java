@@ -1,14 +1,19 @@
 package com.yulan.service.impl;
 
 import com.yulan.dao.Ctm_orderDao;
+import com.yulan.pojo.Ctm_order;
+import com.yulan.pojo.Ctm_order_detail;
 import com.yulan.pojo.Sal_promotion;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.StringUtil;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +81,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             BigDecimal promotion_cost=BigDecimal.valueOf(0.0);
             BigDecimal num=BigDecimal.valueOf((int)m.get("num"));
             String order_type=m.get("order_type").toString();
+
             BigDecimal prime_cost= BigDecimal.valueOf((int) m.get("prime_cost"));
             Sal_promotion sal_promotion=ctm_orderDao.getPromotion(order_type);
             BigDecimal discount=sal_promotion.getDiscount();
@@ -95,6 +101,44 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public BigDecimal getResidemoney(String cid) {
-        return ctm_orderDao.getResidemoney(cid);
+        return ctm_orderDao.getResideMoney(cid);
+    }
+
+    @Override
+    public Map orderCount(Map<String, Object> map) throws InvocationTargetException, IllegalAccessException {
+        Map m=new HashMap();
+        Ctm_order ctm_order=new Ctm_order();
+
+        String cid= map.get("cid").toString();
+        BeanUtils.populate(ctm_order,(Map<String, Object>)map.get("ctm_order"));
+        List<Ctm_order_detail> list=(List) map.get("ctm_orders");
+
+        BigDecimal promotion_cost=BigDecimal.valueOf((Double) map.get("promotion_cost"));//活动后总价
+        //预留优惠券
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
+        if (1==1){//预留余额判断
+            ctm_order.setStatusId("12");
+        }
+        ctm_order.setWebTjTime(new Date(System.currentTimeMillis()));//获取当前时间
+        ctm_orderDao.insertOrderH(ctm_order);
+
+        if (ctm_orderDao.insertOrderH(ctm_order)){
+            for (Ctm_order_detail ctm_order_detail:list){
+                if (!ctm_orderDao.insertOrderB(ctm_order_detail)){
+
+                    m.put("code",1);
+                    m.put("code","FLASE");
+                    break;
+                }
+            }
+            m.put("code",0);
+            m.put("code","SUCCESS");
+
+        }
+
+
+
+
+        return m;
     }
 }
