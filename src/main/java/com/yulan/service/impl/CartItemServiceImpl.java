@@ -17,23 +17,28 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Override
 	public boolean addCartItem(CartItem cartItem) {
-		cartItem.setCartItemId(StringUtil.createStringID());
+		cartItem.setCartItemId(System.currentTimeMillis()+ StringUtil.createStringID());
 		return cartItemDao.addCartItem(cartItem)>0;
 	}
 
 	@Override
-	public boolean deleteCartItemByID(int cartItemID) {
+	public boolean deleteCartItemByID(String cartItemID) {
 		return cartItemDao.deleteCartItemByID(cartItemID)>0;
 	}
 
 	@Override
-	public CartItem getCartItemByID(int cartItemID) {
+	public CartItem getCartItemByID(String cartItemID) {
 		return cartItemDao.getCartItemByID(cartItemID);
 	}
 
 	@Override
-	public List<CartItem> getCartItems(String itemId,String cartID) {
-		return cartItemDao.getCartItems(itemId,cartID);
+	public List<CartItem> getCartItems(String cartID, String commodityType) {
+		return cartItemDao.getCartItems(cartID,commodityType);
+	}
+
+	@Override
+	public CartItem getCartItemOrder(String cartID, String commodityType, String activityGroupType, String productGroupType) {
+		return cartItemDao.getCartItemOrder(cartID,commodityType,activityGroupType,productGroupType);
 	}
 
 	@Override

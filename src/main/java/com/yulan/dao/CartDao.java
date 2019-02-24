@@ -1,18 +1,15 @@
 package com.yulan.dao;
 
 import com.yulan.pojo.Cart;
-import org.apache.ibatis.annotations.Param;
 
 public interface CartDao {
 
 	int addCart(Cart cart);
 
-	int deleteCartByID(int cartID);
+	long countCartByCID(String CID);
 
-	Cart getCartByID(int cartID);
+	Cart getCartByID(String cartID);
 
-	Cart getCartByCustomerID(@Param("customerId") String customerId);
-
-	int updateCart(Cart cart);
+	Cart getCartByCID(String CID);
 
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,7 +28,7 @@ public class CartItemController{
 	}
 
 	@ResponseBody@RequestMapping("deletecartItem")
-	public Map<String,Object> deleteCartItem(@RequestParam("cartItemID")int cartItemID) {
+	public Map<String,Object> deleteCartItem(@RequestParam("cartItemID")String cartItemID) {
 		if(cartItemService.deleteCartItemByID(cartItemID)) {
 			return Response.getResponseMap(0,"修改成功",null);
 		}
@@ -39,19 +38,8 @@ public class CartItemController{
 	}
 
 	@ResponseBody@RequestMapping("getCartItemByID")
-	public CartItem getCartItemByID(int cartItemID) {
+	public CartItem getCartItemByID(String cartItemID) {
 		return cartItemService.getCartItemByID(cartItemID);
-	}
-
-	@ResponseBody@RequestMapping("getCartItems")
-	public List<CartItem> getCartItems() {
-		return cartItemService.getCartItems(null,null);
-	}
-
-	@ResponseBody@RequestMapping("getCartItemsDeal")
-	public Map<String,Object> getCartItemsDeal(@RequestParam(value = "itemId",required=false)String itemId,
-											   @RequestParam(value = "cartID",required=false)String cartID) {
-		return Response.getResponseMap(0,"",cartItemService.getCartItems(itemId,cartID));
 	}
 
 	@ResponseBody@RequestMapping("updateCartItem")

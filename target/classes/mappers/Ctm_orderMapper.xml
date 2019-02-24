@@ -94,6 +94,7 @@
             and c.order_no like  '%'||#{find}||'%'
         </if>
 
+
     </select>
 
     <select id="countOrdersH" resultType="Integer">
@@ -103,6 +104,9 @@
         </if>
         <if test="find!=null">
             and order_no like  '%'||#{find}||'%'
+        </if>
+        <if test="beginTime!=null">
+            and web_tj_time between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
         </if>
 
     </select>
@@ -130,6 +134,70 @@
       to_char(DATE_END,'yyyy-MM-dd')DATE_END, GROUP_TYPE
          from SAL_PROMOTION t where t.ORDER_TYPE=#{order_type}
     </select>
+    
+    <select id="BigDecimal" resultType="BigDecimal">
+     select f_get_customer_money(#{cid}) from dual
+    </select>
+
+    <insert id="insertOrderH" parameterType="Ctm_order" >
+    insert into CTM_ORDER (ORDER_NO, CUSTOMER_CODE, CUSTOMER_CODE2,
+      CURRENCY_ID, LINKPERSON, TELEPHONE,
+      STATUS_ID, DELIVERY_TYPE, DELIVERY_NOTES,
+      POST_ADDRESS, NOTES, DATE_CRE,
+      OPERATOR, DATE_UPDATE, PERSON_UPDATE,
+      CONTRACT_NO, PERSON_ACCEPT, DATE_ACCEPT,
+      YULAN_NOTES, WEB_TJ_TIME, DATE_DEAL,
+      FLAG, USER_NO, PROJECT_NO,
+      CUSTOMER_CODE_O2O, ORDER_FLAG, POST_ADDRESS_MODIFIED,
+      DS_LINKMAN, DS_TEL, DS_USER_NAME,
+      DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE,
+      INVOICE_FLAG, INVOICE_TITLE, WL_CONTACTS,
+      WL_TEL, RECIVER_AREA1, RECIVER_AREA2,
+      RECIVER_AREA3, BILL_TYPE_X, DELIVERY_FLAG,
+      OAO_FLAG, OAO_STATUS, OAO_PERSON,
+      OAO_TIME)
+    values (#{orderNo,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, #{customerCode2,jdbcType=VARCHAR},
+      #{currencyId,jdbcType=VARCHAR}, #{linkperson,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
+      #{statusId,jdbcType=VARCHAR}, #{deliveryType,jdbcType=VARCHAR}, #{deliveryNotes,jdbcType=VARCHAR},
+      #{postAddress,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{dateCre,jdbcType=TIMESTAMP},
+      #{operator,jdbcType=VARCHAR}, #{dateUpdate,jdbcType=TIMESTAMP}, #{personUpdate,jdbcType=VARCHAR},
+      #{contractNo,jdbcType=VARCHAR}, #{personAccept,jdbcType=VARCHAR}, #{dateAccept,jdbcType=TIMESTAMP},
+      #{yulanNotes,jdbcType=VARCHAR}, #{webTjTime,jdbcType=TIMESTAMP}, #{dateDeal,jdbcType=TIMESTAMP},
+      #{flag,jdbcType=VARCHAR}, #{userNo,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR},
+      #{customerCodeO2o,jdbcType=VARCHAR}, #{orderFlag,jdbcType=VARCHAR}, #{postAddressModified,jdbcType=DECIMAL},
+      #{dsLinkman,jdbcType=VARCHAR}, #{dsTel,jdbcType=VARCHAR}, #{dsUserName,jdbcType=VARCHAR},
+      #{dsOrderNo,jdbcType=VARCHAR}, #{isDsOrder,jdbcType=VARCHAR}, #{erpProcessNote,jdbcType=VARCHAR},
+      #{invoiceFlag,jdbcType=VARCHAR}, #{invoiceTitle,jdbcType=VARCHAR}, #{wlContacts,jdbcType=VARCHAR},
+      #{wlTel,jdbcType=VARCHAR}, #{reciverArea1,jdbcType=VARCHAR}, #{reciverArea2,jdbcType=VARCHAR},
+      #{reciverArea3,jdbcType=VARCHAR}, #{billTypeX,jdbcType=CHAR}, #{deliveryFlag,jdbcType=VARCHAR},
+      #{oaoFlag,jdbcType=VARCHAR}, #{oaoStatus,jdbcType=VARCHAR}, #{oaoPerson,jdbcType=VARCHAR},
+      #{oaoTime,jdbcType=TIMESTAMP})
+  </insert>
+
+    <insert id="insertOrderB" parameterType="Ctm_order_detail" >
+    insert into CTM_ORDER_DETAIL (ORDER_NO, LINE_NO, ITEM_NO,
+      ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED,
+      DATE_DELIVER, DATE_UPDATE, NOTES,
+      STATUS_ID, DISCOUNT, DISCOUNT_FLAG,
+      CURTAIN_KS, CURTAIN_ROOM_NAME, CURTAIN_ROOM_ID,
+      CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT,
+      CURTAIN_HEIGHT2, CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID,
+      CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2, ML_NON_STANDARD,
+      CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,
+      DATE_DELIVER_KF, DATE_DELIVER_NB, DATE_DELIVER_FH
+      )
+    values (#{orderNo,jdbcType=VARCHAR}, #{lineNo,jdbcType=DECIMAL}, #{itemNo,jdbcType=VARCHAR},
+      #{itemNoSample,jdbcType=VARCHAR}, #{productionVersion,jdbcType=VARCHAR}, #{qtyRequired,jdbcType=DECIMAL},
+      #{dateDeliver,jdbcType=TIMESTAMP}, #{dateUpdate,jdbcType=TIMESTAMP}, #{notes,jdbcType=VARCHAR},
+      #{statusId,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL}, #{discountFlag,jdbcType=VARCHAR},
+      #{curtainKs,jdbcType=VARCHAR}, #{curtainRoomName,jdbcType=VARCHAR}, #{curtainRoomId,jdbcType=DECIMAL},
+      #{curtainRoomLineno,jdbcType=DECIMAL}, #{curtainWidth,jdbcType=DECIMAL}, #{curtainHeight,jdbcType=DECIMAL},
+      #{curtainHeight2,jdbcType=DECIMAL}, #{curtainItemMenuNotes,jdbcType=VARCHAR}, #{curtainMenuGroupId,jdbcType=VARCHAR},
+      #{curtainSizeTimes,jdbcType=DECIMAL}, #{curtainSizeTimes2,jdbcType=DECIMAL}, #{mlNonStandard,jdbcType=DECIMAL},
+      #{curtainWbhSize,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{transId,jdbcType=VARCHAR},
+      #{dateDeliverKf,jdbcType=TIMESTAMP}, #{dateDeliverNb,jdbcType=TIMESTAMP}, #{dateDeliverFh,jdbcType=TIMESTAMP}
+      )
+  </insert>
 
     <!--<update id="updateOrderStatus" parameterType="map">
         update CTM_ORDER t

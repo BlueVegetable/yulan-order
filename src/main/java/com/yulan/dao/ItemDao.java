@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ItemDao {
 
+    Item getItemByItemNO(String itemNO);
+
     Item getWallpaperInfo(@Param("paperType") String paperType);
 
     String getProductVersion(@Param("itemVersion") String itemVersion);

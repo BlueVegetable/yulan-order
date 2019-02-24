@@ -9,11 +9,15 @@ public interface CartItemDao {
 
 	int addCartItem(CartItem cartItem);
 
-	int deleteCartItemByID(int cartItemID);
+	int deleteCartItemByID(String cartItemID);
 
-	CartItem getCartItemByID(int cartItemID);
+	CartItem getCartItemByID(String cartItemID);
 
-	List<CartItem> getCartItems(@Param("itemId") String itemId,@Param("cartID") String cartID);
+	List<CartItem> getCartItems(@Param("cartID") String cartID, @Param("commodityType") String commodityType);
+
+	CartItem getCartItemOrder(@Param("cartID") String cartID, @Param("commodityType") String commodityType,
+							  @Param("activityGroupType") String activityGroupType,
+							  @Param("productGroupType") String productGroupType);
 
 	int updateCartItem(CartItem cartItem);
 

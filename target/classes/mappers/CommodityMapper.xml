@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CommodityDao">
+    <resultMap id="CommodityMap" type="Commodity" >
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="PRICE" property="price" jdbcType="DECIMAL" />
+        <result column="ACTIVITY_ID" property="activityId" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_PRICE" property="activityPrice" jdbcType="DECIMAL" />
+        <result column="CART_ITEM_ID" property="cartItemId" jdbcType="VARCHAR" />
+        <association property="item" column="ITEM_ID" select="com.yulan.dao.ItemDao.getItemByItemNO" />
+    </resultMap>
+
+    <insert id="addCommodity" parameterType="Commodity">
+        insert into COMMODITY
+        (ID, PRICE, ACTIVITY_ID, ACTIVITY_PRICE, ITEM_ID, CART_ITEM_ID, QUANTITY) VALUES
+        (#{id},#{price},#{activityId},#{activityPrice},#{item.itemNo},#{cartItemId},#{quantity})
+    </insert>
+
+    <select id="getCommodityByID" parameterType="String" resultMap="CommodityMap">
+        select * from COMMODITY where ID = #{commodityID}
+    </select>
+
+    <select id="getCommoditiesByCartItemID" parameterType="String" resultMap="CommodityMap">
+        select * from COMMODITY where CART_ITEM_ID = #{cartItemID}
+    </select>
+</mapper>

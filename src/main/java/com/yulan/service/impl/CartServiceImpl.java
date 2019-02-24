@@ -15,28 +15,28 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public boolean addCart(Cart cart) {
-		cart.setCartId(StringUtil.createStringID());
+        cart.setCartId(System.currentTimeMillis()+ StringUtil.createStringID());
 		return cartDao.addCart(cart)>0;
 	}
 
 	@Override
-	public boolean deleteCartByID(int cartID) {
-		return cartDao.deleteCartByID(cartID)>0;
+	public boolean existCart(String CID) {
+		return cartDao.countCartByCID(CID) > 0;
 	}
 
 	@Override
-	public Cart getCartByID(int cartID) {
+	public Cart getSimpleCartByID(String cartID) {
 		return cartDao.getCartByID(cartID);
 	}
 
 	@Override
-	public Cart getCartByCustomerID(String customerId) {
-		return cartDao.getCartByCustomerID(customerId);
+	public Cart getSimpleCartByCID(String CID) {
+		return cartDao.getCartByCID(CID);
 	}
 
 	@Override
-	public boolean updateCart(Cart cart) {
-		return cartDao.updateCart(cart)>0;
+	public Cart getCartByCID(String CID) {
+		Cart cart = getSimpleCartByCID(CID);
+		return cart;
 	}
-
 }
