@@ -12,9 +12,9 @@ public class Ctm_order_detail  {
 
     private BigDecimal qtyRequired;
 
-    private Date dateDeliver;
+    private java.util.Date dateDeliver;
 
-    private Date dateUpdate;
+    private java.util.Date dateUpdate;
 
     private String notes;
 
@@ -54,11 +54,13 @@ public class Ctm_order_detail  {
 
     private String transId;
 
-    private Date dateDeliverKf;
+    private java.util.Date dateDeliverKf;
 
-    private Date dateDeliverNb;
+    private java.util.Date dateDeliverNb;
 
-    private Date dateDeliverFh;
+    private java.util.Date dateDeliverFh;
+
+    private BigDecimal unitPrice;
 
     public String getItemNo() {
         return itemNo;
@@ -92,19 +94,19 @@ public class Ctm_order_detail  {
         this.qtyRequired = qtyRequired;
     }
 
-    public Date getDateDeliver() {
+    public java.util.Date getDateDeliver() {
         return dateDeliver;
     }
 
-    public void setDateDeliver(Date dateDeliver) {
+    public void setDateDeliver(java.util.Date dateDeliver) {
         this.dateDeliver = dateDeliver;
     }
 
-    public Date getDateUpdate() {
+    public java.util.Date getDateUpdate() {
         return dateUpdate;
     }
 
-    public void setDateUpdate(Date dateUpdate) {
+    public void setDateUpdate(java.util.Date dateUpdate) {
         this.dateUpdate = dateUpdate;
     }
 
@@ -260,27 +262,35 @@ public class Ctm_order_detail  {
         this.transId = transId == null ? null : transId.trim();
     }
 
-    public Date getDateDeliverKf() {
+    public java.util.Date getDateDeliverKf() {
         return dateDeliverKf;
     }
 
-    public void setDateDeliverKf(Date dateDeliverKf) {
+    public void setDateDeliverKf(java.util.Date dateDeliverKf) {
         this.dateDeliverKf = dateDeliverKf;
     }
 
-    public Date getDateDeliverNb() {
+    public java.util.Date getDateDeliverNb() {
         return dateDeliverNb;
     }
 
-    public void setDateDeliverNb(Date dateDeliverNb) {
+    public void setDateDeliverNb(java.util.Date dateDeliverNb) {
         this.dateDeliverNb = dateDeliverNb;
     }
 
-    public Date getDateDeliverFh() {
+    public java.util.Date getDateDeliverFh() {
         return dateDeliverFh;
     }
 
     public void setDateDeliverFh(Date dateDeliverFh) {
         this.dateDeliverFh = dateDeliverFh;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 }

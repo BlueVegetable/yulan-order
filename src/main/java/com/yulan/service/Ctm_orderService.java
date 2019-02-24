@@ -1,6 +1,7 @@
 package com.yulan.service;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -19,5 +20,5 @@ public interface Ctm_orderService {
    BigDecimal getResidemoney(String cid);
 
    //订单结算
-//   Map
+   Map orderCount(Map<String,Object> map) throws InvocationTargetException, IllegalAccessException;
 }

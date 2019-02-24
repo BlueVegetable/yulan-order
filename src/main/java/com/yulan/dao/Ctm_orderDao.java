@@ -45,7 +45,7 @@ public interface Ctm_orderDao {
     /**
      * 获取客户余额
      */
-    BigDecimal getResidemoney(@Param("cid") String cid);
+    BigDecimal getResideMoney(@Param("cid") String cid);
 
     /**
      * 新增订单头
