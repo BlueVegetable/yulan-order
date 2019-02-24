@@ -20,6 +20,11 @@ public class CommodityServiceImpl implements CommodityService {
 	}
 
 	@Override
+	public Commodity getCommodityAppoint(String activityID, String itemID, String cartItemID) {
+		return commodityDao.getCommodityAppoint(activityID, itemID, cartItemID);
+	}
+
+	@Override
 	public boolean deleteCommodityByID(String commodityID) {
 		return commodityDao.deleteCommodityByID(commodityID)>0;
 	}

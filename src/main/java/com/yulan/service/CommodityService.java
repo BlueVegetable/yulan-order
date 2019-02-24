@@ -10,6 +10,8 @@ public interface CommodityService {
 
 	Commodity getCommodityByID(String commodityID);
 
+	Commodity getCommodityAppoint(String activityID,String itemID,String cartItemID);
+
 	boolean updateCommodity(Commodity commodity);
 
 }
