@@ -31,4 +31,33 @@ public class PostAddressController {
             return Response.getResponseMap(1,"Failed",null);
         }
     }
+
+    /**
+     * 修改收货地址接口
+     * @param postAddress
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "updatePostAddress")
+    @ResponseBody
+    public Map updatePostAddress(@RequestBody PostAddress postAddress)throws IOException {
+        if(postAddressService.updatePostAddress(postAddress)){
+            return Response.getResponseMap(0,"SUCCESS",null);
+        }else{
+            return Response.getResponseMap(1,"Failed",null);
+        }
+    }
+
+    /**
+     * 得到收货地址接口
+     * @param data
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "getPostAddress")
+    @ResponseBody
+    public Map getPostAddress(@RequestBody Map<String,Object> data)throws IOException {
+        String cid = (String)data.get("cid");
+        return postAddressService.getPostAddress(cid);
+    }
 }

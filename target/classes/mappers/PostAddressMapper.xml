@@ -6,6 +6,7 @@
         <result column="POST_ADDRESS" property="postAddress" jdbcType="VARCHAR" />
         <result column="WL_CONTACTS" property="wlContacts" jdbcType="VARCHAR" />
         <result column="WL_TEL" property="wlTel" jdbcType="VARCHAR" />
+        <result column="ADDRESS_ID" property="addressId" jdbcType="DECIMAL" />
     </resultMap>
 
 
@@ -28,7 +29,7 @@
                 WL_TEL = #{wlTel,jdbcType=VARCHAR}
             </if>
         </set>
-        where CID = #{cid,jdbcType=VARCHAR}
+        where CID = #{cid,jdbcType=VARCHAR} and ADDRESS_ID = #{addressId}
     </update>
 
     <select id="getPostAddress" resultMap="PostAddressMap">

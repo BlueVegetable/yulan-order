@@ -10,7 +10,17 @@ public class PostAddress {
 
     private String wlTel;
 
+    private Integer addressId;
+
     public PostAddress() {
+    }
+
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
     }
 
     public String getCid() {
