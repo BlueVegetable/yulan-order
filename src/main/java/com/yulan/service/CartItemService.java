@@ -14,6 +14,8 @@ public interface CartItemService {
 
 	List<CartItem> getCartItems(String cartID, String commodityType);
 
+	CartItem getCartItemOrder(String cartID, String commodityType, String activityGroupType, String productGroupType);
+
 	boolean updateCartItem(CartItem cartItem);
 
 }

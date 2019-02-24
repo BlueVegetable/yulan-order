@@ -37,6 +37,11 @@ public class CartItemServiceImpl implements CartItemService {
 	}
 
 	@Override
+	public CartItem getCartItemOrder(String cartID, String commodityType, String activityGroupType, String productGroupType) {
+		return cartItemDao.getCartItemOrder(cartID,commodityType,activityGroupType,productGroupType);
+	}
+
+	@Override
 	public boolean updateCartItem(CartItem cartItem) {
 		return cartItemDao.updateCartItem(cartItem)>0;
 	}

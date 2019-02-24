@@ -10,6 +10,11 @@
         <collection property="commodities" column="CART_ITEM_ID" select="com.yulan.dao.CommodityDao.getCommoditiesByCartItemID" />
     </resultMap>
 
+    <insert id="addCartItem" parameterType="CartItem">
+        insert into CART_ITEM
+        (CART_ITEM_ID, COMMODITY_TYPE, ACTIVITY_GROUP_TYPE, PRODUCT_GROUP_TYPE, CART_ID) VALUES
+        (#{cartItemId},#{commodityType},#{activityGroupType},#{productGroupType},#{cartId})
+    </insert>
     <select id="getCartItemByID" parameterType="String" resultMap="CartItemMap">
         select * from CART_ITEM where CART_ITEM_ID = #{cartItemId}
     </select>

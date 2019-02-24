@@ -15,6 +15,10 @@ public interface CartItemDao {
 
 	List<CartItem> getCartItems(@Param("cartID") String cartID, @Param("commodityType") String commodityType);
 
+	CartItem getCartItemOrder(@Param("cartID") String cartID, @Param("commodityType") String commodityType,
+							  @Param("activityGroupType") String activityGroupType,
+							  @Param("productGroupType") String productGroupType);
+
 	int updateCartItem(CartItem cartItem);
 
 }

@@ -1,15 +1,16 @@
 package com.yulan.controller;
 
-import com.yulan.pojo.Cart;
-import com.yulan.pojo.CartItem;
-import com.yulan.service.CartItemService;
-import com.yulan.service.CartService;
+import com.yulan.pojo.*;
+import com.yulan.service.*;
 import com.yulan.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,15 @@ import java.util.Map;
 public class CartController{
 
 	@Autowired
+	private ItemService itemService;
+	@Autowired
 	private CartService cartService;
 	@Autowired
 	private CartItemService cartItemService;
+	@Autowired
+	private CommodityService commodityService;
+	@Autowired
+	private SalPromotionService salPromotionService;
 
 	private final static String WALLPAPER = "wallpaper";
 	private final static String SOFT = "soft";
@@ -62,6 +69,50 @@ public class CartController{
 		cartItems.put(SOFT,cartItemService.getCartItems(cart.getCartId(),SOFT));
 		cart.setCartItems(cartItems);
 		return cart;
+	}
+
+	@ResponseBody@RequestMapping("addCartItem")
+	public Map addCartItem(@RequestBody Map<String,Object> parameters) {
+		String customer_type = (String) parameters.get("customer_type");
+		String CID = (String) parameters.get("CID");
+		String itemNO = (String) parameters.get("itemNO");
+		String commodityType = (String) parameters.get("commodityType");
+		String orderType = (String) parameters.get("orderType");
+		String quantity = (String) parameters.get("quantity");
+		String price = (String) parameters.get("price");
+
+		Item item = itemService.getItemByItemNO(itemNO);
+		Cart cart = cartService.getSimpleCartByCID(CID);
+		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(orderType);
+		CartItem cartItem = cartItemService.getCartItemOrder(cart.getCartId(), commodityType,
+				salPromotion == null?null:salPromotion.getGroupType(),
+				item.getGroupType());
+		if(cartItem == null) {
+			cartItem = new CartItem();
+			cartItem.setCommodityType(commodityType);
+			cartItem.setProductGroupType(item.getGroupType());
+			cartItem.setActivityGroupType(salPromotion.getGroupType());
+			cartItem.setCartId(cart.getCartId());
+			if(!cartItemService.addCartItem(cartItem))
+				return Response.getResponseMap(1,"添加失败",null);
+		}
+		Commodity commodity = new Commodity();
+		commodity.setItem(item);
+		commodity.setQuantity(new BigInteger(quantity));
+		commodity.setCartItemId(cartItem.getCartItemId());
+		commodity.setActivityId(salPromotion == null?null:salPromotion.getOrderType());
+		switch (customer_type) {
+			case "02":commodity.setPrice(item.getPriceSale());break;
+			case "06":commodity.setPrice(item.getPriceFx());break;
+			case "09":commodity.setPrice(item.getPriceHome());break;
+			case "05":commodity.setPrice(item.getSalePrice());break;
+			case "10":commodity.setPrice(new BigDecimal(price));break;
+			default:return Response.getResponseMap(1,"添加失败",null);
+		}
+		if(!commodityService.addCommodity(commodity))
+			return Response.getResponseMap(1,"添加失败",null);
+		else
+			return Response.getResponseMap(0,"添加成功",null);
 	}
 
 }

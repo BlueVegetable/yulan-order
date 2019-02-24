@@ -25,6 +25,11 @@ public class ItemServiceImpl implements ItemService {
     private MapUtils mapUtils;
 
     @Override
+    public Item getItemByItemNO(String itemNO) {
+        return itemDao.getItemByItemNO(itemNO);
+    }
+
+    @Override
     public Map getWallpaperInfo(String cid, String paperType) throws IOException {
         Map<String,Object> map = new HashMap<>();
         Item item = new Item();
