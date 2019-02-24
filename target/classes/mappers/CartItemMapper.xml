@@ -15,12 +15,19 @@
         (CART_ITEM_ID, COMMODITY_TYPE, ACTIVITY_GROUP_TYPE, PRODUCT_GROUP_TYPE, CART_ID) VALUES
         (#{cartItemId},#{commodityType},#{activityGroupType},#{productGroupType},#{cartId})
     </insert>
+
+    <delete id="deleteCartItemByID" parameterType="String">
+        delete from CART_ITEM where CART_ITEM_ID = #{cartItemID}
+    </delete>
+
     <select id="getCartItemByID" parameterType="String" resultMap="CartItemMap">
         select * from CART_ITEM where CART_ITEM_ID = #{cartItemId}
     </select>
+
     <select id="getCartItems" parameterType="String" resultMap="CartItemMap">
         select * from cart_item where CART_ID = #{cartID} and COMMODITY_TYPE = #{commodityType}
     </select>
+
     <select id="getCartItemOrder" parameterType="Map" resultType="CartItem">
         select * from CART_ITEM
         where

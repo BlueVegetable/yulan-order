@@ -129,4 +129,32 @@ public class CartController{
         }
 	}
 
+	@ResponseBody@RequestMapping("deleteCartItems")
+	public Map deleteCartItems(@RequestBody List<String> cartItemIDs) {
+		int number = 0;
+		for (String cartItemID:cartItemIDs) {
+			commodityService.deleteCommoditiesByCartItemID(cartItemID);
+			cartItemService.deleteCartItemByID(cartItemID);
+		}
+		return Response.getResponseMap(0,"",number);
+	}
+
+	@ResponseBody@RequestMapping("deleteCommodities")
+	public Map deleteCommodities(@RequestBody List<String> commodityIDs) {
+		if (commodityIDs == null||commodityIDs.size() == 0) {
+			return Response.getResponseMap(0,"",null);
+		} else {
+			Commodity commodity = commodityService.getCommodityByID(commodityIDs.get(0));
+			String cartItemID = commodity.getCartItemId();
+			for (String commodityID:commodityIDs) {
+				commodityService.deleteCommodityByID(commodityID);
+			}
+			long number = commodityService.countByCartItemID(cartItemID);
+			if(number == 0) {
+				cartItemService.deleteCartItemByID(cartItemID);
+			}
+			return Response.getResponseMap(0,"",null);
+		}
+	}
+
 }

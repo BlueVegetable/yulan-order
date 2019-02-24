@@ -30,8 +30,18 @@ public class CommodityServiceImpl implements CommodityService {
 	}
 
 	@Override
+	public boolean deleteCommoditiesByCartItemID(String cartItemID) {
+		return commodityDao.deleteCommoditiesByCartItemID(cartItemID) > 0;
+	}
+
+	@Override
 	public Commodity getCommodityByID(String commodityID) {
 		return commodityDao.getCommodityByID(commodityID);
+	}
+
+	@Override
+	public long countByCartItemID(String cartItemID) {
+		return commodityDao.countByCartItemID(cartItemID);
 	}
 
 	@Override
