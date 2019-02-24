@@ -85,4 +85,18 @@ public class Ctm_orderController {
         map.put("code",0);
         return  map;
     }
+
+    /**
+     * 获取用户余额
+     * @param m
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    @RequestMapping("getResidemoney")
+    @ResponseBody
+    public Map getResidemoney(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
+        String cid = (String)m.get("cid");
+
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getResidemoney(cid));
+    }
 }
