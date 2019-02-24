@@ -38,5 +38,7 @@ public interface Ctm_orderDao {
      */
     Sal_promotion getPromotion(@Param("order_type") String order_type);
 
+    boolean updateOrderStatus(@Param("orderNo") String orderNo,@Param("customerCode") String customerCode);
+
 
 }

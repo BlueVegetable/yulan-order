@@ -131,4 +131,11 @@
          from SAL_PROMOTION t where t.ORDER_TYPE=#{order_type}
     </select>
 
+    <!--<update id="updateOrderStatus" parameterType="map">
+        update CTM_ORDER t
+        <set>
+
+        </set>
+    </update>-->
+
 </mapper>
