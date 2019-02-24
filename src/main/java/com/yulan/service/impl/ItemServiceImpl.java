@@ -42,6 +42,7 @@ public class ItemServiceImpl implements ItemService {
                 item.getItemType().setNote(stringUtil.getUtf8(item.getItemType().getNote()));
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
                 map.put("data",item);
                 map.put("code",0);
             }
@@ -69,23 +70,76 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Map getSoftDecorationInfo(String itemType){
+    public Map getSoftDecorationInfo(String itemType,String cid)throws IOException{
         Map<String,Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if(itemType.equals("ML")){
-            itemList = itemDao.getMLInfo();
-
+            itemList = itemDao.getMLInfo(cid);
         }else if(itemType.equals("XHB")){
-            itemList = itemDao.getXHBInfo();
+            itemList = itemDao.getXHBInfo(cid);
         }else if(itemType.equals("PJB")){
-
+            itemList = itemDao.getPJBInfo(cid);
         }else if(itemType.equals("BZ")){
-
+            itemList = itemDao.getBZInfo(cid);
         }else if(itemType.equals("GH")){
-
+            itemList = itemDao.getGHInfo(cid);
         }else if(itemType.equals("TC")){
-
+            itemList = itemDao.getTCInfo(cid);
         }else if(itemType.equals("other")){
+            itemList = itemDao.getOtherInfo(cid);
+        }
+
+        for(int i=0 ; i<itemList.size() ; i++){
+            Item item = itemList.get(i);
+            if(null != item.getNote()){
+                item.setNote(stringUtil.getUtf8(item.getNote()));
+            }
+        }
+
+        if(null == itemList || itemList.size() == 0){
+            map.put("data","没有查询到数据");
+            map.put("code",1);
+        }else{
+            map.put("data",itemList);
+            map.put("code",0);
+        }
+        return map;
+    }
+
+    @Override
+    public Map getSoftInfoSingle(String itemType, String cid, String itemNo) throws IOException {
+        Map<String,Object> map = new HashMap<>();
+        List<Item> itemList = new ArrayList<>();
+        if(itemType.equals("ML")){
+            itemList = itemDao.getMLSingle(cid,itemNo);
+        }else if(itemType.equals("XHB")){
+            itemList = itemDao.getXHBSingle(cid,itemNo);
+        }else if(itemType.equals("PJB")){
+            itemList = itemDao.getPJBSingle(cid,itemNo);
+        }else if(itemType.equals("BZ")){
+            itemList = itemDao.getBZSingle(cid,itemNo);
+        }else if(itemType.equals("GH")){
+            itemList = itemDao.getGHSingle(cid,itemNo);
+        }else if(itemType.equals("TC")){
+            itemList = itemDao.getTCSingle(cid,itemNo);
+        }else if(itemType.equals("other")){
+            itemList = itemDao.getOtherSingle(cid,itemNo);
+        }
+
+        for(int i=0 ; i<itemList.size() ; i++){
+            Item item = itemList.get(i);
+            if(null != item.getNote()){
+                item.setNote(stringUtil.getUtf8(item.getNote()));
+            }
+            if(null != item.getItemVersion()) {
+                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+            }
+            if(null != item.getProductBrand()) {
+                item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+            }
+            if(null != item.getRzStyle()) {
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+            }
 
         }
 

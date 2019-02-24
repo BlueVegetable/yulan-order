@@ -20,17 +20,31 @@ public interface ItemDao {
 
     List<StockShow> getStockShow(@Param("ITEM_NO")String itemNo);
     //面料
-    List<Item> getMLInfo();
+    List<Item> getMLInfo(@Param("cid") String cid);
+
+    List<Item> getMLSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
     //花边
-    List<Item> getXHBInfo();
+    List<Item> getXHBInfo(@Param("cid") String cid);
+
+    List<Item> getXHBSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
     //挂带/配件包
-    List<Item> getPJBInfo();
+    List<Item> getPJBInfo(@Param("cid") String cid);
+
+    List<Item> getPJBSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
     //抱枕
-    List<Item> getBZInfo();
+    List<Item> getBZInfo(@Param("cid") String cid);
+
+    List<Item> getBZSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
     //挂画
-    List<Item> getGHInfo();
+    List<Item> getGHInfo(@Param("cid") String cid);
+
+    List<Item> getGHSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
     //陶瓷
-    List<Item> getTCInfo();
+    List<Item> getTCInfo(@Param("cid") String cid);
+
+    List<Item> getTCSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
     //其他
-    List<Item> getOtherInfo();
+    List<Item> getOtherInfo(@Param("cid") String cid);
+
+    List<Item> getOtherSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
 }

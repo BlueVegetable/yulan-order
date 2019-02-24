@@ -3,16 +3,16 @@
 <mapper namespace="com.yulan.dao.Ctm_orderDao">
 
     <sql id="Base_Column_List_H" >
-    ORDER_NO, CUSTOMER_CODE, CUSTOMER_CODE2, CURRENCY_ID, LINKPERSON, TELEPHONE, STATUS_ID,
-    DELIVERY_TYPE, DELIVERY_NOTES, POST_ADDRESS, NOTES, to_char(DATE_CRE,'yyyy-MM-dd HH:mm:ss') DATE_CRE, OPERATOR, to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE,
-    PERSON_UPDATE, CONTRACT_NO, PERSON_ACCEPT, to_char(DATE_ACCEPT,'yyyy-MM-dd HH:mm:ss') DATE_ACCEPT, YULAN_NOTES, to_char(WEB_TJ_TIME,'yyyy-MM-dd HH:mm:ss') WEB_TJ_TIME,
+    ORDER_NO, CUSTOMER_CODE, CUSTOMER_CODE2, CURRENCY_ID, NVL(LINKPERSON,' ') LINKPERSON , NVL(TELEPHONE,' ') TELEPHONE, STATUS_ID,
+    DELIVERY_TYPE, DELIVERY_NOTES, POST_ADDRESS, NVL(NOTES,' ') NOTES, to_char(DATE_CRE,'yyyy-MM-dd HH:mm:ss') DATE_CRE, OPERATOR, to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE,
+    PERSON_UPDATE, CONTRACT_NO, PERSON_ACCEPT, to_char(DATE_ACCEPT,'yyyy-MM-dd HH:mm:ss') DATE_ACCEPT, NVL(YULAN_NOTES,' ') YULAN_NOTES, to_char(WEB_TJ_TIME,'yyyy-MM-dd HH:mm:ss') WEB_TJ_TIME,
     DATE_DEAL, FLAG, USER_NO, PROJECT_NO, CUSTOMER_CODE_O2O, ORDER_FLAG, POST_ADDRESS_MODIFIED,
     DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
-    INVOICE_TITLE, WL_CONTACTS, WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
-    BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-MM-dd HH:mm:ss') OAO_TIME
+    INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
+    BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-MM-dd HH:mm:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND
   </sql>
     <sql id="Base_Column_List_B" >
-    ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, to_char(DATE_DELIVER,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER,
+    ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-MM-dd HH:mm:ss'),' ') DATE_DELIVER,
     to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE, NOTES, STATUS_ID, DISCOUNT, DISCOUNT_FLAG, CURTAIN_KS, CURTAIN_ROOM_NAME,
     CURTAIN_ROOM_ID, CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT, CURTAIN_HEIGHT2,
     CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
@@ -47,16 +47,22 @@
 
     <select id="getOrdersH" resultType="Map">
         select
-        <include refid="Base_Column_List_H" />
+         *
 
         from (
         select rownum rn,l.* from
-        (select * from CTM_ORDER t where t.customer_code=#{cid}
+        (select
+        <include refid="Base_Column_List_H" />
+
+        from CTM_ORDER t where t.customer_code=#{cid}
             <if test="state_id!=null">
                 and STATUS_ID=#{state_id}
             </if>
             <if test="find!=null">
                 and order_no like  '%'||#{find}||'%'
+            </if>
+            <if test="beginTime!=null">
+                and web_tj_time between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
             </if>
         order by t.WEB_TJ_TIME DESC
         ) l
@@ -70,7 +76,7 @@
         (select t.note,c.*  from
         (select
         <include refid="Base_Column_List_B" />,
-        i.product_type,i.product_brand from ctm_order_detail d ,item i
+        i.product_type,i.product_brand from item i, ctm_order_detail d
         where d.order_no=#{order_no} and d.item_no=i.item_no )c,item_type t
         where c.product_type=t.item_type)h,BRAND_TYPE b
         where h.product_brand=b.brand_id
@@ -99,6 +105,30 @@
             and order_no like  '%'||#{find}||'%'
         </if>
 
+    </select>
+
+    <select id="getOrderB_content" resultType="Map">
+        select b.brand_name,h.* from
+        (select t.note,c.*  from
+        (select
+        <include refid="Base_Column_List_B" />,
+        i.product_type,i.product_brand from item i, ctm_order_detail d
+        where d.order_no=#{order_no} and d.item_no=#{item_on} and d.item_no=i.item_no  )c,item_type t
+        where c.product_type=t.item_type)h,BRAND_TYPE b
+        where h.product_brand=b.brand_id
+
+    </select>
+
+    <select id="getPromotion" resultType="Sal_promotion">
+        select
+          CUSTOMER_CODE, CUSTOMER_TYPE, ORDER_TYPE,
+      ORDER_NAME, ITEM_NO, ITEM_VERSION,
+      PRODUCT_TYPE, PRODUCT_BRAND, TYPE,
+      DISCOUNT, PRICE, FALG_FL,
+      QTY_ORDER, QTY_USE, FLAG_XH,
+      FLAG_ZX, USE_ID,to_char(DATE_START,'yyyy-MM-dd') DATE_START,
+      to_char(DATE_END,'yyyy-MM-dd')DATE_END, GROUP_TYPE
+         from SAL_PROMOTION t where t.ORDER_TYPE=#{order_type}
     </select>
 
 </mapper>
