@@ -12,15 +12,39 @@
 
     <insert id="addCommodity" parameterType="Commodity">
         insert into COMMODITY
-        (ID, PRICE, ACTIVITY_ID, ACTIVITY_PRICE, ITEM_ID, CART_ITEM_ID, QUANTITY) VALUES
-        (#{id},#{price},#{activityId},#{activityPrice},#{item.itemNo},#{cartItemId},#{quantity})
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY) VALUES
+        (#{id},#{price},#{activityId},#{item.itemNo},#{cartItemId},#{quantity})
     </insert>
+
+    <delete id="deleteCommodityByID" parameterType="String">
+        delete from COMMODITY where ID = #{commodityID}
+    </delete>
+
+    <delete id="deleteCommoditiesByCartItemID" parameterType="String">
+        delete from COMMODITY where CART_ITEM_ID = #{cartItemID}
+    </delete>
 
     <select id="getCommodityByID" parameterType="String" resultMap="CommodityMap">
         select * from COMMODITY where ID = #{commodityID}
     </select>
 
+    <select id="getCommodityAppoint" parameterType="Map" resultType="Commodity">
+        select * from COMMODITY where ACTIVITY_ID = #{activityID} and ITEM_ID = #{itemID}
+        and CART_ITEM_ID = #{cartItemID}
+    </select>
+
+    <select id="countByCartItemID" parameterType="String" resultType="long">
+        select count(*) from COMMODITY where CART_ITEM_ID = #{cartItemID}
+    </select>
+
     <select id="getCommoditiesByCartItemID" parameterType="String" resultMap="CommodityMap">
         select * from COMMODITY where CART_ITEM_ID = #{cartItemID}
     </select>
+
+    <update id="updateCommodity" parameterType="Commodity">
+        update COMMODITY
+        set PRICE=#{price},ACTIVITY_ID = #{activityId},ITEM_ID = #{item.itemNo},
+        CART_ITEM_ID = #{cartItemId},QUANTITY = #{quantity}
+        where ID = #{id}
+    </update>
 </mapper>

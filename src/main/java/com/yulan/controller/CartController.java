@@ -77,13 +77,15 @@ public class CartController{
 		String CID = (String) parameters.get("CID");
 		String itemNO = (String) parameters.get("itemNO");
 		String commodityType = (String) parameters.get("commodityType");
-		String orderType = (String) parameters.get("orderType");
+		String activityID = (String) parameters.get("activityID");
+		if(activityID.equals(""))
+		    activityID = null;
 		String quantity = (String) parameters.get("quantity");
 		String price = (String) parameters.get("price");
 
 		Item item = itemService.getItemByItemNO(itemNO);
 		Cart cart = cartService.getSimpleCartByCID(CID);
-		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(orderType);
+		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
 		CartItem cartItem = cartItemService.getCartItemOrder(cart.getCartId(), commodityType,
 				salPromotion == null?null:salPromotion.getGroupType(),
 				item.getGroupType());
@@ -96,23 +98,63 @@ public class CartController{
 			if(!cartItemService.addCartItem(cartItem))
 				return Response.getResponseMap(1,"添加失败",null);
 		}
-		Commodity commodity = new Commodity();
-		commodity.setItem(item);
-		commodity.setQuantity(new BigInteger(quantity));
-		commodity.setCartItemId(cartItem.getCartItemId());
-		commodity.setActivityId(salPromotion == null?null:salPromotion.getOrderType());
-		switch (customer_type) {
-			case "02":commodity.setPrice(item.getPriceSale());break;
-			case "06":commodity.setPrice(item.getPriceFx());break;
-			case "09":commodity.setPrice(item.getPriceHome());break;
-			case "05":commodity.setPrice(item.getSalePrice());break;
-			case "10":commodity.setPrice(new BigDecimal(price));break;
-			default:return Response.getResponseMap(1,"添加失败",null);
+		Commodity commodity = commodityService.getCommodityAppoint(activityID,itemNO,cartItem.getCartItemId());
+		if(commodity == null) {
+            commodity = new Commodity();
+            commodity.setItem(item);
+            commodity.setQuantity(new BigInteger(quantity));
+            commodity.setCartItemId(cartItem.getCartItemId());
+            commodity.setActivityId(activityID);
+            switch (customer_type) {
+                case "02":commodity.setPrice(item.getPriceSale());break;
+                case "06":commodity.setPrice(item.getPriceFx());break;
+                case "09":commodity.setPrice(item.getPriceHome());break;
+                case "05":commodity.setPrice(item.getSalePrice());break;
+                case "10":commodity.setPrice(new BigDecimal(price));break;
+                default:return Response.getResponseMap(1,"添加失败",null);
+            }
+            if(!commodityService.addCommodity(commodity))
+                return Response.getResponseMap(1,"添加失败",null);
+            else
+                return Response.getResponseMap(0,"添加成功",null);
+        } else {
+		    commodity.setItem(item);
+		    BigInteger count = new BigInteger(quantity);
+		    count = count.add(commodity.getQuantity());
+		    commodity.setQuantity(count);
+		    if(!commodityService.updateCommodity(commodity))
+                return Response.getResponseMap(1,"添加失败",null);
+		    else
+                return Response.getResponseMap(0,"添加成功",null);
+        }
+	}
+
+	@ResponseBody@RequestMapping("deleteCartItems")
+	public Map deleteCartItems(@RequestBody List<String> cartItemIDs) {
+		int number = 0;
+		for (String cartItemID:cartItemIDs) {
+			commodityService.deleteCommoditiesByCartItemID(cartItemID);
+			cartItemService.deleteCartItemByID(cartItemID);
 		}
-		if(!commodityService.addCommodity(commodity))
-			return Response.getResponseMap(1,"添加失败",null);
-		else
-			return Response.getResponseMap(0,"添加成功",null);
+		return Response.getResponseMap(0,"",number);
+	}
+
+	@ResponseBody@RequestMapping("deleteCommodities")
+	public Map deleteCommodities(@RequestBody List<String> commodityIDs) {
+		if (commodityIDs == null||commodityIDs.size() == 0) {
+			return Response.getResponseMap(0,"",null);
+		} else {
+			Commodity commodity = commodityService.getCommodityByID(commodityIDs.get(0));
+			String cartItemID = commodity.getCartItemId();
+			for (String commodityID:commodityIDs) {
+				commodityService.deleteCommodityByID(commodityID);
+			}
+			long number = commodityService.countByCartItemID(cartItemID);
+			if(number == 0) {
+				cartItemService.deleteCartItemByID(cartItemID);
+			}
+			return Response.getResponseMap(0,"",null);
+		}
 	}
 
 }
