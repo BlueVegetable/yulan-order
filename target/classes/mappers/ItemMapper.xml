@@ -42,6 +42,7 @@
             <result column="PRO_TYPE" property="proType" jdbcType="VARCHAR" />
     </resultMap>
 
+
     <resultMap id="StockShowMap" type="com.yulan.pojo.StockShow">
         <id column="STOCK_NO" property="stockNo" jdbcType="VARCHAR" />
         <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
@@ -85,31 +86,109 @@
     </select>
 
      <select id="getMLInfo" resultMap="ItemMap">
-         select * from item t where t.product_type in ('ML' , 'MLP')
+         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.product_type in ('ML' , 'MLP')
+     </select>
+
+    <select id="getMLSingle" resultMap="ItemMap">
+          select b.* from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+          and b.product_type in ('ML' , 'MLP')
      </select>
 
     <select id="getXHBInfo" resultMap="ItemMap">
-        select * from item t where t.product_type in ('XHB')
+        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.product_type in ('XHB')
+    </select>
+
+    <select id="getXHBSingle" resultMap="ItemMap">
+       select b.* from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+          and b.product_type in ('XHB')
     </select>
 
     <select id="getPJBInfo" resultMap="ItemMap">
-        select * from item t where t.product_type in ('PJB')
+        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.product_type in ('PJB')
+    </select>
+
+    <select id="getPJBSingle" resultMap="ItemMap">
+        select b.* from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+          and b.product_type in ('PJB')
     </select>
 
     <select id="getBZInfo" resultMap="ItemMap">
-        select * from item t where t.product_type in ('BZ')
+        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.product_type in ('BZ')
+    </select>
+
+    <select id="getBZSingle" resultMap="ItemMap">
+        select b.* from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+          and b.product_type in ('BZ')
     </select>
 
     <select id="getGHInfo" resultMap="ItemMap">
-        select * from item t where t.product_type in ('GH')
+        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.product_type in ('GH')
+    </select>
+
+    <select id="getGHSingle" resultMap="ItemMap">
+        select b.* from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+          and b.product_type in ('GH')
     </select>
 
     <select id="getTCInfo" resultMap="ItemMap">
-        select * from item t where t.product_type in ('TC')
+        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.product_type in ('TC')
     </select>
 
+    <select id="getTCSingle" resultMap="ItemMap">
+        select b.* from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+          and b.product_type in ('TC')
+    </select>
+
+
     <select id="getOtherInfo" resultMap="ItemMap">
-        select * from item t where t.product_type in ('TU','DT')
+        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.product_type in ('TU','DT')
+    </select>
+
+    <select id="getOtherSingle" resultMap="ItemMap">
+         select b.* from v_customer_brand a,item b
+          where a.brand = b.product_brand
+          and a.customer_code = #{cid}
+          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+          and b.product_type in ('TU','DT')
     </select>
 
     <select id="getUnit" resultType="String">

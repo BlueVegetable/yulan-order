@@ -99,4 +99,22 @@ public class Ctm_orderController {
 
         return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getResidemoney(cid));
     }
+
+    /**
+     * 修改订单状态接口
+     * @param data
+     * @return
+     */
+    @RequestMapping("updateOrderStatus")
+    @ResponseBody
+    public Map updateOrderStatus(@RequestBody Map<String,Object> data){
+        String orderNo = (String)data.get("orderNo");
+        String customerCode = (String)data.get("customerCode");
+        String statusId = (String)data.get("statusId");
+        if(ctm_orderService.updateOrderStatus(orderNo, customerCode, statusId)){
+            return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.updateOrderStatus(orderNo, customerCode, statusId));
+        }else{
+            return response.getResponseMap(1,"Failed" ,ctm_orderService.updateOrderStatus(orderNo, customerCode, statusId));
+        }
+    }
 }
