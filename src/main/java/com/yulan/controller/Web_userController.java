@@ -1,5 +1,6 @@
 package com.yulan.controller;
 
+import com.yulan.service.CustomerTypeService;
 import com.yulan.service.Web_userService;
 import com.yulan.utils.Response;
 import com.yulan.utils.TimeUtil;
@@ -21,6 +22,8 @@ public class Web_userController {
     private Map<String, HttpSession> sessions = new HashMap<String,HttpSession>();
     @Autowired
     private Web_userService web_userService;
+    @Autowired
+    private CustomerTypeService customerTypeService;
 
     @RequestMapping("login")
     @ResponseBody
@@ -49,6 +52,7 @@ public class Web_userController {
             /*session.setAttribute("token",token);
             sessions.put(token,session);*/
 //            map.put("token", token );
+            map.put("customerType",customerTypeService.getCustomerTypeByCID((String) m.get("loginName")).getCustomerTypeId());
             map.put("logintime", TimeUtil.getTime());
             return map;
         }
