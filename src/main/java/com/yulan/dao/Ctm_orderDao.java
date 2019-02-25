@@ -60,4 +60,15 @@ public interface Ctm_orderDao {
      * @return
      */
     boolean insertOrderB(Ctm_order_detail ctm_order_detail);
+
+    /**
+     * 修改订单状态
+     * @param orderNo
+     * @param customerCode
+     * @param statusId
+     * @return
+     */
+    boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,
+                              @Param("CUSTOMER_CODE")String customerCode,
+                              @Param("STATUS_ID")String statusId);
 }

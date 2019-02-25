@@ -97,4 +97,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     public BigDecimal getResidemoney(String cid) {
         return ctm_orderDao.getResidemoney(cid);
     }
+
+    @Override
+    public boolean updateOrderStatus(String orderNo, String customerCode,
+                                     String statusId) {
+        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId);
+    }
 }

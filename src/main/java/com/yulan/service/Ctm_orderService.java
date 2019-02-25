@@ -18,6 +18,8 @@ public interface Ctm_orderService {
    //获取用户余额
    BigDecimal getResidemoney(String cid);
 
+   boolean updateOrderStatus(String orderNo, String customerCode, String statusId);
+
    //订单结算
 //   Map
 }
