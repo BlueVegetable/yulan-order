@@ -3,6 +3,7 @@ import com.yulan.dao.CartItemDao;
 import com.yulan.dao.CommodityDao;
 import com.yulan.dao.ItemDao;
 import com.yulan.service.ItemService;
+import com.yulan.service.SalPromotionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class ItemTest {
     private CartDao cartDao;
     @Autowired
     private CommodityDao commodityDao;
+    @Autowired
+    private SalPromotionService salPromotionService;
     @Test
     public void test()throws Exception{
 //        System.out.println(cartDao.getCartByCID("C01613"));
@@ -47,6 +50,8 @@ public class ItemTest {
 //        cartItem.setCommodityType("curtain");
 //        cartItem.setProductGroupType("B");
 //        cartItemDao.addCartItem(cartItem);
-        System.out.println(commodityDao.countByCartItemID("15510235013637c76aeed09ea451ca293ee4dc3d997f0"));
+//        System.out.println(commodityDao.countByCartItemID("15510235013637c76aeed09ea451ca293ee4dc3d997f0"));
+        Object o = salPromotionService.selectSalPromotion("C01613","02","DNEF439501","V0361");
+        System.out.println(o);
     }
 }
