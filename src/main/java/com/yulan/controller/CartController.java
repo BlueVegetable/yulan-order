@@ -72,7 +72,7 @@ public class CartController{
 	}
 
 	@ResponseBody@RequestMapping("addCartItem")
-	public Map addCartItem(@RequestBody Map<String,Object> parameters) {
+	public Map addCartItem(@RequestBody Map<String,Object> parameters) throws Exception {
 		String customer_type = (String) parameters.get("customer_type");
 		String CID = (String) parameters.get("CID");
 		String itemNO = (String) parameters.get("itemNO");
@@ -84,7 +84,7 @@ public class CartController{
 		String price = (String) parameters.get("price");
 
 		Item item = itemService.getItemByItemNO(itemNO);
-		Cart cart = cartService.getSimpleCartByCID(CID);
+		Cart cart = getSimpleCartByCID(CID);
 		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
 		CartItem cartItem = cartItemService.getCartItemOrder(cart.getCartId(), commodityType,
 				salPromotion == null?null:salPromotion.getGroupType(),
