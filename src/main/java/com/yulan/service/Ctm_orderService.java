@@ -21,4 +21,7 @@ public interface Ctm_orderService {
 
    //订单结算
    Map orderCount(Map<String,Object> map) throws InvocationTargetException, IllegalAccessException;
+
+   //查看物流
+   Map getPack(Map<String,Object> m) throws UnsupportedEncodingException;
 }

@@ -1,13 +1,12 @@
-import com.yulan.dao.CartDao;
-import com.yulan.dao.CartItemDao;
-import com.yulan.dao.CommodityDao;
-import com.yulan.dao.ItemDao;
+import com.yulan.dao.*;
 import com.yulan.service.ItemService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.math.BigDecimal;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -22,6 +21,8 @@ public class ItemTest {
     private CartDao cartDao;
     @Autowired
     private CommodityDao commodityDao;
+    @Autowired
+    private Ctm_orderDao ctm_orderDao;
     @Test
     public void test()throws Exception{
 //        System.out.println(cartDao.getCartByCID("C01613"));
@@ -47,6 +48,7 @@ public class ItemTest {
 //        cartItem.setCommodityType("curtain");
 //        cartItem.setProductGroupType("B");
 //        cartItemDao.addCartItem(cartItem);
-        System.out.println(commodityDao.countByCartItemID("15510235013637c76aeed09ea451ca293ee4dc3d997f0"));
+        BigDecimal residemoney=ctm_orderDao.getResideMoney("C10110");
+        System.out.println(residemoney);
     }
 }
