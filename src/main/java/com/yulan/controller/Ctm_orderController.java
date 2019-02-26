@@ -76,6 +76,15 @@ public class Ctm_orderController {
     }
 
     /**
+     * 获取提货单详情
+     */
+    @RequestMapping("getPack")
+    @ResponseBody
+    public Map getPack(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
+        return  ctm_orderService.getPack(m);
+    }
+
+    /**
      * 获取活动价
      */
     @RequestMapping("getPromotion")
@@ -127,4 +136,7 @@ public class Ctm_orderController {
     public Map orderCount(@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
         return  ctm_orderService.orderCount(m);
     }
+
+
+
 }

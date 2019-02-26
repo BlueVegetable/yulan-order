@@ -61,6 +61,106 @@ public class Ctm_order_detail  {
     private java.util.Date dateDeliverFh;
 
     private BigDecimal unitPrice;
+    private BigDecimal promotionCost;
+
+    private String promotion;
+
+    public String getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
+    }
+
+    public Ctm_order_detail(String itemNo, String itemNoSample, String productionVersion, BigDecimal qtyRequired, java.util.Date dateDeliver, java.util.Date dateUpdate, String notes, String statusId, BigDecimal discount, String discountFlag, String curtainKs, String curtainRoomName, Short curtainRoomId, Short curtainRoomLineno, BigDecimal curtainWidth, BigDecimal curtainHeight, BigDecimal curtainHeight2, String curtainItemMenuNotes, String curtainMenuGroupId, BigDecimal curtainSizeTimes, BigDecimal curtainSizeTimes2, Short mlNonStandard, BigDecimal curtainWbhSize, String transType, String transId, java.util.Date dateDeliverKf, java.util.Date dateDeliverNb, java.util.Date dateDeliverFh, BigDecimal unitPrice, BigDecimal promotionCost, String promotion, BigDecimal promotionCost1) {
+        this.itemNo = itemNo;
+        this.itemNoSample = itemNoSample;
+        this.productionVersion = productionVersion;
+        this.qtyRequired = qtyRequired;
+        this.dateDeliver = dateDeliver;
+        this.dateUpdate = dateUpdate;
+        this.notes = notes;
+        this.statusId = statusId;
+        this.discount = discount;
+        this.discountFlag = discountFlag;
+        this.curtainKs = curtainKs;
+        this.curtainRoomName = curtainRoomName;
+        this.curtainRoomId = curtainRoomId;
+        this.curtainRoomLineno = curtainRoomLineno;
+        this.curtainWidth = curtainWidth;
+        this.curtainHeight = curtainHeight;
+        this.curtainHeight2 = curtainHeight2;
+        this.curtainItemMenuNotes = curtainItemMenuNotes;
+        this.curtainMenuGroupId = curtainMenuGroupId;
+        this.curtainSizeTimes = curtainSizeTimes;
+        this.curtainSizeTimes2 = curtainSizeTimes2;
+        this.mlNonStandard = mlNonStandard;
+        this.curtainWbhSize = curtainWbhSize;
+        this.transType = transType;
+        this.transId = transId;
+        this.dateDeliverKf = dateDeliverKf;
+        this.dateDeliverNb = dateDeliverNb;
+        this.dateDeliverFh = dateDeliverFh;
+        this.unitPrice = unitPrice;
+        this.promotionCost = promotionCost;
+        this.promotion = promotion;
+        this.promotionCost = promotionCost1;
+    }
+
+    public Ctm_order_detail() {
+    }
+
+    public void setDateDeliverFh(java.util.Date dateDeliverFh) {
+        this.dateDeliverFh = dateDeliverFh;
+    }
+
+    public BigDecimal getPromotionCost() {
+        return promotionCost;
+    }
+
+    public void setPromotionCost(BigDecimal promotionCost) {
+        this.promotionCost = promotionCost;
+    }
+
+
+
+    public Ctm_order_detail(String itemNo, String itemNoSample, String productionVersion, BigDecimal qtyRequired, java.util.Date dateDeliver, java.util.Date dateUpdate, String notes, String statusId, BigDecimal discount, String discountFlag, String curtainKs, String curtainRoomName, Short curtainRoomId, Short curtainRoomLineno, BigDecimal curtainWidth, BigDecimal curtainHeight, BigDecimal curtainHeight2, String curtainItemMenuNotes, String curtainMenuGroupId, BigDecimal curtainSizeTimes, BigDecimal curtainSizeTimes2, Short mlNonStandard, BigDecimal curtainWbhSize, String transType, String transId, java.util.Date dateDeliverKf, java.util.Date dateDeliverNb, java.util.Date dateDeliverFh, BigDecimal unitPrice, BigDecimal promotionCost) {
+        this.itemNo = itemNo;
+        this.itemNoSample = itemNoSample;
+        this.productionVersion = productionVersion;
+        this.qtyRequired = qtyRequired;
+        this.dateDeliver = dateDeliver;
+        this.dateUpdate = dateUpdate;
+        this.notes = notes;
+        this.statusId = statusId;
+        this.discount = discount;
+        this.discountFlag = discountFlag;
+        this.curtainKs = curtainKs;
+        this.curtainRoomName = curtainRoomName;
+        this.curtainRoomId = curtainRoomId;
+        this.curtainRoomLineno = curtainRoomLineno;
+        this.curtainWidth = curtainWidth;
+        this.curtainHeight = curtainHeight;
+        this.curtainHeight2 = curtainHeight2;
+        this.curtainItemMenuNotes = curtainItemMenuNotes;
+        this.curtainMenuGroupId = curtainMenuGroupId;
+        this.curtainSizeTimes = curtainSizeTimes;
+        this.curtainSizeTimes2 = curtainSizeTimes2;
+        this.mlNonStandard = mlNonStandard;
+        this.curtainWbhSize = curtainWbhSize;
+        this.transType = transType;
+        this.transId = transId;
+        this.dateDeliverKf = dateDeliverKf;
+        this.dateDeliverNb = dateDeliverNb;
+        this.dateDeliverFh = dateDeliverFh;
+        this.unitPrice = unitPrice;
+        this.promotionCost = promotionCost;
+    }
+
+    public Ctm_order_detail(BigDecimal promotionCost) {
+        this.promotionCost = promotionCost;
+    }
 
     public String getItemNo() {
         return itemNo;
