@@ -141,4 +141,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         return m;
     }
+
+    @Override
+    public boolean updateOrderStatus(String orderNo, String customerCode,
+                                     String statusId) {
+        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId);
+    }
 }

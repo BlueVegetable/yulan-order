@@ -199,11 +199,14 @@
       )
   </insert>
 
-    <!--<update id="updateOrderStatus" parameterType="map">
+    <update id="updateOrderStatus" parameterType="map">
         update CTM_ORDER t
         <set>
-
+            <if test="STATUS_ID != null">
+            STATUS_ID = #{STATUS_ID,jdbcType=VARCHAR}
+            </if>
         </set>
-    </update>-->
+        where ORDER_NO = #{ORDER_NO} and CUSTOMER_CODE = #{CUSTOMER_CODE}
+    </update>
 
 </mapper>
