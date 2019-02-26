@@ -1,6 +1,7 @@
 package com.yulan.service;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -21,5 +22,8 @@ public interface Ctm_orderService {
    boolean updateOrderStatus(String orderNo, String customerCode, String statusId);
 
    //订单结算
-//   Map
+   Map orderCount(Map<String,Object> map) throws InvocationTargetException, IllegalAccessException;
+
+   //查看物流
+   Map getPack(Map<String,Object> m) throws UnsupportedEncodingException;
 }

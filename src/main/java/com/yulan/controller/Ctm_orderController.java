@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +76,15 @@ public class Ctm_orderController {
     }
 
     /**
+     * 获取提货单详情
+     */
+    @RequestMapping("getPack")
+    @ResponseBody
+    public Map getPack(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
+        return  ctm_orderService.getPack(m);
+    }
+
+    /**
      * 获取活动价
      */
     @RequestMapping("getPromotion")
@@ -117,4 +127,16 @@ public class Ctm_orderController {
             return response.getResponseMap(1,"Failed" ,ctm_orderService.updateOrderStatus(orderNo, customerCode, statusId));
         }
     }
+
+    /**
+     * 订单结算
+     */
+    @RequestMapping("orderCount")
+    @ResponseBody
+    public Map orderCount(@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
+        return  ctm_orderService.orderCount(m);
+    }
+
+
+
 }

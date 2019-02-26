@@ -28,6 +28,13 @@ public interface Ctm_orderDao {
                                         @Param("finishTime") String finishTime );
     //获取订单具体内容
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
+
+    //获取订单提货单号及其订单运输详情
+    List<Map<String,Object>> getPackDetail(@Param("cid")String cid,@Param("order_no")String order_no,@Param("item_no") String item_no);
+
+    //获取订单型号数量
+    BigDecimal getNum(@Param("order_no")String order_no,@Param("item_no")String item_no);
+
     Integer countOrdersH(@Param("cid")String cid,@Param("state_id")String state_id,
                         @Param("find")String find,@Param("beginTime") String beginTime,
                          @Param("finishTime") String finishTime);
@@ -45,7 +52,7 @@ public interface Ctm_orderDao {
     /**
      * 获取客户余额
      */
-    BigDecimal getResidemoney(@Param("cid") String cid);
+    BigDecimal getResideMoney(@Param("cid") String cid);
 
     /**
      * 新增订单头
