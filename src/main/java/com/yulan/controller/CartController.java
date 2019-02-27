@@ -29,6 +29,10 @@ public class CartController{
 	private CommodityService commodityService;
 	@Autowired
 	private SalPromotionService salPromotionService;
+	@Autowired
+	private ActivityGroupTypeService activityGroupTypeService;
+	@Autowired
+	private ProductGroupTypeService productGroupTypeService;
 
 	private final static String WALLPAPER = "wallpaper";
 	private final static String SOFT = "soft";
@@ -175,8 +179,33 @@ public class CartController{
 		String quantityString = parameters.get("quantity");
 		String widthString = parameters.get("width");
 		String heightString = parameters.get("height");
+		String note = parameters.get("note");
 		Commodity commodity = commodityService.getCommodityByID(commodityID);
 		CartItem cartItem = cartItemService.getCartItemByID(commodity.getCartItemId());
+		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
+		CartItem cartItemNew = cartItemService.getCartItemOrder(cartItem.getCartId(),
+				cartItem.getCommodityType(),salPromotion.getGroupType(),commodity.getItem().getGroupType());
+		if(cartItemNew == null) {
+			cartItemNew = new CartItem();
+			cartItemNew.setCartId(cartItem.getCartId());
+			cartItemNew.setActivityGroupType(salPromotion.getGroupType());
+			cartItemNew.setProductGroupType(commodity.getItem().getGroupType());
+			cartItemNew.setCommodityType(cartItem.getCommodityType());
+			cartItemService.addCartItem(cartItemNew);
+		}
+		if(quantityString!=null&&!quantityString.equals("")) {
+			commodity.setQuantity(new BigInteger(quantityString));
+		} else {
+			commodity.setHeight(new BigInteger(heightString));
+			commodity.setWidth(new BigInteger(widthString));
+		}
+		commodity.setCartItemId(cartItemNew.getCartItemId());
+		if(note==null||note.equals("")) {
+			commodity.setNote(null);
+		} else {
+			commodity.setNote(note);
+		}
+		commodityService.updateCommodity(commodity);
 		return Response.getResponseMap(0,"",null);
 	}
 

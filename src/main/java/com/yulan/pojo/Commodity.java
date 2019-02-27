@@ -15,6 +15,7 @@ public class Commodity {
 	private BigInteger quantity;
 	private BigInteger width;
 	private BigInteger height;
+	private String note;
 
 	public String getId() {
 		return this.id;
@@ -86,6 +87,14 @@ public class Commodity {
 
 	public void setHeight(BigInteger height) {
 		this.height = height;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	@Override

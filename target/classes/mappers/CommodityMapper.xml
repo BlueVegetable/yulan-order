@@ -12,8 +12,8 @@
 
     <insert id="addCommodity" parameterType="Commodity">
         insert into COMMODITY
-        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY) VALUES
-        (#{id},#{price},#{activityId},#{item.itemNo},#{cartItemId},#{quantity})
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE) VALUES
+        (#{id},#{price},#{activityId},#{item.itemNo},#{cartItemId},#{quantity},#{width},#{height},#{note})
     </insert>
 
     <delete id="deleteCommodityByID" parameterType="String">

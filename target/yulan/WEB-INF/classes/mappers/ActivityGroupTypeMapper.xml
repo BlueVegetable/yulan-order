@@ -13,6 +13,10 @@
         (#{id},#{name},#{value})
     </insert>
 
+    <select id="getActivityGroupTypeByID" parameterType="String" resultType="ActivityGroupType">
+        select * from ACTIVITY_GROUP_TYPE where NAME = #{activityGroupTypeID}
+    </select>
+
     <select id="getActivityGroupTypeByName" parameterType="String" resultType="ActivityGroupType">
         select * from ACTIVITY_GROUP_TYPE where NAME = #{name}
     </select>

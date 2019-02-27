@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.ProductGroupTypeDao">
+    <resultMap id="ProductGroupTypeMap" type="ProductGroupType" >
+        <id column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="VALUE" property="value" />
+    </resultMap>
+
+    <insert id="addProductGroupType" parameterType="ProductGroupType">
+        insert into PRODUCT_GROUP_TYPE
+        values
+        (#{id},#{name},#{value})
+    </insert>
+
+    <select id="getProductGroupTypeByID" parameterType="String" resultType="ProductGroupType">
+        select * from PRODUCT_GROUP_TYPE where id = #{productGroupTypeID}
+    </select>
+
+    <select id="getProductGroupTypeByName" parameterType="String" resultType="ProductGroupType">
+        select * from PRODUCT_GROUP_TYPE where NAME = #{name}
+    </select>
+
+</mapper>
