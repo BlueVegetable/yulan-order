@@ -133,7 +133,7 @@ public class Ctm_orderController {
      */
     @RequestMapping("orderCount")
     @ResponseBody
-    public Map orderCount(@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
+    public Map orderCount(@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
         return  ctm_orderService.orderCount(m);
     }
 
