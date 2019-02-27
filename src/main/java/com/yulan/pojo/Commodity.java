@@ -13,6 +13,8 @@ public class Commodity {
 	private Item item;
 	private String cartItemId;
 	private BigInteger quantity;
+	private BigInteger width;
+	private BigInteger height;
 
 	public String getId() {
 		return this.id;
@@ -70,6 +72,22 @@ public class Commodity {
 		this.quantity = quantity;
 	}
 
+	public BigInteger getWidth() {
+		return width;
+	}
+
+	public void setWidth(BigInteger width) {
+		this.width = width;
+	}
+
+	public BigInteger getHeight() {
+		return height;
+	}
+
+	public void setHeight(BigInteger height) {
+		this.height = height;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -80,23 +98,29 @@ public class Commodity {
 				Objects.equals(getActivityId(), commodity.getActivityId()) &&
 				Objects.equals(getActivityPrice(), commodity.getActivityPrice()) &&
 				Objects.equals(getItem(), commodity.getItem()) &&
-				Objects.equals(getCartItemId(), commodity.getCartItemId());
+				Objects.equals(getCartItemId(), commodity.getCartItemId()) &&
+				Objects.equals(getQuantity(), commodity.getQuantity()) &&
+				Objects.equals(getWidth(), commodity.getWidth()) &&
+				Objects.equals(getHeight(), commodity.getHeight());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getPrice(), getActivityId(), getActivityPrice(), getItem(), getCartItemId());
+		return Objects.hash(getId(), getPrice(), getActivityId(), getActivityPrice(), getItem(), getCartItemId(), getQuantity(), getWidth(), getHeight());
 	}
 
 	@Override
 	public String toString() {
 		return "Commodity{" +
 				"id='" + id + '\'' +
-				", price='" + price + '\'' +
+				", price=" + price +
 				", activityId='" + activityId + '\'' +
-				", activityPrice='" + activityPrice + '\'' +
+				", activityPrice=" + activityPrice +
 				", item=" + item +
 				", cartItemId='" + cartItemId + '\'' +
+				", quantity=" + quantity +
+				", width=" + width +
+				", height=" + height +
 				'}';
 	}
 }
