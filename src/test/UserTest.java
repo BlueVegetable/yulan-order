@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -23,11 +23,8 @@ public class UserTest {
 //            System.out.println(formatter.format(m.get("WEB_TJ_TIME")));
 //        }
 ////       System.out.println(ctm_orderDao.countOrders("C10110",null,null));
-        java.util.Date utilDate=new Date();
-        java.sql.Date sqlDate=new java.sql.Date(utilDate.getTime());
-
-        java.sql.Time sTime=new java.sql.Time(utilDate.getTime());
-        java.sql.Timestamp stp=new java.sql.Timestamp(utilDate.getTime());
+        Map<String,Object> map=ctm_orderDao.getlinkpersonandTel("C01613");
+        System.out.println(map.get("CUSTOMER_AGENT")+":"+map.get("OFFICE_TEL"));
 
 
 

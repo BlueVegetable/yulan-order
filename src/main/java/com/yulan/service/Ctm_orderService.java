@@ -22,7 +22,7 @@ public interface Ctm_orderService {
    boolean updateOrderStatus(String orderNo, String customerCode, String statusId);
 
    //订单结算
-   Map orderCount(Map<String,Object> map) throws InvocationTargetException, IllegalAccessException;
+   Map orderCount(Map<String,Object> map) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException;
 
    //查看物流
    Map getPack(Map<String,Object> m) throws UnsupportedEncodingException;

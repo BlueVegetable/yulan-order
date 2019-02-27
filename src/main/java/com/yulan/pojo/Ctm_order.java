@@ -1,6 +1,8 @@
 package com.yulan.pojo;
 
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Ctm_order {
     private String orderNo;
@@ -25,11 +27,11 @@ public class Ctm_order {
 
     private String notes;
 
-    private Date dateCre;
+    private Timestamp dateCre;
 
     private String operator;
 
-    private Date dateUpdate;
+    private Timestamp dateUpdate;
 
     private String personUpdate;
 
@@ -41,7 +43,7 @@ public class Ctm_order {
 
     private String yulanNotes;
 
-    private Date webTjTime;
+    private Timestamp webTjTime;
 
     private Date dateDeal;
 
@@ -94,6 +96,24 @@ public class Ctm_order {
     private String oaoPerson;
 
     private Date oaoTime;
+    private BigDecimal allSpend;
+
+    public BigDecimal getAllSpend() {
+        return allSpend;
+    }
+
+    public void setAllSpend(BigDecimal allSpend) {
+        this.allSpend = allSpend;
+    }
+
+
+    public Ctm_order(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public Ctm_order() {
+    }
+
 
     public String getOrderNo() {
         return orderNo;
@@ -113,6 +133,56 @@ public class Ctm_order {
 
     public String getCustomerCode2() {
         return customerCode2;
+    }
+
+    public Ctm_order(String orderNo, String customerCode, String customerCode2, String currencyId, String linkperson, String telephone, String statusId, String deliveryType, String deliveryNotes, String postAddress, String notes, Timestamp dateCre, String operator, Timestamp dateUpdate, String personUpdate, String contractNo, String personAccept, Date dateAccept, String yulanNotes, Timestamp webTjTime, Date dateDeal, String flag, String userNo, String projectNo, String customerCodeO2o, String orderFlag, Short postAddressModified, String dsLinkman, String dsTel, String dsUserName, String dsOrderNo, String isDsOrder, String erpProcessNote, String invoiceFlag, String invoiceTitle, String wlContacts, String wlTel, String reciverArea1, String reciverArea2, String reciverArea3, String billTypeX, String deliveryFlag, String oaoFlag, String oaoStatus, String oaoPerson, Date oaoTime, BigDecimal allSpend) {
+        this.orderNo = orderNo;
+        this.customerCode = customerCode;
+        this.customerCode2 = customerCode2;
+        this.currencyId = currencyId;
+        this.linkperson = linkperson;
+        this.telephone = telephone;
+        this.statusId = statusId;
+        this.deliveryType = deliveryType;
+        this.deliveryNotes = deliveryNotes;
+        this.postAddress = postAddress;
+        this.notes = notes;
+        this.dateCre = dateCre;
+        this.operator = operator;
+        this.dateUpdate = dateUpdate;
+        this.personUpdate = personUpdate;
+        this.contractNo = contractNo;
+        this.personAccept = personAccept;
+        this.dateAccept = dateAccept;
+        this.yulanNotes = yulanNotes;
+        this.webTjTime = webTjTime;
+        this.dateDeal = dateDeal;
+        this.flag = flag;
+        this.userNo = userNo;
+        this.projectNo = projectNo;
+        this.customerCodeO2o = customerCodeO2o;
+        this.orderFlag = orderFlag;
+        this.postAddressModified = postAddressModified;
+        this.dsLinkman = dsLinkman;
+        this.dsTel = dsTel;
+        this.dsUserName = dsUserName;
+        this.dsOrderNo = dsOrderNo;
+        this.isDsOrder = isDsOrder;
+        this.erpProcessNote = erpProcessNote;
+        this.invoiceFlag = invoiceFlag;
+        this.invoiceTitle = invoiceTitle;
+        this.wlContacts = wlContacts;
+        this.wlTel = wlTel;
+        this.reciverArea1 = reciverArea1;
+        this.reciverArea2 = reciverArea2;
+        this.reciverArea3 = reciverArea3;
+        this.billTypeX = billTypeX;
+        this.deliveryFlag = deliveryFlag;
+        this.oaoFlag = oaoFlag;
+        this.oaoStatus = oaoStatus;
+        this.oaoPerson = oaoPerson;
+        this.oaoTime = oaoTime;
+        this.allSpend = allSpend;
     }
 
     public void setCustomerCode2(String customerCode2) {
@@ -183,11 +253,11 @@ public class Ctm_order {
         this.notes = notes == null ? null : notes.trim();
     }
 
-    public Date getDateCre() {
+    public Timestamp getDateCre() {
         return dateCre;
     }
 
-    public void setDateCre(Date dateCre) {
+    public void setDateCre(Timestamp dateCre) {
         this.dateCre = dateCre;
     }
 
@@ -199,11 +269,11 @@ public class Ctm_order {
         this.operator = operator == null ? null : operator.trim();
     }
 
-    public Date getDateUpdate() {
+    public Timestamp getDateUpdate() {
         return dateUpdate;
     }
 
-    public void setDateUpdate(Date dateUpdate) {
+    public void setDateUpdate(Timestamp dateUpdate) {
         this.dateUpdate = dateUpdate;
     }
 
@@ -247,11 +317,11 @@ public class Ctm_order {
         this.yulanNotes = yulanNotes == null ? null : yulanNotes.trim();
     }
 
-    public Date getWebTjTime() {
+    public Timestamp getWebTjTime() {
         return webTjTime;
     }
 
-    public void setWebTjTime(Date webTjTime) {
+    public void setWebTjTime(Timestamp webTjTime) {
         this.webTjTime = webTjTime;
     }
 

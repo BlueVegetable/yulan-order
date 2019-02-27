@@ -13,7 +13,7 @@
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-MM-dd HH:mm:ss'),' ') DATE_DELIVER,
-    to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE, NOTES, STATUS_ID, DISCOUNT, DISCOUNT_FLAG, CURTAIN_KS, CURTAIN_ROOM_NAME,
+    to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE, NVL(NOTES,' ') NOTES, STATUS_ID, DISCOUNT, DISCOUNT_FLAG, CURTAIN_KS, CURTAIN_ROOM_NAME,
     CURTAIN_ROOM_ID, CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT, CURTAIN_HEIGHT2,
     CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
     ML_NON_STANDARD, CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,to_char(DATE_DELIVER_KF,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_KF,to_char(DATE_DELIVER_NB,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_NB,
@@ -106,7 +106,7 @@
             and order_no like  '%'||#{find}||'%'
         </if>
         <if test="beginTime!=null">
-            and web_tj_time between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
+            and date_cre between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
         </if>
 
     </select>
@@ -221,5 +221,21 @@
         </set>
         where ORDER_NO = #{ORDER_NO} and CUSTOMER_CODE = #{CUSTOMER_CODE}
     </update>
+
+    <select id="getType_word" resultType="String">
+        select 'Y'
+            from item a,item_type b
+            where a.product_type = b.item_type
+            and b.pro_type in ('qiang','support','other')
+            and a.item_no = #{item_no}
+    </select>
+
+    <select id="getBigNum" resultType="String">
+        SELECT order_no FROM  CTM_ORDER t  WHERE t.date_cre = (SELECT MAX(date_cre) FROM  (SELECT * FROM  CTM_ORDER t  WHERE t.order_no like '%'||#{s}||'%'))
+    </select>
+
+    <select id="getlinkpersonandTel" resultType="Map">
+        select t.customer_agent,t.office_tel from CUSTOMER t where t.customer_code=#{cid}
+    </select>
 
 </mapper>
