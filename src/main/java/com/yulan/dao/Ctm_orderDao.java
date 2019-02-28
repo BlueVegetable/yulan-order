@@ -69,6 +69,13 @@ public interface Ctm_orderDao {
     boolean insertOrderB(Ctm_order_detail ctm_order_detail);
 
     /**
+     * 获取订单头部字母
+     * @param item_no
+     * @return
+     */
+    String getType_word(@Param("item_no")String item_no);//Y则是订单W
+
+    /**
      * 修改订单状态
      * @param orderNo
      * @param customerCode
@@ -78,4 +85,18 @@ public interface Ctm_orderDao {
     boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,
                               @Param("CUSTOMER_CODE")String customerCode,
                               @Param("STATUS_ID")String statusId);
+
+    /**
+     * 获取最大订单号自增
+     * @param s
+     * @return
+     */
+    String getBigNum(@Param("s")String s);
+
+    /**
+     * 获取订单头经办人和电话
+     * @param cid
+     * @return
+     */
+    Map<String,Object> getlinkpersonandTel(@Param("cid") String cid );
 }
