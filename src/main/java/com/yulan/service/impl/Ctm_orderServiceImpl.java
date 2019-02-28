@@ -225,6 +225,16 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
+    public Map getlinkpersonandTel(String cid) throws UnsupportedEncodingException {
+        Map<String ,Object> map=ctm_orderDao.getlinkpersonandTel(cid);
+        String CUSTOMER_AGENT=StringUtil.getUtf8(map.get("CUSTOMER_AGENT").toString());
+        Object c=CUSTOMER_AGENT;
+        map.put("CUSTOMER_AGENT",CUSTOMER_AGENT);
+
+        return map;
+    }
+
+    @Override
     public boolean updateOrderStatus(String orderNo, String customerCode,
                                      String statusId) {
         return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId);

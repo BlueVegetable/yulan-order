@@ -137,6 +137,13 @@ public class Ctm_orderController {
         return  ctm_orderService.orderCount(m);
     }
 
+    @RequestMapping("getlink")
+    @ResponseBody
+    public Map getlinkpersonandTel (@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
+        String cid= m.get("cid").toString();
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getlinkpersonandTel(cid));
+    }
+
 
 
 }
