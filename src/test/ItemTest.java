@@ -1,5 +1,5 @@
-import com.yulan.dao.ActivityGroupTypeDao;
-import com.yulan.pojo.ActivityGroupType;
+import com.yulan.dao.ProductGroupTypeDao;
+import com.yulan.pojo.ProductGroupType;
 import com.yulan.utils.StringUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,13 +11,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class ItemTest {
     @Autowired
-    private ActivityGroupTypeDao activityGroupTypeDao;
+    private ProductGroupTypeDao productGroupTypeDao;
     @Test
     public void test()throws Exception{
-        ActivityGroupType activityGroupType = new ActivityGroupType();
-        activityGroupType.setId(StringUtil.createStringID());
-        activityGroupType.setName("D");
-        activityGroupType.setValue(StringUtil.setUtf8("促销品计划"));
-        activityGroupTypeDao.addActivityGroupType(activityGroupType);
+        ProductGroupType productGroupType = new ProductGroupType();
+        productGroupType.setId(StringUtil.createStringID());
+        productGroupType.setName("F");
+        productGroupType.setValue(StringUtil.setUtf8("非窗帘类的软装"));
+        productGroupTypeDao.addProductGroupType(productGroupType);
     }
 }

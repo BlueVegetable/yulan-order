@@ -13,7 +13,8 @@
     <insert id="addCommodity" parameterType="Commodity">
         insert into COMMODITY
         (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE) VALUES
-        (#{id},#{price},#{activityId},#{item.itemNo},#{cartItemId},#{quantity},#{width},#{height},#{note})
+        (#{id},#{price},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{cartItemId},#{quantity,jdbcType=NUMERIC},
+        #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR})
     </insert>
 
     <delete id="deleteCommodityByID" parameterType="String">
@@ -29,8 +30,8 @@
     </select>
 
     <select id="getCommodityAppoint" parameterType="Map" resultType="Commodity">
-        select * from COMMODITY where ACTIVITY_ID = #{activityID} and ITEM_ID = #{itemID}
-        and CART_ITEM_ID = #{cartItemID}
+        select * from COMMODITY where ACTIVITY_ID = #{activityID,jdbcType=VARCHAR} and ITEM_ID = #{itemID,jdbcType=VARCHAR}
+        and CART_ITEM_ID = #{cartItemID,jdbcType=VARCHAR}
     </select>
 
     <select id="countByCartItemID" parameterType="String" resultType="long">
@@ -43,8 +44,9 @@
 
     <update id="updateCommodity" parameterType="Commodity">
         update COMMODITY
-        set PRICE=#{price},ACTIVITY_ID = #{activityId},ITEM_ID = #{item.itemNo},
-        CART_ITEM_ID = #{cartItemId},QUANTITY = #{quantity}
+        set PRICE=#{price},ACTIVITY_ID = #{activityId,jdbcType=VARCHAR},ITEM_ID = #{item.itemNo},
+        CART_ITEM_ID = #{cartItemId},QUANTITY = #{quantity,jdbcType=NUMERIC},WIDTH = #{width,jdbcType=NUMERIC},
+        HEIGHT = ##{height,jdbcType=NUMERIC}
         where ID = #{id}
     </update>
 </mapper>
