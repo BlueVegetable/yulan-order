@@ -15,6 +15,6 @@ public interface ItemService {
 
     Map getSoftDecorationInfo(String itemType, String cid, Integer page, Integer lastNum)throws IOException;
 
-    Map getSoftInfoSingle(String itemType, String cid, String itemNo)throws IOException;
+    Map getSoftInfoSingle(String itemType, String cid, String itemNo, Integer page, Integer lastNum)throws IOException;
 
 }

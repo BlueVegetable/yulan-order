@@ -108,23 +108,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Map getSoftInfoSingle(String itemType, String cid, String itemNo) throws IOException {
+    public Map getSoftInfoSingle(String itemType, String cid, String itemNo, Integer page, Integer lastNum) throws IOException {
         Map<String,Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if(itemType.equals("ML")){
-            itemList = itemDao.getMLSingle(cid,itemNo);
+            itemList = itemDao.getMLSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("XHB")){
-            itemList = itemDao.getXHBSingle(cid,itemNo);
+            itemList = itemDao.getXHBSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("PJB")){
-            itemList = itemDao.getPJBSingle(cid,itemNo);
+            itemList = itemDao.getPJBSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("BZ")){
-            itemList = itemDao.getBZSingle(cid,itemNo);
+            itemList = itemDao.getBZSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("GH")){
-            itemList = itemDao.getGHSingle(cid,itemNo);
+            itemList = itemDao.getGHSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("TC")){
-            itemList = itemDao.getTCSingle(cid,itemNo);
+            itemList = itemDao.getTCSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("other")){
-            itemList = itemDao.getOtherSingle(cid,itemNo);
+            itemList = itemDao.getOtherSingle(cid,itemNo, page, lastNum);
         }
 
         for(int i=0 ; i<itemList.size() ; i++){
