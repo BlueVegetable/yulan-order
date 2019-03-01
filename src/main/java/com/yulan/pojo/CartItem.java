@@ -10,6 +10,7 @@ public class CartItem {
 	private String activityGroupType;
 	private String productGroupType;
 	private List<Commodity> commodities;
+	private Boolean checked;
  	private String cartId;
 
 	public String getCartItemId() {
@@ -50,6 +51,14 @@ public class CartItem {
 
 	public void setCommodities(List<Commodity> commodities) {
 		this.commodities = commodities;
+	}
+
+	public Boolean getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
 	}
 
 	public String getCartId() {

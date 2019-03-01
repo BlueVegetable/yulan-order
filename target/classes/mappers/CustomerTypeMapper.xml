@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CustomerTypeDao">
+    <resultMap id="CustomerTypeMap" type="CustomerType" >
+        <id column="CUSTOMER_TYPE_ID" property="customerTypeId" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_TYPE_NAME" property="customerTypeName" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_TYPE_NOTE" property="customerTypeNote" jdbcType="VARCHAR" />
+        <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
+        <result column="USE_ID" property="useId" jdbcType="VARCHAR" />
+        <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+        <result column="UPDATER" property="updater" jdbcType="VARCHAR" />
+        <result column="DATE_CRE" property="dateCre" jdbcType="TIMESTAMP" />
+        <result column="DATE_UPDATE" property="dateUpdate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="getCustomerTypeByCID" parameterType="String" resultType="CustomerType">
+        select * from CUSTOMER_TYPE where CUSTOMER_TYPE_ID IN (select customer_type from customer where customer_code = #{CID})
+    </select>
+</mapper>

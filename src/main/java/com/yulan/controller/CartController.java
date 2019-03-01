@@ -29,6 +29,10 @@ public class CartController{
 	private CommodityService commodityService;
 	@Autowired
 	private SalPromotionService salPromotionService;
+	@Autowired
+	private ActivityGroupTypeService activityGroupTypeService;
+	@Autowired
+	private ProductGroupTypeService productGroupTypeService;
 
 	private final static String WALLPAPER = "wallpaper";
 	private final static String SOFT = "soft";
@@ -72,7 +76,7 @@ public class CartController{
 	}
 
 	@ResponseBody@RequestMapping("addCartItem")
-	public Map addCartItem(@RequestBody Map<String,Object> parameters) {
+	public Map addCartItem(@RequestBody Map<String,Object> parameters) throws Exception {
 		String customer_type = (String) parameters.get("customer_type");
 		String CID = (String) parameters.get("CID");
 		String itemNO = (String) parameters.get("itemNO");
@@ -82,9 +86,11 @@ public class CartController{
 		    activityID = null;
 		String quantity = (String) parameters.get("quantity");
 		String price = (String) parameters.get("price");
+		String width = (String) parameters.get("width");
+		String height = (String) parameters.get("height");
 
 		Item item = itemService.getItemByItemNO(itemNO);
-		Cart cart = cartService.getSimpleCartByCID(CID);
+		Cart cart = getSimpleCartByCID(CID);
 		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
 		CartItem cartItem = cartItemService.getCartItemOrder(cart.getCartId(), commodityType,
 				salPromotion == null?null:salPromotion.getGroupType(),
@@ -102,7 +108,6 @@ public class CartController{
 		if(commodity == null) {
             commodity = new Commodity();
             commodity.setItem(item);
-            commodity.setQuantity(new BigInteger(quantity));
             commodity.setCartItemId(cartItem.getCartItemId());
             commodity.setActivityId(activityID);
             switch (customer_type) {
@@ -113,15 +118,25 @@ public class CartController{
                 case "10":commodity.setPrice(new BigDecimal(price));break;
                 default:return Response.getResponseMap(1,"添加失败",null);
             }
+            if(quantity==null||quantity.equals("")) {
+            	commodity.setWidth(new BigInteger(width));
+            	commodity.setHeight(new BigInteger(height));
+			} else {
+            	commodity.setQuantity(new BigInteger(quantity));
+			}
             if(!commodityService.addCommodity(commodity))
                 return Response.getResponseMap(1,"添加失败",null);
             else
                 return Response.getResponseMap(0,"添加成功",null);
         } else {
 		    commodity.setItem(item);
-		    BigInteger count = new BigInteger(quantity);
-		    count = count.add(commodity.getQuantity());
-		    commodity.setQuantity(count);
+			if(quantity==null||quantity.equals("")) {
+				return Response.getResponseMap(2,"该产品已存在于购物车",null);
+			} else {
+				BigInteger count = new BigInteger(quantity);
+				count = count.add(commodity.getQuantity());
+				commodity.setQuantity(count);
+			}
 		    if(!commodityService.updateCommodity(commodity))
                 return Response.getResponseMap(1,"添加失败",null);
 		    else
@@ -155,6 +170,43 @@ public class CartController{
 			}
 			return Response.getResponseMap(0,"",null);
 		}
+	}
+
+	@ResponseBody@RequestMapping("updateCartItem")
+	public Map updateCartItem(@RequestBody Map<String,String> parameters) throws Exception {
+		String commodityID = parameters.get("commodityID");
+		String activityID = parameters.get("activityID");
+		String quantityString = parameters.get("quantity");
+		String widthString = parameters.get("width");
+		String heightString = parameters.get("height");
+		String note = parameters.get("note");
+		Commodity commodity = commodityService.getCommodityByID(commodityID);
+		CartItem cartItem = cartItemService.getCartItemByID(commodity.getCartItemId());
+		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
+		CartItem cartItemNew = cartItemService.getCartItemOrder(cartItem.getCartId(),
+				cartItem.getCommodityType(),salPromotion.getGroupType(),commodity.getItem().getGroupType());
+		if(cartItemNew == null) {
+			cartItemNew = new CartItem();
+			cartItemNew.setCartId(cartItem.getCartId());
+			cartItemNew.setActivityGroupType(salPromotion.getGroupType());
+			cartItemNew.setProductGroupType(commodity.getItem().getGroupType());
+			cartItemNew.setCommodityType(cartItem.getCommodityType());
+			cartItemService.addCartItem(cartItemNew);
+		}
+		if(quantityString!=null&&!quantityString.equals("")) {
+			commodity.setQuantity(new BigInteger(quantityString));
+		} else {
+			commodity.setHeight(new BigInteger(heightString));
+			commodity.setWidth(new BigInteger(widthString));
+		}
+		commodity.setCartItemId(cartItemNew.getCartItemId());
+		if(note==null||note.equals("")) {
+			commodity.setNote(null);
+		} else {
+			commodity.setNote(note);
+		}
+		commodityService.updateCommodity(commodity);
+		return Response.getResponseMap(0,"",null);
 	}
 
 }

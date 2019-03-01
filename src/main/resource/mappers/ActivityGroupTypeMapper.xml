@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.ActivityGroupTypeDao">
+    <resultMap id="ActivityGroupTypeMap" type="ActivityGroupType" >
+        <id column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="VALUE" property="value" />
+    </resultMap>
+
+    <insert id="addActivityGroupType" parameterType="ActivityGroupType">
+        insert into ACTIVITY_GROUP_TYPE
+        values
+        (#{id},#{name},#{value})
+    </insert>
+
+    <select id="getActivityGroupTypeByID" parameterType="String" resultType="ActivityGroupType">
+        select * from ACTIVITY_GROUP_TYPE where NAME = #{activityGroupTypeID}
+    </select>
+
+    <select id="getActivityGroupTypeByName" parameterType="String" resultType="ActivityGroupType">
+        select * from ACTIVITY_GROUP_TYPE where NAME = #{name}
+    </select>
+
+</mapper>
