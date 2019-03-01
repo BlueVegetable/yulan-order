@@ -53,7 +53,16 @@ public class ItemController {
         Map map = new HashMap();
         String cid = (String)data.get("cid");
         String itemType = (String)data.get("itemType");
-        map = itemService.getSoftDecorationInfo(itemType,cid);
+        Integer limit = (Integer) data.get("limit");
+        Integer page = (Integer)data.get("page");
+        if(limit==null||page==null) {
+            page=null;
+            limit=null;
+        } else {
+            page=(page-1)*limit+1;
+        }
+        int lastNum=page+limit-1;
+        map = itemService.getSoftDecorationInfo(itemType,cid,page,lastNum);
         return map;
     }
 
