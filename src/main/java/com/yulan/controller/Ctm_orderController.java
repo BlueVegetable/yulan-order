@@ -111,7 +111,7 @@ public class Ctm_orderController {
     }
 
     /**
-     * 修改订单状态接口
+     * 修改订单状态接口(作废)
      * @param data
      * @return
      */

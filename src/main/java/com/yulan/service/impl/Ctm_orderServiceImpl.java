@@ -237,7 +237,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     @Override
     public boolean updateOrderStatus(String orderNo, String customerCode,
                                      String statusId) {
-        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId);
+        Timestamp dateUpdate= new Timestamp(System.currentTimeMillis());
+        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId,dateUpdate);
     }
 
     /**
