@@ -157,5 +157,34 @@ public class ItemServiceImpl implements ItemService {
         return map;
     }
 
+    @Override
+    public Map judgeStockShow(Integer stockShowNum, String itemNo) {
+        Map<String,Object> map = new HashMap<>();
+        Double stockShowNumMax = 0.0;
+        StockShow stockShow = new StockShow();
+        stockShow = itemDao.getStockShowMax(itemNo);
+        Integer sumStockShow = itemDao.sumStockShow(itemNo);
+        if(null != stockShow) {
+            stockShowNumMax = stockShow.getQty();
+            if (stockShowNum <= stockShowNumMax) {
+                map.put("msg", "SUCCESS");
+                map.put("code", 0);
+            }else if (stockShowNumMax < stockShowNum && stockShowNum <= sumStockShow){
+                    //允许分批出货
+                    map.put("msg", "splitShipment ");
+                    map.put("code", 0);
+            }else if(stockShowNum > sumStockShow){
+                    //等待制作
+                    map.put("msg", "waitForProduction");
+                    map.put("code", 0);
+                }
+            } else{
+            //库存为空
+            map.put("msg", "null");
+            map.put("code", 0);
+        }
+        return map;
+    }
+
 
 }

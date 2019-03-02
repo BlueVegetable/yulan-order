@@ -17,4 +17,6 @@ public interface ItemService {
 
     Map getSoftInfoSingle(String itemType, String cid, String itemNo, Integer page, Integer lastNum)throws IOException;
 
+    Map judgeStockShow(Integer stockShowNum, String itemNo);
+
 }

@@ -91,6 +91,19 @@ public class ItemController {
         return map;
     }
 
+    /**
+     * 加入购物车时的库存判断
+     * @param data
+     * @return
+     */
+    @RequestMapping("judgeStockShow")
+    @ResponseBody
+    public Map judgeStockShow(@RequestBody Map<String,Object> data){
+        String itemNo = (String)data.get("itemNo");
+        Integer stockShowNum = (Integer)data.get("stockShowNum");
+        return itemService.judgeStockShow(stockShowNum,itemNo);
+    }
+
 
 
 }

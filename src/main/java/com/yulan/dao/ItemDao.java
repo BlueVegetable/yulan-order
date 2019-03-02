@@ -21,6 +21,10 @@ public interface ItemDao {
     String getUnit(@Param("unit") String unit);
 
     List<StockShow> getStockShow(@Param("ITEM_NO")String itemNo);
+    //获取库存列表中最大的库存数
+    StockShow getStockShowMax(@Param("ITEM_NO")String itemNo);
+    //求某一类型库存总和
+    Integer sumStockShow(@Param("ITEM_NO")String itemNo);
     //面料
     List<Item> getMLInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 

@@ -44,4 +44,14 @@ public class StockShow {
     public void setItemNo(String itemNo) {
         this.itemNo = itemNo;
     }
+
+    @Override
+    public String toString() {
+        return "StockShow{" +
+                "stockNo='" + stockNo + '\'' +
+                ", batchNo='" + batchNo + '\'' +
+                ", qty=" + qty +
+                ", itemNo='" + itemNo + '\'' +
+                '}';
+    }
 }

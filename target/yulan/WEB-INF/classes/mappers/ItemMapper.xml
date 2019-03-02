@@ -85,6 +85,23 @@
       and sf.qty >0
     </select>
 
+    <select id="getStockShowMax" resultType="com.yulan.pojo.StockShow">
+      select * from (
+      select sf.stock_no,sf.batch_no,sf.qty,sf.item_no from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0 ORDER BY sf.qty desc nulls last)WHERE ROWNUM =1
+    </select>
+
+    <select id="sumStockShow" resultType="Integer">
+      select sum(sf.qty) from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0
+    </select>
+
      <select id="getMLInfo" resultMap="ItemMap">
          select * from(
          select rownum rm, c.*  from
