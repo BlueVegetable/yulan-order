@@ -216,7 +216,7 @@
         update CTM_ORDER t
         <set>
             <if test="STATUS_ID != null">
-            STATUS_ID = #{STATUS_ID,jdbcType=VARCHAR}
+            STATUS_ID = #{STATUS_ID,jdbcType=VARCHAR},DATE_UPDATE=#{dateUpdate,jdbcType=TIMESTAMP}
             </if>
         </set>
         where ORDER_NO = #{ORDER_NO} and CUSTOMER_CODE = #{CUSTOMER_CODE}
