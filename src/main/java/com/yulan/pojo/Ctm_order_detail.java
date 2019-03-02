@@ -84,6 +84,53 @@ public class Ctm_order_detail  {
 
     private String promotion;
 
+    private String partSendId;
+
+    public String getPartSendId() {
+        return partSendId;
+    }
+
+    public void setPartSendId(String partSendId) {
+        this.partSendId = partSendId;
+    }
+
+    public Ctm_order_detail(String orderNo, String itemNo, Integer lineNo, String itemNoSample, String productionVersion, BigDecimal qtyRequired, java.util.Date dateDeliver, java.util.Date dateUpdate, String notes, String statusId, BigDecimal discount, String discountFlag, String curtainKs, String curtainRoomName, Short curtainRoomId, Short curtainRoomLineno, BigDecimal curtainWidth, BigDecimal curtainHeight, BigDecimal curtainHeight2, String curtainItemMenuNotes, String curtainMenuGroupId, BigDecimal curtainSizeTimes, BigDecimal curtainSizeTimes2, Short mlNonStandard, BigDecimal curtainWbhSize, String transType, String transId, java.util.Date dateDeliverKf, java.util.Date dateDeliverNb, java.util.Date dateDeliverFh, BigDecimal unitPrice, BigDecimal promotionCost, String promotion, String partSendId) {
+        this.orderNo = orderNo;
+        this.itemNo = itemNo;
+        this.lineNo = lineNo;
+        this.itemNoSample = itemNoSample;
+        this.productionVersion = productionVersion;
+        this.qtyRequired = qtyRequired;
+        this.dateDeliver = dateDeliver;
+        this.dateUpdate = dateUpdate;
+        this.notes = notes;
+        this.statusId = statusId;
+        this.discount = discount;
+        this.discountFlag = discountFlag;
+        this.curtainKs = curtainKs;
+        this.curtainRoomName = curtainRoomName;
+        this.curtainRoomId = curtainRoomId;
+        this.curtainRoomLineno = curtainRoomLineno;
+        this.curtainWidth = curtainWidth;
+        this.curtainHeight = curtainHeight;
+        this.curtainHeight2 = curtainHeight2;
+        this.curtainItemMenuNotes = curtainItemMenuNotes;
+        this.curtainMenuGroupId = curtainMenuGroupId;
+        this.curtainSizeTimes = curtainSizeTimes;
+        this.curtainSizeTimes2 = curtainSizeTimes2;
+        this.mlNonStandard = mlNonStandard;
+        this.curtainWbhSize = curtainWbhSize;
+        this.transType = transType;
+        this.transId = transId;
+        this.dateDeliverKf = dateDeliverKf;
+        this.dateDeliverNb = dateDeliverNb;
+        this.dateDeliverFh = dateDeliverFh;
+        this.unitPrice = unitPrice;
+        this.promotionCost = promotionCost;
+        this.promotion = promotion;
+        this.partSendId = partSendId;
+    }
+
     public String getPromotion() {
         return promotion;
     }

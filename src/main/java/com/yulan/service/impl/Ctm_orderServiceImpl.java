@@ -263,7 +263,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
         String order=ctm_orderDao.getBigNum(orderN+s);
         if(order==null||order.equals("")){
-            trueOrder=orderN+s+"0001";
+            trueOrder=orderN+s+"0001b";
         }else{//截取自增
             order=order.substring(7);
             int o=10000;
@@ -271,7 +271,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             o=o+i+1;
             String p=o+"";
             p=p.substring(1);
-            trueOrder=orderN+s+p;
+            trueOrder=orderN+s+p+"b";//b为b2b订单号标志
         }
         return trueOrder;
 
