@@ -265,7 +265,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         if(order==null||order.equals("")){
             trueOrder=orderN+s+"0001b";
         }else{//截取自增
-            order=order.substring(7);
+            order=order.substring(7,11);
             int o=10000;
             Integer i=Integer.parseInt(order);
             o=o+i+1;
