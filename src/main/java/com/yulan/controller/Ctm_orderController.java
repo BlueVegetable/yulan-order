@@ -145,5 +145,17 @@ public class Ctm_orderController {
     }
 
 
+    /**
+     * 获取用户优惠券
+     * @param m
+     * @return
+     */
+    @RequestMapping("getRebate")
+    @ResponseBody
+    public Map getRebate (@RequestBody Map<String,Object> m){
+        return  ctm_orderService.getRebate(m);
+    }
+
+
 
 }

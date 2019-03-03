@@ -29,4 +29,7 @@ public interface Ctm_orderService {
 
    //获取经办人/联系方式
    Map getlinkpersonandTel(String cid) throws UnsupportedEncodingException;
+
+   //获取客户优惠券
+   Map getRebate(Map<String,Object>map);
 }

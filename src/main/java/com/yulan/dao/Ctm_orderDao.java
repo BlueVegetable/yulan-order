@@ -3,6 +3,7 @@ package com.yulan.dao;
 import com.yulan.pojo.Ctm_order;
 import com.yulan.pojo.Ctm_order_detail;
 import com.yulan.pojo.Sal_promotion;
+import com.yulan.pojo.Sal_rebate_certificate;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -100,4 +101,10 @@ public interface Ctm_orderDao {
      * @return
      */
     Map<String,Object> getlinkpersonandTel(@Param("cid") String cid );
+
+
+    /**
+     * 获取客户优惠券
+     */
+    List<Sal_rebate_certificate> getRebate(@Param("cid")String cid,@Param("currentTime")java.sql.Date currentTime);
 }
