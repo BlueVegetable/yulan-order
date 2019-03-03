@@ -46,7 +46,7 @@
         update COMMODITY
         set PRICE=#{price,jdbcType=VARCHAR},ACTIVITY_ID = #{activityId},ITEM_ID = #{item.itemNo},
         CART_ITEM_ID = #{cartItemId},QUANTITY = #{quantity,jdbcType=NUMERIC},WIDTH = #{width,jdbcType=NUMERIC},
-        HEIGHT = #{height,jdbcType=NUMERIC}
+        HEIGHT = #{height,jdbcType=NUMERIC},NOTE = #{note,jdbcType=VARCHAR}
         where ID = #{id}
     </update>
 </mapper>
