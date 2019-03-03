@@ -1,5 +1,6 @@
 package com.yulan.controller;
 
+import com.yulan.pojo.SalPromotion;
 import com.yulan.service.SalPromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,11 @@ public class SalPromotionController {
 
     @Autowired
     private SalPromotionService salPromotionService;
+
+    @ResponseBody@RequestMapping("getSalPromotionByID")
+    public SalPromotion getSalPromotionByID(String salPromotionID) {
+        return salPromotionService.getSalPromotionByID(salPromotionID);
+    }
 
     @ResponseBody@RequestMapping("selectSalPromotion")
     public List<Map<String,Object>> selectSalPromotion(@RequestParam("CID")String CID,@RequestParam("customerType")String customerType,
