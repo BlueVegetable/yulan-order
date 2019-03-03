@@ -125,9 +125,6 @@ public class CartController{
 			} else {
             	commodity.setQuantity(new BigInteger(quantity));
 			}
-            if(note != null&&!note.equals("")) {
-            	commodity.setNote(note);
-			}
             if(!commodityService.addCommodity(commodity))
                 return Response.getResponseMap(1,"添加失败",null);
             else

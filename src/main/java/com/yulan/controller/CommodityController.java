@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @Controller
@@ -20,7 +21,7 @@ public class CommodityController{
 
 	@ResponseBody
 	@RequestMapping("addCommodity")
-	public Map<String,Object> addCommodity(Commodity commodity) {
+	public Map<String,Object> addCommodity(Commodity commodity) throws UnsupportedEncodingException {
 		if(commodityService.addCommodity(commodity))
 			return Response.getResponseMap(0,"添加成功",null);
 		else
@@ -43,7 +44,7 @@ public class CommodityController{
 	}
 
 	@ResponseBody@RequestMapping("updateCommodity")
-	public Map<String,Object> updateCommodity(Commodity commodity) {
+	public Map<String,Object> updateCommodity(Commodity commodity) throws UnsupportedEncodingException {
 		if(commodityService.updateCommodity(commodity)) {
 			return Response.getResponseMap(0,"",null);
 		} else {

@@ -2,9 +2,11 @@ package com.yulan.service;
 
 import com.yulan.pojo.Commodity;
 
+import java.io.UnsupportedEncodingException;
+
 public interface CommodityService {
 
-	boolean addCommodity(Commodity commodity);
+	boolean addCommodity(Commodity commodity) throws UnsupportedEncodingException;
 
 	boolean deleteCommodityByID(String commodityID);
 
@@ -16,6 +18,6 @@ public interface CommodityService {
 
 	long countByCartItemID(String cartItemID);
 
-	boolean updateCommodity(Commodity commodity);
+	boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException;
 
 }

@@ -7,6 +7,8 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+
 @Service
 public class CommodityServiceImpl implements CommodityService {
 
@@ -14,14 +16,20 @@ public class CommodityServiceImpl implements CommodityService {
 	private CommodityDao commodityDao;
 
 	@Override
-	public boolean addCommodity(Commodity commodity) {
+	public boolean addCommodity(Commodity commodity) throws UnsupportedEncodingException {
 		commodity.setId(System.currentTimeMillis()+ StringUtil.createStringID());
+		String note = commodity.getNote();
+		if(note != null) {
+			commodity.setNote(StringUtil.UTF8ToGBK(note));
+		}
 		return commodityDao.addCommodity(commodity)>0;
 	}
 
 	@Override
 	public Commodity getCommodityAppoint(String activityID, String itemID, String cartItemID) {
-		return commodityDao.getCommodityAppoint(activityID, itemID, cartItemID);
+		Commodity commodity = commodityDao.getCommodityAppoint(activityID, itemID, cartItemID);
+		commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
+		return commodity;
 	}
 
 	@Override
@@ -45,7 +53,11 @@ public class CommodityServiceImpl implements CommodityService {
 	}
 
 	@Override
-	public boolean updateCommodity(Commodity commodity) {
+	public boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException {
+		String note = commodity.getNote();
+		if(note != null) {
+			commodity.setNote(StringUtil.UTF8ToGBK(commodity.getNote()));
+		}
 		return commodityDao.updateCommodity(commodity)>0;
 	}
 
