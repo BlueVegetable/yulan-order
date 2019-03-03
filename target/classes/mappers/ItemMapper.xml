@@ -85,110 +85,226 @@
       and sf.qty >0
     </select>
 
+    <select id="getStockShowMax" resultType="com.yulan.pojo.StockShow">
+      select * from (
+      select sf.stock_no,sf.batch_no,sf.qty,sf.item_no from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0 ORDER BY sf.qty desc nulls last)WHERE ROWNUM =1
+    </select>
+
+    <select id="sumStockShow" resultType="Integer">
+      select sum(sf.qty) from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0
+    </select>
+
      <select id="getMLInfo" resultMap="ItemMap">
+         select * from(
+         select rownum rm, c.*  from
+         (
          select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.product_type in ('ML' , 'MLP')
+         where a.brand = b.product_brand
+         and a.customer_code = #{cid}
+         and b.product_type in ('ML' , 'MLP')
+         ) c)tm
+         <if test="start!=null">
+             where rm &gt;= #{start} and rm &lt;= #{number}
+         </if>
      </select>
 
     <select id="getMLSingle" resultMap="ItemMap">
-          select b.* from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
-          and b.product_type in ('ML' , 'MLP')
+       select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('ML' , 'MLP')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
      </select>
 
     <select id="getXHBInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.product_type in ('XHB')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('XHB')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getXHBSingle" resultMap="ItemMap">
-       select b.* from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
-          and b.product_type in ('XHB')
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('XHB')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getPJBInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.product_type in ('PJB')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('PJB')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getPJBSingle" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
         select b.* from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
-          and b.product_type in ('PJB')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('PJB')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getBZInfo" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.product_type in ('BZ')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('BZ')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getBZSingle" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
         select b.* from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
-          and b.product_type in ('BZ')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('BZ')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getGHInfo" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.product_type in ('GH')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('GH')
+
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getGHSingle" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
         select b.* from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
-          and b.product_type in ('GH')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('GH')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getTCInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.product_type in ('TC')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('TC')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getTCSingle" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
         select b.* from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
-          and b.product_type in ('TC')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('TC')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
 
     <select id="getOtherInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.product_type in ('TU','DT')
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('TU','DT')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getOtherSingle" resultMap="ItemMap">
-         select b.* from v_customer_brand a,item b
-          where a.brand = b.product_brand
-          and a.customer_code = #{cid}
-          and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
-          and b.product_type in ('TU','DT')
+       select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('TU','DT')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <select id="getUnit" resultType="String">

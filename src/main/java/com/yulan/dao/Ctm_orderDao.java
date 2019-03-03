@@ -6,6 +6,7 @@ import com.yulan.pojo.Sal_promotion;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +85,7 @@ public interface Ctm_orderDao {
      */
     boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,
                               @Param("CUSTOMER_CODE")String customerCode,
-                              @Param("STATUS_ID")String statusId);
+                              @Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
 
     /**
      * 获取最大订单号自增

@@ -13,8 +13,10 @@ public interface ItemService {
 
     Map getStockShow(String itemNo);
 
-    Map getSoftDecorationInfo(String itemType, String cid)throws IOException;
+    Map getSoftDecorationInfo(String itemType, String cid, Integer page, Integer lastNum)throws IOException;
 
-    Map getSoftInfoSingle(String itemType, String cid, String itemNo)throws IOException;
+    Map getSoftInfoSingle(String itemType, String cid, String itemNo, Integer page, Integer lastNum)throws IOException;
+
+    Map judgeStockShow(Integer stockShowNum, String itemNo);
 
 }

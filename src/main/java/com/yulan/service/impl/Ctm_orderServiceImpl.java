@@ -225,9 +225,20 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
+    public Map getlinkpersonandTel(String cid) throws UnsupportedEncodingException {
+        Map<String ,Object> map=ctm_orderDao.getlinkpersonandTel(cid);
+        String CUSTOMER_AGENT=StringUtil.getUtf8(map.get("CUSTOMER_AGENT").toString());
+        Object c=CUSTOMER_AGENT;
+        map.put("CUSTOMER_AGENT",CUSTOMER_AGENT);
+
+        return map;
+    }
+
+    @Override
     public boolean updateOrderStatus(String orderNo, String customerCode,
                                      String statusId) {
-        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId);
+        Timestamp dateUpdate= new Timestamp(System.currentTimeMillis());
+        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId,dateUpdate);
     }
 
     /**
@@ -253,15 +264,15 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
         String order=ctm_orderDao.getBigNum(orderN+s);
         if(order==null||order.equals("")){
-            trueOrder=orderN+s+"0001";
+            trueOrder=orderN+s+"0001b";
         }else{//截取自增
-            order=order.substring(7);
+            order=order.substring(7,11);
             int o=10000;
             Integer i=Integer.parseInt(order);
             o=o+i+1;
             String p=o+"";
             p=p.substring(1);
-            trueOrder=orderN+s+p;
+            trueOrder=orderN+s+p+"b";//b为b2b订单号标志
         }
         return trueOrder;
 

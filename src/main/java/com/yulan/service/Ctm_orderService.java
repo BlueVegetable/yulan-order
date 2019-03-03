@@ -26,4 +26,7 @@ public interface Ctm_orderService {
 
    //查看物流
    Map getPack(Map<String,Object> m) throws UnsupportedEncodingException;
+
+   //获取经办人/联系方式
+   Map getlinkpersonandTel(String cid) throws UnsupportedEncodingException;
 }

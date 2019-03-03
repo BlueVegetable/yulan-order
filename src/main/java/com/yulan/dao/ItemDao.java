@@ -21,33 +21,37 @@ public interface ItemDao {
     String getUnit(@Param("unit") String unit);
 
     List<StockShow> getStockShow(@Param("ITEM_NO")String itemNo);
+    //获取库存列表中最大的库存数
+    StockShow getStockShowMax(@Param("ITEM_NO")String itemNo);
+    //求某一类型库存总和
+    Integer sumStockShow(@Param("ITEM_NO")String itemNo);
     //面料
-    List<Item> getMLInfo(@Param("cid") String cid);
+    List<Item> getMLInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
-    List<Item> getMLSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+    List<Item> getMLSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //花边
-    List<Item> getXHBInfo(@Param("cid") String cid);
+    List<Item> getXHBInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
-    List<Item> getXHBSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+    List<Item> getXHBSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //挂带/配件包
-    List<Item> getPJBInfo(@Param("cid") String cid);
+    List<Item> getPJBInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
-    List<Item> getPJBSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+    List<Item> getPJBSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //抱枕
-    List<Item> getBZInfo(@Param("cid") String cid);
+    List<Item> getBZInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
-    List<Item> getBZSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+    List<Item> getBZSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //挂画
-    List<Item> getGHInfo(@Param("cid") String cid);
+    List<Item> getGHInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
-    List<Item> getGHSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+    List<Item> getGHSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //陶瓷
-    List<Item> getTCInfo(@Param("cid") String cid);
+    List<Item> getTCInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
-    List<Item> getTCSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+    List<Item> getTCSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //其他
-    List<Item> getOtherInfo(@Param("cid") String cid);
+    List<Item> getOtherInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
-    List<Item> getOtherSingle(@Param("cid") String cid, @Param("itemNo") String itemNo);
+    List<Item> getOtherSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
 
 }

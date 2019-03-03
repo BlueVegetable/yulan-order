@@ -111,7 +111,7 @@ public class Ctm_orderController {
     }
 
     /**
-     * 修改订单状态接口
+     * 修改订单状态接口(作废)
      * @param data
      * @return
      */
@@ -135,6 +135,13 @@ public class Ctm_orderController {
     @ResponseBody
     public Map orderCount(@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
         return  ctm_orderService.orderCount(m);
+    }
+
+    @RequestMapping("getlink")
+    @ResponseBody
+    public Map getlinkpersonandTel (@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
+        String cid= m.get("cid").toString();
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getlinkpersonandTel(cid));
     }
 
 

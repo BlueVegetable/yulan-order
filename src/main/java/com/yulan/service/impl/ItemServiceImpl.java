@@ -71,23 +71,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Map getSoftDecorationInfo(String itemType,String cid)throws IOException{
+    public Map getSoftDecorationInfo(String itemType,String cid, Integer page, Integer lastNum)throws IOException{
         Map<String,Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if(itemType.equals("ML")){
-            itemList = itemDao.getMLInfo(cid);
+            itemList = itemDao.getMLInfo(cid, page, lastNum);
         }else if(itemType.equals("XHB")){
-            itemList = itemDao.getXHBInfo(cid);
+            itemList = itemDao.getXHBInfo(cid, page, lastNum);
         }else if(itemType.equals("PJB")){
-            itemList = itemDao.getPJBInfo(cid);
+            itemList = itemDao.getPJBInfo(cid, page, lastNum);
         }else if(itemType.equals("BZ")){
-            itemList = itemDao.getBZInfo(cid);
+            itemList = itemDao.getBZInfo(cid, page, lastNum);
         }else if(itemType.equals("GH")){
-            itemList = itemDao.getGHInfo(cid);
+            itemList = itemDao.getGHInfo(cid, page, lastNum);
         }else if(itemType.equals("TC")){
-            itemList = itemDao.getTCInfo(cid);
+            itemList = itemDao.getTCInfo(cid, page, lastNum);
         }else if(itemType.equals("other")){
-            itemList = itemDao.getOtherInfo(cid);
+            itemList = itemDao.getOtherInfo(cid, page, lastNum);
         }
 
         for(int i=0 ; i<itemList.size() ; i++){
@@ -108,23 +108,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Map getSoftInfoSingle(String itemType, String cid, String itemNo) throws IOException {
+    public Map getSoftInfoSingle(String itemType, String cid, String itemNo, Integer page, Integer lastNum) throws IOException {
         Map<String,Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if(itemType.equals("ML")){
-            itemList = itemDao.getMLSingle(cid,itemNo);
+            itemList = itemDao.getMLSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("XHB")){
-            itemList = itemDao.getXHBSingle(cid,itemNo);
+            itemList = itemDao.getXHBSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("PJB")){
-            itemList = itemDao.getPJBSingle(cid,itemNo);
+            itemList = itemDao.getPJBSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("BZ")){
-            itemList = itemDao.getBZSingle(cid,itemNo);
+            itemList = itemDao.getBZSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("GH")){
-            itemList = itemDao.getGHSingle(cid,itemNo);
+            itemList = itemDao.getGHSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("TC")){
-            itemList = itemDao.getTCSingle(cid,itemNo);
+            itemList = itemDao.getTCSingle(cid,itemNo, page, lastNum);
         }else if(itemType.equals("other")){
-            itemList = itemDao.getOtherSingle(cid,itemNo);
+            itemList = itemDao.getOtherSingle(cid,itemNo, page, lastNum);
         }
 
         for(int i=0 ; i<itemList.size() ; i++){
@@ -153,6 +153,35 @@ public class ItemServiceImpl implements ItemService {
         }else{
             map.put("data",itemList);
             map.put("code",0);
+        }
+        return map;
+    }
+
+    @Override
+    public Map judgeStockShow(Integer stockShowNum, String itemNo) {
+        Map<String,Object> map = new HashMap<>();
+        Double stockShowNumMax = 0.0;
+        StockShow stockShow = new StockShow();
+        stockShow = itemDao.getStockShowMax(itemNo);
+        Integer sumStockShow = itemDao.sumStockShow(itemNo);
+        if(null != stockShow) {
+            stockShowNumMax = stockShow.getQty();
+            if (stockShowNum <= stockShowNumMax) {
+                map.put("msg", "SUCCESS");
+                map.put("code", 0);
+            }else if (stockShowNumMax < stockShowNum && stockShowNum <= sumStockShow){
+                    //允许分批出货
+                    map.put("msg", "splitShipment ");
+                    map.put("code", 0);
+            }else if(stockShowNum > sumStockShow){
+                    //等待制作
+                    map.put("msg", "waitForProduction");
+                    map.put("code", 0);
+                }
+            } else{
+            //库存为空
+            map.put("msg", "null");
+            map.put("code", 0);
         }
         return map;
     }

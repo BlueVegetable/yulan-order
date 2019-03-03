@@ -428,6 +428,14 @@
             <version>1.10.2</version>
         </dependency>
 
+        <!-- 解析XML-->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+
 
     </dependencies>
     <build>

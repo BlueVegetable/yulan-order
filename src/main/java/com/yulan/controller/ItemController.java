@@ -53,7 +53,16 @@ public class ItemController {
         Map map = new HashMap();
         String cid = (String)data.get("cid");
         String itemType = (String)data.get("itemType");
-        map = itemService.getSoftDecorationInfo(itemType,cid);
+        Integer limit = (Integer) data.get("limit");
+        Integer page = (Integer)data.get("page");
+        if(limit==null||page==null) {
+            page=null;
+            limit=null;
+        } else {
+            page=(page-1)*limit+1;
+        }
+        int lastNum=page+limit-1;
+        map = itemService.getSoftDecorationInfo(itemType,cid,page,lastNum);
         return map;
     }
 
@@ -69,8 +78,30 @@ public class ItemController {
         String cid = (String)data.get("cid");
         String itemType = (String)data.get("itemType");
         String itemNo = (String)data.get("itemNo");
-        map = itemService.getSoftInfoSingle(itemType,cid,itemNo);
+        Integer limit = (Integer) data.get("limit");
+        Integer page = (Integer)data.get("page");
+        if(limit==null||page==null) {
+            page=null;
+            limit=null;
+        } else {
+            page=(page-1)*limit+1;
+        }
+        int lastNum=page+limit-1;
+        map = itemService.getSoftInfoSingle(itemType,cid,itemNo,page,lastNum);
         return map;
+    }
+
+    /**
+     * 加入购物车时的库存判断
+     * @param data
+     * @return
+     */
+    @RequestMapping("judgeStockShow")
+    @ResponseBody
+    public Map judgeStockShow(@RequestBody Map<String,Object> data){
+        String itemNo = (String)data.get("itemNo");
+        Integer stockShowNum = (Integer)data.get("stockShowNum");
+        return itemService.judgeStockShow(stockShowNum,itemNo);
     }
 
 
