@@ -32,6 +32,7 @@
         <result column="PRICE_FX" property="priceFx" jdbcType="DECIMAL" />
         <result column="PRICE_HOME" property="priceHome" jdbcType="DECIMAL" />
         <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
+        <result column="TOTAL" property="total" jdbcType="DECIMAL"/>
         <association property="itemType" javaType="com.yulan.pojo.ItemType"
                      resultMap="ItemResultMap"/>
     </resultMap>
@@ -106,7 +107,7 @@
          select * from(
          select rownum rm, c.*  from
          (
-         select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+         select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
          where a.brand = b.product_brand
          and a.customer_code = #{cid}
          and b.product_type in ('ML' , 'MLP')
@@ -118,7 +119,7 @@
 
     <select id="getMLSingle" resultMap="ItemMap">
        select * from(
-        select rownum rm, c.*  from
+        select rownum rm, c.* ,COUNT(*) OVER () TOTAL from
         (
         select b.* from v_customer_brand a,item b
         where a.brand = b.product_brand
@@ -135,7 +136,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('XHB')
@@ -147,7 +148,7 @@
 
     <select id="getXHBSingle" resultMap="ItemMap">
         select * from(
-        select rownum rm, c.*  from
+        select rownum rm, c.* ,COUNT(*) OVER () TOTAL from
         (
         select b.* from v_customer_brand a,item b
         where a.brand = b.product_brand
@@ -164,7 +165,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('PJB')
@@ -178,7 +179,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.* from v_customer_brand a,item b
+        select b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -193,7 +194,7 @@
        select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('BZ')
@@ -207,7 +208,7 @@
        select * from(
         select rownum rm, c.*  from
         (
-        select b.* from v_customer_brand a,item b
+        select b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -222,7 +223,7 @@
        select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('GH')
@@ -237,7 +238,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.* from v_customer_brand a,item b
+        select b.*,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
@@ -252,7 +253,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('TC')
@@ -264,7 +265,7 @@
 
     <select id="getTCSingle" resultMap="ItemMap">
        select * from(
-        select rownum rm, c.*  from
+        select rownum rm, c.* ,COUNT(*) OVER () TOTAL from
         (
         select b.* from v_customer_brand a,item b
         where a.brand = b.product_brand
@@ -282,7 +283,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade from v_customer_brand a,item b
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('TU','DT')
@@ -296,7 +297,7 @@
        select * from(
         select rownum rm, c.*  from
         (
-        select b.* from v_customer_brand a,item b
+        select b.* from v_customer_brand a,item b ,COUNT(*) OVER () TOTAL
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
