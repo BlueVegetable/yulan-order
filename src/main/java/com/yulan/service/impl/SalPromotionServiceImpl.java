@@ -22,6 +22,16 @@ public class SalPromotionServiceImpl implements SalPromotionService {
     }
 
     @Override
+    public List<String> getSalPromotionNamesByIDs(List<String> IDs) {
+        List<String> datas = salPromotionDao.getSalPromotionNamesByIDs(IDs);
+        List<String> value = new ArrayList<>();
+        for (String data:datas) {
+            value.add(StringUtil.GBKToUTF8(data));
+        }
+        return value;
+    }
+
+    @Override
     public List<Map<String, Object>> selectSalPromotion(String CID, String customerType, String itemNo, String itemVersion) throws UnsupportedEncodingException {
         List<Map<String,Object>> result = new ArrayList<>();
         List<SalPromotion> salPromotions = salPromotionDao.selectSalPromotions(CID, itemNo);

@@ -28,7 +28,9 @@ public class CommodityServiceImpl implements CommodityService {
 	@Override
 	public Commodity getCommodityAppoint(String activityID, String itemID, String cartItemID) {
 		Commodity commodity = commodityDao.getCommodityAppoint(activityID, itemID, cartItemID);
-		commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
+		if(commodity!=null) {
+			commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
+		}
 		return commodity;
 	}
 

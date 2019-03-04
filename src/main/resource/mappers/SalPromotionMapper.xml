@@ -24,8 +24,26 @@
         <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="getSalPromotionByID" parameterType="String" resultType="SalPromotion">
+    <resultMap id="SalPromotionNameMap" type="String" >
+        <result column="ORDER_NAME" property="orderName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getSalPromotionByID" parameterType="String" resultMap="SalPromotionMap">
         select * from SAL_PROMOTION where ORDER_TYPE = #{orderType}
+    </select>
+
+    <select id="getSalPromotionNamesByIDs" parameterType="List" resultMap="SalPromotionNameMap">
+        select ORDER_NAME from SAL_PROMOTION
+        <where>
+            <if test="IDs != null and IDs.size() > 0">
+                <foreach collection="IDs" item="ID" separator="or">
+                    order_type = #{ID}
+                </foreach>
+            </if>
+            <if test="IDs == null or IDs.size() == 0">
+                1!=1
+            </if>
+        </where>
     </select>
 
     <select id="selectSalPromotions" parameterType="Map" resultMap="SalPromotionMap">

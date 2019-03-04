@@ -4,6 +4,7 @@ import com.yulan.pojo.SalPromotion;
 import com.yulan.service.SalPromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,11 @@ public class SalPromotionController {
     public List<Map<String,Object>> selectSalPromotion(@RequestParam("CID")String CID,@RequestParam("customerType")String customerType,
                                                        @RequestParam("itemNo")String itemNo,@RequestParam("itemVersion")String itemVersion) throws UnsupportedEncodingException {
         return salPromotionService.selectSalPromotion(CID, customerType, itemNo, itemVersion);
+    }
+
+    @ResponseBody@RequestMapping("getSalPromotionsByIDs")
+    public List<String> getSalPromotionsByIDs(@RequestBody List<String> salPromotionIDs) {
+        return salPromotionService.getSalPromotionNamesByIDs(salPromotionIDs);
     }
 
 }
