@@ -61,8 +61,17 @@ public class Item {
 
     private String groupType;
 
+    private Integer total;
+
     private ItemType itemType;
 
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
 
     public ItemType getItemType() {
         return itemType;
