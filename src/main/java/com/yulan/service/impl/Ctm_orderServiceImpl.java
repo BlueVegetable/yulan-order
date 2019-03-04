@@ -250,9 +250,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         if (list.size()!=0){//有优惠券
             for (Sal_rebate_certificate sal_rebate_certificate:list){
                 if (currentDate.before(sal_rebate_certificate.getDateEnd())){
-                    sal_rebate_certificate.setDateId("1");
+                    sal_rebate_certificate.setDateId("1");//没过期
                 }else{
-                    sal_rebate_certificate.setDateId("0");
+                    sal_rebate_certificate.setDateId("0");//过期
                 }
                 //预留类型判断
             }
