@@ -297,7 +297,7 @@
        select * from(
         select rownum rm, c.*  from
         (
-        select b.* from v_customer_brand a,item b ,COUNT(*) OVER () TOTAL
+        select b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b 
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
