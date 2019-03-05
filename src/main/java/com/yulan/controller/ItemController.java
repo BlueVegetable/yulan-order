@@ -100,7 +100,8 @@ public class ItemController {
     @ResponseBody
     public Map judgeStockShow(@RequestBody Map<String,Object> data){
         String itemNo = (String)data.get("itemNo");
-        Integer stockShowNum = (Integer)data.get("stockShowNum");
+        String stockShow = (String) data.get("stockShowNum");
+        Double stockShowNum = Double.parseDouble(stockShow);
         return itemService.judgeStockShow(stockShowNum,itemNo);
     }
 
