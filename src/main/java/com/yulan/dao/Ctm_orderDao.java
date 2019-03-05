@@ -3,9 +3,11 @@ package com.yulan.dao;
 import com.yulan.pojo.Ctm_order;
 import com.yulan.pojo.Ctm_order_detail;
 import com.yulan.pojo.Sal_promotion;
+import com.yulan.pojo.Sal_rebate_certificate;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +86,7 @@ public interface Ctm_orderDao {
      */
     boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,
                               @Param("CUSTOMER_CODE")String customerCode,
-                              @Param("STATUS_ID")String statusId);
+                              @Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
 
     /**
      * 获取最大订单号自增
@@ -99,4 +101,10 @@ public interface Ctm_orderDao {
      * @return
      */
     Map<String,Object> getlinkpersonandTel(@Param("cid") String cid );
+
+
+    /**
+     * 获取客户优惠券
+     */
+    List<Sal_rebate_certificate> getRebate(@Param("cid")String cid,@Param("currentTime")java.sql.Date currentTime);
 }

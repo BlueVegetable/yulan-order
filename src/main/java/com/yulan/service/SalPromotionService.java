@@ -10,6 +10,8 @@ public interface SalPromotionService {
 
     SalPromotion getSalPromotionByID(String orderType);
 
+    List<String> getSalPromotionNamesByIDs(List<String> IDs);
+
     List<Map<String,Object>> selectSalPromotion(String CID,String customerType,String itemNo, String itemVersion) throws UnsupportedEncodingException;
 
 }

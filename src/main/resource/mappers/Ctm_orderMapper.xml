@@ -216,7 +216,7 @@
         update CTM_ORDER t
         <set>
             <if test="STATUS_ID != null">
-            STATUS_ID = #{STATUS_ID,jdbcType=VARCHAR}
+            STATUS_ID = #{STATUS_ID,jdbcType=VARCHAR},DATE_UPDATE=#{dateUpdate,jdbcType=TIMESTAMP}
             </if>
         </set>
         where ORDER_NO = #{ORDER_NO} and CUSTOMER_CODE = #{CUSTOMER_CODE}
@@ -236,6 +236,27 @@
 
     <select id="getlinkpersonandTel" resultType="Map">
         select t.customer_agent,t.office_tel from CUSTOMER t where t.customer_code=#{cid}
+    </select>
+
+    <resultMap id="rebateMap" type="Sal_rebate_certificate" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="REBATE_TYPE" property="rebateType" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+        <result column="REBATE_MONEY" property="rebateMoney" jdbcType="DECIMAL" />
+        <result column="REBATE_MONEY_OVER" property="rebateMoneyOver" jdbcType="DECIMAL" />
+        <result column="DATE_START" property="dateStart" jdbcType="TIMESTAMP" />
+        <result column="DATE_END" property="dateEnd" jdbcType="TIMESTAMP" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="rebateList" >
+    ID, REBATE_TYPE, CUSTOMER_CODE, REBATE_MONEY, REBATE_MONEY_OVER, to_char(DATE_START,'yyyy-MM-dd')DATE_START, to_char(DATE_END,'yyyy-MM-dd')DATE_END,
+    STATUS
+  </sql>
+    <select id="getRebate" resultMap="rebateMap">
+        select
+        <include refid="rebateList" />
+        from SAL_REBATE_CERTIFICATE t
+        where t.customer_code=#{cid} and t.DATE_START &lt;=#{currentTime} and  t.STATUS='1'
     </select>
 
 </mapper>

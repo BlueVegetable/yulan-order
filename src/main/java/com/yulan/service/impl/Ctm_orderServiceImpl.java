@@ -4,6 +4,7 @@ import com.yulan.dao.Ctm_orderDao;
 import com.yulan.pojo.Ctm_order;
 import com.yulan.pojo.Ctm_order_detail;
 import com.yulan.pojo.Sal_promotion;
+import com.yulan.pojo.Sal_rebate_certificate;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
@@ -150,7 +151,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         ctm_order.setDateUpdate(new Timestamp(System.currentTimeMillis()));//获取当前时间
         ctm_order.setCurrencyId("RMB");
         ctm_order.setCustomerCode(cid);
-        BigDecimal promotion_cost=BigDecimal.valueOf((Double) map.get("promotion_cost"));//活动后总价
+        String promotion_costString=map.get("promotion_cost").toString();//先变字符串
+        BigDecimal promotion_cost=BigDecimal.valueOf(Double.valueOf(promotion_costString));//活动后总价
         //预留优惠券
         BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
@@ -234,10 +236,42 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         return map;
     }
 
+    /**
+     * 获取客户优惠券
+     * @param map
+     * @return
+     */
+    @Override
+    public Map getRebate(Map<String, Object> map) {
+        Map map1=new HashMap();
+        java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());//当前时间
+        String cid=map.get("cid").toString();
+        List<Sal_rebate_certificate> list=ctm_orderDao.getRebate(cid,currentDate);
+        if (list.size()!=0){//有优惠券
+            for (Sal_rebate_certificate sal_rebate_certificate:list){
+                if (currentDate.before(sal_rebate_certificate.getDateEnd())){
+                    sal_rebate_certificate.setDateId("1");//没过期
+                }else{
+                    sal_rebate_certificate.setDateId("0");//过期
+                }
+                //预留类型判断
+            }
+            map1.put("data",list);
+
+        }else {
+            map1.put("data"," ");
+        }
+        map1.put("msg","SUCCESS");
+        map1.put("code",0);
+
+        return map1;
+    }
+
     @Override
     public boolean updateOrderStatus(String orderNo, String customerCode,
                                      String statusId) {
-        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId);
+        Timestamp dateUpdate= new Timestamp(System.currentTimeMillis());
+        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId,dateUpdate);
     }
 
     /**

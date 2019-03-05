@@ -88,6 +88,7 @@ public class CartController{
 		String price = (String) parameters.get("price");
 		String width = (String) parameters.get("width");
 		String height = (String) parameters.get("height");
+		String note = (String) parameters.get("note");
 
 		Item item = itemService.getItemByItemNO(itemNO);
 		Cart cart = getSimpleCartByCID(CID);
@@ -136,6 +137,13 @@ public class CartController{
 				BigInteger count = new BigInteger(quantity);
 				count = count.add(commodity.getQuantity());
 				commodity.setQuantity(count);
+			}
+			if(note != null&&!note.equals("")) {
+				if(commodity.getNote()!=null) {
+					commodity.setNote(commodity.getNote()+"\r\n"+note);
+				} else {
+					commodity.setNote(note);
+				}
 			}
 		    if(!commodityService.updateCommodity(commodity))
                 return Response.getResponseMap(1,"添加失败",null);

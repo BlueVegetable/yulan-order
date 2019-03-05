@@ -2,6 +2,7 @@ package com.yulan.service.impl;
 
 import com.yulan.dao.CartItemDao;
 import com.yulan.pojo.CartItem;
+import com.yulan.pojo.Commodity;
 import com.yulan.service.CartItemService;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,14 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Override
 	public List<CartItem> getCartItems(String cartID, String commodityType) {
-		return cartItemDao.getCartItems(cartID,commodityType);
+		List<CartItem> cartItems = cartItemDao.getCartItems(cartID,commodityType);
+		for (CartItem cartItem:cartItems) {
+			List<Commodity> commodities = cartItem.getCommodities();
+			for (Commodity commodity:commodities) {
+				commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
+			}
+		}
+		return cartItems;
 	}
 
 	@Override

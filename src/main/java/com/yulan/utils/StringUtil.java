@@ -69,6 +69,26 @@ public class StringUtil {
         }
     }
 
+    public static String UTF8ToGBK(String string) {
+		String value = null;
+		try {
+			value = setUtf8(string);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
+
+	public static String GBKToUTF8(String string) {
+		String value = null;
+		try {
+			value = getUtf8(string);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
+
 	/**
 	 * 替换文本
 	 * @param text 模板

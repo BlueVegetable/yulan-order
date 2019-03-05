@@ -111,7 +111,7 @@ public class Ctm_orderController {
     }
 
     /**
-     * 修改订单状态接口
+     * 修改订单状态接口(作废)
      * @param data
      * @return
      */
@@ -142,6 +142,18 @@ public class Ctm_orderController {
     public Map getlinkpersonandTel (@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
         String cid= m.get("cid").toString();
         return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getlinkpersonandTel(cid));
+    }
+
+
+    /**
+     * 获取用户优惠券
+     * @param m
+     * @return
+     */
+    @RequestMapping("getRebate")
+    @ResponseBody
+    public Map getRebate (@RequestBody Map<String,Object> m){
+        return  ctm_orderService.getRebate(m);
     }
 
 
