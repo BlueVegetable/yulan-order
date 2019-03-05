@@ -92,7 +92,10 @@ public class CartController{
 
 		Item item = itemService.getItemByItemNO(itemNO);
 		Cart cart = getSimpleCartByCID(CID);
-		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
+		SalPromotion salPromotion = null;
+		if(activityID != null) {
+			salPromotion = salPromotionService.getSalPromotionByID(activityID);
+		}
 		CartItem cartItem = cartItemService.getCartItemOrder(cart.getCartId(), commodityType,
 				salPromotion == null?null:salPromotion.getGroupType(),
 				item.getGroupType());
@@ -100,7 +103,7 @@ public class CartController{
 			cartItem = new CartItem();
 			cartItem.setCommodityType(commodityType);
 			cartItem.setProductGroupType(item.getGroupType());
-			cartItem.setActivityGroupType(salPromotion.getGroupType());
+			cartItem.setActivityGroupType(salPromotion==null?null:salPromotion.getGroupType());
 			cartItem.setCartId(cart.getCartId());
 			if(!cartItemService.addCartItem(cartItem))
 				return Response.getResponseMap(1,"添加失败",null);
