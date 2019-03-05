@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller@RequestMapping("salPromotion")
 public class SalPromotionController {
@@ -32,7 +31,26 @@ public class SalPromotionController {
 
     @ResponseBody@RequestMapping("getSalPromotionsByIDs")
     public List<String> getSalPromotionsByIDs(@RequestBody List<String> salPromotionIDs) {
-        return salPromotionService.getSalPromotionNamesByIDs(salPromotionIDs);
+        Set<String> salPromotionIDsDeal = new LinkedHashSet<>();
+        for (String salPromotion:salPromotionIDs) {
+            salPromotionIDsDeal.add(salPromotion);
+        }
+        List<String> salPromotionIDsUse = new ArrayList<>();
+        for (String salPromotionID:salPromotionIDsDeal) {
+            salPromotionIDsUse.add(salPromotionID);
+        }
+        List<String> data = salPromotionService.getSalPromotionNamesByIDs(salPromotionIDsUse);
+        List<String> result = new ArrayList<>();
+        int j=0;
+        for (String salPromotionID:salPromotionIDs) {
+            String value = null;
+            if(!salPromotionID.equals(salPromotionIDsUse.get(j))) {
+                j++;
+            }
+            value = data.get(j);
+            result.add(value);
+        }
+        return result;
     }
 
 }
