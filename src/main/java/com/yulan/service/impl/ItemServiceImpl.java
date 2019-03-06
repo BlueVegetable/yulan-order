@@ -158,7 +158,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Map judgeStockShow(Integer stockShowNum, String itemNo) {
+    public Map judgeStockShow(Double stockShowNum, String itemNo) {
         Map<String,Object> map = new HashMap<>();
         Double stockShowNumMax = 0.0;
         StockShow stockShow = new StockShow();
