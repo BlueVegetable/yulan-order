@@ -246,21 +246,17 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         Map map1=new HashMap();
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());//当前时间
         String cid=map.get("cid").toString();
-        List<Sal_rebate_certificate> list=ctm_orderDao.getRebate(cid,currentDate);
-        if (list.size()!=0){//有优惠券
-            for (Sal_rebate_certificate sal_rebate_certificate:list){
-                if (currentDate.before(sal_rebate_certificate.getDateEnd())){
-                    sal_rebate_certificate.setDateId("1");//没过期
-                }else{
-                    sal_rebate_certificate.setDateId("0");//过期
-                }
-                //预留类型判断
-            }
-            map1.put("data",list);
+        String type=map.get("typeId").toString();
 
-        }else {
-            map1.put("data"," ");
+        List<Sal_rebate_certificate> list=ctm_orderDao.getRebate(cid,currentDate);
+        if (!(type.equals("D")||type.equals("E")||type.equals("F"))){
+            for (Sal_rebate_certificate sal_rebate_certificate:list){
+                if (sal_rebate_certificate.getRebateType().equals("month")){
+                    sal_rebate_certificate.setDateId("0");
+                }
+            }
         }
+        map1.put("data",list);
         map1.put("msg","SUCCESS");
         map1.put("code",0);
 
