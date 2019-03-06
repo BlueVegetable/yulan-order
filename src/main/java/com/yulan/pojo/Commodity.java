@@ -13,9 +13,10 @@ public class Commodity {
 	private Item item;
 	private String cartItemId;
 	private BigInteger quantity;
-	private BigInteger width;
-	private BigInteger height;
+	private BigDecimal width;
+	private BigDecimal height;
 	private String note;
+	private String unit;
 
 	public String getId() {
 		return this.id;
@@ -73,19 +74,19 @@ public class Commodity {
 		this.quantity = quantity;
 	}
 
-	public BigInteger getWidth() {
+	public BigDecimal getWidth() {
 		return width;
 	}
 
-	public void setWidth(BigInteger width) {
+	public void setWidth(BigDecimal width) {
 		this.width = width;
 	}
 
-	public BigInteger getHeight() {
+	public BigDecimal getHeight() {
 		return height;
 	}
 
-	public void setHeight(BigInteger height) {
+	public void setHeight(BigDecimal height) {
 		this.height = height;
 	}
 
@@ -95,6 +96,14 @@ public class Commodity {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 	@Override
