@@ -33,7 +33,9 @@ public class ActivityGroupTypeServiceImpl implements ActivityGroupTypeService {
 	@Override
 	public ActivityGroupType getActivityGroupTypeByName(String name) throws UnsupportedEncodingException {
 		ActivityGroupType activityGroupType = activityGroupTypeDao.getActivityGroupTypeByName(name);
-		activityGroupType.setValue(StringUtil.getUtf8(activityGroupType.getValue()));
+		if(activityGroupType!=null) {
+			activityGroupType.setValue(StringUtil.getUtf8(activityGroupType.getValue()));
+		}
 		return activityGroupType;
 	}
 

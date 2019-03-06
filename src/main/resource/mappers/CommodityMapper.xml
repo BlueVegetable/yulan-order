@@ -7,14 +7,15 @@
         <result column="ACTIVITY_ID" property="activityId" jdbcType="VARCHAR" />
         <result column="ACTIVITY_PRICE" property="activityPrice" jdbcType="DECIMAL" />
         <result column="CART_ITEM_ID" property="cartItemId" jdbcType="VARCHAR" />
+        <result column="UNIT" property="unit" jdbcType="VARCHAR" />
         <association property="item" column="ITEM_ID" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 
     <insert id="addCommodity" parameterType="Commodity">
         insert into COMMODITY
-        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE) VALUES
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT) VALUES
         (#{id},#{price},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{cartItemId},#{quantity,jdbcType=NUMERIC},
-        #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR})
+        #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR})
     </insert>
 
     <delete id="deleteCommodityByID" parameterType="String">
@@ -30,7 +31,14 @@
     </select>
 
     <select id="getCommodityAppoint" parameterType="Map" resultType="Commodity">
-        select * from COMMODITY where ACTIVITY_ID = #{activityID,jdbcType=VARCHAR} and ITEM_ID = #{itemID,jdbcType=VARCHAR}
+        select * from COMMODITY where 1=1
+        <if test="activityID!=null">
+            and ACTIVITY_ID = #{activityID,jdbcType=VARCHAR}
+        </if>
+        <if test="activityID==null">
+            and ACTIVITY_ID is null
+        </if>
+        and ITEM_ID = #{itemID,jdbcType=VARCHAR}
         and CART_ITEM_ID = #{cartItemID,jdbcType=VARCHAR}
     </select>
 

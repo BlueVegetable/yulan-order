@@ -33,6 +33,8 @@ public class CartController{
 	private ActivityGroupTypeService activityGroupTypeService;
 	@Autowired
 	private ProductGroupTypeService productGroupTypeService;
+	@Autowired
+	private UnitService unitService;
 
 	private final static String WALLPAPER = "wallpaper";
 	private final static String SOFT = "soft";
@@ -114,6 +116,8 @@ public class CartController{
             commodity.setItem(item);
             commodity.setCartItemId(cartItem.getCartItemId());
             commodity.setActivityId(activityID);
+            Unit unit = unitService.getUnitByID(item.getUnit());
+            commodity.setUnit(unit!=null?unit.getNote():null);
             switch (customer_type) {
                 case "02":commodity.setPrice(item.getPriceSale());break;
                 case "06":commodity.setPrice(item.getPriceFx());break;
@@ -123,8 +127,8 @@ public class CartController{
                 default:return Response.getResponseMap(1,"添加失败",null);
             }
             if(quantity==null||quantity.equals("")) {
-            	commodity.setWidth(new BigInteger(width));
-            	commodity.setHeight(new BigInteger(height));
+            	commodity.setWidth(new BigDecimal(width));
+            	commodity.setHeight(new BigDecimal(height));
 			} else {
             	commodity.setQuantity(new BigInteger(quantity));
 			}
@@ -207,8 +211,8 @@ public class CartController{
 		if(quantityString!=null&&!quantityString.equals("")) {
 			commodity.setQuantity(new BigInteger(quantityString));
 		} else {
-			commodity.setHeight(new BigInteger(heightString));
-			commodity.setWidth(new BigInteger(widthString));
+			commodity.setHeight(new BigDecimal(heightString));
+			commodity.setWidth(new BigDecimal(widthString));
 		}
 		commodity.setCartItemId(cartItemNew.getCartItemId());
 		if(note==null||note.equals("")) {
