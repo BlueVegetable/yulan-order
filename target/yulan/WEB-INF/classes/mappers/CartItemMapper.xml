@@ -32,7 +32,12 @@
         select * from CART_ITEM
         where
         CART_ID = #{cartID} and COMMODITY_TYPE = #{commodityType}
-        and ACTIVITY_GROUP_TYPE = #{activityGroupType,jdbcType=VARCHAR}
+        <if test="activityGroupType!=null">
+            and ACTIVITY_GROUP_TYPE = #{activityGroupType,jdbcType=VARCHAR}
+        </if>
+        <if test="activityGroupType==null">
+            and ACTIVITY_GROUP_TYPE is null
+        </if>
         and PRODUCT_GROUP_TYPE = #{productGroupType,jdbcType=VARCHAR}
     </select>
 </mapper>

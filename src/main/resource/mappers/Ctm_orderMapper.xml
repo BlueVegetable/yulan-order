@@ -184,7 +184,8 @@
       CURTAIN_HEIGHT2, CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID,
       CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2, ML_NON_STANDARD,
       CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,
-      DATE_DELIVER_KF, DATE_DELIVER_NB, DATE_DELIVER_FH,UNIT_PRICE,PROMOTION_COST,PROMOTION,PART_SEND_ID
+      DATE_DELIVER_KF, DATE_DELIVER_NB, DATE_DELIVER_FH,UNIT_PRICE,PROMOTION_COST,PROMOTION,
+      PART_SEND_ID,BACK_Y,BACK_M
       )
     values (#{orderNo,jdbcType=VARCHAR}, #{lineNo,jdbcType=DECIMAL}, #{itemNo,jdbcType=VARCHAR},
       #{itemNoSample,jdbcType=VARCHAR}, #{productionVersion,jdbcType=VARCHAR}, #{qtyRequired,jdbcType=DECIMAL},
@@ -196,7 +197,8 @@
       #{curtainSizeTimes,jdbcType=DECIMAL}, #{curtainSizeTimes2,jdbcType=DECIMAL}, #{mlNonStandard,jdbcType=DECIMAL},
       #{curtainWbhSize,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{transId,jdbcType=VARCHAR},
       #{dateDeliverKf,jdbcType=TIMESTAMP}, #{dateDeliverNb,jdbcType=TIMESTAMP}, #{dateDeliverFh,jdbcType=TIMESTAMP},
-      #{unitPrice,jdbcType=DECIMAL},#{promotionCost,jdbcType=TIMESTAMP}, #{promotion,jdbcType=VARCHAR},#{partSendId,jdbcType=VARCHAR}
+      #{unitPrice,jdbcType=DECIMAL},#{promotionCost,jdbcType=TIMESTAMP}, #{promotion,jdbcType=VARCHAR},
+      #{partSendId,jdbcType=VARCHAR},#{backY,jdbcType=TIMESTAMP},#{backM,jdbcType=TIMESTAMP}
       )
   </insert>
     
@@ -247,16 +249,21 @@
         <result column="DATE_START" property="dateStart" jdbcType="TIMESTAMP" />
         <result column="DATE_END" property="dateEnd" jdbcType="TIMESTAMP" />
         <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="NOTES" property="notes" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="rebateList" >
     ID, REBATE_TYPE, CUSTOMER_CODE, REBATE_MONEY, REBATE_MONEY_OVER, to_char(DATE_START,'yyyy-MM-dd')DATE_START, to_char(DATE_END,'yyyy-MM-dd')DATE_END,
-    STATUS
+    STATUS,NOTES
   </sql>
     <select id="getRebate" resultMap="rebateMap">
         select
         <include refid="rebateList" />
         from SAL_REBATE_CERTIFICATE t
-        where t.customer_code=#{cid} and t.DATE_START &lt;=#{currentTime} and  t.STATUS='1'
+        where t.customer_code=#{cid}
+        and t.DATE_START &lt;=#{currentTime}
+        and t.DATE_END &gt;=#{currentTime}
+        and t.REBATE_MONEY_OVER!=0
+        and  t.STATUS='1'
     </select>
 
 </mapper>

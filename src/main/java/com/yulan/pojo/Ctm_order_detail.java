@@ -86,6 +86,26 @@ public class Ctm_order_detail  {
 
     private String partSendId;
 
+    private BigDecimal backY;//年返利
+
+    private BigDecimal backM;//月放利
+
+    public BigDecimal getBackY() {
+        return backY;
+    }
+
+    public void setBackY(BigDecimal backY) {
+        this.backY = backY;
+    }
+
+    public BigDecimal getBackM() {
+        return backM;
+    }
+
+    public void setBackM(BigDecimal backM) {
+        this.backM = backM;
+    }
+
     public String getPartSendId() {
         return partSendId;
     }

@@ -16,12 +16,14 @@ public class CommodityServiceImpl implements CommodityService {
 	private CommodityDao commodityDao;
 
 	@Override
-	public boolean addCommodity(Commodity commodity) throws UnsupportedEncodingException {
+	public boolean addCommodity(Commodity commodity) {
 		commodity.setId(System.currentTimeMillis()+ StringUtil.createStringID());
 		String note = commodity.getNote();
+		String unit = commodity.getUnit();
 		if(note != null) {
 			commodity.setNote(StringUtil.UTF8ToGBK(note));
 		}
+		commodity.setUnit(unit!=null?StringUtil.UTF8ToGBK(unit):null);
 		return commodityDao.addCommodity(commodity)>0;
 	}
 

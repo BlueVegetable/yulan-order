@@ -22,6 +22,16 @@ public class Sal_rebate_certificate {
 
     private String dateId;//过期标志，0过期，1没过期
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    private  String notes;
+
     public String getDateId() {
         return dateId;
     }
