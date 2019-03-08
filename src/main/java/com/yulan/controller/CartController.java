@@ -197,17 +197,31 @@ public class CartController{
 		String note = parameters.get("note");
 		Commodity commodity = commodityService.getCommodityByID(commodityID);
 		CartItem cartItem = cartItemService.getCartItemByID(commodity.getCartItemId());
-		SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
+        SalPromotion salPromotion;
+        if(activityID!=null&&!activityID.equals("")) {
+            salPromotion = salPromotionService.getSalPromotionByID(activityID);
+        } else {
+            salPromotion = null;
+        }
 		CartItem cartItemNew = cartItemService.getCartItemOrder(cartItem.getCartId(),
 				cartItem.getCommodityType(),salPromotion.getGroupType(),commodity.getItem().getGroupType());
 		if(cartItemNew == null) {
 			cartItemNew = new CartItem();
 			cartItemNew.setCartId(cartItem.getCartId());
-			cartItemNew.setActivityGroupType(salPromotion.getGroupType());
+			if(salPromotion!=null) {
+                cartItemNew.setActivityGroupType(salPromotion.getGroupType());
+            } else {
+			    cartItemNew.setActivityGroupType(null);
+            }
 			cartItemNew.setProductGroupType(commodity.getItem().getGroupType());
 			cartItemNew.setCommodityType(cartItem.getCommodityType());
 			cartItemService.addCartItem(cartItemNew);
 		}
+		if(salPromotion!=null) {
+		    commodity.setActivityId(salPromotion.getOrderType());
+        } else {
+		    commodity.setActivityId(null);
+        }
 		if(quantityString!=null&&!quantityString.equals("")) {
 			commodity.setQuantity(new BigInteger(quantityString));
 		} else {
@@ -220,7 +234,23 @@ public class CartController{
 		} else {
 			commodity.setNote(note);
 		}
-		commodityService.updateCommodity(commodity);
+		Commodity commodityMayBe = commodityService.getCommodityAppoint(commodity.getActivityId(),
+                commodity.getItem().getItemNo(),commodity.getCartItemId());
+		if(commodityMayBe == null) {
+            commodityService.updateCommodity(commodity);
+        } else {
+		    if(commodityMayBe.getQuantity()!=null) {
+		        commodityMayBe.setQuantity(commodity.getQuantity().add(commodity.getQuantity()));
+		        commodityService.updateCommodity(commodityMayBe);
+		        commodityService.deleteCommodityByID(commodityMayBe.getId());
+            } else {
+		        return Response.getResponseMap(2,"该产品在此活动下已存在",null);
+            }
+        }
+		long count = commodityService.countByCartItemID(cartItem.getCartItemId());
+		if(count == 0) {
+		    cartItemService.deleteCartItemByID(cartItem.getCartItemId());
+        }
 		return Response.getResponseMap(0,"",null);
 	}
 

@@ -39,6 +39,7 @@ public class CartItemServiceImpl implements CartItemService {
 			List<Commodity> commodities = cartItem.getCommodities();
 			for (Commodity commodity:commodities) {
 				commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
+				commodity.setUnit(StringUtil.GBKToUTF8(commodity.getUnit()));
 			}
 		}
 		return cartItems;

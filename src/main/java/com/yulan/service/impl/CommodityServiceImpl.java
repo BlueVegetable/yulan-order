@@ -32,6 +32,7 @@ public class CommodityServiceImpl implements CommodityService {
 		Commodity commodity = commodityDao.getCommodityAppoint(activityID, itemID, cartItemID);
 		if(commodity!=null) {
 			commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
+			commodity.setUnit(StringUtil.GBKToUTF8(commodity.getUnit()));
 		}
 		return commodity;
 	}
@@ -59,9 +60,11 @@ public class CommodityServiceImpl implements CommodityService {
 	@Override
 	public boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException {
 		String note = commodity.getNote();
+		String unit = commodity.getUnit();
 		if(note != null) {
 			commodity.setNote(StringUtil.UTF8ToGBK(commodity.getNote()));
 		}
+		commodity.setUnit(StringUtil.UTF8ToGBK(unit));
 		return commodityDao.updateCommodity(commodity)>0;
 	}
 

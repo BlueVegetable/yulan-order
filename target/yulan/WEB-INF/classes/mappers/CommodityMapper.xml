@@ -30,7 +30,7 @@
         select * from COMMODITY where ID = #{commodityID}
     </select>
 
-    <select id="getCommodityAppoint" parameterType="Map" resultType="Commodity">
+    <select id="getCommodityAppoint" parameterType="Map" resultMap="CommodityMap">
         select * from COMMODITY where 1=1
         <if test="activityID!=null">
             and ACTIVITY_ID = #{activityID,jdbcType=VARCHAR}
