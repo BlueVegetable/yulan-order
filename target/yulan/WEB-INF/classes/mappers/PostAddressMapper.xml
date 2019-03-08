@@ -10,13 +10,17 @@
         <result column="PROVINCE" property="province" jdbcType="VARCHAR"/>
         <result column="CITY" property="city" jdbcType="VARCHAR"/>
         <result column="COUNTRY" property="country" jdbcType="VARCHAR"/>
+        <result column="PROVINCE_ID" property="provinceID" jdbcType="VARCHAR"/>
+        <result column="CITY_ID" property="cityID" jdbcType="VARCHAR"/>
+        <result column="COUNTRY_ID" property="countryID" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <insert id="addPostAddress" parameterType="com.yulan.pojo.PostAddress" >
-        insert into POST_ADDRESS (CID, POST_ADDRESS, WL_CONTACTS, WL_TEL, PROVINCE, CITY, COUNTRY)
+        insert into POST_ADDRESS (CID, POST_ADDRESS, WL_CONTACTS, WL_TEL, PROVINCE, CITY, COUNTRY, PROVINCE_ID, CITY_ID, COUNTRY_ID)
         values (#{cid,jdbcType=VARCHAR}, #{postAddress,jdbcType=VARCHAR}, #{wlContacts,jdbcType=VARCHAR},
-      #{wlTel,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR} ,#{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR})
+      #{wlTel,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR} ,#{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR},
+      #{provinceID,jdbcType=VARCHAR},#{cityID,jdbcType=VARCHAR},#{countryID,jdbcType=VARCHAR})
     </insert>
 
     <update id="updatePostAddress" parameterType="com.yulan.pojo.PostAddress" >
@@ -38,7 +42,16 @@
                 CITY = #{city,jdbcType=VARCHAR},
             </if>
             <if test="country != null">
-                COUNTRY = #{country,jdbcType=VARCHAR}
+                COUNTRY = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                PROVINCE_ID = #{provinceID,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                CITY_ID = #{cityID,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                COUNTRY_ID = #{countryID,jdbcType=VARCHAR}
             </if>
         </set>
         where CID = #{cid,jdbcType=VARCHAR} and ADDRESS_ID = #{addressId}
