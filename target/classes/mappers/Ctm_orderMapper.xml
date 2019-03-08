@@ -250,10 +250,11 @@
         <result column="DATE_END" property="dateEnd" jdbcType="TIMESTAMP" />
         <result column="STATUS" property="status" jdbcType="VARCHAR" />
         <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+        <result column="APPLICATION" property="application" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="rebateList" >
     ID, REBATE_TYPE, CUSTOMER_CODE, REBATE_MONEY, REBATE_MONEY_OVER, to_char(DATE_START,'yyyy-MM-dd')DATE_START, to_char(DATE_END,'yyyy-MM-dd')DATE_END,
-    STATUS,NOTES
+    STATUS,NOTES,APPLICATION
   </sql>
     <select id="getRebate" resultMap="rebateMap">
         select
@@ -265,5 +266,14 @@
         and t.REBATE_MONEY_OVER!=0
         and  t.STATUS='1'
     </select>
+
+    <select id="getRebateById" resultType="Sal_rebate_certificate">
+        select
+        <include refid="rebateList" />
+        from SAL_REBATE_CERTIFICATE t
+        where t.id=#{id}
+
+    </select>
+
 
 </mapper>

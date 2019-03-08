@@ -121,6 +121,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     @Override
     public Map orderCount(Map<String, Object> map) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
         String product_group_tpye=map.get("product_group_tpye").toString();
+
+        String rebateY=map.get("rebateY").toString();//年优惠券流水号
+        String rebateM=map.get("rebateM").toString();//月优惠券流水号
+
         Map m=new HashMap();
         Ctm_order ctm_order=new Ctm_order();
 
@@ -153,8 +157,32 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         ctm_order.setCustomerCode(cid);
         String promotion_costString=map.get("promotion_cost").toString();//先变字符串
         BigDecimal promotion_cost=BigDecimal.valueOf(Double.valueOf(promotion_costString));//活动后总价
-        //预留优惠券
-        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
+
+
+        //初始为零
+        BigDecimal money_m=BigDecimal.valueOf(0);
+        BigDecimal money_y=BigDecimal.valueOf(0);
+        BigDecimal money=BigDecimal.valueOf(0);
+        if(!(rebateY.equals("")&&rebateM.equals(""))){//同时选了年和月
+            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
+            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
+            money_m=rebate_m.getRebateMoneyOver();
+            money_y=rebate_y.getRebateMoneyOver();
+        }else if (rebateY.equals("")&&!rebateM.equals("")){//月
+            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
+            money_m=rebate_m.getRebateMoneyOver();
+        }else if(!rebateY.equals("")&&rebateM.equals("")){//年
+            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
+            money_y=rebate_y.getRebateMoneyOver();
+        }
+        money=money_y.add(money_m);//优惠券+总额
+
+
+
+
+
+
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid).add(money);//加上优惠券
 
 
         String statusId=" ";
@@ -179,6 +207,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     }
                 }
                 Ctm_order_detail ctm_order_detail= MapUtils.mapToBean(m2,Ctm_order_detail.class);
+
+
                 ctm_order_detail.setLineNo(lineNo++);
                 ctm_order_detail.setStatusId(statusId);
                 ctm_order_detail.setOrderNo(order);
@@ -242,21 +272,30 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
      * @return
      */
     @Override
-    public Map getRebate(Map<String, Object> map) {
+    public Map getRebate(Map<String, Object> map) throws UnsupportedEncodingException {
         Map map1=new HashMap();
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());//当前时间
         String cid=map.get("cid").toString();
         String type=map.get("typeId").toString();
 
         List<Sal_rebate_certificate> list=ctm_orderDao.getRebate(cid,currentDate);
+        List< Map<String, Object>> data=new ArrayList<>();
         if (!(type.equals("D")||type.equals("E")||type.equals("F"))){
             for (Sal_rebate_certificate sal_rebate_certificate:list){
                 if (sal_rebate_certificate.getRebateType().equals("month")){
                     sal_rebate_certificate.setDateId("0");
                 }
+                Map<String, Object> map2=MapUtils.beanToMap(sal_rebate_certificate);
+                for (Map.Entry<String, Object> entry : map2.entrySet()) {
+                    if (entry.getValue() instanceof String) {
+                        String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                        entry.setValue(origin);
+                    }
+                }
+                data.add(map2);
             }
         }
-        map1.put("data",list);
+        map1.put("data",data);
         map1.put("msg","SUCCESS");
         map1.put("code",0);
 
@@ -306,4 +345,18 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         return trueOrder;
 
     }
+
+//    public Map<String,BigDecimal> getBackMoney(BigDecimal promotion_cost,BigDecimal money_m,BigDecimal money_y,BigDecimal thisMoney){
+//        BigDecimal money=money_m.add(money_y);
+//        BigDecimal backMoney_m=BigDecimal.valueOf(0);
+//        BigDecimal backMoney_y=BigDecimal.valueOf(0);
+//        if (promotion_cost.compareTo(money)==1){//价格大于优惠券
+//            if()
+//            backMoney_m=((thisMoney.divide(promotion_cost)).multiply(money_m.divide(money))).multiply(money_m);//月返
+//
+//
+//
+//        }
+//
+//    }
 }

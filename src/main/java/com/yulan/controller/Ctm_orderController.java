@@ -152,7 +152,7 @@ public class Ctm_orderController {
      */
     @RequestMapping("getRebate")
     @ResponseBody
-    public Map getRebate (@RequestBody Map<String,Object> m){
+    public Map getRebate (@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
         return  ctm_orderService.getRebate(m);
     }
 
