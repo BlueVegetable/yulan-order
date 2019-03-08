@@ -48,6 +48,16 @@ public class PostAddressController {
         }
     }
 
+    @RequestMapping(value = "deletePostAddress")
+    @ResponseBody
+    public Map deletePostAddress(@RequestBody PostAddress postAddress){
+        if(postAddressService.deletePostAddress(postAddress)){
+            return Response.getResponseMap(0,"SUCCESS",null);
+        }else{
+            return Response.getResponseMap(1,"Failed",null);
+        }
+    }
+
     /**
      * 得到收货地址接口
      * @param data

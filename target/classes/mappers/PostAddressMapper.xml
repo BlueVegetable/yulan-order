@@ -7,13 +7,16 @@
         <result column="WL_CONTACTS" property="wlContacts" jdbcType="VARCHAR" />
         <result column="WL_TEL" property="wlTel" jdbcType="VARCHAR" />
         <result column="ADDRESS_ID" property="addressId" jdbcType="DECIMAL" />
+        <result column="PROVINCE" property="province" jdbcType="VARCHAR"/>
+        <result column="CITY" property="city" jdbcType="VARCHAR"/>
+        <result column="COUNTRY" property="country" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <insert id="addPostAddress" parameterType="com.yulan.pojo.PostAddress" >
-        insert into POST_ADDRESS (CID, POST_ADDRESS, WL_CONTACTS, WL_TEL)
+        insert into POST_ADDRESS (CID, POST_ADDRESS, WL_CONTACTS, WL_TEL, PROVINCE, CITY, COUNTRY)
         values (#{cid,jdbcType=VARCHAR}, #{postAddress,jdbcType=VARCHAR}, #{wlContacts,jdbcType=VARCHAR},
-      #{wlTel,jdbcType=VARCHAR})
+      #{wlTel,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR} ,#{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR})
     </insert>
 
     <update id="updatePostAddress" parameterType="com.yulan.pojo.PostAddress" >
@@ -26,11 +29,24 @@
                 WL_CONTACTS = #{wlContacts,jdbcType=VARCHAR},
             </if>
             <if test="wlTel != null" >
-                WL_TEL = #{wlTel,jdbcType=VARCHAR}
+                WL_TEL = #{wlTel,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                PROVINCE = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                CITY = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                COUNTRY = #{country,jdbcType=VARCHAR}
             </if>
         </set>
         where CID = #{cid,jdbcType=VARCHAR} and ADDRESS_ID = #{addressId}
     </update>
+
+    <delete id="deletePostAddress" parameterType="com.yulan.pojo.PostAddress" >
+        delete from POST_ADDRESS where CID = #{cid,jdbcType=VARCHAR} and ADDRESS_ID = #{addressId}
+    </delete>
 
     <select id="getPostAddress" resultMap="PostAddressMap">
         select * from POST_ADDRESS t where t.cid = #{CID}
