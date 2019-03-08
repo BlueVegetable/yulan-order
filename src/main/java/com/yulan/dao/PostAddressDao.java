@@ -13,5 +13,7 @@ public interface PostAddressDao {
 
     List<PostAddress> getPostAddress(@Param("CID") String cid);
 
+    boolean deletePostAddress(PostAddress postAddress);
+
 
 }

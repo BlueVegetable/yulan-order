@@ -44,6 +44,10 @@
         where CID = #{cid,jdbcType=VARCHAR} and ADDRESS_ID = #{addressId}
     </update>
 
+    <delete id="deletePostAddress" parameterType="com.yulan.pojo.PostAddress" >
+        delete from POST_ADDRESS where CID = #{cid,jdbcType=VARCHAR} and ADDRESS_ID = #{addressId}
+    </delete>
+
     <select id="getPostAddress" resultMap="PostAddressMap">
         select * from POST_ADDRESS t where t.cid = #{CID}
     </select>

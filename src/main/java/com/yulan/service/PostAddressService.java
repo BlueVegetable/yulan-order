@@ -11,5 +11,7 @@ public interface PostAddressService {
 
     boolean updatePostAddress(PostAddress postAddress)throws IOException;
 
+    boolean deletePostAddress(PostAddress postAddress);
+
     Map getPostAddress(String cid)throws IOException;
 }

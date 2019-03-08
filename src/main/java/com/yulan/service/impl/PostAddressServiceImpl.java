@@ -23,6 +23,7 @@ public class PostAddressServiceImpl implements PostAddressService {
     @Autowired
     private CustomerInfoService customerInfoService;
 
+
     @Override
     public boolean addPostAddress(PostAddress postAddress) throws IOException {
         if(null != postAddress.getPostAddress()){
@@ -52,6 +53,11 @@ public class PostAddressServiceImpl implements PostAddressService {
             postAddress.setCountry(stringUtil.setUtf8(postAddress.getCountry()));
         }
         return postAddressDao.updatePostAddress(postAddress);
+    }
+
+    @Override
+    public boolean deletePostAddress(PostAddress postAddress) {
+        return postAddressDao.deletePostAddress(postAddress);
     }
 
     @Override
