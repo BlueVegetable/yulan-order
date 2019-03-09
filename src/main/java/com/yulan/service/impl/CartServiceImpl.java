@@ -1,6 +1,6 @@
 package com.yulan.service.impl;
 
-import com.yulan.dao.CartDao;
+import com.yulan.encode.CartEncode;
 import com.yulan.pojo.Cart;
 import com.yulan.service.CartService;
 import com.yulan.utils.StringUtil;
@@ -11,27 +11,27 @@ import org.springframework.stereotype.Service;
 public class CartServiceImpl implements CartService {
 
 	@Autowired
-	private CartDao cartDao;
+	private CartEncode cartEncode;
 
 	@Override
 	public boolean addCart(Cart cart) {
         cart.setCartId(System.currentTimeMillis()+ StringUtil.createStringID());
-		return cartDao.addCart(cart)>0;
+		return cartEncode.addCart(cart);
 	}
 
 	@Override
 	public boolean existCart(String CID) {
-		return cartDao.countCartByCID(CID) > 0;
+		return cartEncode.existCart(CID);
 	}
 
 	@Override
 	public Cart getSimpleCartByID(String cartID) {
-		return cartDao.getCartByID(cartID);
+		return cartEncode.getSimpleCartByID(cartID);
 	}
 
 	@Override
 	public Cart getSimpleCartByCID(String CID) {
-		return cartDao.getCartByCID(CID);
+		return cartEncode.getCartByCID(CID);
 	}
 
 	@Override

@@ -204,7 +204,8 @@ public class CartController{
             salPromotion = null;
         }
 		CartItem cartItemNew = cartItemService.getCartItemOrder(cartItem.getCartId(),
-				cartItem.getCommodityType(),salPromotion.getGroupType(),commodity.getItem().getGroupType());
+				cartItem.getCommodityType(),salPromotion==null?null:salPromotion.getGroupType(),
+				commodity.getItem().getGroupType());
 		if(cartItemNew == null) {
 			cartItemNew = new CartItem();
 			cartItemNew.setCartId(cartItem.getCartId());
@@ -240,9 +241,9 @@ public class CartController{
             commodityService.updateCommodity(commodity);
         } else {
 		    if(commodityMayBe.getQuantity()!=null) {
-		        commodityMayBe.setQuantity(commodity.getQuantity().add(commodity.getQuantity()));
+		        commodityMayBe.setQuantity(commodity.getQuantity().add(commodityMayBe.getQuantity()));
 		        commodityService.updateCommodity(commodityMayBe);
-		        commodityService.deleteCommodityByID(commodityMayBe.getId());
+		        commodityService.deleteCommodityByID(commodity.getId());
             } else {
 		        return Response.getResponseMap(2,"该产品在此活动下已存在",null);
             }
