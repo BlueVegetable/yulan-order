@@ -32,6 +32,15 @@ public class PostAddressServiceImpl implements PostAddressService {
         if(null != postAddress.getWlContacts()){
             postAddress.setWlContacts(stringUtil.setUtf8(postAddress.getWlContacts()));
         }
+        if(null != postAddress.getProvince()){
+            postAddress.setProvince(stringUtil.setUtf8(postAddress.getProvince()));
+        }
+        if(null != postAddress.getCity()){
+            postAddress.setCity(stringUtil.setUtf8(postAddress.getCity()));
+        }
+        if(null != postAddress.getCountry()){
+            postAddress.setCountry(stringUtil.setUtf8(postAddress.getCountry()));
+        }
         return postAddressDao.addPostAddress(postAddress);
     }
 

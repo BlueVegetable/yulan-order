@@ -18,7 +18,37 @@ public class PostAddress {
 
     private String country;
 
+    private String provinceID;
+
+    private String cityID;
+
+    private String countryID;
+
     public PostAddress() {
+    }
+
+    public String getProvinceID() {
+        return provinceID;
+    }
+
+    public void setProvinceID(String provinceID) {
+        this.provinceID = provinceID;
+    }
+
+    public String getCityID() {
+        return cityID;
+    }
+
+    public void setCityID(String cityID) {
+        this.cityID = cityID;
+    }
+
+    public String getCountryID() {
+        return countryID;
+    }
+
+    public void setCountryID(String countryID) {
+        this.countryID = countryID;
     }
 
     public String getProvince() {
