@@ -31,5 +31,5 @@ public interface Ctm_orderService {
    Map getlinkpersonandTel(String cid) throws UnsupportedEncodingException;
 
    //获取客户优惠券
-   Map getRebate(Map<String,Object>map);
+   Map getRebate(Map<String,Object>map) throws UnsupportedEncodingException;
 }
