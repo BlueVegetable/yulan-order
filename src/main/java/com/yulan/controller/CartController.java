@@ -237,7 +237,7 @@ public class CartController{
 		}
 		Commodity commodityMayBe = commodityService.getCommodityAppoint(commodity.getActivityId(),
                 commodity.getItem().getItemNo(),commodity.getCartItemId());
-		if(commodityMayBe == null) {
+		if(commodityMayBe == null||commodityMayBe.getId().equals(commodity.getId())) {
             commodityService.updateCommodity(commodity);
         } else {
 		    if(commodityMayBe.getQuantity()!=null) {

@@ -119,12 +119,14 @@ public class Commodity {
 				Objects.equals(getCartItemId(), commodity.getCartItemId()) &&
 				Objects.equals(getQuantity(), commodity.getQuantity()) &&
 				Objects.equals(getWidth(), commodity.getWidth()) &&
-				Objects.equals(getHeight(), commodity.getHeight());
+				Objects.equals(getHeight(), commodity.getHeight()) &&
+				Objects.equals(getNote(), commodity.getNote()) &&
+				Objects.equals(getUnit(), commodity.getUnit());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getPrice(), getActivityId(), getActivityPrice(), getItem(), getCartItemId(), getQuantity(), getWidth(), getHeight());
+		return Objects.hash(getId(), getPrice(), getActivityId(), getActivityPrice(), getItem(), getCartItemId(), getQuantity(), getWidth(), getHeight(), getNote(), getUnit());
 	}
 
 	@Override
