@@ -93,15 +93,16 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         List<Map<String,Object>> data=new ArrayList<>();
         for (Map<String, Object> m:list){
             BigDecimal promotion_cost=BigDecimal.valueOf(0.0);
-            BigDecimal num=BigDecimal.valueOf((int)m.get("num"));
+            String numString=m.get("num").toString();
+            BigDecimal num=BigDecimal.valueOf(Double.valueOf(numString));
             String order_type=m.get("order_type").toString();
             if (order_type==null||order_type.equals("")){
                 m.put("promotion_cost",m.get("prime_cost"));
                 data.add(m);
                 continue;
             }
-
-            BigDecimal prime_cost= BigDecimal.valueOf((int) m.get("prime_cost"));
+            String prime_costString=m.get("prime_cost").toString();
+            BigDecimal prime_cost= BigDecimal.valueOf(Double.valueOf(prime_costString));
             Sal_promotion sal_promotion=ctm_orderDao.getPromotion(order_type);
             BigDecimal discount=sal_promotion.getDiscount();
             BigDecimal price=sal_promotion.getPrice();
