@@ -107,9 +107,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             BigDecimal discount=sal_promotion.getDiscount();
             BigDecimal price=sal_promotion.getPrice();
             if (discount!=null){
-                promotion_cost= discount.multiply(prime_cost).setScale(2);//乘法保留两位小数
+                promotion_cost= discount.multiply(prime_cost);//乘法保留两位小数
             }else{
-                promotion_cost= price.multiply(num).setScale(2);
+                promotion_cost= price.multiply(num);
             }
             m.put("promotion_cost",promotion_cost);
             data.add(m);
