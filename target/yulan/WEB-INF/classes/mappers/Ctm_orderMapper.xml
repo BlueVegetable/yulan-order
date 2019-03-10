@@ -197,8 +197,8 @@
       #{curtainSizeTimes,jdbcType=DECIMAL}, #{curtainSizeTimes2,jdbcType=DECIMAL}, #{mlNonStandard,jdbcType=DECIMAL},
       #{curtainWbhSize,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{transId,jdbcType=VARCHAR},
       #{dateDeliverKf,jdbcType=TIMESTAMP}, #{dateDeliverNb,jdbcType=TIMESTAMP}, #{dateDeliverFh,jdbcType=TIMESTAMP},
-      #{unitPrice,jdbcType=DECIMAL},#{promotionCost,jdbcType=TIMESTAMP}, #{promotion,jdbcType=VARCHAR},
-      #{partSendId,jdbcType=VARCHAR},#{backY,jdbcType=TIMESTAMP},#{backM,jdbcType=TIMESTAMP}
+      #{unitPrice,jdbcType=DECIMAL},#{promotionCost,jdbcType=DECIMAL}, #{promotion,jdbcType=VARCHAR},
+      #{partSendId,jdbcType=VARCHAR},#{backY,jdbcType=DECIMAL},#{backM,jdbcType=DECIMAL}
       )
   </insert>
     

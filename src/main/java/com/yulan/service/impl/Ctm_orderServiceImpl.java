@@ -95,6 +95,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             BigDecimal promotion_cost=BigDecimal.valueOf(0.0);
             BigDecimal num=BigDecimal.valueOf((int)m.get("num"));
             String order_type=m.get("order_type").toString();
+            if (order_type==null||order_type.equals("")){
+                m.put("promotion_cost",m.get("prime_cost"));
+                data.add(m);
+                continue;
+            }
 
             BigDecimal prime_cost= BigDecimal.valueOf((int) m.get("prime_cost"));
             Sal_promotion sal_promotion=ctm_orderDao.getPromotion(order_type);
@@ -122,8 +127,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     public Map orderCount(Map<String, Object> map) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
         String product_group_tpye=map.get("product_group_tpye").toString();
 
-        String rebateY=map.get("rebateY").toString();//年优惠券流水号
-        String rebateM=map.get("rebateM").toString();//月优惠券流水号
+//        String rebateY=map.get("rebateY").toString();//年优惠券流水号
+//        String rebateM=map.get("rebateM").toString();//月优惠券流水号
 
         Map m=new HashMap();
         Ctm_order ctm_order=new Ctm_order();
@@ -163,27 +168,27 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         BigDecimal money_m=BigDecimal.valueOf(0);
         BigDecimal money_y=BigDecimal.valueOf(0);
         BigDecimal money=BigDecimal.valueOf(0);
-        if(!(rebateY.equals("")&&rebateM.equals(""))){//同时选了年和月
-            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
-            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
-            money_m=rebate_m.getRebateMoneyOver();
-            money_y=rebate_y.getRebateMoneyOver();
-        }else if (rebateY.equals("")&&!rebateM.equals("")){//月
-            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
-            money_m=rebate_m.getRebateMoneyOver();
-        }else if(!rebateY.equals("")&&rebateM.equals("")){//年
-            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
-            money_y=rebate_y.getRebateMoneyOver();
-        }
-        money=money_y.add(money_m);//优惠券+总额
+//        if(!(rebateY.equals("")&&rebateM.equals(""))){//同时选了年和月
+//            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
+//            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
+//            money_m=rebate_m.getRebateMoneyOver();
+//            money_y=rebate_y.getRebateMoneyOver();
+//        }else if (rebateY.equals("")&&!rebateM.equals("")){//月
+//            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
+//            money_m=rebate_m.getRebateMoneyOver();
+//        }else if(!rebateY.equals("")&&rebateM.equals("")){//年
+//            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
+//            money_y=rebate_y.getRebateMoneyOver();
+//        }
+//        money=money_y.add(money_m);//优惠券+总额
 
 
 
 
 
 
-        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid).add(money);//加上优惠券
-
+//        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid).add(money);//加上优惠券
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
         if (resideMoney.compareTo(promotion_cost)==-1){//余额不足
@@ -346,17 +351,30 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     }
 
-//    public Map<String,BigDecimal> getBackMoney(BigDecimal promotion_cost,BigDecimal money_m,BigDecimal money_y,BigDecimal thisMoney){
-//        BigDecimal money=money_m.add(money_y);
-//        BigDecimal backMoney_m=BigDecimal.valueOf(0);
-//        BigDecimal backMoney_y=BigDecimal.valueOf(0);
-//        if (promotion_cost.compareTo(money)==1){//价格大于优惠券
-//            if()
-//            backMoney_m=((thisMoney.divide(promotion_cost)).multiply(money_m.divide(money))).multiply(money_m);//月返
-//
-//
-//
-//        }
-//
-//    }
+    /**
+     * 计算返利点
+     * @param promotion_cost 商品总价
+     * @param allMoney 返利券总价
+     * @param money 返利券
+     * @param thisMoney 商品价格
+     * @return 返利
+     *
+     */
+    public BigDecimal getBackMoney(BigDecimal promotion_cost,BigDecimal allMoney,BigDecimal money,BigDecimal thisMoney){
+
+
+
+        BigDecimal backMoney=BigDecimal.valueOf(0);
+        if(money.compareTo(BigDecimal.valueOf(0))==0){
+            return backMoney;
+        }
+
+        if (promotion_cost.compareTo(allMoney)==1){//价格大于优惠券
+
+            backMoney=((thisMoney.divide(promotion_cost)).multiply(money.divide(allMoney))).multiply(money);//返利
+        }else  if (promotion_cost.compareTo(allMoney)==-1){
+            backMoney=((thisMoney.divide(promotion_cost)).multiply(money));
+        }
+        return backMoney;
+    }
 }
