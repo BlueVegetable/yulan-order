@@ -32,6 +32,16 @@ public class Sal_rebate_certificate {
 
     private  String notes;
 
+    private  String application;
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
     public String getDateId() {
         return dateId;
     }

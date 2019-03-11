@@ -1,6 +1,6 @@
 package com.yulan.service.impl;
 
-import com.yulan.dao.CommodityDao;
+import com.yulan.encode.CommodityEncode;
 import com.yulan.pojo.Commodity;
 import com.yulan.service.CommodityService;
 import com.yulan.utils.StringUtil;
@@ -13,59 +13,43 @@ import java.io.UnsupportedEncodingException;
 public class CommodityServiceImpl implements CommodityService {
 
 	@Autowired
-	private CommodityDao commodityDao;
+	private CommodityEncode commodityEncode;
 
 	@Override
 	public boolean addCommodity(Commodity commodity) {
 		commodity.setId(System.currentTimeMillis()+ StringUtil.createStringID());
-		String note = commodity.getNote();
-		String unit = commodity.getUnit();
-		if(note != null) {
-			commodity.setNote(StringUtil.UTF8ToGBK(note));
-		}
-		commodity.setUnit(unit!=null?StringUtil.UTF8ToGBK(unit):null);
-		return commodityDao.addCommodity(commodity)>0;
+		return commodityEncode.addCommodity(commodity);
 	}
 
 	@Override
 	public Commodity getCommodityAppoint(String activityID, String itemID, String cartItemID) {
-		Commodity commodity = commodityDao.getCommodityAppoint(activityID, itemID, cartItemID);
-		if(commodity!=null) {
-			commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
-			commodity.setUnit(StringUtil.GBKToUTF8(commodity.getUnit()));
-		}
+		Commodity commodity = commodityEncode.getCommodityAppoint(activityID, itemID, cartItemID);
 		return commodity;
 	}
 
 	@Override
 	public boolean deleteCommodityByID(String commodityID) {
-		return commodityDao.deleteCommodityByID(commodityID)>0;
+		return commodityEncode.deleteCommodityByID(commodityID);
 	}
 
 	@Override
 	public boolean deleteCommoditiesByCartItemID(String cartItemID) {
-		return commodityDao.deleteCommoditiesByCartItemID(cartItemID) > 0;
+		return commodityEncode.deleteCommoditiesByCartItemID(cartItemID);
 	}
 
 	@Override
 	public Commodity getCommodityByID(String commodityID) {
-		return commodityDao.getCommodityByID(commodityID);
+		return commodityEncode.getCommodityByID(commodityID);
 	}
 
 	@Override
 	public long countByCartItemID(String cartItemID) {
-		return commodityDao.countByCartItemID(cartItemID);
+		return commodityEncode.countByCartItemID(cartItemID);
 	}
 
 	@Override
 	public boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException {
-		String note = commodity.getNote();
-		String unit = commodity.getUnit();
-		if(note != null) {
-			commodity.setNote(StringUtil.UTF8ToGBK(commodity.getNote()));
-		}
-		commodity.setUnit(StringUtil.UTF8ToGBK(unit));
-		return commodityDao.updateCommodity(commodity)>0;
+		return commodityEncode.updateCommodity(commodity);
 	}
 
 }
