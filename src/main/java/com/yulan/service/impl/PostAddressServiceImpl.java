@@ -73,6 +73,9 @@ public class PostAddressServiceImpl implements PostAddressService {
     public Map getPostAddress(String cid) throws IOException {
         Map map = new HashMap();
         List<PostAddress> addressList = new ArrayList<>();
+
+
+
         addressList = postAddressDao.getPostAddress(cid);
         for(int i=0 ; i<addressList.size() ; i++){
             PostAddress postAddress = addressList.get(i);
@@ -92,15 +95,17 @@ public class PostAddressServiceImpl implements PostAddressService {
                 postAddress.setCountry(stringUtil.getUtf8(postAddress.getCountry()));
             }
         }
+
+
         //添加默认地址
         CustomerInfoCard customerInfoCard = customerInfoService.getCustomerInfo(cid);
-        PostAddress postAddress = new PostAddress();
-        postAddress.setCid(customerInfoCard.getCid());
-        postAddress.setProvince(customerInfoCard.getDistrictText());
-        postAddress.setCity(customerInfoCard.getAreaDistrict2Text());
-        postAddress.setCountry(customerInfoCard.getAreaDistrict3Text());
-        postAddress.setAddressId(0);
-        addressList.add(postAddress);
+        PostAddress postAddress2 = new PostAddress();
+        postAddress2.setCid(customerInfoCard.getCid());
+        postAddress2.setProvince(customerInfoCard.getDistrictText());
+        postAddress2.setCity(customerInfoCard.getAreaDistrict2Text());
+        postAddress2.setCountry(customerInfoCard.getAreaDistrict3Text());
+        postAddress2.setAddressId(0);
+        addressList.add(0,postAddress2);
 
         map.put("data",addressList);
         return map;
