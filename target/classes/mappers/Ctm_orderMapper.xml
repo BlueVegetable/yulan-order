@@ -4,20 +4,20 @@
 
     <sql id="Base_Column_List_H" >
     ORDER_NO, CUSTOMER_CODE, CUSTOMER_CODE2, CURRENCY_ID, NVL(LINKPERSON,' ') LINKPERSON , NVL(TELEPHONE,' ') TELEPHONE, STATUS_ID,
-    DELIVERY_TYPE, DELIVERY_NOTES, POST_ADDRESS, NVL(NOTES,' ') NOTES, to_char(DATE_CRE,'yyyy-MM-dd HH:mm:ss') DATE_CRE, OPERATOR, to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE,
-    PERSON_UPDATE, CONTRACT_NO, PERSON_ACCEPT, to_char(DATE_ACCEPT,'yyyy-MM-dd HH:mm:ss') DATE_ACCEPT, NVL(YULAN_NOTES,' ') YULAN_NOTES, to_char(WEB_TJ_TIME,'yyyy-MM-dd HH:mm:ss') WEB_TJ_TIME,
+    DELIVERY_TYPE, DELIVERY_NOTES, POST_ADDRESS, NVL(NOTES,' ') NOTES, to_char(DATE_CRE,'yyyy-mm-dd hh24:mi:ss') DATE_CRE, OPERATOR, to_char(DATE_UPDATE,'yyyy-mm-dd hh24:mi:ss') DATE_UPDATE,
+    PERSON_UPDATE, CONTRACT_NO, PERSON_ACCEPT, to_char(DATE_ACCEPT,'yyyy-mm-dd hh24:mi:ss') DATE_ACCEPT, NVL(YULAN_NOTES,' ') YULAN_NOTES, to_char(WEB_TJ_TIME,'yyyy-mm-dd hh24:mi:ss') WEB_TJ_TIME,
     DATE_DEAL, FLAG, USER_NO, PROJECT_NO, CUSTOMER_CODE_O2O, ORDER_FLAG, POST_ADDRESS_MODIFIED,
     DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
-    BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-MM-dd HH:mm:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND
+    BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND
   </sql>
     <sql id="Base_Column_List_B" >
-    ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-MM-dd HH:mm:ss'),' ') DATE_DELIVER,
-    to_char(DATE_UPDATE,'yyyy-MM-dd HH:mm:ss') DATE_UPDATE, NVL(NOTES,' ') NOTES, STATUS_ID, DISCOUNT, DISCOUNT_FLAG, CURTAIN_KS, CURTAIN_ROOM_NAME,
+    ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
+    to_char(DATE_UPDATE,'yyyy-mm-dd hh24:mi:ss') DATE_UPDATE, NVL(NOTES,' ') NOTES, STATUS_ID, DISCOUNT, DISCOUNT_FLAG, CURTAIN_KS, CURTAIN_ROOM_NAME,
     CURTAIN_ROOM_ID, CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT, CURTAIN_HEIGHT2,
     CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
-    ML_NON_STANDARD, CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,to_char(DATE_DELIVER_KF,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_KF,to_char(DATE_DELIVER_NB,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_NB,
-    to_char(DATE_DELIVER_FH,'yyyy-MM-dd HH:mm:ss') DATE_DELIVER_FH,NVL(UNIT_PRICE,0) UNIT_PRICE,NVL(PROMOTION_COST,0) PROMOTION_COST,NVL(PROMOTION,' ') PROMOTION,NVL(PART_SEND_ID,' ')PART_SEND_ID
+    ML_NON_STANDARD, CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,to_char(DATE_DELIVER_KF,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_KF,to_char(DATE_DELIVER_NB,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_NB,
+    to_char(DATE_DELIVER_FH,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_FH,NVL(UNIT_PRICE,0) UNIT_PRICE,NVL(PROMOTION_COST,0) PROMOTION_COST,NVL(PROMOTION,' ') PROMOTION,NVL(PART_SEND_ID,' ')PART_SEND_ID
   </sql>
 
     <select id="getOrders" resultType="Map">
@@ -62,9 +62,9 @@
                 and order_no like  '%'||#{find}||'%'
             </if>
             <if test="beginTime!=null">
-                and web_tj_time between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
+                and DATE_CRE between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
             </if>
-        order by t.WEB_TJ_TIME DESC
+        order by t.DATE_CRE DESC
         ) l
         where rownum &lt;= #{number})
         where rn &gt;=#{start}

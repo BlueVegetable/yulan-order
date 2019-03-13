@@ -126,16 +126,18 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map orderCount(Map<String, Object> map) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        
         String product_group_tpye=map.get("product_group_tpye").toString();
 
 //        String rebateY=map.get("rebateY").toString();//年优惠券流水号
 //        String rebateM=map.get("rebateM").toString();//月优惠券流水号
-
+        Map<String ,Object> dataMap=new HashMap();
         Map m=new HashMap();
         Ctm_order ctm_order=new Ctm_order();
 
         String order=this.getOrderNumber(product_group_tpye);
         ctm_order.setOrderNo(order);//生成订单号
+
 
         String cid= map.get("cid").toString();
 
@@ -165,10 +167,13 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         BigDecimal promotion_cost=BigDecimal.valueOf(Double.valueOf(promotion_costString));//活动后总价
 
 
+        /**
+         * 优惠券
+         */
         //初始为零
-        BigDecimal money_m=BigDecimal.valueOf(0);
-        BigDecimal money_y=BigDecimal.valueOf(0);
-        BigDecimal money=BigDecimal.valueOf(0);
+//        BigDecimal money_m=BigDecimal.valueOf(0);
+//        BigDecimal money_y=BigDecimal.valueOf(0);
+//        BigDecimal money=BigDecimal.valueOf(0);
 //        if(!(rebateY.equals("")&&rebateM.equals(""))){//同时选了年和月
 //            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
 //            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
@@ -193,11 +198,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         String statusId=" ";
         if (resideMoney.compareTo(promotion_cost)==-1){//余额不足
-            statusId="12";
-            ctm_order.setStatusId(statusId);//已提交
-        }else{
             statusId="5";
             ctm_order.setStatusId(statusId);//欠款待提交
+        }else{
+            statusId="12";
+            ctm_order.setStatusId(statusId);//已经提交
         }
 
 
@@ -226,7 +231,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     break;
                 }
             }
-            m.put("data",statusId);
+            dataMap.put("statusId",statusId);
+            dataMap.put("order",order);
+            m.put("data",dataMap);
             m.put("code",0);
             m.put("msg","SUCCESS");
         }
@@ -377,5 +384,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             backMoney=((thisMoney.divide(promotion_cost)).multiply(money));
         }
         return backMoney;
+
+
     }
 }
