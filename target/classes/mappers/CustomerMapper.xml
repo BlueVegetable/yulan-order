@@ -126,4 +126,8 @@
     <select id="getCustomersByGroupID" parameterType="Map" resultMap="BaseResultMap">
         select * from CUSTOMER where CUSTOMER_CODE in(select CID from customerInfoCard where GROUPID=#{groupID})
     </select>
+
+    <select id="getCustomerByID" parameterType="String" resultType="com.yulan.pojo.Customer">
+         select * from CUSTOMER where CUSTOMER_CODE = #{CID}
+    </select>
 </mapper>

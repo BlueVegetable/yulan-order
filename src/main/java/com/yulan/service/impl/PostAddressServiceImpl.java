@@ -1,9 +1,9 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.CustomerDao;
 import com.yulan.dao.PostAddressDao;
-import com.yulan.pojo.CustomerInfoCard;
+import com.yulan.pojo.Customer;
 import com.yulan.pojo.PostAddress;
-import com.yulan.service.CustomerInfoService;
 import com.yulan.service.PostAddressService;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class PostAddressServiceImpl implements PostAddressService {
     @Autowired
     private PostAddressDao postAddressDao;
     @Autowired
-    private CustomerInfoService customerInfoService;
+    private CustomerDao customerDao;
 
 
     @Override
@@ -98,12 +98,10 @@ public class PostAddressServiceImpl implements PostAddressService {
 
 
         //添加默认地址
-        CustomerInfoCard customerInfoCard = customerInfoService.getCustomerInfo(cid);
+        Customer customer = customerDao.getCustomerByID(cid);
         PostAddress postAddress2 = new PostAddress();
-        postAddress2.setCid(customerInfoCard.getCid());
-        postAddress2.setProvince(customerInfoCard.getDistrictText());
-        postAddress2.setCity(customerInfoCard.getAreaDistrict2Text());
-        postAddress2.setCountry(customerInfoCard.getAreaDistrict3Text());
+        postAddress2.setCid(customer.getCustomerCode());
+        postAddress2.setPostAddress(stringUtil.getUtf8(customer.getDeliveryAdress()));
         postAddress2.setAddressId(0);
         addressList.add(0,postAddress2);
 
