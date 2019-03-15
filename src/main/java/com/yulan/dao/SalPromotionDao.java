@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SalPromotionDao {
 
-    SalPromotion getSalPromotionByID(String orderType);
+    SalPromotion getSalPromotionByID(String pId);
 
     List<String> getSalPromotionNamesByIDs(@Param("IDs") List<String> IDs);
 

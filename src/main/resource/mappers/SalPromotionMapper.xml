@@ -29,7 +29,7 @@
     </resultMap>
 
     <select id="getSalPromotionByID" parameterType="String" resultMap="SalPromotionMap">
-        select * from SAL_PROMOTION where ORDER_TYPE = #{orderType}
+        select * from SAL_PROMOTION where P_ID = #{pId}
     </select>
 
     <select id="getSalPromotionNamesByIDs" parameterType="List" resultMap="SalPromotionNameMap">
@@ -37,7 +37,7 @@
         <where>
             <if test="IDs != null and IDs.size() > 0">
                 <foreach collection="IDs" item="ID" separator="or">
-                    order_type = #{ID}
+                    p_id = #{ID}
                 </foreach>
             </if>
             <if test="IDs == null or IDs.size() == 0">
