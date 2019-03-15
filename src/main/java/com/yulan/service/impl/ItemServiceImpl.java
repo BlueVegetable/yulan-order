@@ -171,7 +171,7 @@ public class ItemServiceImpl implements ItemService {
                 map.put("code", 0);
             }else if (stockShowNumMax < stockShowNum && stockShowNum <= sumStockShow){
                     //允许分批出货
-                    map.put("msg", "splitShipment ");
+                    map.put("msg", "splitShipment");
                     map.put("code", 0);
             }else if(stockShowNum > sumStockShow){
                     //等待制作

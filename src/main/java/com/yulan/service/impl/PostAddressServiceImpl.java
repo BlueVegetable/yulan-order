@@ -1,9 +1,9 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.CustomerDao;
 import com.yulan.dao.PostAddressDao;
-import com.yulan.pojo.CustomerInfoCard;
+import com.yulan.pojo.Customer;
 import com.yulan.pojo.PostAddress;
-import com.yulan.service.CustomerInfoService;
 import com.yulan.service.PostAddressService;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class PostAddressServiceImpl implements PostAddressService {
     @Autowired
     private PostAddressDao postAddressDao;
     @Autowired
-    private CustomerInfoService customerInfoService;
+    private CustomerDao customerDao;
 
 
     @Override
@@ -73,6 +73,9 @@ public class PostAddressServiceImpl implements PostAddressService {
     public Map getPostAddress(String cid) throws IOException {
         Map map = new HashMap();
         List<PostAddress> addressList = new ArrayList<>();
+
+
+
         addressList = postAddressDao.getPostAddress(cid);
         for(int i=0 ; i<addressList.size() ; i++){
             PostAddress postAddress = addressList.get(i);
@@ -92,15 +95,15 @@ public class PostAddressServiceImpl implements PostAddressService {
                 postAddress.setCountry(stringUtil.getUtf8(postAddress.getCountry()));
             }
         }
+
+
         //添加默认地址
-        CustomerInfoCard customerInfoCard = customerInfoService.getCustomerInfo(cid);
-        PostAddress postAddress = new PostAddress();
-        postAddress.setCid(customerInfoCard.getCid());
-        postAddress.setProvince(customerInfoCard.getDistrictText());
-        postAddress.setCity(customerInfoCard.getAreaDistrict2Text());
-        postAddress.setCountry(customerInfoCard.getAreaDistrict3Text());
-        postAddress.setAddressId(0);
-        addressList.add(postAddress);
+        Customer customer = customerDao.getCustomerByID(cid);
+        PostAddress postAddress2 = new PostAddress();
+        postAddress2.setCid(customer.getCustomerCode());
+        postAddress2.setPostAddress(stringUtil.getUtf8(customer.getDeliveryAdress()));
+        postAddress2.setAddressId(0);
+        addressList.add(0,postAddress2);
 
         map.put("data",addressList);
         return map;
