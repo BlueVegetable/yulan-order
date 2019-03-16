@@ -91,6 +91,8 @@ public class CartController{
 		String width = (String) parameters.get("width");
 		String height = (String) parameters.get("height");
 		String note = (String) parameters.get("note");
+		Integer splitShipment = parameters.get("splitShipment")==null||parameters.get("splitShipment").equals("")?
+				null:Integer.parseInt((String) parameters.get("splitShipment"));
 
 		Item item = itemService.getItemByItemNO(itemNO);
 		Cart cart = getSimpleCartByCID(CID);
@@ -118,6 +120,7 @@ public class CartController{
             commodity.setActivityId(activityID);
             Unit unit = unitService.getUnitByID(item.getUnit());
             commodity.setUnit(unit!=null?unit.getNote():null);
+            commodity.setSplitShipment(splitShipment);
             switch (customer_type) {
                 case "02":commodity.setPrice(item.getPriceSale());break;
                 case "06":commodity.setPrice(item.getPriceFx());break;
@@ -138,6 +141,7 @@ public class CartController{
                 return Response.getResponseMap(0,"添加成功",null);
         } else {
 		    commodity.setItem(item);
+		    commodity.setSplitShipment(splitShipment);
 			if(quantity==null||quantity.equals("")) {
 				return Response.getResponseMap(2,"该产品已存在于购物车",null);
 			} else {
@@ -195,7 +199,10 @@ public class CartController{
 		String widthString = parameters.get("width");
 		String heightString = parameters.get("height");
 		String note = parameters.get("note");
+		Integer splitShipment = parameters.get("splitShipment")==null||parameters.get("splitShipment").equals("")?
+				null:Integer.parseInt(parameters.get("splitShipment"));
 		Commodity commodity = commodityService.getCommodityByID(commodityID);
+		commodity.setSplitShipment(splitShipment);
 		CartItem cartItem = cartItemService.getCartItemByID(commodity.getCartItemId());
         SalPromotion salPromotion;
         if(activityID!=null&&!activityID.equals("")) {

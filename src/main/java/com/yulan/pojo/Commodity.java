@@ -17,6 +17,7 @@ public class Commodity {
 	private BigDecimal height;
 	private String note;
 	private String unit;
+	private Integer splitShipment;
 
 	public String getId() {
 		return this.id;
@@ -104,6 +105,14 @@ public class Commodity {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+
+	public Integer getSplitShipment() {
+		return splitShipment;
+	}
+
+	public void setSplitShipment(Integer splitShipment) {
+		this.splitShipment = splitShipment;
 	}
 
 	@Override

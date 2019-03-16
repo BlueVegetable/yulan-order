@@ -26,6 +26,7 @@ public class SalPromotion {
     private Date dateStart;
     private Date dateEnd;
     private String groupType;
+    private String pId;
 
     public String getCustomerCode() {
         return customerCode;
@@ -185,6 +186,14 @@ public class SalPromotion {
 
     public void setGroupType(String groupType) {
         this.groupType = groupType == null ? null : groupType.trim();
+    }
+
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
     }
 
     @Override
