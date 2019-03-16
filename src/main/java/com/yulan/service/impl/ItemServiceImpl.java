@@ -186,5 +186,14 @@ public class ItemServiceImpl implements ItemService {
         return map;
     }
 
+    @Override
+    public Map getCurtainType(Integer page,Integer lastNum) {
+        Map map = new HashMap();
+        List<String> curtainList = itemDao.getCurtainType(page, lastNum);
+        map.put("data",curtainList);
+        map.put("code",0);
+        return map;
+    }
+
 
 }

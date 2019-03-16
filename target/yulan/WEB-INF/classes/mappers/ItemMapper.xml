@@ -51,6 +51,23 @@
         <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
     </resultMap>
 
+    <resultMap id="CurtainMap" type="com.yulan.pojo.ItemMLGY">
+        <id column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+        <id column="ITEM_TYPE" jdbcType="VARCHAR" property="itemType" />
+        <id column="NO" jdbcType="DECIMAL" property="no" />
+        <id column="PARENT_ITEM_NO" jdbcType="VARCHAR" property="parentItemNo" />
+        <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+        <result column="DATE_CRE" jdbcType="TIMESTAMP" property="dateCre" />
+        <result column="PRODUCT_TYPE" jdbcType="VARCHAR" property="productType" />
+        <result column="LSML_RATE" jdbcType="DECIMAL" property="lsmlRate" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="NOTES" jdbcType="VARCHAR" property="notes" />
+        <result column="FIX_TYPE" jdbcType="VARCHAR" property="fixType"/>
+        <result column="DELETE_FLAG" jdbcType="VARCHAR" property="deleteFlag"/>
+        <result column="MODIFY_FLAG" jdbcType="VARCHAR" property="modifyFlag"/>
+        <result column="CHANGE_FLAG" jdbcType="VARCHAR" property="changeFlag"/>
+    </resultMap>
+
 
     <select id="getItemByItemNO" parameterType="String" resultType="Item">
         select * from item where ITEM_NO = #{itemNO}
@@ -309,7 +326,21 @@
     </select>
 
     <select id="getUnit" resultType="String">
-          select t.note from UNIT t where t.unit = #{unit}
+        select t.note from UNIT t where t.unit = #{unit}
     </select>
+
+    <select id="getCurtainType" resultType="String">
+
+        select parent_item_no from(
+        select rownum rm, c.*  from
+        (
+        select distinct t.parent_item_no from ITEM_ML_GY t
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+
+    </select>
+
 
 </mapper>

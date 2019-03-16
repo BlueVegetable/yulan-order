@@ -53,5 +53,7 @@ public interface ItemDao {
     List<Item> getOtherInfo(@Param("cid") String cid, @Param("start")Integer page, @Param("number")Integer lastNum);
 
     List<Item> getOtherSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
+    //获得窗帘型号
+    List<String> getCurtainType(@Param("start")Integer page, @Param("number")Integer lastNum);
 
 }
