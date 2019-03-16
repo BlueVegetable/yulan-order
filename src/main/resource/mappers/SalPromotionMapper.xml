@@ -22,6 +22,7 @@
         <result column="DATE_START" property="dateStart" jdbcType="TIMESTAMP" />
         <result column="DATE_END" property="dateEnd" jdbcType="TIMESTAMP" />
         <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
+        <result column="P_ID" property="pId" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="SalPromotionNameMap" type="String" >

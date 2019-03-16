@@ -107,11 +107,11 @@ public class Commodity {
 		this.unit = unit;
 	}
 
-	public int getSplitShipment() {
+	public Integer getSplitShipment() {
 		return splitShipment;
 	}
 
-	public void setSplitShipment(int splitShipment) {
+	public void setSplitShipment(Integer splitShipment) {
 		this.splitShipment = splitShipment;
 	}
 

@@ -7,15 +7,18 @@
         <result column="ACTIVITY_ID" property="activityId" jdbcType="VARCHAR" />
         <result column="ACTIVITY_PRICE" property="activityPrice" jdbcType="DECIMAL" />
         <result column="CART_ITEM_ID" property="cartItemId" jdbcType="VARCHAR" />
+        <result column="NOTE" property="note" jdbcType="VARCHAR" />
         <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+        <result column="SPLIT_SHIPMENT" property="splitShipment" />
         <association property="item" column="ITEM_ID" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 
     <insert id="addCommodity" parameterType="Commodity">
         insert into COMMODITY
-        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT) VALUES
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT) VALUES
         (#{id},#{price},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{cartItemId},#{quantity,jdbcType=NUMERIC},
-        #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR})
+        #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR},
+        #{splitShipment,jdbcType=NUMERIC})
     </insert>
 
     <delete id="deleteCommodityByID" parameterType="String">
@@ -54,7 +57,7 @@
         update COMMODITY
         set PRICE=#{price,jdbcType=VARCHAR},ACTIVITY_ID = #{activityId,jdbcType=VARCHAR},ITEM_ID = #{item.itemNo},
         CART_ITEM_ID = #{cartItemId},QUANTITY = #{quantity,jdbcType=NUMERIC},WIDTH = #{width,jdbcType=NUMERIC},
-        HEIGHT = #{height,jdbcType=NUMERIC},NOTE = #{note,jdbcType=VARCHAR}
+        HEIGHT = #{height,jdbcType=NUMERIC},NOTE = #{note,jdbcType=VARCHAR},SPLIT_SHIPMENT=#{splitShipment,jdbcType=NUMERIC}
         where ID = #{id}
     </update>
 </mapper>
