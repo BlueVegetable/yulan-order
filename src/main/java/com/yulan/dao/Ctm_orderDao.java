@@ -49,7 +49,7 @@ public interface Ctm_orderDao {
     /**
      * 获取订单页面活动
      */
-    Sal_promotion getPromotion(@Param("order_type") String order_type);
+    Sal_promotion getPromotion(@Param("pId") String pId);
 
     /**
      * 获取客户余额
@@ -114,4 +114,12 @@ public interface Ctm_orderDao {
      * @return
      */
     Sal_rebate_certificate getRebateById(@Param("id")String id);
+
+    /**
+     * 更新优惠券剩余金额
+     * @param id
+     * @param rebateMoneyOver
+     * @return
+     */
+    Boolean updateRebatemoney(@Param("id")String id,@Param("rebateMoneyOver")BigDecimal rebateMoneyOver);
 }

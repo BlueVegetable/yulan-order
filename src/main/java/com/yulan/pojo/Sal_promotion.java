@@ -44,6 +44,16 @@ public class Sal_promotion {
 
     private String groupType;
 
+    private String pId;
+
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
+    }
+
     public String getCustomerCode() {
         return customerCode;
     }
