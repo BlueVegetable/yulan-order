@@ -140,26 +140,27 @@ public class CartController{
             else
                 return Response.getResponseMap(0,"添加成功",null);
         } else {
-		    commodity.setItem(item);
-		    commodity.setSplitShipment(splitShipment);
-			if(quantity==null||quantity.equals("")) {
-				return Response.getResponseMap(2,"该产品已存在于购物车",null);
-			} else {
-				BigInteger count = new BigInteger(quantity);
-				count = count.add(commodity.getQuantity());
-				commodity.setQuantity(count);
-			}
-			if(note != null&&!note.equals("")) {
-				if(commodity.getNote()!=null) {
-					commodity.setNote(commodity.getNote()+"\r\n"+note);
-				} else {
-					commodity.setNote(note);
-				}
-			}
-		    if(!commodityService.updateCommodity(commodity))
-                return Response.getResponseMap(1,"添加失败",null);
-		    else
-                return Response.getResponseMap(0,"添加成功",null);
+//		    commodity.setItem(item);
+//		    commodity.setSplitShipment(splitShipment);
+//			if(quantity==null||quantity.equals("")) {
+
+            return Response.getResponseMap(2,"该产品已存在于购物车",null);
+//			} else {
+//				BigInteger count = new BigInteger(quantity);
+//				count = count.add(commodity.getQuantity());
+//				commodity.setQuantity(count);
+//			}
+//			if(note != null&&!note.equals("")) {
+//				if(commodity.getNote()!=null) {
+//					commodity.setNote(commodity.getNote()+"\r\n"+note);
+//				} else {
+//					commodity.setNote(note);
+//				}
+//			}
+//		    if(!commodityService.updateCommodity(commodity))
+//                return Response.getResponseMap(1,"添加失败",null);
+//		    else
+//                return Response.getResponseMap(0,"添加成功",null);
         }
 	}
 
