@@ -28,14 +28,12 @@ public class CartController{
 	private CartItemService cartItemService;
 	@Autowired@Qualifier("curtainCartItemService")
 	private CartItemService curtainCartItemService;
-	@Autowired
+	@Autowired@Qualifier("commodityService")
 	private CommodityService commodityService;
+	@Autowired@Qualifier("curtainCommodityService")
+    private CommodityService curtainCommodityService;
 	@Autowired
 	private SalPromotionService salPromotionService;
-	@Autowired
-	private ActivityGroupTypeService activityGroupTypeService;
-	@Autowired
-	private ProductGroupTypeService productGroupTypeService;
 	@Autowired
 	private UnitService unitService;
 
@@ -50,6 +48,17 @@ public class CartController{
 		else
 			return Response.getResponseMap(1,"添加失败",null);
 	}
+
+	@ResponseBody@RequestMapping("addCurtain")
+	public Map<String,Object> addCurtain(@RequestBody CurtainCartItem curtainCartItem) {
+	    curtainCartItemService.addCartItem(curtainCartItem);
+	    for (CurtainList curtainList:curtainCartItem.getCurtainLists()) {
+	        for (Commodity commodity:curtainList.getCurtainCommodities()) {
+	            curtainCommodityService.addCommodity(commodity);
+            }
+        }
+	    return Response.getResponseMap(0,"",null);
+    }
 
 	@ResponseBody@RequestMapping("getCartByID")
 	public Cart getCartByID(String cartID) {

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 
-@Service
+@Service("commodityService")
 public class CommodityServiceImpl implements CommodityService {
 
 	@Autowired
