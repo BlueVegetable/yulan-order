@@ -421,6 +421,156 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         return map1;
     }
 
+    /**
+     * 显示优惠券摊分
+     * @param map
+     * @return
+     */
+    @Override
+    public Map showRebate(Map<String, Object> map) throws InvocationTargetException, IllegalAccessException {
+
+
+        List<Map<String,Object>> list2=new ArrayList<>();
+        String rebateY=map.get("rebateY").toString();//年优惠券流水号
+        String rebateM=map.get("rebateM").toString();//月优惠券流水号
+        Map<String ,Object> dataMap=new HashMap();
+        Map m=new HashMap();
+        Ctm_order ctm_order=new Ctm_order();
+
+
+
+
+
+
+        Map<String ,Object> ctm_ordermap=(Map<String, Object>) map.get("ctm_order");
+
+
+
+        BeanUtils.populate(ctm_order,ctm_ordermap);//转为Ctm_order类
+
+
+
+
+
+
+
+        List<Map<String,Object>> list=(List) map.get("ctm_orders");
+
+        String promotion_costString=map.get("promotion_cost").toString();//先变字符串
+        BigDecimal promotion_cost=BigDecimal.valueOf(Double.valueOf(promotion_costString));//活动后总价
+
+
+        /**
+         * 优惠券
+         */
+        //初始为零
+        BigDecimal money_m=BigDecimal.valueOf(0);
+        BigDecimal money_y=BigDecimal.valueOf(0);
+        BigDecimal money=BigDecimal.valueOf(0);
+        if(!rebateY.equals("")&&!rebateM.equals("")){//同时选了年和月
+            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
+            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
+            money_m=rebate_m.getRebateMoneyOver();
+            money_y=rebate_y.getRebateMoneyOver();
+        }else if (rebateY.equals("")&&!rebateM.equals("")){//月
+            Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
+            money_m=rebate_m.getRebateMoneyOver();
+        }else if(!rebateY.equals("")&&rebateM.equals("")){//年
+            Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
+            money_y=rebate_y.getRebateMoneyOver();
+        }
+        money=money_y.add(money_m);//优惠券+总额
+
+        //重新计算总花费-总花费
+        BigDecimal allSpend=ctm_order.getAllSpend();
+        if (money.compareTo(allSpend)!=-1){//优惠券大于等于总花费
+            allSpend=BigDecimal.valueOf(0);
+        }else {
+            allSpend=allSpend.subtract(money);
+        }
+
+
+
+
+
+
+
+
+
+
+        //统计所花券金额
+        BigDecimal allRebateMonth=BigDecimal.valueOf(0);
+        BigDecimal allRebateYear=BigDecimal.valueOf(0);
+
+
+
+            for (Map<String,Object> m2:list){//订单详情遍历
+                Map<String,Object> returnMap=new HashMap<>();
+
+
+
+                Ctm_order_detail ctm_order_detail= MapUtils.mapToBean(m2,Ctm_order_detail.class);
+
+
+
+
+
+                //优惠券
+                BigDecimal rebateMonth =BigDecimal.valueOf(0);
+                BigDecimal rebateYear=BigDecimal.valueOf(0);
+                if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
+                    if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
+                        rebateMonth=this.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
+
+                    }else {
+                        rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                        rebateYear=this.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
+                    }
+                }else{//订单价格大于优惠券
+                    rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                    rebateYear=this.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
+
+                }
+                returnMap.put("itemNo",ctm_order_detail.getItemNo());
+                returnMap.put("rebateYear",rebateYear);
+                returnMap.put("rebateMonth",rebateMonth);
+                list2.add(returnMap);
+
+
+
+                //统计
+                allRebateMonth=allRebateMonth.add(rebateMonth);
+                allRebateYear=allRebateYear.add(rebateYear);
+
+                ctm_order_detail.setBackM(rebateMonth);
+                ctm_order_detail.setBackY(rebateYear);
+
+
+
+
+
+            }
+
+            Map<String,Object> datamap=new HashMap<>();
+            datamap.put("allRebateMonth",allRebateMonth);
+            datamap.put("allRebateYear",allRebateYear);
+            datamap.put("allspend",allSpend);
+            datamap.put("rebate",list2);
+
+
+
+
+            m.put("data",datamap);
+            m.put("code",0);
+            m.put("msg","SUCCESS");
+
+
+
+
+
+        return m;
+    }
+
     @Override
     public boolean updateOrderStatus(String orderNo, String customerCode,
                                      String statusId) {
