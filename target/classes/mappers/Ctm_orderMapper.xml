@@ -9,7 +9,8 @@
     DATE_DEAL, FLAG, USER_NO, PROJECT_NO, CUSTOMER_CODE_O2O, ORDER_FLAG, POST_ADDRESS_MODIFIED,
     DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
-    BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND
+    BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND,
+    NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
@@ -131,8 +132,8 @@
       DISCOUNT, PRICE, FALG_FL,
       QTY_ORDER, QTY_USE, FLAG_XH,
       FLAG_ZX, USE_ID,to_char(DATE_START,'yyyy-MM-dd') DATE_START,
-      to_char(DATE_END,'yyyy-MM-dd')DATE_END, GROUP_TYPE
-         from SAL_PROMOTION t where t.ORDER_TYPE=#{order_type}
+      to_char(DATE_END,'yyyy-MM-dd')DATE_END, GROUP_TYPE,P_ID
+         from SAL_PROMOTION t where t.p_id=#{pId}
     </select>
     
     <select id="getResideMoney" resultType="BigDecimal">
@@ -155,7 +156,7 @@
       WL_TEL, RECIVER_AREA1, RECIVER_AREA2,
       RECIVER_AREA3, BILL_TYPE_X, DELIVERY_FLAG,
       OAO_FLAG, OAO_STATUS, OAO_PERSON,
-      OAO_TIME,ALL_SPEND)
+      OAO_TIME,ALL_SPEND,BUYUSER,BUYUSERPHONE)
     values (#{orderNo,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, #{customerCode2,jdbcType=VARCHAR},
       #{currencyId,jdbcType=VARCHAR}, #{linkperson,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
       #{statusId,jdbcType=VARCHAR}, #{deliveryType,jdbcType=VARCHAR}, #{deliveryNotes,jdbcType=VARCHAR},
@@ -171,7 +172,9 @@
       #{wlTel,jdbcType=VARCHAR}, #{reciverArea1,jdbcType=VARCHAR}, #{reciverArea2,jdbcType=VARCHAR},
       #{reciverArea3,jdbcType=VARCHAR}, #{billTypeX,jdbcType=CHAR}, #{deliveryFlag,jdbcType=VARCHAR},
       #{oaoFlag,jdbcType=VARCHAR}, #{oaoStatus,jdbcType=VARCHAR}, #{oaoPerson,jdbcType=VARCHAR},
-      #{oaoTime,jdbcType=TIMESTAMP},#{allSpend,jdbcType=DECIMAL})
+      #{oaoTime,jdbcType=TIMESTAMP},#{allSpend,jdbcType=DECIMAL},#{buyUser,jdbcType=VARCHAR},
+      #{buyUserPhone,jdbcType=VARCHAR}
+      )
   </insert>
 
     <insert id="insertOrderB" parameterType="Ctm_order_detail" >
@@ -274,6 +277,50 @@
         where t.id=#{id}
 
     </select>
+
+    <update id="updateRebatemoney" >
+        update SAL_REBATE_CERTIFICATE t
+          set t.REBATE_MONEY_OVER=#{rebateMoneyOver}
+        where t.id=#{id}
+    </update>
+
+    <insert id="insertRebateRecord" parameterType="Sal_rebate_certificate_record">
+        insert into SAL_REBATE_CERTIFICATE_RECORD
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="orderNo != null" >
+                ORDER_NO,
+            </if>
+            <if test="lineNo != null" >
+                LINE_NO,
+            </if>
+            <if test="rebateMoney != null" >
+                REBATE_MONEY,
+            </if>
+            <if test="dateUse != null" >
+                DATE_USE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="lineNo != null" >
+                #{lineNo,jdbcType=DECIMAL},
+            </if>
+            <if test="rebateMoney != null" >
+                #{rebateMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="dateUse != null" >
+                #{dateUse,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
 
 
 </mapper>

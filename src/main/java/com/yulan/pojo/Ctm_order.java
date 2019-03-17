@@ -98,6 +98,25 @@ public class Ctm_order {
     private Date oaoTime;
     private BigDecimal allSpend;
 
+    private String buyUser;
+    private String buyUserPhone;
+
+    public String getBuyUser() {
+        return buyUser;
+    }
+
+    public void setBuyUser(String buyUser) {
+        this.buyUser = buyUser;
+    }
+
+    public String getBuyUserPhone() {
+        return buyUserPhone;
+    }
+
+    public void setBuyUserPhone(String buyUserPhone) {
+        this.buyUserPhone = buyUserPhone;
+    }
+
     public BigDecimal getAllSpend() {
         return allSpend;
     }
