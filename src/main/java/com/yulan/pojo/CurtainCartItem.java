@@ -6,27 +6,6 @@ import java.util.Objects;
 
 public class CurtainCartItem extends CartItem {
 
-    public class CurtainList {
-        private String partName;
-        private List<CurtainCommodity> curtainCommodities;
-
-        public String getPartName() {
-            return partName;
-        }
-
-        public void setPartName(String partName) {
-            this.partName = partName;
-        }
-
-        public List<CurtainCommodity> getCurtainCommodities() {
-            return curtainCommodities;
-        }
-
-        public void setCurtainCommodities(List<CurtainCommodity> curtainCommodities) {
-            this.curtainCommodities = curtainCommodities;
-        }
-    }
-
     private BigDecimal width;
     private BigDecimal height;
     private BigDecimal drape;

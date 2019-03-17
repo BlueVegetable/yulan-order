@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("cartItemService")
 public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired

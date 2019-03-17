@@ -4,6 +4,7 @@ import com.yulan.pojo.*;
 import com.yulan.service.*;
 import com.yulan.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +24,10 @@ public class CartController{
 	private ItemService itemService;
 	@Autowired
 	private CartService cartService;
-	@Autowired
+	@Autowired@Qualifier("cartItemService")
 	private CartItemService cartItemService;
+	@Autowired@Qualifier("curtainCartItemService")
+	private CartItemService curtainCartItemService;
 	@Autowired
 	private CommodityService commodityService;
 	@Autowired
@@ -70,7 +73,7 @@ public class CartController{
 	public Cart getAllCartByCID(String CID) throws Exception {
 		Cart cart = getSimpleCartByCID(CID);
 		Map<String, List<CartItem>> cartItems = new HashMap<>();
-		cartItems.put(CURTAIN,cartItemService.getCartItems(cart.getCartId(),CURTAIN));
+		cartItems.put(CURTAIN,curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN));
 		cartItems.put(WALLPAPER,cartItemService.getCartItems(cart.getCartId(),WALLPAPER));
 		cartItems.put(SOFT,cartItemService.getCartItems(cart.getCartId(),SOFT));
 		cart.setCartItems(cartItems);
@@ -120,6 +123,7 @@ public class CartController{
             commodity.setActivityId(activityID);
             Unit unit = unitService.getUnitByID(item.getUnit());
             commodity.setUnit(unit!=null?unit.getNote():null);
+            commodity.setNote(note);
             commodity.setSplitShipment(splitShipment);
             switch (customer_type) {
                 case "02":commodity.setPrice(item.getPriceSale());break;
@@ -227,7 +231,7 @@ public class CartController{
 			cartItemService.addCartItem(cartItemNew);
 		}
 		if(salPromotion!=null) {
-		    commodity.setActivityId(salPromotion.getOrderType());
+		    commodity.setActivityId(salPromotion.getpId());
         } else {
 		    commodity.setActivityId(null);
         }
