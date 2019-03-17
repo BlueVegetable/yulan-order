@@ -1,10 +1,7 @@
 package com.yulan.service.impl;
 
 import com.yulan.dao.Ctm_orderDao;
-import com.yulan.pojo.Ctm_order;
-import com.yulan.pojo.Ctm_order_detail;
-import com.yulan.pojo.Sal_promotion;
-import com.yulan.pojo.Sal_rebate_certificate;
+import com.yulan.pojo.*;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
@@ -127,7 +124,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map orderCount(Map<String, Object> map) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
-        
+        Timestamp nowTime=new Timestamp(System.currentTimeMillis());//获取当前时间
         String product_group_tpye=map.get("product_group_tpye").toString();
 
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
@@ -152,6 +149,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
         BeanUtils.populate(ctm_order,ctm_ordermap);//转为Ctm_order类
+
+
+
         Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(cid);
 
         ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
@@ -159,9 +159,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话
 
         List<Map<String,Object>> list=(List) map.get("ctm_orders");
-        ctm_order.setWebTjTime(new Timestamp(System.currentTimeMillis()));//获取当前时间
-        ctm_order.setDateCre(new Timestamp(System.currentTimeMillis()));//获取当前时间
-        ctm_order.setDateUpdate(new Timestamp(System.currentTimeMillis()));//获取当前时间
+        ctm_order.setWebTjTime(nowTime);//获取当前时间
+        ctm_order.setDateCre(nowTime);//获取当前时间
+        ctm_order.setDateUpdate(nowTime);//获取当前时间
         ctm_order.setCurrencyId("RMB");
         ctm_order.setCustomerCode(cid);
         String promotion_costString=map.get("promotion_cost").toString();//先变字符串
@@ -175,7 +175,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         BigDecimal money_m=BigDecimal.valueOf(0);
         BigDecimal money_y=BigDecimal.valueOf(0);
         BigDecimal money=BigDecimal.valueOf(0);
-        if(!(rebateY.equals("")&&rebateM.equals(""))){//同时选了年和月
+        if(!rebateY.equals("")&&!rebateM.equals("")){//同时选了年和月
             Sal_rebate_certificate rebate_y=ctm_orderDao.getRebateById(rebateY);//年优惠券
             Sal_rebate_certificate rebate_m=ctm_orderDao.getRebateById(rebateM);//月优惠券
             money_m=rebate_m.getRebateMoneyOver();
@@ -193,18 +193,27 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
 
+        //重新计算总花费-总花费
+        BigDecimal allSpend=ctm_order.getAllSpend();
+        if (money.compareTo(allSpend)!=-1){//优惠券大于等于总花费
+            allSpend=BigDecimal.valueOf(0);
+        }else {
+            allSpend=allSpend.subtract(money);
+        }
+        ctm_order.setAllSpend(allSpend);
 
         BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid).add(money);//加上优惠券
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
-        if (resideMoney.compareTo(promotion_cost)==-1){//余额不足
-            statusId="5";
-            ctm_order.setStatusId(statusId);//欠款待提交
-        }else{
+        if ((money.compareTo(promotion_cost)!=-1)||((resideMoney.compareTo(promotion_cost)!=-1))){
             statusId="12";
             ctm_order.setStatusId(statusId);//已经提交
+        }else{
+            statusId="5";
+            ctm_order.setStatusId(statusId);//欠款待提交
         }
+
 
         //统计所花券金额
         BigDecimal allRebateMonth=BigDecimal.valueOf(0);
@@ -214,6 +223,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
             int lineNo=1;
             for (Map<String,Object> m2:list){//订单详情录入
+
+
+
                 for (Map.Entry<String, Object> entry : m2.entrySet()) {
                     if (entry.getValue() instanceof String) {
                         String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
@@ -223,7 +235,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 Ctm_order_detail ctm_order_detail= MapUtils.mapToBean(m2,Ctm_order_detail.class);
 
 
-                ctm_order_detail.setLineNo(lineNo++);
+                ctm_order_detail.setLineNo(lineNo);
                 ctm_order_detail.setStatusId(statusId);
                 ctm_order_detail.setOrderNo(order);
 
@@ -233,6 +245,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
                     if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
                         rebateMonth=this.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
+
                     }else {
                         rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
                         rebateYear=this.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
@@ -241,6 +254,49 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
                     rebateYear=this.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
 
+                }
+
+                /**
+                 * 记录优惠券使用记录
+                 */
+                if(!rebateY.equals("")&&!rebateM.equals("")){//同时选了年和月
+                    Sal_rebate_certificate_record sal_rebate_certificate_recordM=new Sal_rebate_certificate_record();//月优惠券使用记录
+                    sal_rebate_certificate_recordM.setDateUse(nowTime);
+                    sal_rebate_certificate_recordM.setLineNo(String.valueOf(lineNo));
+                    sal_rebate_certificate_recordM.setOrderNo(order);
+                    sal_rebate_certificate_recordM.setId(rebateM);
+                    sal_rebate_certificate_recordM.setRebateMoney(rebateMonth);
+                    if (rebateYear.compareTo(BigDecimal.valueOf(0))==1){//年也用了
+                        Sal_rebate_certificate_record sal_rebate_certificate_recordY=new Sal_rebate_certificate_record();//月优惠券使用记录
+                        sal_rebate_certificate_recordY.setDateUse(nowTime);
+                        sal_rebate_certificate_recordY.setLineNo(String.valueOf(lineNo));
+                        sal_rebate_certificate_recordY.setOrderNo(order);
+                        sal_rebate_certificate_recordY.setId(rebateY);
+                        sal_rebate_certificate_recordY.setRebateMoney(rebateYear);
+                        ctm_orderDao.insertRebateRecord(sal_rebate_certificate_recordM);
+                        ctm_orderDao.insertRebateRecord(sal_rebate_certificate_recordY);
+                    }else {
+                        ctm_orderDao.insertRebateRecord(sal_rebate_certificate_recordM);
+                    }
+
+                }else if (rebateY.equals("")&&!rebateM.equals("")){//月
+                    Sal_rebate_certificate_record sal_rebate_certificate_recordM=new Sal_rebate_certificate_record();//月优惠券使用记录
+                    sal_rebate_certificate_recordM.setDateUse(nowTime);
+                    sal_rebate_certificate_recordM.setLineNo(String.valueOf(lineNo));
+                    sal_rebate_certificate_recordM.setOrderNo(order);
+                    sal_rebate_certificate_recordM.setId(rebateM);
+                    sal_rebate_certificate_recordM.setRebateMoney(rebateMonth);
+                    ctm_orderDao.insertRebateRecord(sal_rebate_certificate_recordM);
+
+                }else if(!rebateY.equals("")&&rebateM.equals("")){//年
+
+                    Sal_rebate_certificate_record sal_rebate_certificate_recordY=new Sal_rebate_certificate_record();//月优惠券使用记录
+                    sal_rebate_certificate_recordY.setDateUse(nowTime);
+                    sal_rebate_certificate_recordY.setLineNo(String.valueOf(lineNo));
+                    sal_rebate_certificate_recordY.setOrderNo(order);
+                    sal_rebate_certificate_recordY.setId(rebateY);
+                    sal_rebate_certificate_recordY.setRebateMoney(rebateYear);
+                    ctm_orderDao.insertRebateRecord(sal_rebate_certificate_recordY);
                 }
 
                 //统计
@@ -259,15 +315,26 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     m.put("msg","FLASE");
                     break;
                 }
+                lineNo++;
             }
 
             /**
              * 更新优惠券金额
              */
-            BigDecimal month=ctm_orderDao.getRebateById(rebateM).getRebateMoneyOver();
-            BigDecimal year=ctm_orderDao.getRebateById(rebateY).getRebateMoneyOver();
-            ctm_orderDao.updateRebatemoney(rebateM,month.subtract(allRebateMonth));
-            ctm_orderDao.updateRebatemoney(rebateY,year.subtract(allRebateYear));
+            if(!rebateY.equals("")&&!rebateM.equals("")){//同时选了年和月
+                BigDecimal month=ctm_orderDao.getRebateById(rebateM).getRebateMoneyOver();
+                BigDecimal year=ctm_orderDao.getRebateById(rebateY).getRebateMoneyOver();
+                ctm_orderDao.updateRebatemoney(rebateM,month.subtract(allRebateMonth));
+                ctm_orderDao.updateRebatemoney(rebateY,year.subtract(allRebateYear));
+
+            }else if (rebateY.equals("")&&!rebateM.equals("")){//月
+                BigDecimal month=ctm_orderDao.getRebateById(rebateM).getRebateMoneyOver();
+                ctm_orderDao.updateRebatemoney(rebateM,month.subtract(allRebateMonth));
+            }else if(!rebateY.equals("")&&rebateM.equals("")){//年
+                BigDecimal year=ctm_orderDao.getRebateById(rebateY).getRebateMoneyOver();
+                ctm_orderDao.updateRebatemoney(rebateY,year.subtract(allRebateYear));
+            }
+
 
 
             dataMap.put("statusId",statusId);

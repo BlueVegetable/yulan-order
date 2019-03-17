@@ -284,5 +284,43 @@
         where t.id=#{id}
     </update>
 
+    <insert id="insertRebateRecord" parameterType="Sal_rebate_certificate_record">
+        insert into SAL_REBATE_CERTIFICATE_RECORD
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="orderNo != null" >
+                ORDER_NO,
+            </if>
+            <if test="lineNo != null" >
+                LINE_NO,
+            </if>
+            <if test="rebateMoney != null" >
+                REBATE_MONEY,
+            </if>
+            <if test="dateUse != null" >
+                DATE_USE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="lineNo != null" >
+                #{lineNo,jdbcType=DECIMAL},
+            </if>
+            <if test="rebateMoney != null" >
+                #{rebateMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="dateUse != null" >
+                #{dateUse,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
 
 </mapper>
