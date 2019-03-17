@@ -1,6 +1,7 @@
 package com.yulan.dao;
 
 import com.yulan.pojo.Item;
+import com.yulan.pojo.ItemMLGY;
 import com.yulan.pojo.StockShow;
 import org.apache.ibatis.annotations.Param;
 
@@ -54,6 +55,10 @@ public interface ItemDao {
 
     List<Item> getOtherSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //获得窗帘型号
-    List<String> getCurtainType(@Param("start")Integer page, @Param("number")Integer lastNum);
+    List<Item> getCurtainType(@Param("start")Integer page, @Param("number")Integer lastNum);
+   //获取同一型号窗帘下的系列产品
+    List<ItemMLGY> getCurtainInfo(@Param("curtainNo") String curtainNo);
+   //获取每个窗帘对应的工艺
+    List<String> getItemGY(@Param("itemNO") String itemNo);
 
 }

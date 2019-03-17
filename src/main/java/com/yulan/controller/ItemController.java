@@ -107,7 +107,7 @@ public class ItemController {
 
     @RequestMapping(value = "getCurtainType")
     @ResponseBody
-    public Map getCurtainType(@RequestBody Map<String,Object> data){
+    public Map getCurtainType(@RequestBody Map<String,Object> data)throws IOException{
         Integer limit = (Integer) data.get("limit");
         Integer page = (Integer)data.get("page");
         if(limit==null||page==null) {
@@ -118,6 +118,18 @@ public class ItemController {
         }
         int lastNum=page+limit-1;
        return itemService.getCurtainType(page,lastNum);
+    }
+
+    /**
+     * 获取到窗帘的所有信息
+     * @param data
+     * @return
+     */
+    @RequestMapping(value = "getCurtainInfo")
+    @ResponseBody
+    public Map getCurtainInfo(@RequestBody Map<String,Object> data)throws IOException{
+        String itemNO = (String)data.get("itemNO");
+        return  itemService.getCurtainInfo(itemNO);
     }
 
 

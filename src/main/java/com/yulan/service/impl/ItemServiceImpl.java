@@ -187,11 +187,36 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Map getCurtainType(Integer page,Integer lastNum) {
-        Map map = new HashMap();
-        List<String> curtainList = itemDao.getCurtainType(page, lastNum);
-        map.put("data",curtainList);
-        map.put("code",0);
+    public Map getCurtainType(Integer page,Integer lastNum) throws IOException {
+        Map<String, Object> map = new HashMap<>();
+        List<Item> curtainList = itemDao.getCurtainType(page, lastNum);
+        for (int i = 0; i < curtainList.size(); i++) {
+            Item item = curtainList.get(i);
+            if (null != item.getNote()) {
+                item.setNote(stringUtil.getUtf8(item.getNote()));
+            }
+            if (null != item.getItemVersion()) {
+                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+            }
+            if (null != item.getProductBrand()) {
+                item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+            }
+            if (null != item.getRzStyle()) {
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+            }
+            if (null != item.getUnit()) {
+                item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
+            }
+        }
+            map.put("data", curtainList);
+            map.put("code", 0);
+            return map;
+        }
+
+    @Override
+    public Map getCurtainInfo(String curtainNo) throws IOException {
+        Map map = new HashMap<>();
+
         return map;
     }
 

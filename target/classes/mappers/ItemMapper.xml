@@ -33,6 +33,7 @@
         <result column="PRICE_HOME" property="priceHome" jdbcType="DECIMAL" />
         <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
         <result column="TOTAL" property="total" jdbcType="DECIMAL"/>
+        <result column="DUIHUA_LOSS" property="duihuaLoss" jdbcType="DECIMAL"/>
         <association property="itemType" javaType="com.yulan.pojo.ItemType"
                      resultMap="ItemResultMap"/>
     </resultMap>
@@ -329,18 +330,25 @@
         select t.note from UNIT t where t.unit = #{unit}
     </select>
 
-    <select id="getCurtainType" resultType="String">
-
-        select parent_item_no from(
+    <select id="getCurtainType" resultMap="ItemMap">
+        select * from(
         select rownum rm, c.*  from
         (
-        select distinct t.parent_item_no from ITEM_ML_GY t
+        select t.* ,COUNT(*) OVER () TOTAL from ITEM t where t.product_type = 'KS'
         ) c)tm
         <if test="start!=null">
             where rm &gt;= #{start} and rm &lt;= #{number}
         </if>
-
     </select>
+    <!--获取同一型号窗帘下的系列产品-->
+    <select id="getCurtainInfo" resultMap="CurtainMap">
+        select * from ITEM_ML_GY t where t.parent_item_no = #{curtainNo} ORDER BY t.NO
+    </select>
+    <!-- 获取每个窗帘对应的工艺-->
+    <select id="getItemGY" resultType="String">
+        select t.gy_no from ITEM_GY_LIST t where t.parent_item_no = #{itemNO}
+    </select>
+
 
 
 </mapper>
