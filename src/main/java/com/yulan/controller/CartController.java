@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,7 +145,10 @@ public class CartController{
             	commodity.setWidth(new BigDecimal(width));
             	commodity.setHeight(new BigDecimal(height));
 			} else {
-            	commodity.setQuantity(new BigInteger(quantity));
+            	commodity.setQuantity(new BigDecimal(quantity));
+			}
+            if(commodity.getPrice() == null) {
+            	return Response.getResponseMap(2,"该产品正在上架，暂时不能加入购物车",null);
 			}
             if(!commodityService.addCommodity(commodity))
                 return Response.getResponseMap(1,"添加失败",null);
@@ -245,7 +247,7 @@ public class CartController{
 		    commodity.setActivityId(null);
         }
 		if(quantityString!=null&&!quantityString.equals("")) {
-			commodity.setQuantity(new BigInteger(quantityString));
+			commodity.setQuantity(new BigDecimal(quantityString));
 		} else {
 			commodity.setHeight(new BigDecimal(heightString));
 			commodity.setWidth(new BigDecimal(widthString));
