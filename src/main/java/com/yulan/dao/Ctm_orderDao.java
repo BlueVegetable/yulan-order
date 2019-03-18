@@ -1,9 +1,6 @@
 package com.yulan.dao;
 
-import com.yulan.pojo.Ctm_order;
-import com.yulan.pojo.Ctm_order_detail;
-import com.yulan.pojo.Sal_promotion;
-import com.yulan.pojo.Sal_rebate_certificate;
+import com.yulan.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -49,7 +46,7 @@ public interface Ctm_orderDao {
     /**
      * 获取订单页面活动
      */
-    Sal_promotion getPromotion(@Param("order_type") String order_type);
+    Sal_promotion getPromotion(@Param("pId") String pId);
 
     /**
      * 获取客户余额
@@ -114,4 +111,19 @@ public interface Ctm_orderDao {
      * @return
      */
     Sal_rebate_certificate getRebateById(@Param("id")String id);
+
+    /**
+     * 更新优惠券剩余金额
+     * @param id
+     * @param rebateMoneyOver
+     * @return
+     */
+    Boolean updateRebatemoney(@Param("id")String id,@Param("rebateMoneyOver")BigDecimal rebateMoneyOver);
+
+    /**
+     * 记录优惠券使用记录
+     * @param sal_rebate_certificate_record
+     * @return
+     */
+    Boolean insertRebateRecord(Sal_rebate_certificate_record sal_rebate_certificate_record);
 }

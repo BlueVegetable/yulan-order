@@ -60,8 +60,10 @@ public class Item {
     private BigDecimal priceHome;
 
     private String groupType;
-
+    //统计返回页数的时候一共有多少条
     private Integer total;
+
+    private BigDecimal duihuaLoss;
 
     private ItemType itemType;
 
@@ -71,6 +73,14 @@ public class Item {
 
     public void setTotal(Integer total) {
         this.total = total;
+    }
+
+    public BigDecimal getDuihuaLoss() {
+        return duihuaLoss;
+    }
+
+    public void setDuihuaLoss(BigDecimal duihuaLoss) {
+        this.duihuaLoss = duihuaLoss;
     }
 
     public ItemType getItemType() {

@@ -19,4 +19,8 @@ public interface ItemService {
 
     Map judgeStockShow(Double stockShowNum, String itemNo);
 
+    Map getCurtainType(Integer page,Integer lastNum)throws IOException;
+
+    Map getCurtainInfo(String curtainNo)throws IOException;
+
 }

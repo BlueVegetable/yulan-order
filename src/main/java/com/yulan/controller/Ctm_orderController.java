@@ -156,6 +156,17 @@ public class Ctm_orderController {
         return  ctm_orderService.getRebate(m);
     }
 
+    /**
+     * 显示优惠券摊分
+     * @param m
+     * @return
+     */
+    @RequestMapping("showRebate")
+    @ResponseBody
+    public Map showRebate (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
+        return  ctm_orderService.showRebate(m);
+    }
+
 
 
 }

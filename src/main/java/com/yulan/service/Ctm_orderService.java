@@ -32,4 +32,7 @@ public interface Ctm_orderService {
 
    //获取客户优惠券
    Map getRebate(Map<String,Object>map) throws UnsupportedEncodingException;
+
+   //点击优惠券显示摊分明细
+   Map showRebate(Map<String,Object>map) throws InvocationTargetException, IllegalAccessException;
 }
