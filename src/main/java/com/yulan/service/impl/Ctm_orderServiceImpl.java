@@ -299,12 +299,15 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     ctm_orderDao.insertRebateRecord(sal_rebate_certificate_recordY);
                 }
 
+
                 //统计
                 allRebateMonth=allRebateMonth.add(rebateMonth);
                 allRebateYear=allRebateYear.add(rebateYear);
 
                 ctm_order_detail.setBackM(rebateMonth);
                 ctm_order_detail.setBackY(rebateYear);
+
+                ctm_order_detail.setFinalCost(ctm_order_detail.getPromotionCost().subtract(rebateMonth).subtract(rebateYear));//最终金额
 
 
 
@@ -524,6 +527,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
                     }else {
                         rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+
                         rebateYear=this.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
                     }
                 }else{//订单价格大于优惠券
@@ -634,10 +638,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
 
         if (promotion_cost.compareTo(allMoney)==1){//价格大于优惠券
-
-            backMoney=((thisMoney.divide(promotion_cost,4,RoundingMode.HALF_UP)).multiply(money.divide(allMoney,4,RoundingMode.HALF_UP))).multiply(money);//返利
+            backMoney=thisMoney.multiply(money).multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP).divide(allMoney,2,RoundingMode.HALF_UP);
+//            backMoney=((thisMoney.divide(promotion_cost)).multiply(money.divide(allMoney,4,RoundingMode.HALF_UP))).multiply(money);//返利
         }else  {
-            backMoney=((thisMoney.divide(promotion_cost,4, RoundingMode.HALF_UP)).multiply(money));
+            backMoney=((thisMoney.multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP)));
         }
         return backMoney;
 

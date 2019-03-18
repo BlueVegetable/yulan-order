@@ -90,6 +90,16 @@ public class Ctm_order_detail  {
 
     private BigDecimal backM;//月放利
 
+    private BigDecimal finalCost;//最终花费（活动加券后）
+
+    public BigDecimal getFinalCost() {
+        return finalCost;
+    }
+
+    public void setFinalCost(BigDecimal finalCost) {
+        this.finalCost = finalCost;
+    }
+
     public BigDecimal getBackY() {
         return backY;
     }
