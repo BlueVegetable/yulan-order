@@ -207,7 +207,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         String statusId=" ";
         if ((money.compareTo(promotion_cost)!=-1)||((resideMoney.compareTo(promotion_cost)!=-1))){
-            statusId="12";
+            statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
         }else{
             statusId="5";
