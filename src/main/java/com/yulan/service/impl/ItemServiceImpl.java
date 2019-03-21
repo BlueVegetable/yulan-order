@@ -2,14 +2,17 @@ package com.yulan.service.impl;
 
 import com.yulan.dao.ItemDao;
 import com.yulan.pojo.Item;
+import com.yulan.pojo.ItemMLGY;
 import com.yulan.pojo.StockShow;
 import com.yulan.service.ItemService;
+import com.yulan.utils.Arith;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +24,8 @@ public class ItemServiceImpl implements ItemService {
     private ItemDao itemDao;
 
     private StringUtil stringUtil;
+
+    private static Arith arith;
 
     private MapUtils mapUtils;
 
@@ -47,7 +52,6 @@ public class ItemServiceImpl implements ItemService {
                 map.put("data",item);
                 map.put("code",0);
             }
-
 
         }else{
             map.put("data","没有找到相关产品");
@@ -214,8 +218,59 @@ public class ItemServiceImpl implements ItemService {
         }
 
     @Override
-    public Map getCurtainInfo(String curtainNo) throws IOException {
+    public Map getCurtainInfo(Double width, Double height, Double WBH, Double multiple, String location, String curtainNo) throws IOException {
         Map map = new HashMap<>();
+        List<ItemMLGY> curtainItemList = new ArrayList<>();
+        curtainItemList = itemDao.getCurtainInfo(curtainNo);
+        for(int i = 0;i < curtainItemList.size();i++ ){
+            ItemMLGY itemMLGY = new ItemMLGY();
+            itemMLGY = curtainItemList.get(i);
+            Item curtainItem = itemDao.getItemByItemNO(itemMLGY.getParentItemNo());
+            Double usage;
+            if(itemMLGY.getItemType().equals("lt")){
+                //帘头
+                if(height < 3){
+                    usage = width + WBH * 2 ;
+                }else if( height < 4){
+                    usage = (width + WBH * 2 ) * 1.1;
+                }else if(height < 5){
+                    usage = (width + WBH * 2 ) * 1.3;
+                }else{
+                    usage = (width + WBH * 2 ) * 1.5;
+                }
+                BigDecimal ltUsage = new BigDecimal(usage);
+                map.put("lt", ltUsage);
+            }else if(itemMLGY.getItemType().equals("ls")){
+               BigDecimal lsUsage = BigDecimal.valueOf(0);
+                //帘身
+                //特殊款式
+                if(itemMLGY.getParentItemNo().equals("Z340004") || itemMLGY.getParentItemNo().equals("U310111")){
+                    lsUsage = arith.mul(arith.dbToBD(width),curtainItem.getWidthHh());
+                }else{
+                    //定高
+                    if(curtainItem.getFixType().equals("02")){
+                        lsUsage = arith.add(arith.dbToBD( width * multiple),curtainItem.getDuihuaLoss());
+                    }else{
+                        //定宽
+                        if(curtainItem.getHighHh().doubleValue() > 0){
+                            //花回
+                            lsUsage = arith.mul(arith.mul(arith.round(arith.div(arith.div(arith.dbToBD( width * multiple),curtainItem.getFixGrade()),arith.dbToBD(1000.0)),2),
+                                    arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2),curtainItem.getHighJia()),curtainItem.getHighHh()),2)),
+                                    curtainItem.getHighHh());
+                        }else if(curtainItem.getHighHh().doubleValue() == 0){
+                            lsUsage = arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple),curtainItem.getFixGrade()),arith.dbToBD(1000.0)),2),arith.sub(arith.dbToBD(height + 0.2),curtainItem.getHighJia()));
+                        }
+                    }
+                }
+                map.put("ls",lsUsage);
+            }else if(itemMLGY.getItemType().equals("sha")){
+                //纱
+
+            }else if(itemMLGY.getItemType().equals("pjb")){
+                //配件
+
+            }
+        }
 
         return map;
     }

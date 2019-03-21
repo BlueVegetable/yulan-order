@@ -21,6 +21,6 @@ public interface ItemService {
 
     Map getCurtainType(Integer page,Integer lastNum)throws IOException;
 
-    Map getCurtainInfo(String curtainNo)throws IOException;
+    Map getCurtainInfo(Double width,Double height,Double WBH,Double multiple,String location,String curtainNo)throws IOException;
 
 }
