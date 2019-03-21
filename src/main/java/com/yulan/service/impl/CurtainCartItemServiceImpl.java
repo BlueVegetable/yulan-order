@@ -20,8 +20,27 @@ public class CurtainCartItemServiceImpl implements CartItemService {
 
     @Override
     public boolean addCartItem(CartItem cartItem) {
-        cartItem.setCartItemId(System.currentTimeMillis()+StringUtil.createStringID());
-        return curtainCartItemEncode.addCartItem(cartItem);
+        boolean flag = true;
+        CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
+        String cartItemId = System.currentTimeMillis()+StringUtil.createStringID();
+        curtainCartItem.setCartItemId(cartItemId);
+        flag = flag && curtainCartItemEncode.addCartItem(cartItem);
+        for (CurtainList curtainList:curtainCartItem.getCurtainLists()) {
+            List<CurtainCommodity> curtainCommodities = curtainList.getCurtainCommodities();
+            String partName = curtainList.getPartName();
+            for (CurtainCommodity curtainCommodity:curtainCommodities) {
+                curtainCommodity.setId(System.currentTimeMillis()+StringUtil.createStringID());
+                curtainCommodity.setCurtainPartName(partName);
+                curtainCommodity.setCartItemId(cartItemId);
+            }
+        }
+        for (CurtainList curtainList:curtainCartItem.getCurtainLists()) {
+            List<CurtainCommodity> curtainCommodities = curtainList.getCurtainCommodities();
+            for (CurtainCommodity curtainCommodity:curtainCommodities) {
+                flag = flag && curtainCommodityEncode.addCommodity(curtainCommodity);
+            }
+        }
+        return flag;
     }
 
     @Override

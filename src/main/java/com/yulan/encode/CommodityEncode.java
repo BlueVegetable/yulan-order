@@ -6,8 +6,6 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-
 @Service
 public class CommodityEncode {
 
@@ -40,14 +38,17 @@ public class CommodityEncode {
     }
 
     public Commodity getCommodityByID(String commodityID) {
-        return commodityDao.getCommodityByID(commodityID);
+        Commodity commodity = commodityDao.getCommodityByID(commodityID);
+        commodity.setUnit(StringUtil.GBKToUTF8(commodity.getUnit()));
+        commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
+        return commodity;
     }
 
     public long countByCartItemID(String cartItemID) {
         return commodityDao.countByCartItemID(cartItemID);
     }
 
-    public boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException {
+    public boolean updateCommodity(Commodity commodity) {
         String note = commodity.getNote();
         String unit = commodity.getUnit();
         if(note != null) {

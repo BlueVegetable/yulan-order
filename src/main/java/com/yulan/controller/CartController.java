@@ -112,7 +112,7 @@ public class CartController{
 			salPromotion = salPromotionService.getSalPromotionByID(activityID);
 		}
 		CartItem cartItem = cartItemService.getCartItemOrder(cart.getCartId(), commodityType,
-				salPromotion == null?null:salPromotion.getGroupType(),
+				salPromotion == null?"Z":salPromotion.getGroupType(),
 				item.getGroupType());
 		if(cartItem == null) {
 			cartItem = new CartItem();
@@ -177,6 +177,12 @@ public class CartController{
 //		    else
 //                return Response.getResponseMap(0,"添加成功",null);
         }
+	}
+
+	@ResponseBody@RequestMapping("addCurtainCartItem")
+	public Map addCurtainCartItem(@RequestBody CurtainCartItem curtainCartItem) {
+		curtainCartItemService.addCartItem(curtainCartItem);
+		return Response.getResponseMap(0,"",null);
 	}
 
 	@ResponseBody@RequestMapping("deleteCartItems")
