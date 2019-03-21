@@ -4,13 +4,13 @@ import com.yulan.pojo.*;
 import com.yulan.service.*;
 import com.yulan.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,16 +23,16 @@ public class CartController{
 	private ItemService itemService;
 	@Autowired
 	private CartService cartService;
-	@Autowired
+	@Autowired@Qualifier("cartItemService")
 	private CartItemService cartItemService;
-	@Autowired
+	@Autowired@Qualifier("curtainCartItemService")
+	private CartItemService curtainCartItemService;
+	@Autowired@Qualifier("commodityService")
 	private CommodityService commodityService;
+	@Autowired@Qualifier("curtainCommodityService")
+    private CommodityService curtainCommodityService;
 	@Autowired
 	private SalPromotionService salPromotionService;
-	@Autowired
-	private ActivityGroupTypeService activityGroupTypeService;
-	@Autowired
-	private ProductGroupTypeService productGroupTypeService;
 	@Autowired
 	private UnitService unitService;
 
@@ -47,6 +47,17 @@ public class CartController{
 		else
 			return Response.getResponseMap(1,"添加失败",null);
 	}
+
+	@ResponseBody@RequestMapping("addCurtain")
+	public Map<String,Object> addCurtain(@RequestBody CurtainCartItem curtainCartItem) {
+	    curtainCartItemService.addCartItem(curtainCartItem);
+	    for (CurtainList curtainList:curtainCartItem.getCurtainLists()) {
+	        for (Commodity commodity:curtainList.getCurtainCommodities()) {
+	            curtainCommodityService.addCommodity(commodity);
+            }
+        }
+	    return Response.getResponseMap(0,"",null);
+    }
 
 	@ResponseBody@RequestMapping("getCartByID")
 	public Cart getCartByID(String cartID) {
@@ -70,7 +81,7 @@ public class CartController{
 	public Cart getAllCartByCID(String CID) throws Exception {
 		Cart cart = getSimpleCartByCID(CID);
 		Map<String, List<CartItem>> cartItems = new HashMap<>();
-		cartItems.put(CURTAIN,cartItemService.getCartItems(cart.getCartId(),CURTAIN));
+		cartItems.put(CURTAIN,curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN));
 		cartItems.put(WALLPAPER,cartItemService.getCartItems(cart.getCartId(),WALLPAPER));
 		cartItems.put(SOFT,cartItemService.getCartItems(cart.getCartId(),SOFT));
 		cart.setCartItems(cartItems);
@@ -101,7 +112,7 @@ public class CartController{
 			salPromotion = salPromotionService.getSalPromotionByID(activityID);
 		}
 		CartItem cartItem = cartItemService.getCartItemOrder(cart.getCartId(), commodityType,
-				salPromotion == null?null:salPromotion.getGroupType(),
+				salPromotion == null?"Z":salPromotion.getGroupType(),
 				item.getGroupType());
 		if(cartItem == null) {
 			cartItem = new CartItem();
@@ -120,6 +131,7 @@ public class CartController{
             commodity.setActivityId(activityID);
             Unit unit = unitService.getUnitByID(item.getUnit());
             commodity.setUnit(unit!=null?unit.getNote():null);
+            commodity.setNote(note);
             commodity.setSplitShipment(splitShipment);
             switch (customer_type) {
                 case "02":commodity.setPrice(item.getPriceSale());break;
@@ -133,34 +145,44 @@ public class CartController{
             	commodity.setWidth(new BigDecimal(width));
             	commodity.setHeight(new BigDecimal(height));
 			} else {
-            	commodity.setQuantity(new BigInteger(quantity));
+            	commodity.setQuantity(new BigDecimal(quantity));
+			}
+            if(commodity.getPrice() == null) {
+            	return Response.getResponseMap(2,"该产品正在上架，暂时不能加入购物车",null);
 			}
             if(!commodityService.addCommodity(commodity))
                 return Response.getResponseMap(1,"添加失败",null);
             else
                 return Response.getResponseMap(0,"添加成功",null);
         } else {
-		    commodity.setItem(item);
-		    commodity.setSplitShipment(splitShipment);
-			if(quantity==null||quantity.equals("")) {
-				return Response.getResponseMap(2,"该产品已存在于购物车",null);
-			} else {
-				BigInteger count = new BigInteger(quantity);
-				count = count.add(commodity.getQuantity());
-				commodity.setQuantity(count);
-			}
-			if(note != null&&!note.equals("")) {
-				if(commodity.getNote()!=null) {
-					commodity.setNote(commodity.getNote()+"\r\n"+note);
-				} else {
-					commodity.setNote(note);
-				}
-			}
-		    if(!commodityService.updateCommodity(commodity))
-                return Response.getResponseMap(1,"添加失败",null);
-		    else
-                return Response.getResponseMap(0,"添加成功",null);
+//		    commodity.setItem(item);
+//		    commodity.setSplitShipment(splitShipment);
+//			if(quantity==null||quantity.equals("")) {
+
+            return Response.getResponseMap(2,"该产品已存在于购物车",null);
+//			} else {
+//				BigInteger count = new BigInteger(quantity);
+//				count = count.add(commodity.getQuantity());
+//				commodity.setQuantity(count);
+//			}
+//			if(note != null&&!note.equals("")) {
+//				if(commodity.getNote()!=null) {
+//					commodity.setNote(commodity.getNote()+"\r\n"+note);
+//				} else {
+//					commodity.setNote(note);
+//				}
+//			}
+//		    if(!commodityService.updateCommodity(commodity))
+//                return Response.getResponseMap(1,"添加失败",null);
+//		    else
+//                return Response.getResponseMap(0,"添加成功",null);
         }
+	}
+
+	@ResponseBody@RequestMapping("addCurtainCartItem")
+	public Map addCurtainCartItem(@RequestBody CurtainCartItem curtainCartItem) {
+		curtainCartItemService.addCartItem(curtainCartItem);
+		return Response.getResponseMap(0,"",null);
 	}
 
 	@ResponseBody@RequestMapping("deleteCartItems")
@@ -226,12 +248,12 @@ public class CartController{
 			cartItemService.addCartItem(cartItemNew);
 		}
 		if(salPromotion!=null) {
-		    commodity.setActivityId(salPromotion.getOrderType());
+		    commodity.setActivityId(salPromotion.getpId());
         } else {
 		    commodity.setActivityId(null);
         }
 		if(quantityString!=null&&!quantityString.equals("")) {
-			commodity.setQuantity(new BigInteger(quantityString));
+			commodity.setQuantity(new BigDecimal(quantityString));
 		} else {
 			commodity.setHeight(new BigDecimal(heightString));
 			commodity.setWidth(new BigDecimal(widthString));

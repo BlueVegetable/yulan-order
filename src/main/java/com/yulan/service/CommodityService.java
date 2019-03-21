@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 
 public interface CommodityService {
 
-	boolean addCommodity(Commodity commodity) throws UnsupportedEncodingException;
+	boolean addCommodity(Commodity commodity);
 
 	boolean deleteCommodityByID(String commodityID);
 

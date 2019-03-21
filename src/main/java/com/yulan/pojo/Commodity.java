@@ -1,7 +1,6 @@
 package com.yulan.pojo;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Objects;
 
 public class Commodity {
@@ -12,7 +11,7 @@ public class Commodity {
 	private BigDecimal activityPrice;
 	private Item item;
 	private String cartItemId;
-	private BigInteger quantity;
+	private BigDecimal quantity;
 	private BigDecimal width;
 	private BigDecimal height;
 	private String note;
@@ -67,11 +66,11 @@ public class Commodity {
 		this.cartItemId=cartItemId;
 	}
 
-	public BigInteger getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(BigInteger quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 

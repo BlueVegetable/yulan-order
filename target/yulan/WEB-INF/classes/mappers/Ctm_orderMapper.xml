@@ -18,7 +18,8 @@
     CURTAIN_ROOM_ID, CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT, CURTAIN_HEIGHT2,
     CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
     ML_NON_STANDARD, CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,to_char(DATE_DELIVER_KF,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_KF,to_char(DATE_DELIVER_NB,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_NB,
-    to_char(DATE_DELIVER_FH,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_FH,NVL(UNIT_PRICE,0) UNIT_PRICE,NVL(PROMOTION_COST,0) PROMOTION_COST,NVL(PROMOTION,' ') PROMOTION,NVL(PART_SEND_ID,' ')PART_SEND_ID
+    to_char(DATE_DELIVER_FH,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_FH,NVL(UNIT_PRICE,0) UNIT_PRICE,NVL(PROMOTION_COST,0) PROMOTION_COST,NVL(PROMOTION,' ') PROMOTION,NVL(PART_SEND_ID,' ')PART_SEND_ID,
+    NVL(BACK_Y,0)BACK_Y,NVL(BACK_M,0)BACK_M,NVL(FINAL_COST,0)FINAL_COST
   </sql>
 
     <select id="getOrders" resultType="Map">
@@ -188,7 +189,7 @@
       CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2, ML_NON_STANDARD,
       CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,
       DATE_DELIVER_KF, DATE_DELIVER_NB, DATE_DELIVER_FH,UNIT_PRICE,PROMOTION_COST,PROMOTION,
-      PART_SEND_ID,BACK_Y,BACK_M
+      PART_SEND_ID,BACK_Y,BACK_M,FINAL_COST
       )
     values (#{orderNo,jdbcType=VARCHAR}, #{lineNo,jdbcType=DECIMAL}, #{itemNo,jdbcType=VARCHAR},
       #{itemNoSample,jdbcType=VARCHAR}, #{productionVersion,jdbcType=VARCHAR}, #{qtyRequired,jdbcType=DECIMAL},
@@ -201,7 +202,7 @@
       #{curtainWbhSize,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{transId,jdbcType=VARCHAR},
       #{dateDeliverKf,jdbcType=TIMESTAMP}, #{dateDeliverNb,jdbcType=TIMESTAMP}, #{dateDeliverFh,jdbcType=TIMESTAMP},
       #{unitPrice,jdbcType=DECIMAL},#{promotionCost,jdbcType=DECIMAL}, #{promotion,jdbcType=VARCHAR},
-      #{partSendId,jdbcType=VARCHAR},#{backY,jdbcType=DECIMAL},#{backM,jdbcType=DECIMAL}
+      #{partSendId,jdbcType=VARCHAR},#{backY,jdbcType=DECIMAL},#{backM,jdbcType=DECIMAL},#{finalCost,jdbcType=DECIMAL}
       )
   </insert>
     
