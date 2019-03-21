@@ -126,4 +126,67 @@ public interface Ctm_orderDao {
      * @return
      */
     Boolean insertRebateRecord(Sal_rebate_certificate_record sal_rebate_certificate_record);
+
+    /**
+     * 查找订单头
+     * @param orderNo
+     * @return
+     */
+    Ctm_order getOrderH(@Param("orderNo") String orderNo);
+
+    /**
+     * 查找订单详情
+     * @param orderNo
+
+     * @return
+     */
+    List<Ctm_order_detail> getOrderB(@Param("orderNo") String orderNo);
+
+    /**
+     * 取消订单时优惠券金额回复
+     */
+
+    /**
+     * 更新订单头
+     * @param ctm_order
+     * @return
+     */
+    Boolean updateOrder(Ctm_order ctm_order);
+
+    /**
+     * 更新订单详情
+     * @param ctm_order_detail
+     * @return
+     */
+    Boolean updateOrderB(Ctm_order_detail ctm_order_detail);
+
+    /**
+     * 寻找优惠券使用记录，用于取消订单时优惠券金额返回
+     * @param id
+     * @return
+     */
+    List<Sal_rebate_certificate_record> findRecrod(@Param("id")String id);
+
+
+    /**
+     * 寻找优惠券
+     * @param id
+     * @return
+     */
+    Sal_rebate_certificate findRebate(@Param("id")String id);
+
+    /**
+     * 更新优惠券剩余金额
+     * @param sal_rebate_certificate
+     * @return
+     */
+    Boolean updateRebate(Sal_rebate_certificate sal_rebate_certificate);
+
+    /**
+     * 更新优惠券使用记录状态
+     * @param statusId
+     * @return
+     */
+    Boolean updateRecord(@Param("statusId")String statusId,@Param("orderNo")String orderNo);
+
 }

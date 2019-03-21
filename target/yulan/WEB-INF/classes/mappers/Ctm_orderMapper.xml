@@ -323,5 +323,367 @@
         </trim>
     </insert>
 
+    <resultMap id="rebateRecordMap" type="Sal_rebate_certificate_record" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <result column="LINE_NO" property="lineNo" jdbcType="DECIMAL" />
+        <result column="REBATE_MONEY" property="rebateMoney" jdbcType="DECIMAL" />
+        <result column="DATE_USE" property="dateUse" jdbcType="TIMESTAMP" />
+        <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <select id="findRecrod" resultMap="rebateRecordMap">
+        select * from SAL_REBATE_CERTIFICATE_RECORD
+        where ORDER_NO = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateRecord" parameterType="String">
+        update SAL_REBATE_CERTIFICATE_RECORD
+         set STATUS_ID=#{statusId,jdbcType=VARCHAR}
+        where ORDER_NO= #{orderNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateRebate" parameterType="Sal_rebate_certificate" >
+        update SAL_REBATE_CERTIFICATE
+        <set >
+            <if test="rebateType != null" >
+                REBATE_TYPE = #{rebateType,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCode != null" >
+                CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="rebateMoney != null" >
+                REBATE_MONEY = #{rebateMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="rebateMoneyOver != null" >
+                REBATE_MONEY_OVER = #{rebateMoneyOver,jdbcType=DECIMAL},
+            </if>
+            <if test="dateStart != null" >
+                DATE_START = #{dateStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateEnd != null" >
+                DATE_END = #{dateEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="findRebate" resultType="Sal_rebate_certificate">
+        select * from SAL_REBATE_CERTIFICATE where ID=#{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateOrder" parameterType="Ctm_order" >
+        update CTM_ORDER
+        <set >
+            <if test="customerCode != null" >
+                CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCode2 != null" >
+                CUSTOMER_CODE2 = #{customerCode2,jdbcType=VARCHAR},
+            </if>
+            <if test="currencyId != null" >
+                CURRENCY_ID = #{currencyId,jdbcType=VARCHAR},
+            </if>
+            <if test="linkperson != null" >
+                LINKPERSON = #{linkperson,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null" >
+                TELEPHONE = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="statusId != null" >
+                STATUS_ID = #{statusId,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryType != null" >
+                DELIVERY_TYPE = #{deliveryType,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryNotes != null" >
+                DELIVERY_NOTES = #{deliveryNotes,jdbcType=VARCHAR},
+            </if>
+            <if test="postAddress != null" >
+                POST_ADDRESS = #{postAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="notes != null" >
+                NOTES = #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="dateCre != null" >
+                DATE_CRE = #{dateCre,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operator != null" >
+                OPERATOR = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="dateUpdate != null" >
+                DATE_UPDATE = #{dateUpdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="personUpdate != null" >
+                PERSON_UPDATE = #{personUpdate,jdbcType=VARCHAR},
+            </if>
+            <if test="contractNo != null" >
+                CONTRACT_NO = #{contractNo,jdbcType=VARCHAR},
+            </if>
+            <if test="personAccept != null" >
+                PERSON_ACCEPT = #{personAccept,jdbcType=VARCHAR},
+            </if>
+            <if test="dateAccept != null" >
+                DATE_ACCEPT = #{dateAccept,jdbcType=TIMESTAMP},
+            </if>
+            <if test="yulanNotes != null" >
+                YULAN_NOTES = #{yulanNotes,jdbcType=VARCHAR},
+            </if>
+            <if test="webTjTime != null" >
+                WEB_TJ_TIME = #{webTjTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateDeal != null" >
+                DATE_DEAL = #{dateDeal,jdbcType=TIMESTAMP},
+            </if>
+            <if test="flag != null" >
+                FLAG = #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="userNo != null" >
+                USER_NO = #{userNo,jdbcType=VARCHAR},
+            </if>
+            <if test="projectNo != null" >
+                PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCodeO2o != null" >
+                CUSTOMER_CODE_O2O = #{customerCodeO2o,jdbcType=VARCHAR},
+            </if>
+            <if test="orderFlag != null" >
+                ORDER_FLAG = #{orderFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="postAddressModified != null" >
+                POST_ADDRESS_MODIFIED = #{postAddressModified,jdbcType=DECIMAL},
+            </if>
+            <if test="dsLinkman != null" >
+                DS_LINKMAN = #{dsLinkman,jdbcType=VARCHAR},
+            </if>
+            <if test="dsTel != null" >
+                DS_TEL = #{dsTel,jdbcType=VARCHAR},
+            </if>
+            <if test="dsUserName != null" >
+                DS_USER_NAME = #{dsUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="dsOrderNo != null" >
+                DS_ORDER_NO = #{dsOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="isDsOrder != null" >
+                IS_DS_ORDER = #{isDsOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="erpProcessNote != null" >
+                ERP_PROCESS_NOTE = #{erpProcessNote,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceFlag != null" >
+                INVOICE_FLAG = #{invoiceFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceTitle != null" >
+                INVOICE_TITLE = #{invoiceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="wlContacts != null" >
+                WL_CONTACTS = #{wlContacts,jdbcType=VARCHAR},
+            </if>
+            <if test="wlTel != null" >
+                WL_TEL = #{wlTel,jdbcType=VARCHAR},
+            </if>
+            <if test="reciverArea1 != null" >
+                RECIVER_AREA1 = #{reciverArea1,jdbcType=VARCHAR},
+            </if>
+            <if test="reciverArea2 != null" >
+                RECIVER_AREA2 = #{reciverArea2,jdbcType=VARCHAR},
+            </if>
+            <if test="reciverArea3 != null" >
+                RECIVER_AREA3 = #{reciverArea3,jdbcType=VARCHAR},
+            </if>
+            <if test="billTypeX != null" >
+                BILL_TYPE_X = #{billTypeX,jdbcType=CHAR},
+            </if>
+            <if test="deliveryFlag != null" >
+                DELIVERY_FLAG = #{deliveryFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoFlag != null" >
+                OAO_FLAG = #{oaoFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoStatus != null" >
+                OAO_STATUS = #{oaoStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoPerson != null" >
+                OAO_PERSON = #{oaoPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoTime != null" >
+                OAO_TIME = #{oaoTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="allSpend != null" >
+                ALL_SPEND = #{allSpend,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateOrderB" parameterType="Ctm_order_detail" >
+        update CTM_ORDER_DETAIL
+        <set >
+            <if test="itemNo != null" >
+                ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="itemNoSample != null" >
+                ITEM_NO_SAMPLE = #{itemNoSample,jdbcType=VARCHAR},
+            </if>
+            <if test="productionVersion != null" >
+                PRODUCTION_VERSION = #{productionVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="qtyRequired != null" >
+                QTY_REQUIRED = #{qtyRequired,jdbcType=DECIMAL},
+            </if>
+            <if test="dateDeliver != null" >
+                DATE_DELIVER = #{dateDeliver,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateUpdate != null" >
+                DATE_UPDATE = #{dateUpdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="notes != null" >
+                NOTES = #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="statusId != null" >
+                STATUS_ID = #{statusId,jdbcType=VARCHAR},
+            </if>
+            <if test="discount != null" >
+                DISCOUNT = #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="discountFlag != null" >
+                DISCOUNT_FLAG = #{discountFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainKs != null" >
+                CURTAIN_KS = #{curtainKs,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainRoomName != null" >
+                CURTAIN_ROOM_NAME = #{curtainRoomName,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainRoomId != null" >
+                CURTAIN_ROOM_ID = #{curtainRoomId,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainRoomLineno != null" >
+                CURTAIN_ROOM_LINENO = #{curtainRoomLineno,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainWidth != null" >
+                CURTAIN_WIDTH = #{curtainWidth,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainHeight != null" >
+                CURTAIN_HEIGHT = #{curtainHeight,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainHeight2 != null" >
+                CURTAIN_HEIGHT2 = #{curtainHeight2,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainItemMenuNotes != null" >
+                CURTAIN_ITEM_MENU_NOTES = #{curtainItemMenuNotes,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainMenuGroupId != null" >
+                CURTAIN_MENU_GROUP_ID = #{curtainMenuGroupId,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainSizeTimes != null" >
+                CURTAIN_SIZE_TIMES = #{curtainSizeTimes,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainSizeTimes2 != null" >
+                CURTAIN_SIZE_TIMES2 = #{curtainSizeTimes2,jdbcType=DECIMAL},
+            </if>
+            <if test="mlNonStandard != null" >
+                ML_NON_STANDARD = #{mlNonStandard,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainWbhSize != null" >
+                CURTAIN_WBH_SIZE = #{curtainWbhSize,jdbcType=DECIMAL},
+            </if>
+            <if test="transType != null" >
+                TRANS_TYPE = #{transType,jdbcType=VARCHAR},
+            </if>
+            <if test="transId != null" >
+                TRANS_ID = #{transId,jdbcType=VARCHAR},
+            </if>
+            <if test="dateDeliverKf != null" >
+                DATE_DELIVER_KF = #{dateDeliverKf,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateDeliverNb != null" >
+                DATE_DELIVER_NB = #{dateDeliverNb,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateDeliverFh != null" >
+                DATE_DELIVER_FH = #{dateDeliverFh,jdbcType=TIMESTAMP},
+            </if>
+            <if test="unitPrice != null" >
+                UNIT_PRICE = #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="promotionCost != null" >
+                PROMOTION_COST = #{promotionCost,jdbcType=DECIMAL},
+            </if>
+
+            <if test="promotion != null" >
+                PROMOTION = #{promotion,jdbcType=VARCHAR},
+            </if>
+            <if test="partSendId != null" >
+                PART_SEND_ID = #{partSendId,jdbcType=VARCHAR},
+            </if>
+            <if test="backY != null" >
+                BACK_Y = #{backY,jdbcType=DECIMAL},
+            </if>
+            <if test="backM != null" >
+                BACK_M = #{backM,jdbcType=DECIMAL},
+            </if>
+            <if test="finalCost != null" >
+                FINAL_COST = #{finalCost,jdbcType=DECIMAL},
+            </if>
+
+        </set>
+        where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+        and LINE_NO = #{lineNo,jdbcType=DECIMAL}
+    </update>
+    
+    <select id="getOrderH" resultType="Ctm_order">
+        select * from CTM_ORDER where order_no=#{orderNo}
+    </select>
+
+
+    <resultMap id="Ctm_order_detailMap" type="Ctm_order_detail" >
+        <id column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <id column="LINE_NO" property="lineNo" jdbcType="DECIMAL" />
+        <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+        <result column="ITEM_NO_SAMPLE" property="itemNoSample" jdbcType="VARCHAR" />
+        <result column="PRODUCTION_VERSION" property="productionVersion" jdbcType="VARCHAR" />
+        <result column="QTY_REQUIRED" property="qtyRequired" jdbcType="DECIMAL" />
+        <result column="DATE_DELIVER" property="dateDeliver" jdbcType="TIMESTAMP" />
+        <result column="DATE_UPDATE" property="dateUpdate" jdbcType="TIMESTAMP" />
+        <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+        <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+        <result column="DISCOUNT" property="discount" jdbcType="DECIMAL" />
+        <result column="DISCOUNT_FLAG" property="discountFlag" jdbcType="VARCHAR" />
+        <result column="CURTAIN_KS" property="curtainKs" jdbcType="VARCHAR" />
+        <result column="CURTAIN_ROOM_NAME" property="curtainRoomName" jdbcType="VARCHAR" />
+        <result column="CURTAIN_ROOM_ID" property="curtainRoomId" jdbcType="DECIMAL" />
+        <result column="CURTAIN_ROOM_LINENO" property="curtainRoomLineno" jdbcType="DECIMAL" />
+        <result column="CURTAIN_WIDTH" property="curtainWidth" jdbcType="DECIMAL" />
+        <result column="CURTAIN_HEIGHT" property="curtainHeight" jdbcType="DECIMAL" />
+        <result column="CURTAIN_HEIGHT2" property="curtainHeight2" jdbcType="DECIMAL" />
+        <result column="CURTAIN_ITEM_MENU_NOTES" property="curtainItemMenuNotes" jdbcType="VARCHAR" />
+        <result column="CURTAIN_MENU_GROUP_ID" property="curtainMenuGroupId" jdbcType="VARCHAR" />
+        <result column="CURTAIN_SIZE_TIMES" property="curtainSizeTimes" jdbcType="DECIMAL" />
+        <result column="CURTAIN_SIZE_TIMES2" property="curtainSizeTimes2" jdbcType="DECIMAL" />
+        <result column="ML_NON_STANDARD" property="mlNonStandard" jdbcType="DECIMAL" />
+        <result column="CURTAIN_WBH_SIZE" property="curtainWbhSize" jdbcType="DECIMAL" />
+        <result column="TRANS_TYPE" property="transType" jdbcType="VARCHAR" />
+        <result column="TRANS_ID" property="transId" jdbcType="VARCHAR" />
+        <result column="DATE_DELIVER_KF" property="dateDeliverKf" jdbcType="TIMESTAMP" />
+        <result column="DATE_DELIVER_NB" property="dateDeliverNb" jdbcType="TIMESTAMP" />
+        <result column="DATE_DELIVER_FH" property="dateDeliverFh" jdbcType="TIMESTAMP" />
+        <result column="UNIT_PRICE" property="unitPrice" jdbcType="DECIMAL" />
+        <result column="PROMOTION_COST" property="promotionCost" jdbcType="DECIMAL" />
+        <result column="PROMOTION" property="promotion" jdbcType="VARCHAR" />
+        <result column="PART_SEND_ID" property="partSendId" jdbcType="VARCHAR" />
+        <result column="BACK_Y" property="backY" jdbcType="DECIMAL" />
+        <result column="BACK_M" property="backM" jdbcType="DECIMAL" />
+        <result column="FINAL_COST" property="finalCost" jdbcType="DECIMAL" />
+
+    </resultMap>
+    <select id="getOrderB" resultMap="Ctm_order_detailMap" >
+        select * from CTM_ORDER_DETAIL where order_no=#{orderNo} 
+    </select>
+
+
 
 </mapper>
