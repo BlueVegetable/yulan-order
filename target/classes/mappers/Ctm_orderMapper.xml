@@ -681,7 +681,7 @@
 
     </resultMap>
     <select id="getOrderB" resultMap="Ctm_order_detailMap" >
-        select * from CTM_ORDER_DETAIL where order_no=#{orderNo} 
+        select * from CTM_ORDER_DETAIL where order_no=#{orderNo}
     </select>
 
 
