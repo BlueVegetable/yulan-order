@@ -28,6 +28,9 @@ public interface Ctm_orderDao {
     //获取订单具体内容
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
 
+    //查找是否有出货单
+    PackDetail findPackDetail(@Param("orderNo")String orderNo,@Param("itemNo")String itemNo );
+
     //获取订单提货单号及其订单运输详情
     List<Map<String,Object>> getPackDetail(@Param("cid")String cid,@Param("order_no")String order_no,@Param("item_no") String item_no);
 

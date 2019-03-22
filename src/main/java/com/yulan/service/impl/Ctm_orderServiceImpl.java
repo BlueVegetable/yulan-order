@@ -56,6 +56,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                         entry.setValue(origin);
                     }
                 }
+                if (ctm_orderDao.findPackDetail(order_no,m2.get("ITEM_NO").toString())!=null){
+                    m2.put("packDetailId",1);
+                }else{
+                    m2.put("packDetailId",0);
+                }
                 BigDecimal unit_price=(BigDecimal)m2.get("UNIT_PRICE");
                 BigDecimal num=(BigDecimal)m2.get("QTY_REQUIRED");
                 m2.put("all_cost",unit_price.multiply(num));
