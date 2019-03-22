@@ -24,7 +24,7 @@ public interface Ctm_orderDao {
     List<Map<String,Object>> getOrdersH(@Param("start")Integer start, @Param("number") Integer number,
                                        @Param("cid")String cid, @Param("state_id")String state_id,
                                        @Param("find")String find,@Param("beginTime") String beginTime,
-                                        @Param("finishTime") String finishTime );
+                                        @Param("finishTime") String finishTime ,@Param("orderType")String orderType);
     //获取订单具体内容
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
 

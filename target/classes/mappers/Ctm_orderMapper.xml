@@ -10,7 +10,7 @@
     DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
     BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND,
-    NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE
+    NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
@@ -65,6 +65,9 @@
             </if>
             <if test="beginTime!=null">
                 and DATE_CRE between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
+            </if>
+            <if test="orderType!=null">
+                and order_no like  '%'||#{orderType}||'%'
             </if>
         order by t.DATE_CRE DESC
         ) l
@@ -157,7 +160,7 @@
       WL_TEL, RECIVER_AREA1, RECIVER_AREA2,
       RECIVER_AREA3, BILL_TYPE_X, DELIVERY_FLAG,
       OAO_FLAG, OAO_STATUS, OAO_PERSON,
-      OAO_TIME,ALL_SPEND,BUYUSER,BUYUSERPHONE)
+      OAO_TIME,ALL_SPEND,BUYUSER,BUYUSERPHONE,ALLBACK_M,ALLBACK_Y)
     values (#{orderNo,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, #{customerCode2,jdbcType=VARCHAR},
       #{currencyId,jdbcType=VARCHAR}, #{linkperson,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
       #{statusId,jdbcType=VARCHAR}, #{deliveryType,jdbcType=VARCHAR}, #{deliveryNotes,jdbcType=VARCHAR},
@@ -174,7 +177,7 @@
       #{reciverArea3,jdbcType=VARCHAR}, #{billTypeX,jdbcType=CHAR}, #{deliveryFlag,jdbcType=VARCHAR},
       #{oaoFlag,jdbcType=VARCHAR}, #{oaoStatus,jdbcType=VARCHAR}, #{oaoPerson,jdbcType=VARCHAR},
       #{oaoTime,jdbcType=TIMESTAMP},#{allSpend,jdbcType=DECIMAL},#{buyUser,jdbcType=VARCHAR},
-      #{buyUserPhone,jdbcType=VARCHAR}
+      #{buyUserPhone,jdbcType=VARCHAR},#{allBackM,jdbcType=DECIMAL},#{allBackY,jdbcType=DECIMAL}
       )
   </insert>
 
