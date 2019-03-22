@@ -206,7 +206,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
-        if ((money.compareTo(promotion_cost)!=-1)||((resideMoney.compareTo(promotion_cost)!=-1))){
+        if (resideMoney.compareTo(promotion_cost)!=-1){
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
         }else{
@@ -416,6 +416,18 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 }
                 data.add(map2);
             }
+        }else {//软装
+            for (Sal_rebate_certificate sal_rebate_certificate:list){
+
+                Map<String, Object> map2=MapUtils.beanToMap(sal_rebate_certificate);
+                for (Map.Entry<String, Object> entry : map2.entrySet()) {
+                    if (entry.getValue() instanceof String) {
+                        String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                        entry.setValue(origin);
+                    }
+                }
+                data.add(map2);
+            }
         }
         map1.put("data",data);
         map1.put("msg","SUCCESS");
@@ -571,6 +583,87 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
 
+
+        return m;
+    }
+
+    @Override
+    public Map cancelOrder(Map<String, Object> map) {
+        Map<String ,Object> m=new HashMap<>();
+        String  orderNo=map.get("orderNo").toString();
+        Ctm_order ctm_order=new Ctm_order();
+        ctm_order.setOrderNo(orderNo);
+        ctm_order.setStatusId("3");
+        BigDecimal allmony_y=BigDecimal.valueOf(0);//年返利
+        BigDecimal allmony_m=BigDecimal.valueOf(0);//月返利
+        String yesrId="";//年返利券编号
+        String monthId="";//月返利券编号
+        if (ctm_orderDao.updateOrder(ctm_order)){
+            List<Sal_rebate_certificate_record> list=ctm_orderDao.findRecrod(orderNo);
+            for (Sal_rebate_certificate_record s:list){
+                String id=s.getId();
+                if (id.indexOf("Y")!=-1){//年返利券
+                    yesrId=id;
+                    allmony_y=allmony_y.add(s.getRebateMoney());
+
+                }else{//月
+                    monthId=id;
+                    allmony_m=allmony_m.add(s.getRebateMoney());
+                }
+            }
+            if (!yesrId.equals("")){//更新年券
+                Sal_rebate_certificate sal_rebate_certificateY=ctm_orderDao.findRebate(yesrId);
+                BigDecimal rebateMoneyOver=sal_rebate_certificateY.getRebateMoneyOver().add(allmony_y);
+                sal_rebate_certificateY.setRebateMoneyOver(rebateMoneyOver);
+                ctm_orderDao.updateRebate(sal_rebate_certificateY);
+            }
+            if (!monthId.equals("")){//更新月券
+                Sal_rebate_certificate sal_rebate_certificateM=ctm_orderDao.findRebate(monthId);
+                BigDecimal rebateMoneyOver=sal_rebate_certificateM.getRebateMoneyOver().add(allmony_m);
+                sal_rebate_certificateM.setRebateMoneyOver(rebateMoneyOver);
+                ctm_orderDao.updateRebate(sal_rebate_certificateM);
+            }
+            ctm_orderDao.updateRecord("0",orderNo);
+            m.put("code",0);
+            m.put("data","3");//订单作废状态
+            m.put("msg","SUCCESS");
+        }
+
+
+
+
+        return m;
+    }
+
+    @Override
+    public Map putAgainOrder(Map<String, Object> map) {
+        Map<String ,Object> m=new HashMap<>();
+        String orderNo=map.get("orderNo").toString();
+        String cid=map.get("cid").toString();
+        Ctm_order ctm_order=ctm_orderDao.getOrderH(orderNo);
+        List<Ctm_order_detail> list=ctm_orderDao.getOrderB(orderNo);
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);//加上优惠券
+        BigDecimal allSpend=ctm_order.getAllSpend();
+//        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
+
+        String statusId=" ";
+        if (resideMoney.compareTo(allSpend)!=-1){
+            statusId="1";
+            ctm_order.setStatusId(statusId);//已经提交
+        }else{
+            statusId="5";
+            ctm_order.setStatusId(statusId);//欠款待提交
+        }
+        if (ctm_orderDao.updateOrder(ctm_order)){
+            for (Ctm_order_detail ctm_order_detail:list){
+                ctm_order_detail.setStatusId(statusId);
+                ctm_orderDao.updateOrderB(ctm_order_detail);
+            }
+            m.put("code",0);
+            m.put("data",statusId);
+            m.put("msg","SUCCESS");
+
+        }
 
         return m;
     }

@@ -167,6 +167,31 @@ public class Ctm_orderController {
         return  ctm_orderService.showRebate(m);
     }
 
+    /**
+     * 取消订单
+     * @param m
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    @RequestMapping("cancelOrder")
+    @ResponseBody
+    public Map cancelOrder (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
+        return  ctm_orderService.cancelOrder(m);
+    }
+
+    /**
+     * 重新提交订单
+     * @param m
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    @RequestMapping("putAgainOrder")
+    @ResponseBody
+    public Map putAgainOrder (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
+        return  ctm_orderService.putAgainOrder(m);
+    }
 
 
 }

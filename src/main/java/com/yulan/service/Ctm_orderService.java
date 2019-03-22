@@ -35,4 +35,10 @@ public interface Ctm_orderService {
 
    //点击优惠券显示摊分明细
    Map showRebate(Map<String,Object>map) throws InvocationTargetException, IllegalAccessException;
+
+   //订单取消
+   Map cancelOrder(Map<String,Object>map);
+
+   //订单重新提交
+   Map putAgainOrder(Map<String, Object>map);
 }
