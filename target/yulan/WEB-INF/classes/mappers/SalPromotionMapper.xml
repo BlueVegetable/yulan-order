@@ -52,6 +52,6 @@
         where
         (customer_code = '%' or customer_code = #{CID})
         and
-        (item_NO = '%' or item_no = #{itemNo})
+        (item_NO = '%' or item_no = #{itemNo,jdbcType=VARCHAR})
     </select>
 </mapper>

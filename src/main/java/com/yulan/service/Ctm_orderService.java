@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface Ctm_orderService {
    //获取订单列表
-   Map getOrders(Integer st,Integer number,String cid,String state_id,String find,String beginTime,String finishTime) throws UnsupportedEncodingException;
+   Map getOrders(Integer st,Integer number,String cid,String state_id,String find,String beginTime,String finishTime,String orderType) throws UnsupportedEncodingException;
 
    //获取订单详情
    Map getOrderB_content(String order_no,String item_no) throws UnsupportedEncodingException;
@@ -35,4 +35,10 @@ public interface Ctm_orderService {
 
    //点击优惠券显示摊分明细
    Map showRebate(Map<String,Object>map) throws InvocationTargetException, IllegalAccessException;
+
+   //订单取消
+   Map cancelOrder(Map<String,Object>map);
+
+   //订单重新提交
+   Map putAgainOrder(Map<String, Object>map);
 }

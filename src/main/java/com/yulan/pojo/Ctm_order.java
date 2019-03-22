@@ -100,6 +100,24 @@ public class Ctm_order {
 
     private String buyUser;
     private String buyUserPhone;
+    private BigDecimal allBackY;
+    private BigDecimal allBackM;
+
+    public BigDecimal getAllBackY() {
+        return allBackY;
+    }
+
+    public void setAllBackY(BigDecimal allBackY) {
+        this.allBackY = allBackY;
+    }
+
+    public BigDecimal getAllBackM() {
+        return allBackM;
+    }
+
+    public void setAllBackM(BigDecimal allBackM) {
+        this.allBackM = allBackM;
+    }
 
     public String getBuyUser() {
         return buyUser;

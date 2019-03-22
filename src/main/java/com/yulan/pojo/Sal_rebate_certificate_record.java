@@ -14,6 +14,16 @@ public class Sal_rebate_certificate_record {
 
     private Timestamp dateUse;
 
+    private String statusId;
+
+    public String getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(String statusId) {
+        this.statusId = statusId;
+    }
+
     public String getId() {
         return id;
     }
