@@ -661,6 +661,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         String statusId=ctm_order.getStatusId();
         if (statusId.equals("6")){
             statusId="1";
+            ctm_order.setStatusId(statusId);
         }else{
             if (resideMoney.compareTo(allSpend)!=-1){
                 statusId="1";
