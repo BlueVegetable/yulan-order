@@ -66,6 +66,16 @@ public class Item {
     private BigDecimal duihuaLoss;
 
     private ItemType itemType;
+    //窗帘需要的信息
+    private ItemMLGY itemMLGY;
+
+    public ItemMLGY getItemMLGY() {
+        return itemMLGY;
+    }
+
+    public void setItemMLGY(ItemMLGY itemMLGY) {
+        this.itemMLGY = itemMLGY;
+    }
 
     public Integer getTotal() {
         return total;
