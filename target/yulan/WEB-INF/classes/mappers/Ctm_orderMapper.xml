@@ -88,6 +88,10 @@
 
     </select>
 
+    <select id="findPackDetail" resultType="PackDetail">
+        select * from PACK_DETAIL t where t.item_no=#{itemNo} and t.web_order_no=#{orderNo}
+    </select>
+
     <select id="countOrders" resultType="Integer">
         select count(*) from
         (select o.*,d.item_no from ctm_order_detail d,CTM_ORDER o where o.order_no=d.order_no and o.customer_code=#{cid} ) c
