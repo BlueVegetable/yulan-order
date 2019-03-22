@@ -27,9 +27,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
     @Override
-    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime) throws UnsupportedEncodingException {
+    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType) throws UnsupportedEncodingException {
         Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime);
+        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType);
         List<Map<String,Object>> data=new ArrayList<>();
         map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime));
         for (Map<String,Object> m:list) {
@@ -320,6 +320,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 }
                 lineNo++;
             }
+
+
+            ctm_order.setAllBackM(allRebateMonth);//订单头存总返利
+            ctm_order.setAllBackY(allRebateYear);
+            ctm_orderDao.updateOrder(ctm_order);
 
             /**
              * 更新优惠券金额
@@ -646,14 +651,21 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         BigDecimal allSpend=ctm_order.getAllSpend();
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
-        String statusId=" ";
-        if (resideMoney.compareTo(allSpend)!=-1){
+
+
+        String statusId=ctm_order.getStatusId();
+        if (statusId.equals("6")){
             statusId="1";
-            ctm_order.setStatusId(statusId);//已经提交
         }else{
-            statusId="5";
-            ctm_order.setStatusId(statusId);//欠款待提交
+            if (resideMoney.compareTo(allSpend)!=-1){
+                statusId="1";
+                ctm_order.setStatusId(statusId);//已经提交
+            }else{
+                statusId="5";
+                ctm_order.setStatusId(statusId);//欠款待提交
+            }
         }
+
         if (ctm_orderDao.updateOrder(ctm_order)){
             for (Ctm_order_detail ctm_order_detail:list){
                 ctm_order_detail.setStatusId(statusId);
@@ -729,13 +741,14 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         if(money.compareTo(BigDecimal.valueOf(0))==0){//优惠券为零（或不选）
             return backMoney;
         }
+        backMoney=((thisMoney.multiply(money).divide(promotion_cost,2, RoundingMode.HALF_UP)));
 
-        if (promotion_cost.compareTo(allMoney)==1){//价格大于优惠券
-            backMoney=thisMoney.multiply(money).multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP).divide(allMoney,2,RoundingMode.HALF_UP);
-//            backMoney=((thisMoney.divide(promotion_cost)).multiply(money.divide(allMoney,4,RoundingMode.HALF_UP))).multiply(money);//返利
-        }else  {
-            backMoney=((thisMoney.multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP)));
-        }
+//        if (promotion_cost.compareTo(allMoney)==1){//价格大于优惠券
+//            backMoney=thisMoney.multiply(money).multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP).divide(allMoney,2,RoundingMode.HALF_UP);
+////            backMoney=((thisMoney.divide(promotion_cost)).multiply(money.divide(allMoney,4,RoundingMode.HALF_UP))).multiply(money);//返利
+//        }else  {
+//            backMoney=((thisMoney.multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP)));
+//        }
         return backMoney;
 
 

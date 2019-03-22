@@ -25,6 +25,7 @@ public class Ctm_orderController {
     public Map getOrders(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
         Integer limit=Integer.parseInt(m.get("limit").toString());
         Integer page=Integer.parseInt(m.get("page").toString());
+        String orderType=m.get("orderType").toString();
         String beginTime=m.get("beginTime").toString();
         String finishTime=m.get("finishTime").toString();
         if (beginTime.equals("") ||finishTime.equals("")){
@@ -35,7 +36,9 @@ public class Ctm_orderController {
         if (!m.get("state_id").toString().equals("")){
             state_id=m.get("state_id").toString();
         }
-
+        if (orderType.equals("")){
+            orderType=null;
+        }
 
         String cid=m.get("cid").toString();
         String find=m.get("find").toString();
@@ -51,7 +54,7 @@ public class Ctm_orderController {
             page=(page-1)*limit+1;
             lastNum=page+limit-1;
         }
-        Map map=ctm_orderService.getOrders(page,lastNum,cid,state_id,find,beginTime,finishTime);
+        Map map=ctm_orderService.getOrders(page,lastNum,cid,state_id,find,beginTime,finishTime,orderType);
         map.put("code",0);
         map.put("msg","");
 
