@@ -268,15 +268,26 @@ public class ItemServiceImpl implements ItemService {
                     //帘身
                     //特殊款式
                     if (itemMLGY.getParentItemNo().equals("Z340004") || itemMLGY.getParentItemNo().equals("U310111")) {
-                        lsUsage = arith.mul(arith.dbToBD(width),
-                                curtainItem.getWidthHh());
-                        map.put("ls", lsUsage);
+                        if (itemMLGY.getProductType().equals("ML")) {
+                            {
+                                if (curtainItem.getWidthHh() != null) {
+                                    lsUsage = arith.mul(arith.dbToBD(width),
+                                            curtainItem.getWidthHh());
+                                    map.put("ls", lsUsage);
+                                } else {
+                                    map.put("ls " + itemMLGY.getItemNo(), itemMLGY.getItemNo() +
+                                            " has null values and can not be " +
+                                            "calculated,please checkout WidthHh");
+                                }
+                            }
+                        }
+
                     } else {
                         if (itemMLGY.getProductType().equals("ML")) {
                             //定高
                             if (curtainItem.getWidthHh() == null || curtainItem.getFixType() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
-                                map.put("ls", itemMLGY.getItemNo() +
+                                map.put("ls "+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
                                         " has null values and can not be " +
                                         "calculated,please checkout WidthHh," +
                                         "FixType,DuihuaLoss,HighJia");
@@ -312,7 +323,7 @@ public class ItemServiceImpl implements ItemService {
                 if (itemMLGY.getProductType().equals("ML")) {
                     if (curtainItem.getWidthHh() == null || curtainItem.getFixType() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
-                        map.put("sha", itemMLGY.getItemNo() +
+                        map.put("sha "+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
                                 " has null values and can not be " +
                                 "calculated,please checkout WidthHh," +
                                 "FixType,DuihuaLoss,HighJia");
@@ -381,7 +392,7 @@ public class ItemServiceImpl implements ItemService {
 
             map.put(item.getItemNo(), item);
         }
-
+        map.put("code",0);
         return map;
     }
 
