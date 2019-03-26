@@ -64,7 +64,7 @@
                 and order_no like  '%'||#{find}||'%'
             </if>
             <if test="beginTime!=null">
-                and DATE_CRE between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
+                and DATE_CRE between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
             </if>
             <if test="orderType!=null">
                 and order_no like  '%'||#{orderType}||'%'
@@ -146,7 +146,7 @@
             and order_no like  '%'||#{orderType}||'%'
         </if>
         <if test="beginTime!=null">
-            and date_cre between to_date(#{beginTime},'yyyy/mm/dd') and to_date(#{finishTime},'yyyy/mm/dd')
+            and date_cre between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
         </if>
 
     </select>
