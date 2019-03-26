@@ -27,13 +27,14 @@
         insert into COMMODITY
         (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,
         CURTAIN_ITEM_NAME,CURTAIN_PART_NAME,DOSAGE,MANUFACTURING_INSTRUCTIONS,CERTAIN_HEIGHT_WIDTH,
-        SPECIFICATION,ILLUSTRATE)
+        SPECIFICATION,ILLUSTRATE,STATUS)
         VALUES
         (#{id},#{price},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{cartItemId},#{quantity,jdbcType=NUMERIC},
         #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR},
         #{splitShipment,jdbcType=NUMERIC},#{curtainItemName,jdbcType=VARCHAR},#{curtainPartName,jdbcType=VARCHAR},
         #{dosage,jdbcType=NUMERIC},#{manufacturingInstructions,jdbcType=VARCHAR},
-        #{certainHeightWidth,jdbcType=NUMERIC},#{specification,jdbcType=NUMERIC},#{illustrate,jdbcType=VARCHAR})
+        #{certainHeightWidth,jdbcType=NUMERIC},#{specification,jdbcType=NUMERIC},#{illustrate,jdbcType=VARCHAR},
+        #{status})
     </insert>
 
     <delete id="deleteCommodityByID" parameterType="String">
@@ -65,7 +66,7 @@
     </select>
 
     <select id="getCommoditiesByCartItemID" parameterType="String" resultMap="CurtainCommodityMap">
-        select * from COMMODITY where CART_ITEM_ID = #{cartItemID}
+        select * from COMMODITY where CART_ITEM_ID = #{cartItemID} and status = 1
     </select>
 
     <update id="updateCommodity" parameterType="CurtainCommodity">
@@ -78,5 +79,9 @@
         CERTAIN_HEIGHT_WIDTH = #{certainHeightWidth,jdbcType=NUMERIC},SPECIFICATION = #{specification,jdbcType=NUMERIC},
         ILLUSTRATE = #{illustrate,jdbcType=VARCHAR}
         where ID = #{id}
+    </update>
+
+    <update id="alterCommodityStatus" parameterType="Map">
+        update commodity set status = #{status} where ID = #{commodityID}
     </update>
 </mapper>

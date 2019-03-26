@@ -58,4 +58,8 @@ public class CommodityEncode {
         return commodityDao.updateCommodity(commodity)>0;
     }
 
+    public boolean alterCommodityStatus(String commodityID,int status) {
+        return commodityDao.alterCommodityStatus(commodityID, status) > 0;
+    }
+
 }

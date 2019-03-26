@@ -15,10 +15,11 @@
 
     <insert id="addCommodity" parameterType="Commodity">
         insert into COMMODITY
-        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT) VALUES
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,STATUS)
+        VALUES
         (#{id},#{price},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{cartItemId},#{quantity,jdbcType=NUMERIC},
         #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR},
-        #{splitShipment,jdbcType=NUMERIC})
+        #{splitShipment,jdbcType=NUMERIC},#{status})
     </insert>
 
     <delete id="deleteCommodityByID" parameterType="String">
@@ -50,7 +51,7 @@
     </select>
 
     <select id="getCommoditiesByCartItemID" parameterType="String" resultMap="CommodityMap">
-        select * from COMMODITY where CART_ITEM_ID = #{cartItemID}
+        select * from COMMODITY where CART_ITEM_ID = #{cartItemID} and status = 1
     </select>
 
     <update id="updateCommodity" parameterType="Commodity">
@@ -59,5 +60,9 @@
         CART_ITEM_ID = #{cartItemId},QUANTITY = #{quantity,jdbcType=NUMERIC},WIDTH = #{width,jdbcType=NUMERIC},
         HEIGHT = #{height,jdbcType=NUMERIC},NOTE = #{note,jdbcType=VARCHAR},SPLIT_SHIPMENT=#{splitShipment,jdbcType=NUMERIC}
         where ID = #{id}
+    </update>
+
+    <update id="alterCommodityStatus" parameterType="Map">
+        update commodity set status = #{status} where ID = #{commodityID}
     </update>
 </mapper>

@@ -15,8 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping("cart")
+@Controller @RequestMapping("cart")
 public class CartController{
 
 	@Autowired
@@ -123,60 +122,38 @@ public class CartController{
 			if(!cartItemService.addCartItem(cartItem))
 				return Response.getResponseMap(1,"添加失败",null);
 		}
-		Commodity commodity = commodityService.getCommodityAppoint(activityID,itemNO,cartItem.getCartItemId());
-		if(commodity == null) {
-            commodity = new Commodity();
-            commodity.setItem(item);
-            commodity.setCartItemId(cartItem.getCartItemId());
-            commodity.setActivityId(activityID);
-            Unit unit = unitService.getUnitByID(item.getUnit());
-            commodity.setUnit(unit!=null?unit.getNote():null);
-            commodity.setNote(note);
-            commodity.setSplitShipment(splitShipment);
-            switch (customer_type) {
-                case "02":commodity.setPrice(item.getPriceSale());break;
-                case "06":commodity.setPrice(item.getPriceFx());break;
-                case "09":commodity.setPrice(item.getPriceHome());break;
-                case "05":commodity.setPrice(item.getSalePrice());break;
-                case "10":commodity.setPrice(new BigDecimal(price));break;
-                default:return Response.getResponseMap(1,"添加失败",null);
-            }
-            if(quantity==null||quantity.equals("")) {
-            	commodity.setWidth(new BigDecimal(width));
-            	commodity.setHeight(new BigDecimal(height));
-			} else {
-            	commodity.setQuantity(new BigDecimal(quantity));
-			}
-            if(commodity.getPrice() == null) {
-            	return Response.getResponseMap(2,"该产品正在上架，暂时不能加入购物车",null);
-			}
-            if(!commodityService.addCommodity(commodity))
-                return Response.getResponseMap(1,"添加失败",null);
-            else
-                return Response.getResponseMap(0,"添加成功",null);
-        } else {
-//		    commodity.setItem(item);
-//		    commodity.setSplitShipment(splitShipment);
-//			if(quantity==null||quantity.equals("")) {
 
-            return Response.getResponseMap(2,"该产品已存在于购物车",null);
-//			} else {
-//				BigInteger count = new BigInteger(quantity);
-//				count = count.add(commodity.getQuantity());
-//				commodity.setQuantity(count);
-//			}
-//			if(note != null&&!note.equals("")) {
-//				if(commodity.getNote()!=null) {
-//					commodity.setNote(commodity.getNote()+"\r\n"+note);
-//				} else {
-//					commodity.setNote(note);
-//				}
-//			}
-//		    if(!commodityService.updateCommodity(commodity))
-//                return Response.getResponseMap(1,"添加失败",null);
-//		    else
-//                return Response.getResponseMap(0,"添加成功",null);
-        }
+
+		Commodity commodity = new Commodity();
+		commodity.setItem(item);
+		commodity.setCartItemId(cartItem.getCartItemId());
+		commodity.setActivityId(activityID);
+		Unit unit = unitService.getUnitByID(item.getUnit());
+		commodity.setUnit(unit!=null?unit.getNote():null);
+		commodity.setNote(note);
+		commodity.setSplitShipment(splitShipment);
+		commodity.setStatus(Commodity.COMMODITY_EXIST_STATUS);
+		switch (customer_type) {
+			case "02":commodity.setPrice(item.getPriceSale());break;
+			case "06":commodity.setPrice(item.getPriceFx());break;
+			case "09":commodity.setPrice(item.getPriceHome());break;
+			case "05":commodity.setPrice(item.getSalePrice());break;
+			case "10":commodity.setPrice(new BigDecimal(price));break;
+			default:return Response.getResponseMap(1,"添加失败",null);
+		}
+		if(quantity==null||quantity.equals("")) {
+			commodity.setWidth(new BigDecimal(width));
+			commodity.setHeight(new BigDecimal(height));
+		} else {
+			commodity.setQuantity(new BigDecimal(quantity));
+		}
+		if(commodity.getPrice() == null) {
+			return Response.getResponseMap(2,"该产品正在上架，暂时不能加入购物车",null);
+		}
+		if(!commodityService.addCommodity(commodity))
+			return Response.getResponseMap(1,"添加失败",null);
+		else
+			return Response.getResponseMap(0,"添加成功",null);
 	}
 
 	@ResponseBody@RequestMapping("addCurtainCartItem")

@@ -20,4 +20,6 @@ public interface CommodityService {
 
 	boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException;
 
+	boolean alterCommodityStatus(String commodityID,int status);
+
 }

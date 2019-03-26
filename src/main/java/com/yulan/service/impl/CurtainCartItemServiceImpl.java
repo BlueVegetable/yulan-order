@@ -56,6 +56,7 @@ public class CurtainCartItemServiceImpl implements CartItemService {
     @Override
     public List<CartItem> getCartItems(String cartID, String commodityType) {
         List<CartItem> cartItems = curtainCartItemEncode.getCartItems(cartID, commodityType);
+        List<CartItem> result = new ArrayList<>();
         for (CartItem cartItem:cartItems) {
             List<Commodity> commodities = curtainCommodityEncode.getCommoditiesByCartItemID(cartItem.getCartItemId());
             List<CurtainCommodity> lt = new ArrayList<>();
@@ -79,8 +80,11 @@ public class CurtainCartItemServiceImpl implements CartItemService {
             curtainLists.add(new CurtainList("配件",peijian));
             CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
             curtainCartItem.setCurtainLists(curtainLists);
+            if(lt.size()!=0&&ls.size()!=0&&sha.size()!=0&&peijian.size()!=0) {
+                result.add(curtainCartItem);
+            }
         }
-        return cartItems;
+        return result;
     }
 
     @Override
