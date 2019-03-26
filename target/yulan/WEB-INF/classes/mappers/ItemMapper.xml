@@ -97,7 +97,7 @@
     </select>
 
     <select id="getStockShow" resultMap="StockShowMap">
-      select sf.stock_no,sf.batch_no,sf.qty,sf.item_no from stock_floor sf
+      select sf.stock_no, mc_get_ph(sf.batch_no)AS batch_no ,sf.qty,sf.item_no from stock_floor sf
       where sf.item_no = #{ITEM_NO}
       and sf.stock_no in (
       select t.stock_no from stock_customer t where t.flag = 1 )
@@ -106,7 +106,7 @@
 
     <select id="getStockShowMax" resultType="com.yulan.pojo.StockShow">
       select * from (
-      select sf.stock_no,sf.batch_no,sf.qty,sf.item_no from stock_floor sf
+      select sf.stock_no,mc_get_ph(sf.batch_no) AS batch_no ,sf.qty,sf.item_no from stock_floor sf
       where sf.item_no = #{ITEM_NO}
       and sf.stock_no in (
       select t.stock_no from stock_customer t where t.flag = 1 )

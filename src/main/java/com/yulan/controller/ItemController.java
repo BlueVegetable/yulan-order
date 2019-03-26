@@ -105,6 +105,12 @@ public class ItemController {
         return itemService.judgeStockShow(stockShowNum,itemNo);
     }
 
+    /**
+     * 获得窗帘的所有类型
+     * @param data
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "getCurtainType")
     @ResponseBody
     public Map getCurtainType(@RequestBody Map<String,Object> data)throws IOException{
@@ -121,7 +127,7 @@ public class ItemController {
     }
 
     /**
-     * 获取到窗帘的所有信息
+     * 获取单个类型窗帘的所有信息
      * @param data
      * @return
      */
@@ -129,7 +135,17 @@ public class ItemController {
     @ResponseBody
     public Map getCurtainInfo(@RequestBody Map<String,Object> data)throws IOException{
         String itemNO = (String)data.get("itemNO");
-        return  itemService.getCurtainInfo(itemNO);
+        //成品宽度
+        Double width = (Double)data.get("width");
+        //成品高度
+        Double height  = (Double)data.get("height");
+        //帘头外包盒宽度
+        Double WBH = (Double)data.get("WBH");
+        //褶皱倍数
+        Double multiple = (Double)data.get("multiple");
+        String location = (String)data.get("location");
+
+        return  itemService.getCurtainInfo(width,height,WBH,multiple,location,itemNO);
     }
 
 

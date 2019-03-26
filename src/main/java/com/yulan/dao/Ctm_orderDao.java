@@ -29,7 +29,7 @@ public interface Ctm_orderDao {
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
 
     //查找是否有出货单
-    PackDetail findPackDetail(@Param("orderNo")String orderNo,@Param("itemNo")String itemNo );
+    List<PackDetail> findPackDetail(@Param("orderNo")String orderNo,@Param("itemNo")String itemNo );
 
     //获取订单提货单号及其订单运输详情
     List<Map<String,Object>> getPackDetail(@Param("cid")String cid,@Param("order_no")String order_no,@Param("item_no") String item_no);
@@ -39,7 +39,7 @@ public interface Ctm_orderDao {
 
     Integer countOrdersH(@Param("cid")String cid,@Param("state_id")String state_id,
                         @Param("find")String find,@Param("beginTime") String beginTime,
-                         @Param("finishTime") String finishTime);
+                         @Param("finishTime") String finishTime,@Param("orderType")String orderType);
 
     /**
      * 获取订单详情

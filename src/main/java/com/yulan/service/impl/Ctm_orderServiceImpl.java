@@ -31,7 +31,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         Map<String,Object> map=new HashMap<>();
         List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType);
         List<Map<String,Object>> data=new ArrayList<>();
-        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime));
+        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime,orderType));
         for (Map<String,Object> m:list) {
 
             for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码
@@ -56,7 +56,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                         entry.setValue(origin);
                     }
                 }
-                if (ctm_orderDao.findPackDetail(order_no,m2.get("ITEM_NO").toString())!=null){
+                List<PackDetail> packDetails=ctm_orderDao.findPackDetail(order_no,m2.get("ITEM_NO").toString());
+                if (packDetails.size()!=0){
                     m2.put("packDetailId",1);
                 }else{
                     m2.put("packDetailId",0);
