@@ -65,4 +65,13 @@
     <update id="alterCommodityStatus" parameterType="Map">
         update commodity set status = #{status} where ID = #{commodityID}
     </update>
+
+    <update id="alterCommoditiesStatus" parameterType="Map">
+        update COMMODITY set status = #{status} where ID in
+        (
+        <foreach collection="commodityIDs" item="item" separator=",">
+            item
+        </foreach>
+        )
+    </update>
 </mapper>
