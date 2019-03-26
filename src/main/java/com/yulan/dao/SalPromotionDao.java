@@ -11,5 +11,6 @@ public interface SalPromotionDao {
 
     List<String> getSalPromotionNamesByIDs(@Param("IDs") List<String> IDs);
 
-    List<SalPromotion> selectSalPromotions(@Param("CID") String CID,@Param("itemNo")String itemNo);
+    List<SalPromotion> selectSalPromotions(@Param("CID") String CID, @Param("itemNo")String itemNo,
+                                           @Param("productType")String productType, @Param("productBrand")String productBrand);
 }

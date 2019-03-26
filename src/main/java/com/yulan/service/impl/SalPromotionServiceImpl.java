@@ -7,7 +7,6 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Service
@@ -33,14 +32,20 @@ public class SalPromotionServiceImpl implements SalPromotionService {
     }
 
     @Override
-    public List<Map<String, Object>> selectSalPromotion(String CID, String customerType, String itemNo, String itemVersion) throws UnsupportedEncodingException {
+    public List<Map<String, Object>> selectSalPromotion(String CID, String customerType, String itemNo, String itemVersion,
+                                                        String productType,String productBrand) {
         List<Map<String,Object>> result = new ArrayList<>();
-        List<SalPromotion> salPromotions = salPromotionDao.selectSalPromotions(CID, itemNo);
+        List<SalPromotion> salPromotions = salPromotionDao.selectSalPromotions(CID, itemNo,productType,productBrand);
         List<SalPromotion> salPromotionsDeal = new ArrayList<>();
         for (SalPromotion salPromotion:salPromotions) {
             if((salPromotion.getCustomerType().equals("%")||salPromotion.getCustomerType().equals(customerType))&&
                     (salPromotion.getItemVersion().equals("%")||salPromotion.getItemVersion().equals(itemVersion))) {
-                salPromotionsDeal.add(salPromotion);
+                long current = System.currentTimeMillis();
+                long before = salPromotion.getDateStart().getTime();
+                long end = salPromotion.getDateEnd().getTime();
+                if(current>=before&&current<=end) {
+                    salPromotionsDeal.add(salPromotion);
+                }
             } else {
                 continue;
             }
@@ -55,7 +60,7 @@ public class SalPromotionServiceImpl implements SalPromotionService {
             salPromotions = new ArrayList<>();
             for (SalPromotion salPromotion:salPromotionsDeal) {
                 if (salPromotion.getGroupType().equals(first)) {
-                    salPromotion.setOrderName(StringUtil.getUtf8(salPromotion.getOrderName()));
+                    salPromotion.setOrderName(StringUtil.GBKToUTF8(salPromotion.getOrderName()));
                     salPromotions.add(salPromotion);
                 }
             }
