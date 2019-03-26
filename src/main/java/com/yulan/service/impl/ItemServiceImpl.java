@@ -46,7 +46,7 @@ public class ItemServiceImpl implements ItemService {
             } else {
                 item.getItemType().setNote(stringUtil.getUtf8(item.getItemType().getNote()));
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
-                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+  //              item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
                 map.put("data", item);
@@ -138,9 +138,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
             }
-            if (null != item.getItemVersion()) {
+            /*if (null != item.getItemVersion()) {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
-            }
+            }*/
             if (null != item.getProductBrand()) {
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
             }
@@ -201,9 +201,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
             }
-            if (null != item.getItemVersion()) {
+            /*if (null != item.getItemVersion()) {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
-            }
+            }*/
             if (null != item.getProductBrand()) {
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
             }
@@ -377,9 +377,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
             }
-            if (null != item.getItemVersion()) {
+          /*  if (null != item.getItemVersion()) {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
-            }
+            }*/
             if (null != item.getProductBrand()) {
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
             }
