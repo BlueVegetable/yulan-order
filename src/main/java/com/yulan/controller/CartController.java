@@ -15,8 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping("cart")
+@Controller @RequestMapping("cart")
 public class CartController{
 
 	@Autowired
@@ -133,6 +132,7 @@ public class CartController{
 		commodity.setUnit(unit!=null?unit.getNote():null);
 		commodity.setNote(note);
 		commodity.setSplitShipment(splitShipment);
+		commodity.setStatus(Commodity.COMMODITY_EXIST_STATUS);
 		switch (customer_type) {
 			case "02":commodity.setPrice(item.getPriceSale());break;
 			case "06":commodity.setPrice(item.getPriceFx());break;

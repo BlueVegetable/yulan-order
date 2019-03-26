@@ -2,11 +2,13 @@ package com.yulan.service.impl;
 
 import com.yulan.encode.CartItemEncode;
 import com.yulan.pojo.CartItem;
+import com.yulan.pojo.Commodity;
 import com.yulan.service.CartItemService;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("cartItemService")
@@ -34,7 +36,14 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	public List<CartItem> getCartItems(String cartID, String commodityType) {
 		List<CartItem> cartItems = cartItemEncode.getCartItems(cartID,commodityType);
-		return cartItems;
+		List<CartItem> cartItemsDeal = new ArrayList<>();
+		for (CartItem cartItem:cartItems) {
+			List<Commodity> commodities = cartItem.getCommodities();
+			if(commodities.size()!=0) {
+				cartItemsDeal.add(cartItem);
+			}
+		}
+		return cartItemsDeal;
 	}
 
 	@Override

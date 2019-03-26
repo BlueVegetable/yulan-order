@@ -50,4 +50,8 @@ public class CurtainCommodityServiceImpl implements CommodityService {
 		return curtainCommodityEncode.updateCommodity(commodity);
 	}
 
+	@Override
+	public boolean alterCommodityStatus(String commodityID, int status) {
+		return curtainCommodityEncode.alterCommodityStatus(commodityID,status);
+	}
 }

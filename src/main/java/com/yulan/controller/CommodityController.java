@@ -5,6 +5,7 @@ import com.yulan.service.CommodityService;
 import com.yulan.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +51,14 @@ public class CommodityController{
 		} else {
 			return Response.getResponseMap(1,"",null);
 		}
+	}
+
+	@ResponseBody@RequestMapping("alterCommodityStatus")
+	public Map<String,Object> alterCommodityStatus(@RequestBody Map<String,Object> parameters) {
+		String commodityID = (String) parameters.get("commodityID");
+		Integer status = (Integer) parameters.get("status");
+		commodityService.alterCommodityStatus(commodityID,status);
+		return Response.getResponseMap(0,"",null);
 	}
 
 }

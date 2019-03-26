@@ -52,4 +52,8 @@ public class CommodityServiceImpl implements CommodityService {
 		return commodityEncode.updateCommodity(commodity);
 	}
 
+	@Override
+	public boolean alterCommodityStatus(String commodityID, int status) {
+		return commodityEncode.alterCommodityStatus(commodityID, status);
+	}
 }

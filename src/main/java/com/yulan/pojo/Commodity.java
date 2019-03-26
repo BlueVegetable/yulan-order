@@ -17,6 +17,10 @@ public class Commodity {
 	private String note;
 	private String unit;
 	private Integer splitShipment;
+	private Integer status;
+
+	public static final Integer COMMODITY_EXIST_STATUS = 1;
+	public static final Integer COMMODITY_NONE_EXIST_STATUS = 0;
 
 	public String getId() {
 		return this.id;
@@ -112,6 +116,14 @@ public class Commodity {
 
 	public void setSplitShipment(Integer splitShipment) {
 		this.splitShipment = splitShipment;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	@Override

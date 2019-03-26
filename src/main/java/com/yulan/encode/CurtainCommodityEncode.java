@@ -46,4 +46,8 @@ public class CurtainCommodityEncode {
         return curtainCommodityDao.updateCommodity(commodity)>0;
     }
 
+    public boolean alterCommodityStatus(String commodityID,int status) {
+        return curtainCommodityDao.alterCommodityStatus(commodityID, status) > 0;
+    }
+
 }

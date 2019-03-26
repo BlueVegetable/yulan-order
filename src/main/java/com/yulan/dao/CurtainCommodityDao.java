@@ -24,4 +24,6 @@ public interface CurtainCommodityDao {
 
 	int updateCommodity(Commodity commodity);
 
+	int alterCommodityStatus(@Param("commodityID") String commodityID,@Param("status") int status);
+
 }

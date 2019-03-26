@@ -53,5 +53,9 @@
         (customer_code = '%' or customer_code = #{CID})
         and
         (item_NO = '%' or item_no = #{itemNo,jdbcType=VARCHAR})
+        and
+        (PRODUCT_TYPE = '%' or PRODUCT_TYPE = #{productType,jdbcType=VARCHAR})
+        and
+        (PRODUCT_BRAND = '%' or PRODUCT_BRAND = #{productBrand,jdbcType=VARCHAR})
     </select>
 </mapper>
