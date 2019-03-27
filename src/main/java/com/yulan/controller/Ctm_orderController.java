@@ -1,6 +1,8 @@
 package com.yulan.controller;
 
 import com.yulan.service.Ctm_orderService;
+import com.yulan.service.Sal_rebate_certificateService;
+import com.yulan.service.Sal_rebate_certificate_recordService;
 import com.yulan.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,11 @@ public class Ctm_orderController {
     @Autowired
     private Ctm_orderService ctm_orderService;
     private Response response;
+    @Autowired
+    private Sal_rebate_certificateService sal_rebate_certificateService;
+
+    @Autowired
+    private Sal_rebate_certificate_recordService sal_rebate_certificate_recordService;
 
     @RequestMapping("getOrders")
     @ResponseBody
@@ -194,6 +201,29 @@ public class Ctm_orderController {
     @ResponseBody
     public Map putAgainOrder (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException {
         return  ctm_orderService.putAgainOrder(m);
+    }
+
+    /**
+     * 个人中心优惠券管理
+     * @param m
+     * @return
+     */
+    @RequestMapping("findRebate")
+    @ResponseBody
+    public Map getRebates (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  sal_rebate_certificateService.getRebate(m);
+    }
+
+
+    /**
+     * 优惠券使用记录
+     * @param m
+     * @return
+     */
+    @RequestMapping("findRecrods")
+    @ResponseBody
+    public Map findRecrods (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  sal_rebate_certificate_recordService.findRecrods(m);
     }
 
 
