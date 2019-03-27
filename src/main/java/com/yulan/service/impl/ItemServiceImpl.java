@@ -46,7 +46,7 @@ public class ItemServiceImpl implements ItemService {
             } else {
                 item.getItemType().setNote(stringUtil.getUtf8(item.getItemType().getNote()));
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
-  //              item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
                 map.put("data", item);
@@ -135,12 +135,13 @@ public class ItemServiceImpl implements ItemService {
 
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
+
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
             }
-            /*if (null != item.getItemVersion()) {
+            if (null != item.getItemVersion()) {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
-            }*/
+            }
             if (null != item.getProductBrand()) {
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
             }
@@ -201,9 +202,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
             }
-            /*if (null != item.getItemVersion()) {
+            if (null != item.getItemVersion()) {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
-            }*/
+            }
             if (null != item.getProductBrand()) {
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
             }
@@ -238,11 +239,13 @@ public class ItemServiceImpl implements ItemService {
         Map map = new HashMap<>();
         List<ItemMLGY> curtainItemList = new ArrayList<>();
         curtainItemList = itemDao.getCurtainInfo(curtainNo);
+
+        List<Item> itemList = new ArrayList<>();
         for (int i = 0; i < curtainItemList.size(); i++) {
             ItemMLGY itemMLGY = new ItemMLGY();
             itemMLGY = curtainItemList.get(i);
             Item curtainItem =
-                    itemDao.getItemByItemNO(itemMLGY.getParentItemNo());
+                    itemDao.getItemByItemNO(itemMLGY.getItemNo());
             Double usage;
 
             if (itemMLGY.getItemType().equals("lt")) {
@@ -272,7 +275,7 @@ public class ItemServiceImpl implements ItemService {
                             {
                                 if (curtainItem.getWidthHh() != null) {
                                     lsUsage = arith.mul(arith.dbToBD(width),
-                                            curtainItem.getWidthHh());
+                                            arith.div( curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
                                     map.put("ls", lsUsage);
                                 } else {
                                     map.put("ls " + itemMLGY.getItemNo(), itemMLGY.getItemNo() +
@@ -285,9 +288,9 @@ public class ItemServiceImpl implements ItemService {
                     } else {
                         if (itemMLGY.getProductType().equals("ML")) {
                             //定高
-                            if (curtainItem.getWidthHh() == null || curtainItem.getFixType() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
+                            if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade()  == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
-                                map.put("ls "+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
+                                map.put("ls"+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
                                         " has null values and can not be " +
                                         "calculated,please checkout WidthHh," +
                                         "FixType,DuihuaLoss,HighJia");
@@ -305,12 +308,13 @@ public class ItemServiceImpl implements ItemService {
                                     } else if (curtainItem.getHighHh().doubleValue() > 0) {
                                         //花回
                                         lsUsage =
-                                                arith.mul(arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2),
-                                                        arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), curtainItem.getHighHh()), 2)),
-                                                        curtainItem.getHighHh());
+                                                arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
+                                                        arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
+                                                        arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
                                     }
                                 }
-                                map.put("ls", lsUsage);
+                                //获取每种产品的用量
+                                map.put("ls"+itemMLGY.getItemNo(), lsUsage);
                             }
 
                         }
@@ -321,15 +325,15 @@ public class ItemServiceImpl implements ItemService {
                 BigDecimal shaUsage = BigDecimal.valueOf(0);
                 //纱
                 if (itemMLGY.getProductType().equals("ML")) {
-                    if (curtainItem.getWidthHh() == null || curtainItem.getFixType() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
+                    if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
                         map.put("sha "+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
                                 " has null values and can not be " +
                                 "calculated,please checkout WidthHh," +
-                                "FixType,DuihuaLoss,HighJia");
+                                "FixGrade(),DuihuaLoss,HighJia");
 
                     } else {
-                        if (curtainItem.getFixType().equals("02")) {
+                        if ("02".equals(curtainItem.getFixType())) {
                             shaUsage = arith.add(arith.dbToBD(width * multiple),
                                     curtainItem.getDuihuaLoss());
                         } else {
@@ -337,15 +341,15 @@ public class ItemServiceImpl implements ItemService {
                             if (curtainItem.getHighHh().doubleValue() > 0) {
                                 //花回
                                 shaUsage =
-                                        arith.mul(arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2),
-                                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), curtainItem.getHighHh()), 2)),
-                                                curtainItem.getHighHh());
+                                        arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
+                                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()),arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
+                                                arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
                             } else if (curtainItem.getHighHh().doubleValue() == 0) {
                                 shaUsage =
-                                        arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
+                                        arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
                             }
                         }
-                        map.put("sha", shaUsage);
+                        map.put("sha"+itemMLGY.getItemNo(), shaUsage);
                     }
                 }
             } else if (itemMLGY.getItemType().equals("pjb")) {
@@ -389,9 +393,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
             }
-
-            map.put(item.getItemNo(), item);
+            itemList.add(item);
         }
+        map.put("itemList", itemList);
         map.put("code",0);
         return map;
     }
