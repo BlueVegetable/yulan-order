@@ -226,5 +226,16 @@ public class Ctm_orderController {
         return  sal_rebate_certificate_recordService.findRecrods(m);
     }
 
+    /**
+     * 获取优惠券返利集合
+     * @param m
+     * @return
+     */
+    @RequestMapping("getReturnRecord")
+    @ResponseBody
+    public Map getReturnRecord (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  sal_rebate_certificateService.getReturnRecord(m);
+    }
+
 
 }

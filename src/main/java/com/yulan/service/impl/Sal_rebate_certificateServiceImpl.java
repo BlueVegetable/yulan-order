@@ -1,6 +1,8 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.SalReturnRecordDao;
 import com.yulan.dao.Sal_rebate_certificateDao;
+import com.yulan.pojo.SalReturnRecord;
 import com.yulan.pojo.Sal_rebate_certificate;
 import com.yulan.service.Sal_rebate_certificateService;
 import com.yulan.utils.MapUtils;
@@ -18,6 +20,9 @@ import java.util.Map;
 public class Sal_rebate_certificateServiceImpl implements Sal_rebate_certificateService {
     @Autowired
     private Sal_rebate_certificateDao sal_rebate_certificateDao;
+
+    @Autowired
+    private SalReturnRecordDao salReturnRecordDao;
 
     @Override
     public Map getRebate(Map<String, Object> map) throws UnsupportedEncodingException {
@@ -43,6 +48,28 @@ public class Sal_rebate_certificateServiceImpl implements Sal_rebate_certificate
             }
             data.add(map1);
 
+        }
+        m.put("data",data);
+        m.put("code",0);
+        m.put("msg","SUCCESSS");
+        return m;
+    }
+
+    @Override
+    public Map getReturnRecord(Map<String, Object> map) throws UnsupportedEncodingException {
+        String id=map.get("id").toString();
+        List<SalReturnRecord> list=salReturnRecordDao.getReturnRecord(id);
+        Map m=new HashMap();
+        List<Map<String,Object>> data=new ArrayList<>();
+        for (SalReturnRecord salReturnRecord:list) {
+            Map<String, Object> map1 = MapUtils.beanToMap(salReturnRecord);
+            for (Map.Entry<String, Object> entry : map1.entrySet()) {//转码
+                if (entry.getValue() instanceof String) {
+                    String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                    entry.setValue(origin);
+                }
+            }
+            data.add(map1);
         }
         m.put("data",data);
         m.put("code",0);

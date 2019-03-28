@@ -14,6 +14,11 @@
         select * from SAL_REBATE_CERTIFICATE_RECORD t
         where t.id = #{id,jdbcType=VARCHAR}
         and t.status_id is null
+        order by t.date_use desc
+    </select>
+
+    <select id="getReturn" resultType="Map">
+        select * from SAL_RETURN_RECORD t where t.cardid='C01613201903001'
     </select>
 
 </mapper>
