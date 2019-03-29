@@ -20,5 +20,8 @@
     <select id="getReturn" resultType="Map">
         select * from SAL_RETURN_RECORD t where t.cardid='C01613201903001'
     </select>
+    <select id="getItemNO" resultType="String">
+        select t.item_no from CTM_ORDER_DETAIL t where t.order_no=#{orderNo} and t.line_no=#{lineNo}
+    </select>
 
 </mapper>
