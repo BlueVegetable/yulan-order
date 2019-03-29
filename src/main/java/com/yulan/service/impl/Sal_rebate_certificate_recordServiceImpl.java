@@ -32,7 +32,10 @@ public class Sal_rebate_certificate_recordServiceImpl implements Sal_rebate_cert
                     entry.setValue(origin);
                 }
             }
+            String itemNo=sal_rebate_certificate_recordDao.getItemNO(sal_rebate_certificate_record.getOrderNo(),sal_rebate_certificate_record.getLineNo());
+            map1.put("itemNo",itemNo);
             data.add(map1);
+
 
 
         }

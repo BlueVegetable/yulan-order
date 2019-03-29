@@ -24,8 +24,6 @@
         from SAL_REBATE_CERTIFICATE t
         where t.customer_code=#{cid}
 
-        and t.REBATE_MONEY_OVER!=0
-
     </select>
 
 
