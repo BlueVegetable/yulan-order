@@ -4,6 +4,7 @@ import com.yulan.pojo.Commodity;
 import com.yulan.service.CommodityService;
 import com.yulan.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("commodity")
 public class CommodityController{
 
-	@Autowired
+	@Autowired@Qualifier("commodityService")
 	private CommodityService commodityService;
 
 	@ResponseBody
@@ -54,10 +56,8 @@ public class CommodityController{
 	}
 
 	@ResponseBody@RequestMapping("alterCommodityStatus")
-	public Map<String,Object> alterCommodityStatus(@RequestBody Map<String,Object> parameters) {
-		String commodityID = (String) parameters.get("commodityID");
-		Integer status = (Integer) parameters.get("status");
-		commodityService.alterCommodityStatus(commodityID,status);
+	public Map<String,Object> alterCommodityStatus(@RequestBody List<String> commodityIDs) {
+		commodityService.alterCommoditiesStatus(commodityIDs,0);
 		return Response.getResponseMap(0,"",null);
 	}
 

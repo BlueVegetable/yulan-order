@@ -6,6 +6,8 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommodityEncode {
 
@@ -60,6 +62,10 @@ public class CommodityEncode {
 
     public boolean alterCommodityStatus(String commodityID,int status) {
         return commodityDao.alterCommodityStatus(commodityID, status) > 0;
+    }
+
+    public int alterCommoditiesStatus(List<String> commodityIDs, int status) {
+        return commodityDao.alterCommoditiesStatus(commodityIDs,status);
     }
 
 }

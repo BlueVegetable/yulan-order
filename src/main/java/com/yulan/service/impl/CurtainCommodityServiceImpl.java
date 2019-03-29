@@ -7,6 +7,8 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("curtainCommodityService")
 public class CurtainCommodityServiceImpl implements CommodityService {
 
@@ -53,5 +55,10 @@ public class CurtainCommodityServiceImpl implements CommodityService {
 	@Override
 	public boolean alterCommodityStatus(String commodityID, int status) {
 		return curtainCommodityEncode.alterCommodityStatus(commodityID,status);
+	}
+
+	@Override
+	public int alterCommoditiesStatus(List<String> commodityIDs, int status) {
+		return 0;
 	}
 }
