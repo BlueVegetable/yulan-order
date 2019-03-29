@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.Sal_rebate_certificate_recordDao">
+    <resultMap id="rebateRecordMap" type="Sal_rebate_certificate_record" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <result column="LINE_NO" property="lineNo" jdbcType="DECIMAL" />
+        <result column="REBATE_MONEY" property="rebateMoney" jdbcType="DECIMAL" />
+        <result column="DATE_USE" property="dateUse" jdbcType="TIMESTAMP" />
+        <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <select id="findRecrods" resultMap="rebateRecordMap">
+        select * from SAL_REBATE_CERTIFICATE_RECORD t
+        where t.id = #{id,jdbcType=VARCHAR}
+        and t.status_id is null
+        order by t.date_use desc
+    </select>
+
+    <select id="getReturn" resultType="Map">
+        select * from SAL_RETURN_RECORD t where t.cardid='C01613201903001'
+    </select>
+
+</mapper>
