@@ -17,4 +17,12 @@ public interface Sal_rebate_certificate_recordDao {
 
     Map<String,Object> getReturn();
 
+    /**
+     *获取订单商品型号
+     * @param orderNo
+     * @param lineNo
+     * @return
+     */
+    String getItemNO(@Param("orderNo")String orderNo,@Param("lineNo")String lineNo);
+
 }

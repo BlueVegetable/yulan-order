@@ -108,11 +108,12 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             String prime_costString=m.get("prime_cost").toString();
             BigDecimal prime_cost= BigDecimal.valueOf(Double.valueOf(prime_costString));
             Sal_promotion sal_promotion=ctm_orderDao.getPromotion(pId);
+            String type=sal_promotion.getType();
             BigDecimal discount=sal_promotion.getDiscount();
             BigDecimal price=sal_promotion.getPrice();
-            if (discount!=null){
+            if (type.equals("1")){//折扣
                 promotion_cost= discount.multiply(prime_cost);//乘法保留两位小数
-            }else{
+            }else {//定价
                 promotion_cost= price.multiply(num);
             }
             m.put("promotion_cost",promotion_cost);
