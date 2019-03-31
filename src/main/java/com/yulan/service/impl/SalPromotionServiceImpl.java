@@ -7,6 +7,8 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -41,9 +43,15 @@ public class SalPromotionServiceImpl implements SalPromotionService {
             if((salPromotion.getCustomerType().equals("%")||salPromotion.getCustomerType().equals(customerType))&&
                     (salPromotion.getItemVersion().equals("%")||salPromotion.getItemVersion().equals(itemVersion))) {
                 long current = System.currentTimeMillis();
-                long before = salPromotion.getDateStart().getTime();
-                long end = salPromotion.getDateEnd().getTime();
-                if(current>=before&&current<=end) {
+                java.sql.Date before = salPromotion.getDateStart();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.sql.Date end = salPromotion.getDateEnd();
+                Timestamp beforeTimestamp,endTimestamp;
+                beforeTimestamp = Timestamp.valueOf(simpleDateFormat.format(before)+" 00:00:00");
+                endTimestamp = Timestamp.valueOf(simpleDateFormat.format(end)+" 23:59:59");
+                long beforeTime = beforeTimestamp.getTime();
+                long endTime = endTimestamp.getTime();
+                if(current>=beforeTime&&current<=endTime) {
                     salPromotionsDeal.add(salPromotion);
                 }
             } else {

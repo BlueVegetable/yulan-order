@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Map;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -14,8 +15,10 @@ public class test {
     private Sal_rebate_certificate_recordDao sal_rebate_certificate_recordDao;
 
     @Test
-   public  void main() {
-        Map<String,Object> map=sal_rebate_certificate_recordDao.getReturn();
-        System.out.println(map.get("ID"));
+    public void main() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Timestamp date = Timestamp.valueOf("2019-10-20 00:00:00");
+        String value = simpleDateFormat.format(date);
+        System.out.println(value);
     }
 }
