@@ -3,6 +3,7 @@ package com.yulan.service;
 import com.yulan.pojo.Commodity;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 public interface CommodityService {
 
@@ -21,5 +22,7 @@ public interface CommodityService {
 	boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException;
 
 	boolean alterCommodityStatus(String commodityID,int status);
+
+	int alterCommoditiesStatus(List<String> commodityIDs,int status);
 
 }

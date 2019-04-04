@@ -1,6 +1,8 @@
 package com.yulan.controller;
 
+import com.yulan.pojo.Item;
 import com.yulan.pojo.SalPromotion;
+import com.yulan.service.ItemService;
 import com.yulan.service.SalPromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ public class SalPromotionController {
 
     @Autowired
     private SalPromotionService salPromotionService;
+    @Autowired
+    private ItemService itemService;
 
     @ResponseBody@RequestMapping("getSalPromotionByID")
     public SalPromotion getSalPromotionByID(String salPromotionID) {
@@ -26,8 +30,11 @@ public class SalPromotionController {
 
     @ResponseBody@RequestMapping("selectSalPromotion")
     public List<Map<String,Object>> selectSalPromotion(@RequestParam("CID")String CID,@RequestParam("customerType")String customerType,
-                                                       @RequestParam("itemNo")String itemNo,@RequestParam("itemVersion")String itemVersion,
-                                                       @RequestParam("productType")String productType,@RequestParam("productBrand")String productBrand) {
+                                                       @RequestParam("itemNo")String itemNo) {
+        Item item = itemService.getItemByItemNO(itemNo);
+        String itemVersion = item.getItemVersion();
+        String productType = item.getProductType();
+        String productBrand = item.getProductBrand();
         return salPromotionService.selectSalPromotion(CID, customerType, itemNo, itemVersion,productType,productBrand);
     }
 

@@ -117,7 +117,7 @@ public class CartController{
 			cartItem = new CartItem();
 			cartItem.setCommodityType(commodityType);
 			cartItem.setProductGroupType(item.getGroupType());
-			cartItem.setActivityGroupType(salPromotion==null?null:salPromotion.getGroupType());
+			cartItem.setActivityGroupType(salPromotion==null?"Z":salPromotion.getGroupType());
 			cartItem.setCartId(cart.getCartId());
 			if(!cartItemService.addCartItem(cartItem))
 				return Response.getResponseMap(1,"添加失败",null);
@@ -210,7 +210,7 @@ public class CartController{
             salPromotion = null;
         }
 		CartItem cartItemNew = cartItemService.getCartItemOrder(cartItem.getCartId(),
-				cartItem.getCommodityType(),salPromotion==null?null:salPromotion.getGroupType(),
+				cartItem.getCommodityType(),salPromotion==null?"Z":salPromotion.getGroupType(),
 				commodity.getItem().getGroupType());
 		if(cartItemNew == null) {
 			cartItemNew = new CartItem();
@@ -218,7 +218,7 @@ public class CartController{
 			if(salPromotion!=null) {
                 cartItemNew.setActivityGroupType(salPromotion.getGroupType());
             } else {
-			    cartItemNew.setActivityGroupType(null);
+			    cartItemNew.setActivityGroupType("Z");
             }
 			cartItemNew.setProductGroupType(commodity.getItem().getGroupType());
 			cartItemNew.setCommodityType(cartItem.getCommodityType());

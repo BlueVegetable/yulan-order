@@ -26,4 +26,6 @@ public interface CommodityDao {
 
 	int alterCommodityStatus(@Param("commodityID") String commodityID,@Param("status") int status);
 
+	int alterCommoditiesStatus(@Param("commodityIDs") List<String> commodityIDs,@Param("status") int status);
+
 }

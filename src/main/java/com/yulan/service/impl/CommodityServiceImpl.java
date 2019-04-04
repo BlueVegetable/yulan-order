@@ -7,7 +7,7 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @Service("commodityService")
 public class CommodityServiceImpl implements CommodityService {
@@ -48,12 +48,17 @@ public class CommodityServiceImpl implements CommodityService {
 	}
 
 	@Override
-	public boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException {
+	public boolean updateCommodity(Commodity commodity) {
 		return commodityEncode.updateCommodity(commodity);
 	}
 
 	@Override
 	public boolean alterCommodityStatus(String commodityID, int status) {
 		return commodityEncode.alterCommodityStatus(commodityID, status);
+	}
+
+	@Override
+	public int alterCommoditiesStatus(List<String> commodityIDs, int status) {
+		return commodityEncode.alterCommoditiesStatus(commodityIDs, status);
 	}
 }
