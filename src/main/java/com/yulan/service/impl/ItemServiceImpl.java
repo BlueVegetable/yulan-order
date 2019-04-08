@@ -221,6 +221,40 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
+     * 窗帘模糊查询
+     * @param page
+     * @param lastNum
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public Map getCurtainTypeBySearch(Integer page, Integer lastNum, String itemNo) throws IOException {
+        Map<String, Object> map = new HashMap<>();
+        List<Item> curtainList = itemDao.getCurtainTypeBySearch(page, lastNum, itemNo);
+        for (int i = 0; i < curtainList.size(); i++) {
+            Item item = curtainList.get(i);
+            if (null != item.getNote()) {
+                item.setNote(stringUtil.getUtf8(item.getNote()));
+            }
+            if (null != item.getItemVersion()) {
+                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+            }
+            if (null != item.getProductBrand()) {
+                item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+            }
+            if (null != item.getRzStyle()) {
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+            }
+            if (null != item.getUnit()) {
+                item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
+            }
+        }
+        map.put("data", curtainList);
+        map.put("code", 0);
+        return map;
+    }
+
+    /**
      * 获取窗帘详细信息
      *
      * @param width

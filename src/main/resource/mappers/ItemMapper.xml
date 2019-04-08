@@ -354,6 +354,18 @@
             where rm &gt;= #{start} and rm &lt;= #{number}
         </if>
     </select>
+
+    <select id="getCurtainTypeBySearch" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select t.* ,COUNT(*) OVER () TOTAL from ITEM t where t.product_type = 'KS' and t.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
     <!--获取同一型号窗帘下的系列产品-->
     <select id="getCurtainInfo" resultMap="CurtainMap">
         select * from ITEM_ML_GY t where t.parent_item_no = #{curtainNo} ORDER BY t.NO

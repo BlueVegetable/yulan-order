@@ -56,6 +56,8 @@ public interface ItemDao {
     List<Item> getOtherSingle(@Param("cid") String cid, @Param("itemNo") String itemNo, @Param("start")Integer page, @Param("number")Integer lastNum);
     //获得窗帘型号
     List<Item> getCurtainType(@Param("start")Integer page, @Param("number")Integer lastNum);
+    //窗帘型号模糊查询
+    List<Item> getCurtainTypeBySearch(@Param("start")Integer page, @Param("number")Integer lastNum, @Param("itemNo") String itemNo);
    //获取同一型号窗帘下的系列产品
     List<ItemMLGY> getCurtainInfo(@Param("curtainNo") String curtainNo);
    //获取每个窗帘对应的工艺

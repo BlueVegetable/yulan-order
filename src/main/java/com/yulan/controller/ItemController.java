@@ -127,6 +127,28 @@ public class ItemController {
     }
 
     /**
+     * 窗帘模糊查询
+     * @param data
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "getCurtainBySearch")
+    @ResponseBody
+    public Map getCurtainBySearch(@RequestBody Map<String,Object> data)throws IOException{
+        Integer limit = (Integer) data.get("limit");
+        Integer page = (Integer)data.get("page");
+        String itemNo = (String)data.get("itemNo");
+        if(limit==null||page==null) {
+            page=null;
+            limit=null;
+        } else {
+            page=(page-1)*limit+1;
+        }
+        int lastNum=page+limit-1;
+        return itemService.getCurtainTypeBySearch(page,lastNum,itemNo);
+    }
+
+    /**
      * 获取单个类型窗帘的所有信息
      * @param data
      * @return
