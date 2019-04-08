@@ -84,6 +84,16 @@ public class Ctm_order_detail  {
 
     private String promotion;
 
+    private String promotionType;
+
+    public String getPromotionType() {
+        return promotionType;
+    }
+
+    public void setPromotionType(String promotionType) {
+        this.promotionType = promotionType;
+    }
+
     private String partSendId;
 
     private BigDecimal backY;//年返利
