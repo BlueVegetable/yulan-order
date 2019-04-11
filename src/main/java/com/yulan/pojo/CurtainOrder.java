@@ -1,14 +1,22 @@
 package com.yulan.pojo;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class CurtainOrder{
     private String orderNo;
 
     private String lineNo;
 
-    private Date dateUpdate;
+    private java.sql.Timestamp dateUpdate;
+
+    public Timestamp getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(Timestamp dateUpdate) {
+        this.dateUpdate = dateUpdate;
+    }
 
     private String curtainMenuGroupId;
 
@@ -40,13 +48,7 @@ public class CurtainOrder{
         this.lineNo = lineNo;
     }
 
-    public Date getDateUpdate() {
-        return dateUpdate;
-    }
 
-    public void setDateUpdate(Date dateUpdate) {
-        this.dateUpdate = dateUpdate;
-    }
 
     public String getCurtainMenuGroupId() {
         return curtainMenuGroupId;
