@@ -1,6 +1,7 @@
 package com.yulan.controller;
 
 import com.yulan.service.Ctm_orderService;
+import com.yulan.service.CurtainOrderService;
 import com.yulan.service.Sal_rebate_certificateService;
 import com.yulan.service.Sal_rebate_certificate_recordService;
 import com.yulan.utils.Response;
@@ -26,6 +27,9 @@ public class Ctm_orderController {
 
     @Autowired
     private Sal_rebate_certificate_recordService sal_rebate_certificate_recordService;
+
+    @Autowired
+    private CurtainOrderService curtainOrderService;
 
     @RequestMapping("getOrders")
     @ResponseBody
@@ -236,6 +240,19 @@ public class Ctm_orderController {
     public Map getReturnRecord (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
         return  sal_rebate_certificateService.getReturnRecord(m);
     }
+
+    /**
+     * 提交窗帘审核
+     * @param m
+     * @return
+     */
+    @RequestMapping("insertCurtain")
+    @ResponseBody
+    public Map insertCurtain (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  curtainOrderService.insertCurtain(m);
+    }
+
+
 
 
 }

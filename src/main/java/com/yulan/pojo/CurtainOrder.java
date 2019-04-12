@@ -31,6 +31,24 @@ public class CurtainOrder{
     private String notes;
 
     private String lanAuditing;
+    private String curtainRoomId;
+    private String curtainRoomLineno;
+
+    public String getCurtainRoomLineno() {
+        return curtainRoomLineno;
+    }
+
+    public void setCurtainRoomLineno(String curtainRoomLineno) {
+        this.curtainRoomLineno = curtainRoomLineno;
+    }
+
+    public String getCurtainRoomId() {
+        return curtainRoomId;
+    }
+
+    public void setCurtainRoomId(String curtainRoomId) {
+        this.curtainRoomId = curtainRoomId;
+    }
 
     public String getOrderNo() {
         return orderNo;

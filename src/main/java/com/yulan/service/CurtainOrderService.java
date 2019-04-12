@@ -11,7 +11,7 @@ public interface CurtainOrderService {
      * @param map
      * @return
      */
-    Boolean insertCurtain(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException;
+    Map insertCurtain(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException;
 
 
 }

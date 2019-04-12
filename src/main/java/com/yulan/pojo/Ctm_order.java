@@ -102,6 +102,15 @@ public class Ctm_order {
     private String buyUserPhone;
     private BigDecimal allBackY;
     private BigDecimal allBackM;
+    private String curtainStatusId;
+
+    public String getCurtainStatusId() {
+        return curtainStatusId;
+    }
+
+    public void setCurtainStatusId(String curtainStatusId) {
+        this.curtainStatusId = curtainStatusId;
+    }
 
     public BigDecimal getAllBackY() {
         return allBackY;
