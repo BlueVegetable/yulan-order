@@ -24,6 +24,11 @@ public class CartItemServiceImpl implements CartItemService {
 	}
 
 	@Override
+	public boolean newCartItem(CartItem cartItem) {
+		return false;
+	}
+
+	@Override
 	public boolean deleteCartItemByID(String cartItemID) {
 		return cartItemEncode.deleteCartItemByID(cartItemID);
 	}

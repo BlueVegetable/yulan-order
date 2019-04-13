@@ -6,7 +6,6 @@
         <result column="PRICE" property="price" jdbcType="DECIMAL" />
         <result column="ACTIVITY_ID" property="activityId" jdbcType="VARCHAR" />
         <result column="ACTIVITY_PRICE" property="activityPrice" jdbcType="DECIMAL" />
-        <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
         <result column="CART_ITEM_ID" property="cartItemId" jdbcType="VARCHAR" />
         <result column="QUANTITY" property="quantity" jdbcType="DECIMAL" />
         <result column="WIDTH" property="width" jdbcType="DECIMAL" />
@@ -21,6 +20,7 @@
         <result column="CERTAIN_HEIGHT_WIDTH" property="certainHeightWidth" jdbcType="DECIMAL" />
         <result column="SPECIFICATION" property="specification" jdbcType="DECIMAL" />
         <result column="ILLUSTRATE" property="illustrate" jdbcType="VARCHAR" />
+        <association property="item" column="ITEM_ID" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 
     <insert id="addCommodity" parameterType="CurtainCommodity">
