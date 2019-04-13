@@ -324,7 +324,7 @@ public class ItemServiceImpl implements ItemService {
                             //定高
                             if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade()  == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
-                                map.put("ls"+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
+                                map.put("ls", itemMLGY.getItemNo() +
                                         " has null values and can not be " +
                                         "calculated,please checkout WidthHh," +
                                         "FixType,DuihuaLoss,HighJia");
@@ -361,7 +361,7 @@ public class ItemServiceImpl implements ItemService {
                 if (itemMLGY.getProductType().equals("ML")) {
                     if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
-                        map.put("sha "+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
+                        map.put("sha", itemMLGY.getItemNo() +
                                 " has null values and can not be " +
                                 "calculated,please checkout WidthHh," +
                                 "FixGrade(),DuihuaLoss,HighJia");
@@ -383,7 +383,7 @@ public class ItemServiceImpl implements ItemService {
                                         arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
                             }
                         }
-                        map.put("sha"+itemMLGY.getItemNo(), shaUsage);
+                        map.put("sha", shaUsage);
                     }
                 }
             } else if (itemMLGY.getItemType().equals("pjb")) {
