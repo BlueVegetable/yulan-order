@@ -8,6 +8,8 @@ public interface CartItemService {
 
 	boolean addCartItem(CartItem cartItem);
 
+	boolean newCartItem(CartItem cartItem);
+
 	boolean deleteCartItemByID(String cartItemID);
 
 	CartItem getCartItemByID(String cartItemID);

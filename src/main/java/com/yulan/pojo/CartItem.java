@@ -10,6 +10,9 @@ public class CartItem {
 	private String activityGroupType;
 	private String productGroupType;
 	private List<Commodity> commodities;
+	/**
+	 * @deprecated 购物车生成订单后会改变的一个状态
+	 */
 	private Boolean checked;
  	private String cartId;
 

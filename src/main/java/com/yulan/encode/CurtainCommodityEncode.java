@@ -2,6 +2,8 @@ package com.yulan.encode;
 
 import com.yulan.dao.CurtainCommodityDao;
 import com.yulan.pojo.Commodity;
+import com.yulan.pojo.CurtainCommodity;
+import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,13 @@ public class CurtainCommodityEncode {
     private CurtainCommodityDao curtainCommodityDao;
 
     public boolean addCommodity(Commodity commodity) {
+        CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
+        curtainCommodity.setNote(StringUtil.UTF8ToGBK(curtainCommodity.getNote()));
+        curtainCommodity.setUnit(StringUtil.UTF8ToGBK(curtainCommodity.getUnit()));
+        curtainCommodity.setCurtainItemName(StringUtil.UTF8ToGBK(curtainCommodity.getCurtainItemName()));
+        curtainCommodity.setCurtainPartName(StringUtil.UTF8ToGBK(curtainCommodity.getCurtainPartName()));
+        curtainCommodity.setManufacturingInstructions(StringUtil.UTF8ToGBK(curtainCommodity.getManufacturingInstructions()));
+        curtainCommodity.setIllustrate(StringUtil.UTF8ToGBK(curtainCommodity.getIllustrate()));
         return curtainCommodityDao.addCommodity(commodity)>0;
     }
 
@@ -35,7 +44,17 @@ public class CurtainCommodityEncode {
     }
 
     public List<Commodity> getCommoditiesByCartItemID(String cartItemID) {
-        return curtainCommodityDao.getCommoditiesByCartItemID(cartItemID);
+        List<Commodity> commodities = curtainCommodityDao.getCommoditiesByCartItemID(cartItemID);
+        for (Commodity commodity:commodities) {
+            CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
+            curtainCommodity.setNote(StringUtil.GBKToUTF8(curtainCommodity.getNote()));
+            curtainCommodity.setUnit(StringUtil.GBKToUTF8(curtainCommodity.getUnit()));
+            curtainCommodity.setCurtainItemName(StringUtil.GBKToUTF8(curtainCommodity.getCurtainItemName()));
+            curtainCommodity.setCurtainPartName(StringUtil.GBKToUTF8(curtainCommodity.getCurtainPartName()));
+            curtainCommodity.setManufacturingInstructions(StringUtil.GBKToUTF8(curtainCommodity.getManufacturingInstructions()));
+            curtainCommodity.setIllustrate(StringUtil.GBKToUTF8(curtainCommodity.getIllustrate()));
+        }
+        return commodities;
     }
 
     public long countByCartItemID(String cartItemID) {
