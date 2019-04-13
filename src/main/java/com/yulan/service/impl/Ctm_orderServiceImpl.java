@@ -1,6 +1,7 @@
 package com.yulan.service.impl;
 
 import com.yulan.dao.Ctm_orderDao;
+import com.yulan.dao.CurtainOrderDao;
 import com.yulan.pojo.*;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.MapUtils;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class Ctm_orderServiceImpl implements Ctm_orderService {
     @Autowired
     private Ctm_orderDao ctm_orderDao;
+    @Autowired
+    private CurtainOrderDao curtainOrderDao;
 
 
     @Override
@@ -228,23 +231,23 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         if (ctm_orderDao.insertOrderH(ctm_order)){//订单头录入
 
-            int lineNo=1;
-            for (Map<String,Object> m2:list){//订单详情录入
+                    int lineNo=1;
+                    for (Map<String,Object> m2:list){//订单详情录入
 
 
 
-                for (Map.Entry<String, Object> entry : m2.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-                        entry.setValue(origin);
-                    }
-                }
-                Ctm_order_detail ctm_order_detail= MapUtils.mapToBean(m2,Ctm_order_detail.class);
+                        for (Map.Entry<String, Object> entry : m2.entrySet()) {
+                            if (entry.getValue() instanceof String) {
+                                String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
+                                entry.setValue(origin);
+                            }
+                        }
+                        Ctm_order_detail ctm_order_detail= MapUtils.mapToBean(m2,Ctm_order_detail.class);
 
 
-                ctm_order_detail.setLineNo(lineNo);
-                ctm_order_detail.setStatusId(statusId);
-                ctm_order_detail.setOrderNo(order);
+                        ctm_order_detail.setLineNo(lineNo);
+                        ctm_order_detail.setStatusId(statusId);
+                        ctm_order_detail.setOrderNo(order);
 
                 //优惠券
                 BigDecimal rebateMonth =BigDecimal.valueOf(0);
@@ -325,7 +328,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     m.put("msg","FLASE");
                     break;
                 }
+
                 lineNo++;
+
+
+
             }
 
 

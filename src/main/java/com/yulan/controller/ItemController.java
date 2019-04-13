@@ -127,6 +127,28 @@ public class ItemController {
     }
 
     /**
+     * 窗帘模糊查询
+     * @param data
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "getCurtainBySearch")
+    @ResponseBody
+    public Map getCurtainBySearch(@RequestBody Map<String,Object> data)throws IOException{
+        Integer limit = (Integer) data.get("limit");
+        Integer page = (Integer)data.get("page");
+        String itemNo = (String)data.get("itemNo");
+        if(limit==null||page==null) {
+            page=null;
+            limit=null;
+        } else {
+            page=(page-1)*limit+1;
+        }
+        int lastNum=page+limit-1;
+        return itemService.getCurtainTypeBySearch(page,lastNum,itemNo);
+    }
+
+    /**
      * 获取单个类型窗帘的所有信息
      * @param data
      * @return
@@ -136,13 +158,13 @@ public class ItemController {
     public Map getCurtainInfo(@RequestBody Map<String,Object> data)throws IOException{
         String itemNO = (String)data.get("itemNO");
         //成品宽度
-        Double width = (Double)data.get("width");
+        Double width =  Double.valueOf((String)data.get("width"));
         //成品高度
-        Double height  = (Double)data.get("height");
+        Double height  = Double.valueOf((String)data.get("height"));
         //帘头外包盒宽度
-        Double WBH = (Double)data.get("WBH");
+        Double WBH =  Double.valueOf((String)data.get("WBH"));
         //褶皱倍数
-        Double multiple = (Double)data.get("multiple");
+        Double multiple =  Double.valueOf((String)data.get("multiple"));
         String location = (String)data.get("location");
 
         return  itemService.getCurtainInfo(width,height,WBH,multiple,location,itemNO);

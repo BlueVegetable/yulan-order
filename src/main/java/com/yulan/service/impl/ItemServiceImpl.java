@@ -221,6 +221,40 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
+     * 窗帘模糊查询
+     * @param page
+     * @param lastNum
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public Map getCurtainTypeBySearch(Integer page, Integer lastNum, String itemNo) throws IOException {
+        Map<String, Object> map = new HashMap<>();
+        List<Item> curtainList = itemDao.getCurtainTypeBySearch(page, lastNum, itemNo);
+        for (int i = 0; i < curtainList.size(); i++) {
+            Item item = curtainList.get(i);
+            if (null != item.getNote()) {
+                item.setNote(stringUtil.getUtf8(item.getNote()));
+            }
+            if (null != item.getItemVersion()) {
+                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+            }
+            if (null != item.getProductBrand()) {
+                item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+            }
+            if (null != item.getRzStyle()) {
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+            }
+            if (null != item.getUnit()) {
+                item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
+            }
+        }
+        map.put("data", curtainList);
+        map.put("code", 0);
+        return map;
+    }
+
+    /**
      * 获取窗帘详细信息
      *
      * @param width
@@ -290,7 +324,7 @@ public class ItemServiceImpl implements ItemService {
                             //定高
                             if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade()  == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
-                                map.put("ls"+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
+                                map.put("ls", itemMLGY.getItemNo() +
                                         " has null values and can not be " +
                                         "calculated,please checkout WidthHh," +
                                         "FixType,DuihuaLoss,HighJia");
@@ -327,7 +361,7 @@ public class ItemServiceImpl implements ItemService {
                 if (itemMLGY.getProductType().equals("ML")) {
                     if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
-                        map.put("sha "+itemMLGY.getItemNo(), itemMLGY.getItemNo() +
+                        map.put("sha", itemMLGY.getItemNo() +
                                 " has null values and can not be " +
                                 "calculated,please checkout WidthHh," +
                                 "FixGrade(),DuihuaLoss,HighJia");
@@ -349,7 +383,7 @@ public class ItemServiceImpl implements ItemService {
                                         arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
                             }
                         }
-                        map.put("sha"+itemMLGY.getItemNo(), shaUsage);
+                        map.put("sha", shaUsage);
                     }
                 }
             } else if (itemMLGY.getItemType().equals("pjb")) {
