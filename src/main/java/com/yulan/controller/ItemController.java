@@ -170,6 +170,16 @@ public class ItemController {
         return  itemService.getCurtainInfo(width,height,WBH,multiple,location,itemNO);
     }
 
-
+    /**
+     * 获取可以更换的GY类型
+     * @param data
+     * @return
+     */
+    @RequestMapping(value = "getGYList")
+    @ResponseBody
+    public Map getGYList(@RequestBody Map<String,Object> data){
+        String itemNO = (String)data.get("itemNO");
+        return itemService.getGYList(itemNO);
+    }
 
 }

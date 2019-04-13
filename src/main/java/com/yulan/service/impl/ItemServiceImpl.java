@@ -434,5 +434,14 @@ public class ItemServiceImpl implements ItemService {
         return map;
     }
 
+    @Override
+    public Map getGYList(String itemNO) {
+        Map map = new HashMap<>();
+        List<String> GYList = itemDao.getItemGY(itemNO);
+        map.put("GYLis",GYList);
+        map.put("code",0);
+        return map;
+    }
+
 
 }

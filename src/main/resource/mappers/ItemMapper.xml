@@ -375,6 +375,4 @@
         select t.gy_no from ITEM_GY_LIST t where t.parent_item_no = #{itemNO}
     </select>
 
-
-
 </mapper>
