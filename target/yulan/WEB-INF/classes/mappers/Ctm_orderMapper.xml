@@ -10,7 +10,7 @@
     DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
     BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND,
-    NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y
+    NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y,CURTAIN_STATUS_ID
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
@@ -180,69 +180,559 @@
     </select>
 
     <insert id="insertOrderH" parameterType="Ctm_order" >
-    insert into CTM_ORDER (ORDER_NO, CUSTOMER_CODE, CUSTOMER_CODE2,
-      CURRENCY_ID, LINKPERSON, TELEPHONE,
-      STATUS_ID, DELIVERY_TYPE, DELIVERY_NOTES,
-      POST_ADDRESS, NOTES, DATE_CRE,
-      OPERATOR, DATE_UPDATE, PERSON_UPDATE,
-      CONTRACT_NO, PERSON_ACCEPT, DATE_ACCEPT,
-      YULAN_NOTES, WEB_TJ_TIME, DATE_DEAL,
-      FLAG, USER_NO, PROJECT_NO,
-      CUSTOMER_CODE_O2O, ORDER_FLAG, POST_ADDRESS_MODIFIED,
-      DS_LINKMAN, DS_TEL, DS_USER_NAME,
-      DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE,
-      INVOICE_FLAG, INVOICE_TITLE, WL_CONTACTS,
-      WL_TEL, RECIVER_AREA1, RECIVER_AREA2,
-      RECIVER_AREA3, BILL_TYPE_X, DELIVERY_FLAG,
-      OAO_FLAG, OAO_STATUS, OAO_PERSON,
-      OAO_TIME,ALL_SPEND,BUYUSER,BUYUSERPHONE,ALLBACK_M,ALLBACK_Y)
-    values (#{orderNo,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, #{customerCode2,jdbcType=VARCHAR},
-      #{currencyId,jdbcType=VARCHAR}, #{linkperson,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
-      #{statusId,jdbcType=VARCHAR}, #{deliveryType,jdbcType=VARCHAR}, #{deliveryNotes,jdbcType=VARCHAR},
-      #{postAddress,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{dateCre,jdbcType=TIMESTAMP},
-      #{operator,jdbcType=VARCHAR}, #{dateUpdate,jdbcType=TIMESTAMP}, #{personUpdate,jdbcType=VARCHAR},
-      #{contractNo,jdbcType=VARCHAR}, #{personAccept,jdbcType=VARCHAR}, #{dateAccept,jdbcType=TIMESTAMP},
-      #{yulanNotes,jdbcType=VARCHAR}, #{webTjTime,jdbcType=TIMESTAMP}, #{dateDeal,jdbcType=TIMESTAMP},
-      #{flag,jdbcType=VARCHAR}, #{userNo,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR},
-      #{customerCodeO2o,jdbcType=VARCHAR}, #{orderFlag,jdbcType=VARCHAR}, #{postAddressModified,jdbcType=DECIMAL},
-      #{dsLinkman,jdbcType=VARCHAR}, #{dsTel,jdbcType=VARCHAR}, #{dsUserName,jdbcType=VARCHAR},
-      #{dsOrderNo,jdbcType=VARCHAR}, #{isDsOrder,jdbcType=VARCHAR}, #{erpProcessNote,jdbcType=VARCHAR},
-      #{invoiceFlag,jdbcType=VARCHAR}, #{invoiceTitle,jdbcType=VARCHAR}, #{wlContacts,jdbcType=VARCHAR},
-      #{wlTel,jdbcType=VARCHAR}, #{reciverArea1,jdbcType=VARCHAR}, #{reciverArea2,jdbcType=VARCHAR},
-      #{reciverArea3,jdbcType=VARCHAR}, #{billTypeX,jdbcType=CHAR}, #{deliveryFlag,jdbcType=VARCHAR},
-      #{oaoFlag,jdbcType=VARCHAR}, #{oaoStatus,jdbcType=VARCHAR}, #{oaoPerson,jdbcType=VARCHAR},
-      #{oaoTime,jdbcType=TIMESTAMP},#{allSpend,jdbcType=DECIMAL},#{buyUser,jdbcType=VARCHAR},
-      #{buyUserPhone,jdbcType=VARCHAR},#{allBackM,jdbcType=DECIMAL},#{allBackY,jdbcType=DECIMAL}
-      )
+        insert into CTM_ORDER
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderNo != null" >
+                ORDER_NO,
+            </if>
+            <if test="customerCode != null" >
+                CUSTOMER_CODE,
+            </if>
+            <if test="customerCode2 != null" >
+                CUSTOMER_CODE2,
+            </if>
+            <if test="currencyId != null" >
+                CURRENCY_ID,
+            </if>
+            <if test="linkperson != null" >
+                LINKPERSON,
+            </if>
+            <if test="telephone != null" >
+                TELEPHONE,
+            </if>
+            <if test="statusId != null" >
+                STATUS_ID,
+            </if>
+            <if test="deliveryType != null" >
+                DELIVERY_TYPE,
+            </if>
+            <if test="deliveryNotes != null" >
+                DELIVERY_NOTES,
+            </if>
+            <if test="postAddress != null" >
+                POST_ADDRESS,
+            </if>
+            <if test="notes != null" >
+                NOTES,
+            </if>
+            <if test="dateCre != null" >
+                DATE_CRE,
+            </if>
+            <if test="operator != null" >
+                OPERATOR,
+            </if>
+            <if test="dateUpdate != null" >
+                DATE_UPDATE,
+            </if>
+            <if test="personUpdate != null" >
+                PERSON_UPDATE,
+            </if>
+            <if test="contractNo != null" >
+                CONTRACT_NO,
+            </if>
+            <if test="personAccept != null" >
+                PERSON_ACCEPT,
+            </if>
+            <if test="dateAccept != null" >
+                DATE_ACCEPT,
+            </if>
+            <if test="yulanNotes != null" >
+                YULAN_NOTES,
+            </if>
+            <if test="webTjTime != null" >
+                WEB_TJ_TIME,
+            </if>
+            <if test="dateDeal != null" >
+                DATE_DEAL,
+            </if>
+            <if test="flag != null" >
+                FLAG,
+            </if>
+            <if test="userNo != null" >
+                USER_NO,
+            </if>
+            <if test="projectNo != null" >
+                PROJECT_NO,
+            </if>
+            <if test="customerCodeO2o != null" >
+                CUSTOMER_CODE_O2O,
+            </if>
+            <if test="orderFlag != null" >
+                ORDER_FLAG,
+            </if>
+            <if test="postAddressModified != null" >
+                POST_ADDRESS_MODIFIED,
+            </if>
+            <if test="dsLinkman != null" >
+                DS_LINKMAN,
+            </if>
+            <if test="dsTel != null" >
+                DS_TEL,
+            </if>
+            <if test="dsUserName != null" >
+                DS_USER_NAME,
+            </if>
+            <if test="dsOrderNo != null" >
+                DS_ORDER_NO,
+            </if>
+            <if test="isDsOrder != null" >
+                IS_DS_ORDER,
+            </if>
+            <if test="erpProcessNote != null" >
+                ERP_PROCESS_NOTE,
+            </if>
+            <if test="invoiceFlag != null" >
+                INVOICE_FLAG,
+            </if>
+            <if test="invoiceTitle != null" >
+                INVOICE_TITLE,
+            </if>
+            <if test="wlContacts != null" >
+                WL_CONTACTS,
+            </if>
+            <if test="wlTel != null" >
+                WL_TEL,
+            </if>
+            <if test="reciverArea1 != null" >
+                RECIVER_AREA1,
+            </if>
+            <if test="reciverArea2 != null" >
+                RECIVER_AREA2,
+            </if>
+            <if test="reciverArea3 != null" >
+                RECIVER_AREA3,
+            </if>
+            <if test="billTypeX != null" >
+                BILL_TYPE_X,
+            </if>
+            <if test="deliveryFlag != null" >
+                DELIVERY_FLAG,
+            </if>
+            <if test="oaoFlag != null" >
+                OAO_FLAG,
+            </if>
+            <if test="oaoStatus != null" >
+                OAO_STATUS,
+            </if>
+            <if test="oaoPerson != null" >
+                OAO_PERSON,
+            </if>
+            <if test="oaoTime != null" >
+                OAO_TIME,
+            </if>
+            <if test="allSpend != null" >
+                ALL_SPEND,
+            </if>
+            <if test="buyUser != null" >
+                BUYUSER,
+            </if>
+            <if test="buyUserPhone != null" >
+                BUYUSERPHONE,
+            </if>
+            <if test="allBackM != null" >
+                ALLBACK_M,
+            </if>
+            <if test="allBackY != null" >
+                ALLBACK_Y,
+            </if>
+            <if test="curtainStatusId != null" >
+                CURTAIN_STATUS_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCode != null" >
+                #{customerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCode2 != null" >
+                #{customerCode2,jdbcType=VARCHAR},
+            </if>
+            <if test="currencyId != null" >
+                #{currencyId,jdbcType=VARCHAR},
+            </if>
+            <if test="linkperson != null" >
+                #{linkperson,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null" >
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="statusId != null" >
+                #{statusId,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryType != null" >
+                #{deliveryType,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryNotes != null" >
+                #{deliveryNotes,jdbcType=VARCHAR},
+            </if>
+            <if test="postAddress != null" >
+                #{postAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="notes != null" >
+                #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="dateCre != null" >
+                #{dateCre,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operator != null" >
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="dateUpdate != null" >
+                #{dateUpdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="personUpdate != null" >
+                #{personUpdate,jdbcType=VARCHAR},
+            </if>
+            <if test="contractNo != null" >
+                #{contractNo,jdbcType=VARCHAR},
+            </if>
+            <if test="personAccept != null" >
+                #{personAccept,jdbcType=VARCHAR},
+            </if>
+            <if test="dateAccept != null" >
+                #{dateAccept,jdbcType=TIMESTAMP},
+            </if>
+            <if test="yulanNotes != null" >
+                #{yulanNotes,jdbcType=VARCHAR},
+            </if>
+            <if test="webTjTime != null" >
+                #{webTjTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateDeal != null" >
+                #{dateDeal,jdbcType=TIMESTAMP},
+            </if>
+            <if test="flag != null" >
+                #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="userNo != null" >
+                #{userNo,jdbcType=VARCHAR},
+            </if>
+            <if test="projectNo != null" >
+                #{projectNo,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCodeO2o != null" >
+                #{customerCodeO2o,jdbcType=VARCHAR},
+            </if>
+            <if test="orderFlag != null" >
+                #{orderFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="postAddressModified != null" >
+                #{postAddressModified,jdbcType=DECIMAL},
+            </if>
+            <if test="dsLinkman != null" >
+                #{dsLinkman,jdbcType=VARCHAR},
+            </if>
+            <if test="dsTel != null" >
+                #{dsTel,jdbcType=VARCHAR},
+            </if>
+            <if test="dsUserName != null" >
+                #{dsUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="dsOrderNo != null" >
+                #{dsOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="isDsOrder != null" >
+                #{isDsOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="erpProcessNote != null" >
+                #{erpProcessNote,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceFlag != null" >
+                #{invoiceFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceTitle != null" >
+                #{invoiceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="wlContacts != null" >
+                #{wlContacts,jdbcType=VARCHAR},
+            </if>
+            <if test="wlTel != null" >
+                #{wlTel,jdbcType=VARCHAR},
+            </if>
+            <if test="reciverArea1 != null" >
+                #{reciverArea1,jdbcType=VARCHAR},
+            </if>
+            <if test="reciverArea2 != null" >
+                #{reciverArea2,jdbcType=VARCHAR},
+            </if>
+            <if test="reciverArea3 != null" >
+                #{reciverArea3,jdbcType=VARCHAR},
+            </if>
+            <if test="billTypeX != null" >
+                #{billTypeX,jdbcType=CHAR},
+            </if>
+            <if test="deliveryFlag != null" >
+                #{deliveryFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoFlag != null" >
+                #{oaoFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoStatus != null" >
+                #{oaoStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoPerson != null" >
+                #{oaoPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="oaoTime != null" >
+                #{oaoTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="allSpend != null" >
+                #{allSpend,jdbcType=DECIMAL},
+            </if>
+            <if test="buyUser != null" >
+                #{buyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="buyUserPhone != null" >
+                #{buyUserPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="allBackM != null" >
+                #{allBackM,jdbcType=DECIMAL},
+            </if>
+            <if test="allBackY != null" >
+                #{allBackY,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainStatusId != null" >
+                #{curtainStatusId,jdbcType=VARCHAR},
+            </if>
+        </trim>
   </insert>
 
     <insert id="insertOrderB" parameterType="Ctm_order_detail" >
-    insert into CTM_ORDER_DETAIL (ORDER_NO, LINE_NO, ITEM_NO,
-      ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED,
-      DATE_DELIVER, DATE_UPDATE, NOTES,
-      STATUS_ID, DISCOUNT, DISCOUNT_FLAG,
-      CURTAIN_KS, CURTAIN_ROOM_NAME, CURTAIN_ROOM_ID,
-      CURTAIN_ROOM_LINENO, CURTAIN_WIDTH, CURTAIN_HEIGHT,
-      CURTAIN_HEIGHT2, CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID,
-      CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2, ML_NON_STANDARD,
-      CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,
-      DATE_DELIVER_KF, DATE_DELIVER_NB, DATE_DELIVER_FH,UNIT_PRICE,PROMOTION_COST,PROMOTION,
-      PART_SEND_ID,BACK_Y,BACK_M,FINAL_COST,PROMOTION_TYPE
-      )
-    values (#{orderNo,jdbcType=VARCHAR}, #{lineNo,jdbcType=DECIMAL}, #{itemNo,jdbcType=VARCHAR},
-      #{itemNoSample,jdbcType=VARCHAR}, #{productionVersion,jdbcType=VARCHAR}, #{qtyRequired,jdbcType=DECIMAL},
-      #{dateDeliver,jdbcType=TIMESTAMP}, #{dateUpdate,jdbcType=TIMESTAMP}, #{notes,jdbcType=VARCHAR},
-      #{statusId,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL}, #{discountFlag,jdbcType=VARCHAR},
-      #{curtainKs,jdbcType=VARCHAR}, #{curtainRoomName,jdbcType=VARCHAR}, #{curtainRoomId,jdbcType=DECIMAL},
-      #{curtainRoomLineno,jdbcType=DECIMAL}, #{curtainWidth,jdbcType=DECIMAL}, #{curtainHeight,jdbcType=DECIMAL},
-      #{curtainHeight2,jdbcType=DECIMAL}, #{curtainItemMenuNotes,jdbcType=VARCHAR}, #{curtainMenuGroupId,jdbcType=VARCHAR},
-      #{curtainSizeTimes,jdbcType=DECIMAL}, #{curtainSizeTimes2,jdbcType=DECIMAL}, #{mlNonStandard,jdbcType=DECIMAL},
-      #{curtainWbhSize,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{transId,jdbcType=VARCHAR},
-      #{dateDeliverKf,jdbcType=TIMESTAMP}, #{dateDeliverNb,jdbcType=TIMESTAMP}, #{dateDeliverFh,jdbcType=TIMESTAMP},
-      #{unitPrice,jdbcType=DECIMAL},#{promotionCost,jdbcType=DECIMAL}, #{promotion,jdbcType=VARCHAR},
-      #{partSendId,jdbcType=VARCHAR},#{backY,jdbcType=DECIMAL},#{backM,jdbcType=DECIMAL},#{finalCost,jdbcType=DECIMAL},
-      #{promotionType,jdbcType=VARCHAR}
-      )
+        insert into CTM_ORDER_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderNo != null" >
+                ORDER_NO,
+            </if>
+            <if test="lineNo != null" >
+                LINE_NO,
+            </if>
+            <if test="itemNo != null" >
+                ITEM_NO,
+            </if>
+            <if test="itemNoSample != null" >
+                ITEM_NO_SAMPLE,
+            </if>
+            <if test="productionVersion != null" >
+                PRODUCTION_VERSION,
+            </if>
+            <if test="qtyRequired != null" >
+                QTY_REQUIRED,
+            </if>
+            <if test="dateDeliver != null" >
+                DATE_DELIVER,
+            </if>
+            <if test="dateUpdate != null" >
+                DATE_UPDATE,
+            </if>
+            <if test="notes != null" >
+                NOTES,
+            </if>
+            <if test="statusId != null" >
+                STATUS_ID,
+            </if>
+            <if test="discount != null" >
+                DISCOUNT,
+            </if>
+            <if test="discountFlag != null" >
+                DISCOUNT_FLAG,
+            </if>
+            <if test="curtainKs != null" >
+                CURTAIN_KS,
+            </if>
+            <if test="curtainRoomName != null" >
+                CURTAIN_ROOM_NAME,
+            </if>
+            <if test="curtainRoomId != null" >
+                CURTAIN_ROOM_ID,
+            </if>
+            <if test="curtainRoomLineno != null" >
+                CURTAIN_ROOM_LINENO,
+            </if>
+            <if test="curtainWidth != null" >
+                CURTAIN_WIDTH,
+            </if>
+            <if test="curtainHeight != null" >
+                CURTAIN_HEIGHT,
+            </if>
+            <if test="curtainHeight2 != null" >
+                CURTAIN_HEIGHT2,
+            </if>
+            <if test="curtainItemMenuNotes != null" >
+                CURTAIN_ITEM_MENU_NOTES,
+            </if>
+            <if test="curtainMenuGroupId != null" >
+                CURTAIN_MENU_GROUP_ID,
+            </if>
+            <if test="curtainSizeTimes != null" >
+                CURTAIN_SIZE_TIMES,
+            </if>
+            <if test="curtainSizeTimes2 != null" >
+                CURTAIN_SIZE_TIMES2,
+            </if>
+            <if test="mlNonStandard != null" >
+                ML_NON_STANDARD,
+            </if>
+            <if test="curtainWbhSize != null" >
+                CURTAIN_WBH_SIZE,
+            </if>
+            <if test="transType != null" >
+                TRANS_TYPE,
+            </if>
+            <if test="transId != null" >
+                TRANS_ID,
+            </if>
+            <if test="dateDeliverKf != null" >
+                DATE_DELIVER_KF,
+            </if>
+            <if test="dateDeliverNb != null" >
+                DATE_DELIVER_NB,
+            </if>
+            <if test="dateDeliverFh != null" >
+                DATE_DELIVER_FH,
+            </if>
+            <if test="unitPrice != null" >
+                UNIT_PRICE,
+            </if>
+            <if test="promotionCost != null" >
+                PROMOTION_COST,
+            </if>
+            <if test="promotion != null" >
+                PROMOTION,
+            </if>
+            <if test="partSendId != null" >
+                PART_SEND_ID,
+            </if>
+            <if test="backY != null" >
+                BACK_Y,
+            </if>
+            <if test="backM != null" >
+                BACK_M,
+            </if>
+            <if test="finalCost != null" >
+                FINAL_COST,
+            </if>
+            <if test="promotionType != null" >
+                PROMOTION_TYPE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="lineNo != null" >
+                #{lineNo,jdbcType=DECIMAL},
+            </if>
+            <if test="itemNo != null" >
+                #{itemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="itemNoSample != null" >
+                #{itemNoSample,jdbcType=VARCHAR},
+            </if>
+            <if test="productionVersion != null" >
+                #{productionVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="qtyRequired != null" >
+                #{qtyRequired,jdbcType=DECIMAL},
+            </if>
+            <if test="dateDeliver != null" >
+                #{dateDeliver,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateUpdate != null" >
+                #{dateUpdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="notes != null" >
+                #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="statusId != null" >
+                #{statusId,jdbcType=VARCHAR},
+            </if>
+            <if test="discount != null" >
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="discountFlag != null" >
+                #{discountFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainKs != null" >
+                #{curtainKs,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainRoomName != null" >
+                #{curtainRoomName,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainRoomId != null" >
+                #{curtainRoomId,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainRoomLineno != null" >
+                #{curtainRoomLineno,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainWidth != null" >
+                #{curtainWidth,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainHeight != null" >
+                #{curtainHeight,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainHeight2 != null" >
+                #{curtainHeight2,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainItemMenuNotes != null" >
+                #{curtainItemMenuNotes,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainMenuGroupId != null" >
+                #{curtainMenuGroupId,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainSizeTimes != null" >
+                #{curtainSizeTimes,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainSizeTimes2 != null" >
+                #{curtainSizeTimes2,jdbcType=DECIMAL},
+            </if>
+            <if test="mlNonStandard != null" >
+                #{mlNonStandard,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainWbhSize != null" >
+                #{curtainWbhSize,jdbcType=DECIMAL},
+            </if>
+            <if test="transType != null" >
+                #{transType,jdbcType=VARCHAR},
+            </if>
+            <if test="transId != null" >
+                #{transId,jdbcType=VARCHAR},
+            </if>
+            <if test="dateDeliverKf != null" >
+                #{dateDeliverKf,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateDeliverNb != null" >
+                #{dateDeliverNb,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dateDeliverFh != null" >
+                #{dateDeliverFh,jdbcType=TIMESTAMP},
+            </if>
+            <if test="unitPrice != null" >
+                #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="promotionCost != null" >
+                #{promotionCost,jdbcType=DECIMAL},
+            </if>
+            <if test="promotion != null" >
+                #{promotion,jdbcType=VARCHAR},
+            </if>
+            <if test="partSendId != null" >
+                #{partSendId,jdbcType=VARCHAR},
+            </if>
+            <if test="backY != null" >
+                #{backY,jdbcType=DECIMAL},
+            </if>
+            <if test="backM != null" >
+                #{backM,jdbcType=DECIMAL},
+            </if>
+            <if test="finalCost != null" >
+                #{finalCost,jdbcType=DECIMAL},
+            </if>
+            <if test="promotionType != null" >
+                #{promotionType,jdbcType=VARCHAR},
+            </if>
+        </trim>
   </insert>
     
     <select id="getPackDetail" resultType="Map">
@@ -560,6 +1050,9 @@
             </if>
             <if test="allBackM != null" >
                 ALLBACK_M = #{allBackM,jdbcType=DECIMAL},
+            </if>
+            <if test="curtainStatusId != null" >
+                CURTAIN_STATUS_ID = #{curtainStatusId,jdbcType=VARCHAR},
             </if>
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
