@@ -31,6 +31,12 @@ public class Ctm_orderController {
     @Autowired
     private CurtainOrderService curtainOrderService;
 
+    /**
+     * 订单列表获取
+     * @param m
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     @RequestMapping("getOrders")
     @ResponseBody
     public Map getOrders(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
@@ -39,6 +45,11 @@ public class Ctm_orderController {
         String orderType=m.get("orderType").toString();
         String beginTime=m.get("beginTime").toString();
         String finishTime=m.get("finishTime").toString();
+        String curtainStatusId=m.get("curtainStatusId").toString();
+
+        if (curtainStatusId.equals("") ||curtainStatusId.equals("")) {
+            curtainStatusId = null;
+        }
         if (beginTime.equals("") ||finishTime.equals("")){
             beginTime=null;
             finishTime=null;
@@ -65,7 +76,7 @@ public class Ctm_orderController {
             page=(page-1)*limit+1;
             lastNum=page+limit-1;
         }
-        Map map=ctm_orderService.getOrders(page,lastNum,cid,state_id,find,beginTime,finishTime,orderType);
+        Map map=ctm_orderService.getOrders(page,lastNum,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId);
         map.put("code",0);
         map.put("msg","");
 
@@ -250,6 +261,28 @@ public class Ctm_orderController {
     @ResponseBody
     public Map insertCurtain (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
         return  curtainOrderService.insertCurtain(m);
+    }
+
+    /**
+     * 窗帘审核 退回/修改
+     * @param m
+     * @return
+     */
+    @RequestMapping("updateCurtainOrder")
+    @ResponseBody
+    public Map updateCurtainOrder (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  curtainOrderService.updateCurtainOrder(m);
+    }
+
+    /**
+     * 窗帘审核 通过
+     * @param m
+     * @return
+     */
+    @RequestMapping("updateCurOrderStatus")
+    @ResponseBody
+    public Map updateCurOrderStatus (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  curtainOrderService.updateCurOrderStatus(m);
     }
 
 

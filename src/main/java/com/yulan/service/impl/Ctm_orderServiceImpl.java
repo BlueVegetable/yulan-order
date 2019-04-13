@@ -30,11 +30,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
     @Override
-    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType) throws UnsupportedEncodingException {
+    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType,String curtainStatusId) throws UnsupportedEncodingException {
         Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType);
+        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId);
         List<Map<String,Object>> data=new ArrayList<>();
-        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime,orderType));
+        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId));
         for (Map<String,Object> m:list) {
 
             for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码

@@ -60,6 +60,12 @@
             <if test="state_id!=null">
                 and STATUS_ID=#{state_id}
             </if>
+            <if test="curtainStatusId!=null">
+                and CURTAIN_STATUS_ID=#{curtainStatusId}
+            </if>
+            <if test="state_id ==null">
+                and STATUS_ID !='0'
+            </if>
             <if test="find!=null">
                 and order_no like  '%'||#{find}||'%'
             </if>
@@ -69,7 +75,7 @@
             <if test="orderType!=null">
                 and order_no like  '%'||#{orderType}||'%'
             </if>
-        order by t.DATE_CRE DESC
+        order by t.date_update  DESC
         ) l
         where rownum &lt;= #{number})
         where rn &gt;=#{start}
@@ -138,6 +144,12 @@
         select count(*) from CTM_ORDER t where t.customer_code=#{cid}
         <if test="state_id!=null">
             and STATUS_ID=#{state_id}
+        </if>
+        <if test="curtainStatusId!=null">
+            and CURTAIN_STATUS_ID=#{curtainStatusId}
+        </if>
+        <if test="state_id ==null">
+            and STATUS_ID !='0'
         </if>
         <if test="find!=null">
             and order_no like  '%'||#{find}||'%'
