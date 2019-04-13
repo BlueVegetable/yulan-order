@@ -170,6 +170,39 @@ public class ItemController {
         return  itemService.getCurtainInfo(width,height,WBH,multiple,location,itemNO);
     }
 
+    /**
+     * 更改窗帘产品下的单个产品型号，更改变量
+     * @param data
+     * @return
+     */
+    @RequestMapping(value = "changeCurtainItem")
+    @ResponseBody
+    public Map changeCurtainItem(@RequestBody Map<String,Object> data) throws IOException{
+        String itemNO = (String) data.get("itemNO");
+        String itemType = (String) data.get("itemType");
+        String parentItemNo = (String) data.get("parentItemNo");
+        //成品宽度
+        Double width = Double.valueOf((String) data.get("width"));
+        //成品高度
+        Double height = Double.valueOf((String) data.get("height"));
+        //帘头外包盒宽度
+        Double WBH = Double.valueOf((String) data.get("WBH"));
+        //褶皱倍数
+        Double multiple = Double.valueOf((String) data.get("multiple"));
 
+        return itemService.changeCurtainItem(width, height, WBH, multiple, itemNO, itemType, parentItemNo);
+    }
+
+    /**
+     * 获取可以更换的GY类型
+     * @param data
+     * @return
+     */
+    @RequestMapping(value = "getGYList")
+    @ResponseBody
+    public Map getGYList(@RequestBody Map<String,Object> data){
+        String itemNO = (String)data.get("itemNO");
+        return itemService.getGYList(itemNO);
+    }
 
 }
