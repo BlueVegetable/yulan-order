@@ -3,6 +3,7 @@ package com.yulan.controller;
 import com.yulan.pojo.*;
 import com.yulan.service.*;
 import com.yulan.utils.Response;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +100,6 @@ public class CartController{
 		if(activityID.equals(""))
 		    activityID = null;
 		String quantity = (String) parameters.get("quantity");
-		String price = (String) parameters.get("price");
 		String width = (String) parameters.get("width");
 		String height = (String) parameters.get("height");
 		String note = (String) parameters.get("note");
@@ -138,7 +140,7 @@ public class CartController{
 			case "06":commodity.setPrice(item.getPriceFx());break;
 			case "09":commodity.setPrice(item.getPriceHome());break;
 			case "05":commodity.setPrice(item.getSalePrice());break;
-			case "10":commodity.setPrice(new BigDecimal(price));break;
+			case "10":break;
 			default:return Response.getResponseMap(1,"添加失败",null);
 		}
 		if(quantity==null||quantity.equals("")) {
@@ -157,7 +159,59 @@ public class CartController{
 	}
 
 	@ResponseBody@RequestMapping("addCurtainCartItem")
-	public Map addCurtainCartItem(@RequestBody CurtainCartItem curtainCartItem) {
+	public Map addCurtainCartItem(@RequestBody Map<String,Object> parameters) throws InvocationTargetException, IllegalAccessException {
+
+		JSONObject jsonObject = JSONObject.fromObject(parameters);
+		CurtainCartItem curtainCartItem = (CurtainCartItem) JSONObject.toBean(jsonObject,CurtainCartItem.class);
+		{
+			//进行参数注入
+			List<CurtainList> curtainLists = new ArrayList<>();
+			List<Map<String,Object>> curtainListParameter = (List<Map<String,Object>>) parameters.get("curtainLists");
+			for (Map<String,Object> o:curtainListParameter) {
+				CurtainList curtainList = new CurtainList();
+				curtainList.setPartName((String) o.get("partName"));
+				List<CurtainCommodity> curtainCommodities = new ArrayList<>();
+				List<Map<String,Object>> commodityParameters = (List<Map<String, Object>>) o.get("curtainCommodities");
+				for (Map<String,Object> commodityParameter:commodityParameters) {
+					CurtainCommodity curtainCommodity;
+					JSONObject inline = JSONObject.fromObject(commodityParameter);
+					curtainCommodity = (CurtainCommodity) JSONObject.toBean(inline,CurtainCommodity.class);
+					curtainCommodities.add(curtainCommodity);
+				}
+				curtainList.setCurtainCommodities(curtainCommodities);
+				curtainLists.add(curtainList);
+			}
+			curtainCartItem.setCurtainLists(curtainLists);
+		}
+
+		String CID = (String) parameters.get("CID");
+		String cartId = cartService.getSimpleCartByCID(CID).getCartId();
+		curtainCartItem.setCartId(cartId);
+		CartItem cartItemAppoint = curtainCartItemService.getCartItemOrder(cartId,"curtain",curtainCartItem.getActivityGroupType(),"E");
+		if(cartItemAppoint == null) {
+			curtainCartItemService.newCartItem(curtainCartItem);
+		} else {
+			curtainCartItem.setCartItemId(cartItemAppoint.getCartItemId());
+		}
+		List<CurtainList> curtainLists = curtainCartItem.getCurtainLists();
+		String customerType = (String) parameters.get("customerType");
+		String price = (String) parameters.get("price");
+		for (CurtainList curtainList:curtainLists) {
+			List<CurtainCommodity> curtainCommodities = curtainList.getCurtainCommodities();
+			for (CurtainCommodity curtainCommodity:curtainCommodities) {
+				String itemNo = curtainCommodity.getItem().getItemNo();
+				Item item = itemService.getItemByItemNO(itemNo);
+				switch (customerType) {
+					case "02":curtainCommodity.setPrice(item.getPriceSale());break;
+					case "06":curtainCommodity.setPrice(item.getPriceFx());break;
+					case "09":curtainCommodity.setPrice(item.getPriceHome());break;
+					case "05":curtainCommodity.setPrice(item.getSalePrice());break;
+					case "10":curtainCommodity.setPrice(new BigDecimal(price));break;
+					default:return Response.getResponseMap(1,"添加失败",null);
+				}
+				curtainCommodity.setCartItemId(curtainCartItem.getCartItemId());
+			}
+		}
 		curtainCartItemService.addCartItem(curtainCartItem);
 		return Response.getResponseMap(0,"",null);
 	}

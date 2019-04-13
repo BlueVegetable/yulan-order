@@ -1,11 +1,13 @@
 package com.yulan.pojo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class CurtainList {
     private String partName;
     private List<CurtainCommodity> curtainCommodities;
+    private List<Map<String,Object>> curtainCommodity;
 
     public String getPartName() {
         return partName;
@@ -21,6 +23,14 @@ public class CurtainList {
 
     public void setCurtainCommodities(List<CurtainCommodity> curtainCommodities) {
         this.curtainCommodities = curtainCommodities;
+    }
+
+    public List<Map<String, Object>> getCurtainCommodity() {
+        return curtainCommodity;
+    }
+
+    public void setCurtainCommodity(List<Map<String, Object>> curtainCommodity) {
+        this.curtainCommodity = curtainCommodity;
     }
 
     public CurtainList() {}

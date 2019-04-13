@@ -1,6 +1,7 @@
 package com.yulan.pojo;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class CurtainCommodity extends Commodity {
@@ -12,6 +13,7 @@ public class CurtainCommodity extends Commodity {
     private Integer certainHeightWidth;
     private BigDecimal specification;
     private String illustrate;
+    private Timestamp saveTime;
 
     public String getCurtainItemName() {
         return curtainItemName;
@@ -67,6 +69,14 @@ public class CurtainCommodity extends Commodity {
 
     public void setIllustrate(String illustrate) {
         this.illustrate = illustrate;
+    }
+
+    public Timestamp getSaveTime() {
+        return saveTime;
+    }
+
+    public void setSaveTime(Timestamp saveTime) {
+        this.saveTime = saveTime;
     }
 
     @Override
