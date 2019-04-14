@@ -3,7 +3,9 @@ package com.yulan.service.impl;
 import com.yulan.dao.Ctm_orderDao;
 import com.yulan.dao.CurtainOrderDao;
 import com.yulan.pojo.*;
+import com.yulan.service.Ctm_orderService;
 import com.yulan.service.CurtainOrderService;
+import com.yulan.utils.BackUtil;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
 import org.apache.commons.beanutils.BeanUtils;
@@ -21,13 +23,14 @@ import java.util.Map;
 
 @Service
 public class CurtainOrderServiceImpl implements CurtainOrderService {
+
     @Autowired
     private  Ctm_orderDao ctm_orderDao;
     @Autowired
     private CurtainOrderDao curtainOrderDao;
 
-
-    private Ctm_orderServiceImpl ctm_orderService=new Ctm_orderServiceImpl();
+    @Autowired
+    private Ctm_orderService ctm_orderService;
 
 
 
@@ -204,7 +207,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     public Map gatAllCurOrders(Map m ) throws UnsupportedEncodingException {
         Integer limit=Integer.parseInt(m.get("limit").toString());
         Integer page=Integer.parseInt(m.get("page").toString());
-        String orderType=m.get("orderType").toString();
+
         String beginTime=m.get("beginTime").toString();
         String finishTime=m.get("finishTime").toString();
         String curtainStatusId=m.get("curtainStatusId").toString();
@@ -217,9 +220,6 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             finishTime=null;
         }
 
-        if (orderType.equals("")){
-            orderType=null;
-        }
         String find=m.get("find").toString();
 
         if (find.equals("")){
@@ -235,9 +235,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
 
         Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(page,lastNum,null,"0",find,beginTime,finishTime,orderType,curtainStatusId);
+        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(page,lastNum,null,"0",find,beginTime,finishTime,null,curtainStatusId);
         List<Map<String,Object>> data=new ArrayList<>();
-        map.put("count",ctm_orderDao.countOrdersH(null,"0",find,beginTime,finishTime,orderType,curtainStatusId));
+        map.put("count",ctm_orderDao.countOrdersH(null,"0",find,beginTime,finishTime,null,curtainStatusId));
         for (Map<String,Object> m1:list) {
 
             for (Map.Entry<String, Object> entry : m1.entrySet()) {//将订单头内容转码
@@ -417,15 +417,15 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                 BigDecimal rebateYear=BigDecimal.valueOf(0);
                 if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
                     if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
-                        rebateMonth=ctm_orderService.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
+                        rebateMonth=BackUtil.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
 
                     }else {
-                        rebateMonth=ctm_orderService.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
-                        rebateYear=ctm_orderService.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
+                        rebateMonth= BackUtil.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                        rebateYear=BackUtil.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
                     }
                 }else{//订单价格大于优惠券
-                    rebateMonth=ctm_orderService.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
-                    rebateYear=ctm_orderService.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
+                    rebateMonth=BackUtil.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                    rebateYear=BackUtil.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
 
                 }
 
