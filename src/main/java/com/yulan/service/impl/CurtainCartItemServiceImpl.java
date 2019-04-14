@@ -69,11 +69,14 @@ public class CurtainCartItemServiceImpl implements CartItemService {
         List<CartItem> cartItems = curtainCartItemEncode.getCartItems(cartID, commodityType);
         List<CartItem> result = new ArrayList<>();
         for (CartItem cartItem:cartItems) {
-//            List<Commodity> commodities = curtainCommodityEncode.getCommoditiesByCartItemID(cartItem.getCartItemId());
-//            List<CurtainCommodity> lt = new ArrayList<>();
-//            List<CurtainCommodity> ls = new ArrayList<>();
-//            List<CurtainCommodity> sha = new ArrayList<>();
-//            List<CurtainCommodity> peijian = new ArrayList<>();
+            List<Commodity> commodities = curtainCommodityEncode.getCommoditiesByCartItemID(cartItem.getCartItemId());
+            List<List<Commodity>> dealCommodities = dealCommodities(commodities);
+            for (List<Commodity> dealCommodity:dealCommodities) {
+                List<CurtainCommodity> lt = new ArrayList<>();
+                List<CurtainCommodity> ls = new ArrayList<>();
+                List<CurtainCommodity> sha = new ArrayList<>();
+                List<CurtainCommodity> peijian = new ArrayList<>();
+            }
 //            List<CurtainList> curtainLists = new ArrayList<>();
 //            for (Commodity commodity:commodities) {
 //                CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
