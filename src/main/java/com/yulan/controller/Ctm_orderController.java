@@ -76,6 +76,7 @@ public class Ctm_orderController {
             page=(page-1)*limit+1;
             lastNum=page+limit-1;
         }
+
         Map map=ctm_orderService.getOrders(page,lastNum,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId);
         map.put("code",0);
         map.put("msg","");
@@ -96,8 +97,8 @@ public class Ctm_orderController {
     @ResponseBody
     public Map getOrder_content(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
         String order_no = (String)m.get("order_no");
-        String item_no = m.get("item_no").toString();
-        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderB_content(order_no,item_no));
+        String cid = (String)m.get("cid");
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderContent(order_no,cid));
     }
 
     /**
