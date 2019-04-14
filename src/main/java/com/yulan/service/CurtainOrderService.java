@@ -27,5 +27,20 @@ public interface CurtainOrderService {
      */
     Map updateCurOrderStatus(Map map);
 
+    /**
+     * 玉兰人员获取说有审核窗帘订单
+     * @param map
+     * @return
+     */
+    Map gatAllCurOrders(Map map) throws UnsupportedEncodingException;
+
+
+    /**
+     * 窗帘订单提交结算
+     * @param map
+     * @return
+     */
+    Map curOrderCount(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException;
+
 
 }
