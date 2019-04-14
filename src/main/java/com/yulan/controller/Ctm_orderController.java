@@ -47,6 +47,8 @@ public class Ctm_orderController {
         String finishTime=m.get("finishTime").toString();
         String curtainStatusId=m.get("curtainStatusId").toString();
 
+
+
         if (curtainStatusId.equals("") ||curtainStatusId.equals("")) {
             curtainStatusId = null;
         }
@@ -64,6 +66,10 @@ public class Ctm_orderController {
 
         String cid=m.get("cid").toString();
         String find=m.get("find").toString();
+
+        if (cid.equals("") ||cid.equals("")) {
+            cid = null;
+        }
 
         if (find.equals("")){
             find=null;
@@ -93,9 +99,9 @@ public class Ctm_orderController {
      * @return
      * @throws UnsupportedEncodingException
      */
-    @RequestMapping("getOrder_content")
+    @RequestMapping("getOrderContent")
     @ResponseBody
-    public Map getOrder_content(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
+    public Map getOrderContent(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
         String order_no = (String)m.get("order_no");
         String cid = (String)m.get("cid");
         return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderContent(order_no,cid));
@@ -286,7 +292,27 @@ public class Ctm_orderController {
         return  curtainOrderService.updateCurOrderStatus(m);
     }
 
+    /**
+     * 玉兰人员获取所有窗帘审核
+     * @param m
+     * @return
+     */
+    @RequestMapping("gatAllCurOrders")
+    @ResponseBody
+    public Map gatAllCurOrders (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  curtainOrderService.gatAllCurOrders(m);
+    }
 
+    /**
+     * 窗帘订单提交结算
+     * @param m
+     * @return
+     */
+    @RequestMapping("curOrderCount")
+    @ResponseBody
+    public Map curOrderCount (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  curtainOrderService.curOrderCount(m);
+    }
 
 
 }
