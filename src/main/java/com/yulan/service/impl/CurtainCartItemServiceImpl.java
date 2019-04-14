@@ -70,33 +70,30 @@ public class CurtainCartItemServiceImpl implements CartItemService {
         List<CartItem> result = new ArrayList<>();
         for (CartItem cartItem:cartItems) {
             List<Commodity> commodities = curtainCommodityEncode.getCommoditiesByCartItemID(cartItem.getCartItemId());
-            List<List<Commodity>> dealCommodities = dealCommodities(commodities);
-            for (List<Commodity> dealCommodity:dealCommodities) {
-                List<CurtainCommodity> lt = new ArrayList<>();
-                List<CurtainCommodity> ls = new ArrayList<>();
-                List<CurtainCommodity> sha = new ArrayList<>();
-                List<CurtainCommodity> peijian = new ArrayList<>();
+            List<CurtainCommodity> lt = new ArrayList<>();
+            List<CurtainCommodity> ls = new ArrayList<>();
+            List<CurtainCommodity> sha = new ArrayList<>();
+            List<CurtainCommodity> peijian = new ArrayList<>();
+            List<CurtainList> curtainLists = new ArrayList<>();
+            for (Commodity commodity:commodities) {
+                CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
+                switch (curtainCommodity.getCurtainPartName()) {
+                    case "帘头":lt.add(curtainCommodity);break;
+                    case "帘身":ls.add(curtainCommodity);break;
+                    case "纱":sha.add(curtainCommodity);break;
+                    case "配件":peijian.add(curtainCommodity);break;
+                    default:continue;
+                }
             }
-//            List<CurtainList> curtainLists = new ArrayList<>();
-//            for (Commodity commodity:commodities) {
-//                CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
-//                switch (curtainCommodity.getCurtainPartName()) {
-//                    case "帘头":lt.add(curtainCommodity);break;
-//                    case "帘身":ls.add(curtainCommodity);break;
-//                    case "纱":sha.add(curtainCommodity);break;
-//                    case "配件":peijian.add(curtainCommodity);break;
-//                    default:continue;
-//                }
-//            }
-//            curtainLists.add(new CurtainList("帘头",lt));
-//            curtainLists.add(new CurtainList("帘身",ls));
-//            curtainLists.add(new CurtainList("纱",sha));
-//            curtainLists.add(new CurtainList("配件",peijian));
-//            CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
-//            curtainCartItem.setCurtainLists(curtainLists);
-//            if(lt.size()!=0&&ls.size()!=0&&sha.size()!=0&&peijian.size()!=0) {
-//                result.add(curtainCartItem);
-//            }
+            curtainLists.add(new CurtainList("帘头",lt));
+            curtainLists.add(new CurtainList("帘身",ls));
+            curtainLists.add(new CurtainList("纱",sha));
+            curtainLists.add(new CurtainList("配件",peijian));
+            CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
+            curtainCartItem.setCurtainLists(curtainLists);
+            if(lt.size()!=0&&ls.size()!=0&&sha.size()!=0&&peijian.size()!=0) {
+                result.add(curtainCartItem);
+            }
         }
         return result;
     }

@@ -1,6 +1,5 @@
 package com.yulan.pojo;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -8,7 +7,7 @@ public class Cart {
 
 	private String cartId;
 	private String customerId;
-	private Map<String, List<CartItem>> cartItems;
+	private Map<String,Object> cartItems;
 
 	public String getCartId() {
 		return this.cartId;
@@ -26,11 +25,11 @@ public class Cart {
 		this.customerId=customerId;
 	}
 
-	public Map<String, List<CartItem>> getCartItems() {
+	public Map<String, Object> getCartItems() {
 		return cartItems;
 	}
 
-	public void setCartItems(Map<String, List<CartItem>> cartItems) {
+	public void setCartItems(Map<String, Object> cartItems) {
 		this.cartItems = cartItems;
 	}
 

@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Controller @RequestMapping("cart")
 public class CartController{
@@ -82,8 +79,8 @@ public class CartController{
 	@ResponseBody@RequestMapping("getAllCartByCID")
 	public Cart getAllCartByCID(String CID) throws Exception {
 		Cart cart = getSimpleCartByCID(CID);
-		Map<String, List<CartItem>> cartItems = new HashMap<>();
-		cartItems.put(CURTAIN,curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN));
+		Map<String, Object> cartItems = new HashMap<>();
+		cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN)));
 		cartItems.put(WALLPAPER,cartItemService.getCartItems(cart.getCartId(),WALLPAPER));
 		cartItems.put(SOFT,cartItemService.getCartItems(cart.getCartId(),SOFT));
 		cart.setCartItems(cartItems);
@@ -159,8 +156,7 @@ public class CartController{
 	}
 
 	@ResponseBody@RequestMapping("addCurtainCartItem")
-	public Map addCurtainCartItem(@RequestBody Map<String,Object> parameters) throws InvocationTargetException, IllegalAccessException {
-
+	public Map addCurtainCartItem(@RequestBody Map<String,Object> parameters) {
 		JSONObject jsonObject = JSONObject.fromObject(parameters);
 		CurtainCartItem curtainCartItem = (CurtainCartItem) JSONObject.toBean(jsonObject,CurtainCartItem.class);
 		{
@@ -187,12 +183,8 @@ public class CartController{
 		String CID = (String) parameters.get("CID");
 		String cartId = cartService.getSimpleCartByCID(CID).getCartId();
 		curtainCartItem.setCartId(cartId);
-		CartItem cartItemAppoint = curtainCartItemService.getCartItemOrder(cartId,"curtain",curtainCartItem.getActivityGroupType(),"E");
-		if(cartItemAppoint == null) {
-			curtainCartItemService.newCartItem(curtainCartItem);
-		} else {
-			curtainCartItem.setCartItemId(cartItemAppoint.getCartItemId());
-		}
+		curtainCartItem.setSaveTime(new Timestamp(System.currentTimeMillis()));
+		curtainCartItemService.newCartItem(curtainCartItem);
 		List<CurtainList> curtainLists = curtainCartItem.getCurtainLists();
 		String customerType = (String) parameters.get("customerType");
 		String price = (String) parameters.get("price");
@@ -313,6 +305,42 @@ public class CartController{
 		    cartItemService.deleteCartItemByID(cartItem.getCartItemId());
         }
 		return Response.getResponseMap(0,"",null);
+	}
+
+	private List<Map<String,Object>> dealCurtainCartItems(List<CartItem> cartItems) {
+		List<Map<String,Object>> result = new ArrayList<>();
+		if(cartItems == null||cartItems.size()==0) {
+			return result;
+		}
+		Map<String,List<CartItem>> inline = new HashMap<>();
+		for (CartItem cartItem:cartItems) {
+			String productGroupType = cartItem.getProductGroupType();
+			String activityGroupType = cartItem.getActivityGroupType();
+			productGroupType = productGroupType ==null?"":productGroupType;
+			activityGroupType = activityGroupType ==null?"":activityGroupType;
+			String key = productGroupType+activityGroupType;
+			List<CartItem> cartItemList = new ArrayList<>();
+			inline.put(key,cartItemList);
+		}
+		for (CartItem cartItem:cartItems) {
+			String productGroupType = cartItem.getProductGroupType();
+			String activityGroupType = cartItem.getActivityGroupType();
+			productGroupType = productGroupType ==null?"":productGroupType;
+			activityGroupType = activityGroupType ==null?"":activityGroupType;
+			String key = productGroupType+activityGroupType;
+			List<CartItem> inlineProperty = inline.get(key);
+			inlineProperty.add(cartItem);
+		}
+		Set<Map.Entry<String,List<CartItem>>> inlineProperty = inline.entrySet();
+		for (Map.Entry<String,List<CartItem>> one : inlineProperty) {
+			Map<String,Object> oneResult = new HashMap<>();
+			List<CartItem> cartItemList = one.getValue();
+			oneResult.put("productGroupType",cartItemList.get(0).getProductGroupType());
+			oneResult.put("activityGroupType",cartItemList.get(0).getActivityGroupType());
+			oneResult.put("curtainCartItems",cartItemList);
+			result.add(oneResult);
+		}
+		return result;
 	}
 
 }
