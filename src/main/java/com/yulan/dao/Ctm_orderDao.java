@@ -46,7 +46,7 @@ public interface Ctm_orderDao {
     /**
      * 获取订单详情
      */
-    Map<String,Object> getOrderB_content(@Param("order_no")String order_no,@Param("item_on")String item_no);
+    List<Map<String,Object>> getOrderContent(@Param("orderNO")String orderNO);
 
     /**
      * 获取订单页面活动
