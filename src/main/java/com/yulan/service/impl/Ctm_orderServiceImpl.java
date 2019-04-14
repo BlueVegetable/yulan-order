@@ -30,11 +30,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
     @Override
-    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType) throws UnsupportedEncodingException {
+    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType,String curtainStatusId) throws UnsupportedEncodingException {
         Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType);
+        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId);
         List<Map<String,Object>> data=new ArrayList<>();
-        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime,orderType));
+        map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId));
         for (Map<String,Object> m:list) {
 
             for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码
@@ -83,15 +83,66 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
-    public Map getOrderB_content(String order_no, String item_no) throws UnsupportedEncodingException {
-        Map<String,Object> map=ctm_orderDao.getOrderB_content(order_no,item_no);
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            if (entry.getValue() instanceof String) {
-                String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
-                entry.setValue(origin);
+    public Map getOrderContent(String order_no,String cid) throws UnsupportedEncodingException {
+        if (order_no.indexOf("X")==-1){//非窗帘
+            return this.getOrders(1,1,cid,null,order_no,null,null,null,null);
+        }else{
+            Map<String,Object> map=new HashMap<>();
+            List<Map<String,Object>> list=ctm_orderDao.getOrdersH(1,1,cid,null,order_no,null,null,null,null);
+            List<Map<String,Object>> data=new ArrayList<>();
+            map.put("count",ctm_orderDao.countOrdersH(cid,null,order_no,null,null,null,null));
+            for (Map<String,Object> m:list) {
+
+                for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码
+                    if (entry.getValue() instanceof String) {
+                        String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                        entry.setValue(origin);
+                    }
+                }
+
+                List<Map<String,Object>> list2=ctm_orderDao.getOrdersB(order_no);
+                int orderB_num=0;
+                for (Map<String,Object> m2:list2) {//将订单具体内容转码
+                    List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(cid,order_no,m2.get("ITEM_NO").toString());
+                    if(list3.size()!=0){
+                        m2.put("pack_id",1);//是否可以查看物流判断，1可以，0不可以
+                    }else{
+                        m2.put("pack_id",0);
+                    }
+                    for (Map.Entry<String, Object> entry : m2.entrySet()) {
+                        if (entry.getValue() instanceof String) {
+                            String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                            entry.setValue(origin);
+                        }
+                    }
+                    List<PackDetail> packDetails=ctm_orderDao.findPackDetail(order_no,m2.get("ITEM_NO").toString());//是否出货
+                    if (packDetails.size()!=0){
+                        m2.put("packDetailId",1);
+                    }else{
+                        m2.put("packDetailId",0);
+                    }
+                    BigDecimal unit_price=(BigDecimal)m2.get("UNIT_PRICE");
+                    BigDecimal num=(BigDecimal)m2.get("QTY_REQUIRED");
+                    m2.put("all_cost",unit_price.multiply(num));
+                    CurtainOrder curtainOrder=curtainOrderDao.getCurtainOrder(order_no,m2.get("LINE_NO").toString());
+                    m2.put("curtains",curtainOrder);
+                    orderB_num++;
+
+                }
+
+                m.put("OREDERB_NUM",orderB_num);//订单商品数量
+                m.put("ORDERBODY",list2);
+                data.add(m);
             }
+
+
+            map.put("data",data);
+
+            return map;
         }
-        return map ;
+
+
+
     }
 
     @Override
