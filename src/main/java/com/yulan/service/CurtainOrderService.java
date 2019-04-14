@@ -13,5 +13,19 @@ public interface CurtainOrderService {
      */
     Map insertCurtain(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException;
 
+    /**
+     * 窗帘审核 修改/退回
+     * @param map
+     * @return
+     */
+    Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException;
+
+    /**
+     * 窗帘审核 通
+     * @param map
+     * @return
+     */
+    Map updateCurOrderStatus(Map map);
+
 
 }
