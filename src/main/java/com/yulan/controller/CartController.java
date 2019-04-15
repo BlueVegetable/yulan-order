@@ -311,7 +311,7 @@ public class CartController{
 	public Map updateCurtainCartItem(@RequestBody Map<String,Object> parameters) {
 		String customerType = (String) parameters.get("customerType");
 		List<Map<String,Object>> curtainLists = (List<Map<String, Object>>) parameters.get("curtainLists");
-		String cartItemId = (String) curtainLists.get(0).get("cartItemId");
+		String cartItemId = (String) ((List<Map<String,Object>>)curtainLists.get(0).get("curtainCommodities")).get(0).get("cartItemId");
 		curtainCommodityService.deleteCommoditiesByCartItemID(cartItemId);
 		List<CurtainList> curtainListsNew = new ArrayList<>();
 		{

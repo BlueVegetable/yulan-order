@@ -28,14 +28,14 @@
         insert into COMMODITY
         (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,
         CURTAIN_ITEM_NAME,CURTAIN_PART_NAME,DOSAGE,MANUFACTURING_INSTRUCTIONS,CERTAIN_HEIGHT_WIDTH,
-        SPECIFICATION,ILLUSTRATE,STATUS,SAVE_TIME)
+        SPECIFICATION,ILLUSTRATE,STATUS)
         VALUES
         (#{id},#{price},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{cartItemId},#{quantity,jdbcType=NUMERIC},
         #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR},
         #{splitShipment,jdbcType=NUMERIC},#{curtainItemName,jdbcType=VARCHAR},#{curtainPartName,jdbcType=VARCHAR},
         #{dosage,jdbcType=NUMERIC},#{manufacturingInstructions,jdbcType=VARCHAR},
         #{certainHeightWidth,jdbcType=NUMERIC},#{specification,jdbcType=NUMERIC},#{illustrate,jdbcType=VARCHAR},
-        #{status},#{saveTime})
+        #{status})
     </insert>
 
     <delete id="deleteCommodityByID" parameterType="String">
