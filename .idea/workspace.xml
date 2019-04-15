@@ -182,8 +182,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CurtainCommodityMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="24" column="16" lean-forward="true" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+            <state relative-caret-position="-57">
+              <caret line="9" column="69" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -527,7 +527,7 @@
     <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555329093898" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555329439275" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -904,7 +904,7 @@
       <workItem from="1554862373648" duration="1398000" />
       <workItem from="1555142042535" duration="1502000" />
       <workItem from="1555163368897" duration="5080000" />
-      <workItem from="1555327951770" duration="1059000" />
+      <workItem from="1555327951770" duration="1485000" />
     </task>
     <servers />
   </component>
@@ -941,7 +941,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="807579000" />
+    <option name="totallyTimeSpent" value="808005000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -954,9 +954,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-12" y="-12" width="1556" height="844" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.89099526" visible="true" weight="0.21562083" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.89099526" visible="true" weight="0.21562083" />
       <window_info id="Structure" order="1" sideWeight="0.15433404" side_tool="true" weight="0.25670242" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -967,13 +966,13 @@
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32907802" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32907802" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49393696" visible="true" weight="0.45786518" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49393696" weight="0.45786518" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.36938202" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49798927" weight="0.3432624" />
       <window_info anchor="bottom" id="Spring" order="8" weight="0.32907802" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.09410112" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.35814607" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50606304" side_tool="true" weight="0.3374778" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49636218" weight="0.11095506" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
@@ -1404,8 +1403,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CurtainCommodityMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="24" column="16" lean-forward="true" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+        <state relative-caret-position="-57">
+          <caret line="9" column="69" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
         </state>
       </provider>
     </entry>
