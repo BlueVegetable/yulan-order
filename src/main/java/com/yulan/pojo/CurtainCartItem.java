@@ -1,6 +1,7 @@
 package com.yulan.pojo;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ public class CurtainCartItem extends CartItem {
     private Integer outsourcingBoxExist;
     private BigDecimal outsourcingBoxWidth;
     private List<CurtainList> curtainLists;
+    private Timestamp saveTime;
 
     public BigDecimal getWidth() {
         return width;
@@ -59,6 +61,14 @@ public class CurtainCartItem extends CartItem {
 
     public void setCurtainLists(List<CurtainList> curtainLists) {
         this.curtainLists = curtainLists;
+    }
+
+    public Timestamp getSaveTime() {
+        return saveTime;
+    }
+
+    public void setSaveTime(Timestamp saveTime) {
+        this.saveTime = saveTime;
     }
 
     @Override

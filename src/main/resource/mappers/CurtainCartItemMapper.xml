@@ -17,11 +17,11 @@
     <insert id="addCartItem" parameterType="CurtainCartItem">
         insert into CART_ITEM
         (CART_ITEM_ID, COMMODITY_TYPE, ACTIVITY_GROUP_TYPE, PRODUCT_GROUP_TYPE, CART_ID,WIDTH,HEIGHT,
-        DRAPE,OUTSOURCING_BOX_EXIST,OUTSOURCING_BOX_WIDTH)
+        DRAPE,OUTSOURCING_BOX_EXIST,OUTSOURCING_BOX_WIDTH,SAVE_TIME)
         VALUES
         (#{cartItemId},#{commodityType},#{activityGroupType,jdbcType=VARCHAR},#{productGroupType,jdbcType=VARCHAR},
         #{cartId},#{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{drape,jdbcType=NUMERIC},
-        #{outsourcingBoxExist,jdbcType=NUMERIC},#{outsourcingBoxWidth,jdbcType=NUMERIC})
+        #{outsourcingBoxExist,jdbcType=NUMERIC},#{outsourcingBoxWidth,jdbcType=NUMERIC},#{saveTime})
     </insert>
 
     <delete id="deleteCartItemByID" parameterType="String">

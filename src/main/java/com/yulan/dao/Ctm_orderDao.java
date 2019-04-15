@@ -24,7 +24,8 @@ public interface Ctm_orderDao {
     List<Map<String,Object>> getOrdersH(@Param("start")Integer start, @Param("number") Integer number,
                                        @Param("cid")String cid, @Param("state_id")String state_id,
                                        @Param("find")String find,@Param("beginTime") String beginTime,
-                                        @Param("finishTime") String finishTime ,@Param("orderType")String orderType);
+                                        @Param("finishTime") String finishTime ,@Param("orderType")String orderType,
+                                        @Param("curtainStatusId")String curtainStatusId);
     //获取订单具体内容
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
 
@@ -39,12 +40,13 @@ public interface Ctm_orderDao {
 
     Integer countOrdersH(@Param("cid")String cid,@Param("state_id")String state_id,
                         @Param("find")String find,@Param("beginTime") String beginTime,
-                         @Param("finishTime") String finishTime,@Param("orderType")String orderType);
+                         @Param("finishTime") String finishTime,@Param("orderType")String orderType,
+                         @Param("curtainStatusId")String curtainStatusId);
 
     /**
      * 获取订单详情
      */
-    Map<String,Object> getOrderB_content(@Param("order_no")String order_no,@Param("item_on")String item_no);
+    List<Map<String,Object>> getOrderContent(@Param("orderNO")String orderNO);
 
     /**
      * 获取订单页面活动
