@@ -58,35 +58,6 @@ public class CartController{
 	    return Response.getResponseMap(0,"",null);
     }
 
-	@ResponseBody@RequestMapping("getCartByID")
-	public Cart getCartByID(String cartID) {
-		return cartService.getSimpleCartByID(cartID);
-	}
-
-	@ResponseBody@RequestMapping("getSimpleCartByCID")
-	public Cart getSimpleCartByCID(String CID) throws Exception {
-		Cart cart = cartService.getSimpleCartByCID(CID);
-		if(cart == null) {
-			cart = new Cart();
-			cart.setCustomerId(CID);
-			if(!cartService.addCart(cart)) {
-				throw new Exception("服务器出错");
-			}
-		}
-		return cart;
-	}
-
-	@ResponseBody@RequestMapping("getAllCartByCID")
-	public Cart getAllCartByCID(String CID) throws Exception {
-		Cart cart = getSimpleCartByCID(CID);
-		Map<String, Object> cartItems = new HashMap<>();
-		cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN)));
-		cartItems.put(WALLPAPER,cartItemService.getCartItems(cart.getCartId(),WALLPAPER));
-		cartItems.put(SOFT,cartItemService.getCartItems(cart.getCartId(),SOFT));
-		cart.setCartItems(cartItems);
-		return cart;
-	}
-
 	@ResponseBody@RequestMapping("addCartItem")
 	public Map addCartItem(@RequestBody Map<String,Object> parameters) throws Exception {
 		String customer_type = (String) parameters.get("customer_type");
@@ -236,6 +207,35 @@ public class CartController{
 		}
 	}
 
+    @ResponseBody@RequestMapping("getCartByID")
+    public Cart getCartByID(String cartID) {
+        return cartService.getSimpleCartByID(cartID);
+    }
+
+    @ResponseBody@RequestMapping("getSimpleCartByCID")
+    public Cart getSimpleCartByCID(String CID) throws Exception {
+        Cart cart = cartService.getSimpleCartByCID(CID);
+        if(cart == null) {
+            cart = new Cart();
+            cart.setCustomerId(CID);
+            if(!cartService.addCart(cart)) {
+                throw new Exception("服务器出错");
+            }
+        }
+        return cart;
+    }
+
+    @ResponseBody@RequestMapping("getAllCartByCID")
+    public Cart getAllCartByCID(String CID) throws Exception {
+        Cart cart = getSimpleCartByCID(CID);
+        Map<String, Object> cartItems = new HashMap<>();
+        cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN)));
+        cartItems.put(WALLPAPER,cartItemService.getCartItems(cart.getCartId(),WALLPAPER));
+        cartItems.put(SOFT,cartItemService.getCartItems(cart.getCartId(),SOFT));
+        cart.setCartItems(cartItems);
+        return cart;
+    }
+
 	@ResponseBody@RequestMapping("updateCartItem")
 	public Map updateCartItem(@RequestBody Map<String,String> parameters) throws Exception {
 		String commodityID = parameters.get("commodityID");
@@ -304,6 +304,56 @@ public class CartController{
 		if(count == 0) {
 		    cartItemService.deleteCartItemByID(cartItem.getCartItemId());
         }
+		return Response.getResponseMap(0,"",null);
+	}
+
+	@ResponseBody@RequestMapping("updateCurtainCartItem")
+	public Map updateCurtainCartItem(@RequestBody Map<String,Object> parameters) {
+		String customerType = (String) parameters.get("customerType");
+		List<Map<String,Object>> curtainLists = (List<Map<String, Object>>) parameters.get("curtainLists");
+		String cartItemId = (String) curtainLists.get(0).get("cartItemId");
+		curtainCommodityService.deleteCommoditiesByCartItemID(cartItemId);
+		List<CurtainList> curtainListsNew = new ArrayList<>();
+		{
+			//进行参数注入
+			List<Map<String,Object>> curtainListParameter = curtainLists;
+			for (Map<String,Object> o:curtainListParameter) {
+				CurtainList curtainList = new CurtainList();
+				curtainList.setPartName((String) o.get("partName"));
+				List<CurtainCommodity> curtainCommodities = new ArrayList<>();
+				List<Map<String,Object>> commodityParameters = (List<Map<String, Object>>) o.get("curtainCommodities");
+				for (Map<String,Object> commodityParameter:commodityParameters) {
+					CurtainCommodity curtainCommodity;
+					JSONObject inline = JSONObject.fromObject(commodityParameter);
+					curtainCommodity = (CurtainCommodity) JSONObject.toBean(inline,CurtainCommodity.class);
+					curtainCommodities.add(curtainCommodity);
+				}
+				curtainList.setCurtainCommodities(curtainCommodities);
+				curtainListsNew.add(curtainList);
+			}
+		}
+		String price = (String) parameters.get("price");
+		for (CurtainList curtainList:curtainListsNew) {
+			List<CurtainCommodity> curtainCommodities = curtainList.getCurtainCommodities();
+			for (CurtainCommodity curtainCommodity:curtainCommodities) {
+				String itemNo = curtainCommodity.getItem().getItemNo();
+				Item item = itemService.getItemByItemNO(itemNo);
+				switch (customerType) {
+					case "02":curtainCommodity.setPrice(item.getPriceSale());break;
+					case "06":curtainCommodity.setPrice(item.getPriceFx());break;
+					case "09":curtainCommodity.setPrice(item.getPriceHome());break;
+					case "05":curtainCommodity.setPrice(item.getSalePrice());break;
+					case "10":curtainCommodity.setPrice(new BigDecimal(price));break;
+					default:return Response.getResponseMap(1,"添加失败",null);
+				}
+			}
+		}
+		for (CurtainList curtainList:curtainListsNew) {
+			List<CurtainCommodity> commodities = curtainList.getCurtainCommodities();
+			for (CurtainCommodity curtainCommodity:commodities) {
+				curtainCommodityService.addCommodity(curtainCommodity);
+			}
+		}
 		return Response.getResponseMap(0,"",null);
 	}
 
