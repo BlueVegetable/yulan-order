@@ -87,7 +87,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                     curtainOrder.setOrderNo(orderNo);
                     curtainOrder.setLineNo(String.valueOf(lineNo));
                     curtainOrder.setDateUpdate(nowTime);
-                    curtainOrder.setItemNo(m2.get("itemNo").toString());
+//                    curtainOrder.setItemNo(m2.get("itemNo").toString());//由前端传，窗帘型号
                     curtainOrderDao.insertCurtainOrder(curtainOrder);
                 }
                 Ctm_order_detail ctm_order_detail = MapUtils.mapToBean(m2, Ctm_order_detail.class);
@@ -163,7 +163,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
                     curtainOrder.setLineNo(String.valueOf(lineNo));
                     curtainOrder.setDateUpdate(nowTime);
-                    curtainOrder.setItemNo(m2.get("itemNo").toString());
+//                    curtainOrder.setItemNo(m2.get("itemNo").toString());//由前端传，窗帘型号
                     curtainOrderDao.updateCurtainOrder(curtainOrder);
                 }
                 Ctm_order_detail ctm_order_detail = MapUtils.mapToBean(m2, Ctm_order_detail.class);
@@ -278,7 +278,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
 
         map.put("data",data);
-
+        map.put("code",0);
+        map.put("msg","SUCCESS");
         return map;
 
     }
@@ -391,9 +392,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                     }
                     CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
 
-                    curtainOrder.setLineNo(String.valueOf(lineNo));
+//                    curtainOrder.setLineNo(String.valueOf(lineNo));
                     curtainOrder.setDateUpdate(nowTime);
-                    curtainOrder.setItemNo(m2.get("itemNo").toString());
+//                    curtainOrder.setItemNo(m2.get("itemNo").toString());
                     curtainOrderDao.updateCurtainOrder(curtainOrder);
                 }
 
