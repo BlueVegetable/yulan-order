@@ -177,10 +177,11 @@ public class ItemController {
      */
     @RequestMapping(value = "changeCurtainItem")
     @ResponseBody
-    public Map changeCurtainItem(@RequestBody Map<String,Object> data) throws IOException{
+    public Map changeCurtainItem(@RequestBody Map<String,Object> data){
         String itemNO = (String) data.get("itemNO");
         String itemType = (String) data.get("itemType");
         String parentItemNo = (String) data.get("parentItemNo");
+        String fixType = (String)data.get("fixType"); //定宽/高
         //成品宽度
         Double width = Double.valueOf((String) data.get("width"));
         //成品高度
@@ -190,7 +191,7 @@ public class ItemController {
         //褶皱倍数
         Double multiple = Double.valueOf((String) data.get("multiple"));
 
-        return itemService.changeCurtainItem(width, height, WBH, multiple, itemNO, itemType, parentItemNo);
+        return itemService.changeCurtainItem(width, height, WBH, multiple, itemNO, itemType, parentItemNo, fixType);
     }
 
     /**

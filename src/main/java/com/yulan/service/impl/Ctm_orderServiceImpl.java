@@ -25,6 +25,7 @@ import java.util.Map;
 public class Ctm_orderServiceImpl implements Ctm_orderService {
     @Autowired
     private Ctm_orderDao ctm_orderDao;
+
     @Autowired
     private CurtainOrderDao curtainOrderDao;
 
@@ -88,9 +89,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             return this.getOrders(1,1,cid,null,order_no,null,null,null,null);
         }else{
             Map<String,Object> map=new HashMap<>();
-            List<Map<String,Object>> list=ctm_orderDao.getOrdersH(1,1,cid,"0",order_no,null,null,null,null);
+            List<Map<String,Object>> list=ctm_orderDao.getOrderContent(order_no);
             List<Map<String,Object>> data=new ArrayList<>();
-            map.put("count",ctm_orderDao.countOrdersH(cid,"0",order_no,null,null,null,null));
+            map.put("count",1);
             for (Map<String,Object> m:list) {
 
                 for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码
@@ -809,12 +810,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
         backMoney=((thisMoney.multiply(money).divide(promotion_cost,2, RoundingMode.HALF_UP)));
 
-//        if (promotion_cost.compareTo(allMoney)==1){//价格大于优惠券
-//            backMoney=thisMoney.multiply(money).multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP).divide(allMoney,2,RoundingMode.HALF_UP);
-////            backMoney=((thisMoney.divide(promotion_cost)).multiply(money.divide(allMoney,4,RoundingMode.HALF_UP))).multiply(money);//返利
-//        }else  {
-//            backMoney=((thisMoney.multiply(money).divide(promotion_cost,2,RoundingMode.HALF_UP)));
-//        }
+
         return backMoney;
 
 

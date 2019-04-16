@@ -472,7 +472,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map changeCurtainItem(Double width, Double height, Double WBH,
                                  Double multiple, String itemNO,
-                                 String itemType, String parentItemNo) throws IOException {
+                                 String itemType, String parentItemNo, String fixType) {
         Map map = new HashMap<>();
         Item curtainItem =
                 itemDao.getItemByItemNO(itemNO);
@@ -502,23 +502,7 @@ public class ItemServiceImpl implements ItemService {
                                 "FixType,DuihuaLoss,HighJia");
 
                     } else {
-                        /*if ("02".equals(curtainItem.getFixType())) {
-                            lsUsage =
-                                    arith.add(arith.dbToBD(width * multiple),
-                                            curtainItem.getDuihuaLoss());
-                        } else {
-                            //定宽
-                            if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
-                                lsUsage =
-                                        arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
-                            } else if (curtainItem.getHighHh().doubleValue() > 0) {
-                                //花回
-                                lsUsage =
-                                        arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
-                                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
-                                                arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
-                            }
-                        }*/
+                        curtainItem.setFixType(fixType);
                         lsUsage = usageCalculation(width, multiple,height, curtainItem);
                         //获取每种产品的用量
                         map.put("ls", lsUsage);
@@ -538,27 +522,13 @@ public class ItemServiceImpl implements ItemService {
                             "FixGrade(),DuihuaLoss,HighJia");
 
                 } else {
-                    /*if ("02".equals(curtainItem.getFixType())) {
-                        shaUsage = arith.add(arith.dbToBD(width * multiple),
-                                curtainItem.getDuihuaLoss());
-                    } else {
-                        //定宽
-                        if (curtainItem.getHighHh().doubleValue() > 0) {
-                            //花回
-                            shaUsage =
-                                    arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
-                                            arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()),arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
-                                            arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
-                        } else if (curtainItem.getHighHh().doubleValue() == 0) {
-                            shaUsage =
-                                    arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
-                        }
-                    }*/
+                    curtainItem.setFixType(fixType);
                     shaUsage = usageCalculation(width, multiple,height, curtainItem);
                     map.put("sha", shaUsage);
                 }
 
         }
+        map.put("code",0);
         return map;
     }
 

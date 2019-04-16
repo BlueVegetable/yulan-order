@@ -20,7 +20,7 @@
         <result column="CERTAIN_HEIGHT_WIDTH" property="certainHeightWidth" jdbcType="DECIMAL" />
         <result column="SPECIFICATION" property="specification" jdbcType="DECIMAL" />
         <result column="ILLUSTRATE" property="illustrate" jdbcType="VARCHAR" />
-        <result column="SAVE_TIME" property="saveTime" />
+        <result column="SAVE_TIME" property="saveTime" jdbcType="VARCHAR" />
         <association property="item" column="ITEM_ID" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 

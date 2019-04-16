@@ -41,4 +41,11 @@ public interface Ctm_orderService {
 
    //订单重新提交
    Map putAgainOrder(Map<String, Object>map);
+
+   /**
+    * 生成订单号
+    * @param product_group_tpye
+    * @return
+    */
+   String getOrderNumber(String product_group_tpye);
 }
