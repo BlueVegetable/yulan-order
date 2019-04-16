@@ -466,7 +466,7 @@ public class ItemServiceImpl implements ItemService {
             }
         }
 
-        return usage;
+        return usage.setScale(2,BigDecimal.ROUND_HALF_UP);
     }
 
     @Override
