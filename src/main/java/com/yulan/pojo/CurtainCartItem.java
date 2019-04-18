@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class CurtainCartItem extends CartItem {
 
+    private String modelNumber;
     private BigDecimal width;
     private BigDecimal height;
     private BigDecimal drape;
@@ -14,6 +15,14 @@ public class CurtainCartItem extends CartItem {
     private BigDecimal outsourcingBoxWidth;
     private List<CurtainList> curtainLists;
     private Timestamp saveTime;
+
+    public String getModelNumber() {
+        return modelNumber;
+    }
+
+    public void setModelNumber(String modelNumber) {
+        this.modelNumber = modelNumber;
+    }
 
     public BigDecimal getWidth() {
         return width;
