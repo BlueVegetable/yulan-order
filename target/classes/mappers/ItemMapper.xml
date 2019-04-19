@@ -370,6 +370,22 @@
     <select id="getCurtainInfo" resultMap="CurtainMap">
         select * from ITEM_ML_GY t where t.parent_item_no = #{curtainNo} ORDER BY t.NO
     </select>
+
+    <!--获取每个窗帘可更换 -->
+    <select id="getCurtainItemTypeAll" resultMap="ItemMap">
+        select * from item b
+        <if test="itemNO == 'LCB'">
+        where b.product_type in ('LCB')
+        </if>
+        <if test="itemNO == 'ML' or itemNO == 'MLP'">
+        where b.product_type in ('ML','MLP')
+        </if>
+        <if test="itemNO == 'PJB'">
+            where b.product_type in ('PJB')
+        </if>
+        and b.sale_id not in ('C','F')
+    </select>
+
     <!-- 获取每个窗帘对应的工艺-->
     <select id="getItemGY" resultType="String">
         select t.gy_no from ITEM_GY_LIST t where t.parent_item_no = #{itemNO}

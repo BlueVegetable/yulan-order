@@ -8,6 +8,7 @@ import com.yulan.service.ItemService;
 import com.yulan.utils.Arith;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -276,8 +277,7 @@ public class ItemServiceImpl implements ItemService {
 
         List<Item> itemList = new ArrayList<>();
         for (int i = 0; i < curtainItemList.size(); i++) {
-            ItemMLGY itemMLGY = new ItemMLGY();
-            itemMLGY = curtainItemList.get(i);
+            ItemMLGY itemMLGY = curtainItemList.get(i);
             Item curtainItem =
                     itemDao.getItemByItemNO(itemMLGY.getItemNo());
             if(curtainItem.getHighJia()== null){
@@ -415,7 +415,11 @@ public class ItemServiceImpl implements ItemService {
                 }
                 map.put("XHB", XHBusage);
             }
-            Item item = itemDao.getItemByItemNO(itemMLGY.getItemNo());
+            //这行代码有问题是因为item如果型号一样的话，就会地址一样，然后后面的itemMLGY就会覆盖掉前面的，就会产生重复数据
+            Item item;
+            Item selectItem = itemDao.getItemByItemNO(itemMLGY.getItemNo());
+            JSONObject jsonObject = JSONObject.fromObject(selectItem);
+            item = (Item)JSONObject.toBean(jsonObject,Item.class);
             item.setItemMLGY(itemMLGY);
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
@@ -529,6 +533,34 @@ public class ItemServiceImpl implements ItemService {
 
         }
         map.put("code",0);
+        return map;
+    }
+
+    @Override
+    public Map getCurtainItemTypeAll(String itemNO) throws IOException {
+        Map map = new HashMap<>();
+        List<Item> itemList = new ArrayList<>();
+        itemList = itemDao.getCurtainItemTypeAll(itemNO);
+        for (int i = 0; i < itemList.size(); i++) {
+            Item item = itemList.get(i);
+            if (null != item.getNote()) {
+                item.setNote(stringUtil.getUtf8(item.getNote()));
+            }
+            if (null != item.getItemVersion()) {
+                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+            }
+            if (null != item.getProductBrand()) {
+                item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+            }
+            if (null != item.getRzStyle()) {
+                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+            }
+            if (null != item.getUnit()) {
+                item.setUnit(stringUtil.GBKToUTF8(itemDao.getUnit(item.getUnit())));
+            }
+        }
+        map.put("code",0);
+        map.put("data",itemDao.getCurtainItemTypeAll(itemNO));
         return map;
     }
 

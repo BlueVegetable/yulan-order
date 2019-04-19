@@ -1,6 +1,7 @@
 package com.yulan.pojo;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Item {
     private String itemNo;
@@ -369,5 +370,52 @@ public class Item {
                 ", priceHome=" + priceHome +
                 ", groupType='" + groupType + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(itemNo, item.itemNo) &&
+                Objects.equals(oldItemNo, item.oldItemNo) &&
+                Objects.equals(itemVersion, item.itemVersion) &&
+                Objects.equals(productType, item.productType) &&
+                Objects.equals(note, item.note) &&
+                Objects.equals(saleId, item.saleId) &&
+                Objects.equals(unit, item.unit) &&
+                Objects.equals(useId, item.useId) &&
+                Objects.equals(productBrand, item.productBrand) &&
+                Objects.equals(productFlag, item.productFlag) &&
+                Objects.equals(itemFlag, item.itemFlag) &&
+                Objects.equals(itemDz, item.itemDz) &&
+                Objects.equals(fixType, item.fixType) &&
+                Objects.equals(fixGrade, item.fixGrade) &&
+                Objects.equals(rzStyle, item.rzStyle) &&
+                Objects.equals(rzGrade, item.rzGrade) &&
+                Objects.equals(highJia, item.highJia) &&
+                Objects.equals(wbhFlag, item.wbhFlag) &&
+                Objects.equals(deleteFlag, item.deleteFlag) &&
+                Objects.equals(mlModifyFlag, item.mlModifyFlag) &&
+                Objects.equals(widthHh, item.widthHh) &&
+                Objects.equals(highHh, item.highHh) &&
+                Objects.equals(duihua, item.duihua) &&
+                Objects.equals(oao, item.oao) &&
+                Objects.equals(salePrice, item.salePrice) &&
+                Objects.equals(priceSale, item.priceSale) &&
+                Objects.equals(priceFx, item.priceFx) &&
+                Objects.equals(priceHome, item.priceHome) &&
+                Objects.equals(groupType, item.groupType) &&
+                Objects.equals(total, item.total) &&
+                Objects.equals(duihuaLoss, item.duihuaLoss) &&
+                Objects.equals(itemType, item.itemType) &&
+                Objects.equals(itemMLGY, item.itemMLGY);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemNo, oldItemNo, itemVersion, productType, note
+                , saleId, unit, useId, productBrand, productFlag, itemFlag,
+                itemDz, fixType, fixGrade, rzStyle, rzGrade, highJia, wbhFlag, deleteFlag, mlModifyFlag, widthHh, highHh, duihua, oao, salePrice, priceSale, priceFx, priceHome, groupType, total, duihuaLoss, itemType, itemMLGY);
     }
 }
