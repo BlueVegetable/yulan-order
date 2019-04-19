@@ -8,6 +8,7 @@ import java.util.Objects;
 public class CurtainCartItem extends CartItem {
 
     private String modelNumber;
+    private String location;
     private BigDecimal width;
     private BigDecimal height;
     private BigDecimal drape;
@@ -22,6 +23,14 @@ public class CurtainCartItem extends CartItem {
 
     public void setModelNumber(String modelNumber) {
         this.modelNumber = modelNumber;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public BigDecimal getWidth() {
