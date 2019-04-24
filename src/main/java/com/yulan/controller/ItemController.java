@@ -195,6 +195,21 @@ public class ItemController {
     }
 
     /**
+     * 获取窗帘下的产品可更换列表
+     * ML 面料
+     * PJB 配件包
+     * LCB 里衬布
+     * @param data
+     * @return
+     */
+    @RequestMapping(value = "getCurtainItemTypeAll")
+    @ResponseBody
+    public Map getCurtainItemTypeAll(@RequestBody Map<String,Object> data)throws IOException{
+        String itemNO = (String) data.get("itemNO");
+        return itemService.getCurtainItemTypeAll(itemNO);
+    }
+
+    /**
      * 获取可以更换的GY类型
      * @param data
      * @return

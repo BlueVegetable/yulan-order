@@ -62,5 +62,7 @@ public interface ItemDao {
     List<ItemMLGY> getCurtainInfo(@Param("curtainNo") String curtainNo);
    //获取每个窗帘对应的工艺
     List<String> getItemGY(@Param("itemNO") String itemNo);
+    //获取每个窗帘可更换的里衬布
+    List<Item> getCurtainItemTypeAll(@Param("itemNO") String itemNo);
 
 }

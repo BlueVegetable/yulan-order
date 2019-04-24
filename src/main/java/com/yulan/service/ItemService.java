@@ -27,5 +27,7 @@ public interface ItemService {
 
     Map changeCurtainItem(Double width,Double height,Double WBH,Double multiple,String itemNO, String itemType, String parentItemNo, String fixType);
 
+    Map getCurtainItemTypeAll(String itemNO)throws IOException;
+
     Map getGYList(String itemNO);
 }
