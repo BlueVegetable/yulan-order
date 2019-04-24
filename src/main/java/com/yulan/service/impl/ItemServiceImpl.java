@@ -537,10 +537,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Map getCurtainItemTypeAll(String itemNO) throws IOException {
+    public Map getCurtainItemTypeAll(Integer page,Integer lastNum, String itemNO) throws IOException {
         Map map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
-        itemList = itemDao.getCurtainItemTypeAll(itemNO);
+        itemList = itemDao.getCurtainItemTypeAll(page, lastNum,itemNO);
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
             if (null != item.getNote()) {
@@ -560,7 +560,7 @@ public class ItemServiceImpl implements ItemService {
             }
         }
         map.put("code",0);
-        map.put("data",itemDao.getCurtainItemTypeAll(itemNO));
+        map.put("data",itemList);
         return map;
     }
 

@@ -373,7 +373,10 @@
 
     <!--获取每个窗帘可更换 -->
     <select id="getCurtainItemTypeAll" resultMap="ItemMap">
-        select * from item b
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* ,COUNT(*) OVER () TOTAL from item b
         <if test="itemNO == 'LCB'">
         where b.product_type in ('LCB')
         </if>
@@ -384,6 +387,10 @@
             where b.product_type in ('PJB')
         </if>
         and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
     </select>
 
     <!-- 获取每个窗帘对应的工艺-->
