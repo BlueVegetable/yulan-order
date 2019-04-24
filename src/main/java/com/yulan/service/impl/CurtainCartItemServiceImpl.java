@@ -91,7 +91,7 @@ public class CurtainCartItemServiceImpl implements CartItemService {
             curtainLists.add(new CurtainList("配件",peijian));
             CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
             curtainCartItem.setCurtainLists(curtainLists);
-            if(lt.size()!=0&&ls.size()!=0&&sha.size()!=0&&peijian.size()!=0) {
+            if(lt.size()!=0||ls.size()!=0||sha.size()!=0||peijian.size()!=0) {
                 result.add(curtainCartItem);
             }
         }
