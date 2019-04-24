@@ -63,6 +63,6 @@ public interface ItemDao {
    //获取每个窗帘对应的工艺
     List<String> getItemGY(@Param("itemNO") String itemNo);
     //获取每个窗帘可更换的里衬布
-    List<Item> getCurtainItemTypeAll(@Param("itemNO") String itemNo);
+    List<Item> getCurtainItemTypeAll(@Param("start")Integer page, @Param("number")Integer lastNum,@Param("itemNO") String itemNo);
 
 }
