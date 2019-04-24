@@ -74,6 +74,7 @@ public class CurtainCartItemServiceImpl implements CartItemService {
             List<CurtainCommodity> ls = new ArrayList<>();
             List<CurtainCommodity> sha = new ArrayList<>();
             List<CurtainCommodity> peijian = new ArrayList<>();
+            List<CurtainCommodity> lspb = new ArrayList<>();
             List<CurtainList> curtainLists = new ArrayList<>();
             for (Commodity commodity:commodities) {
                 CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
@@ -82,6 +83,7 @@ public class CurtainCartItemServiceImpl implements CartItemService {
                     case "帘身":ls.add(curtainCommodity);break;
                     case "纱":sha.add(curtainCommodity);break;
                     case "配件":peijian.add(curtainCommodity);break;
+                    case "帘身配布":lspb.add(curtainCommodity);break;
                     default:continue;
                 }
             }
@@ -89,6 +91,7 @@ public class CurtainCartItemServiceImpl implements CartItemService {
             curtainLists.add(new CurtainList("帘身",ls));
             curtainLists.add(new CurtainList("纱",sha));
             curtainLists.add(new CurtainList("配件",peijian));
+            curtainLists.add(new CurtainList("帘身配布",lspb));
             CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
             curtainCartItem.setCurtainLists(curtainLists);
             if(lt.size()!=0||ls.size()!=0||sha.size()!=0||peijian.size()!=0) {

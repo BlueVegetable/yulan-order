@@ -8,6 +8,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ItemTest {
     @Test
     public void test() {
-        System.out.println();
+        System.out.println("c01613".toUpperCase());
     }
 }
