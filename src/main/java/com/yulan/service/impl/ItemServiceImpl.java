@@ -539,28 +539,27 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map getCurtainItemTypeAll(Integer page,Integer lastNum, String itemNO) throws IOException {
         Map map = new HashMap<>();
-        List<Item> itemList = new ArrayList<>();
-        itemList = itemDao.getCurtainItemTypeAll(page, lastNum,itemNO);
+        List<Item> itemList = itemList = itemDao.getCurtainItemTypeAll(page, lastNum,itemNO);
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
-            if (null != item.getNote()) {
-                item.setNote(stringUtil.getUtf8(item.getNote()));
-            }
-            if (null != item.getItemVersion()) {
-                item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
-            }
-            if (null != item.getProductBrand()) {
-                item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
-            }
-            if (null != item.getRzStyle()) {
-                item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
-            }
-            if (null != item.getUnit()) {
-                item.setUnit(stringUtil.GBKToUTF8(itemDao.getUnit(item.getUnit())));
-            }
+            changeItemToUTF8(item);
         }
         map.put("code",0);
         map.put("data",itemList);
+        return map;
+    }
+
+    @Override
+    public Map searchCurtainItemTypeAll(Integer page, Integer lastNum,
+                                        String itemType, String itemNO) throws IOException {
+        Map map = new HashMap<>();
+        List<Item> itemList = itemDao.searchCurtainItemTypeAll(page, lastNum,itemType,itemNO);
+        for (int i = 0; i < itemList.size(); i++) {
+            Item item = itemList.get(i);
+            changeItemToUTF8(item);
+        }
+        map.put("data",itemList);
+        map.put("code",0);
         return map;
     }
 
@@ -572,6 +571,24 @@ public class ItemServiceImpl implements ItemService {
         map.put("GYLis",GYList);
         map.put("code",0);
         return map;
+    }
+
+    private void changeItemToUTF8(Item item)throws IOException {
+        if (null != item.getNote()) {
+            item.setNote(stringUtil.getUtf8(item.getNote()));
+        }
+        if (null != item.getItemVersion()) {
+            item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
+        }
+        if (null != item.getProductBrand()) {
+            item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
+        }
+        if (null != item.getRzStyle()) {
+            item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+        }
+        if (null != item.getUnit()) {
+            item.setUnit(stringUtil.GBKToUTF8(itemDao.getUnit(item.getUnit())));
+        }
     }
 
 

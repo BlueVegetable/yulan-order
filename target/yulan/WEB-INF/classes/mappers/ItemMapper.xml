@@ -392,6 +392,29 @@
             where rm &gt;= #{start} and rm &lt;= #{number}
         </if>
     </select>
+    <!--获取每个窗帘可更换产品 模糊查询 -->
+    <select id="searchCurtainItemTypeAll" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* ,COUNT(*) OVER () TOTAL from item b
+        <if test="itemType == 'LCB'">
+            where b.product_type in ('LCB')
+        </if>
+        <if test="itemType == 'ML' or itemType == 'MLP'">
+            where b.product_type in ('ML','MLP')
+        </if>
+        <if test="itemType == 'PJB'">
+            where b.product_type in ('PJB')
+        </if>
+        and b.sale_id not in ('C','F')
+        and b.item_no like CONCAT(CONCAT('%',#{itemNO}),'%')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
 
     <!-- 获取每个窗帘对应的工艺-->
     <select id="getItemGY" resultType="String">
