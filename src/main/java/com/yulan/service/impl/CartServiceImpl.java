@@ -21,6 +21,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public boolean existCart(String CID) {
+		CID = CID.toUpperCase();
 		return cartEncode.existCart(CID);
 	}
 
@@ -36,6 +37,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public Cart getCartByCID(String CID) {
+		CID = CID.toUpperCase();
 		Cart cart = getSimpleCartByCID(CID);
 		return cart;
 	}

@@ -175,6 +175,19 @@ public class CartController{
 				curtainCommodity.setCartItemId(curtainCartItem.getCartItemId());
 			}
 		}
+        {
+            boolean hasPrice = true;
+            //进行价格的判断
+            for (CurtainList curtainList:curtainCartItem.getCurtainLists()) {
+                List<CurtainCommodity> curtainCommodities = curtainList.getCurtainCommodities();
+                for (CurtainCommodity curtainCommodity:curtainCommodities) {
+                    hasPrice = hasPrice && curtainCommodity.getPrice()!=null;
+                    if(!hasPrice) {
+                        return Response.getResponseMap(2,"该商品信息正在完善，请等待",null);
+                    }
+                }
+            }
+        }
 		curtainCartItemService.addCartItem(curtainCartItem);
 		return Response.getResponseMap(0,"",null);
 	}
