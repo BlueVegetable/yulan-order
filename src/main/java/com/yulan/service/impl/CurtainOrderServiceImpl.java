@@ -538,6 +538,27 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         return m;
     }
 
+    @Override
+    public Map getCurtainOrder(Map map) throws UnsupportedEncodingException {
+        Map m=new HashMap();
+
+        String orderNo=map.get("orderNo").toString();
+        String lineNo=map.get("lineNo").toString();
+        CurtainOrder curtainOrder=curtainOrderDao.getCurtainOrder(orderNo,lineNo);
+        Map<String, Object> curtainOrderMap=MapUtils.beanToMaplin(curtainOrder);
+        curtainOrderMap.put("type",curtainOrderDao.getTypeName(curtainOrder.getCurtainMenuGroupId()));
+        for (Map.Entry<String, Object> entry : curtainOrderMap.entrySet()) {
+            if (entry.getValue() instanceof String) {
+                String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                entry.setValue(origin);
+            }
+        }
+        m.put("data",curtainOrderMap);
+        m.put("code",0);
+        m.put("msg","SUCCESS");
+
+        return m;
+    }
 
 
 }

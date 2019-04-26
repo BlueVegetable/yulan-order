@@ -140,6 +140,10 @@
 
   </update>
 
+  <select id="getTypeName" resultType="String" parameterType="String">
+    select t.note from ITEM_TYPE t where t.item_type=#{productType}
+  </select>
+
 
 
 </mapper>

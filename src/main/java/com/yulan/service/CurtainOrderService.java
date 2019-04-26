@@ -42,6 +42,13 @@ public interface CurtainOrderService {
      */
     Map curOrderCount(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException;
 
+    /**
+     * 查看窗帘详情
+     * @param map
+     * @return
+     */
+    Map getCurtainOrder(Map map) throws UnsupportedEncodingException;
+
 
 
 
