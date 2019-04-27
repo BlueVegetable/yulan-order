@@ -7,14 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e49d8f3b-fac9-412c-952d-2f996440b542" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yulan/dao/CommodityOrderDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CommodityOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/CommodityOrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityOrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resource/mappers/CommodityOrderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CartServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainCartItemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainCartItemServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/ItemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/ItemTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ItemServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan/WEB-INF/classes/com/yulan/service/impl/ItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan/WEB-INF/classes/com/yulan/service/impl/ItemServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/ItemTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ItemTest.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -55,32 +56,67 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CommodityOrder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="151" column="9" lean-forward="true" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
+            <state relative-caret-position="-660">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
               <folding>
-                <element signature="method#addCart#0;class#CartController#0" />
-                <element signature="e#1860#2020#1" />
-                <element signature="e#1933#2010#1" />
-                <element signature="method#addCartItem#0;class#CartController#0" />
-                <element signature="method#deleteCartItems#0;class#CartController#0" />
-                <element signature="method#deleteCommodities#0;class#CartController#0" />
-                <element signature="e#9308#9309#0" expanded="true" />
-                <element signature="e#9368#9369#0" expanded="true" />
-                <element signature="method#getSimpleCartByCID#0;class#CartController#0" />
-                <element signature="method#updateCartItem#0;class#CartController#0" />
-                <element signature="method#dealCurtainCartItems#0;class#CartController#0" />
+                <element signature="e#4271#5897#0" />
+                <element signature="e#5900#6361#0" />
+                <element signature="e#6364#7354#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainCartItemServiceImpl.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/dao/CommodityOrderDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+            <state relative-caret-position="46">
+              <caret line="11" column="50" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CommodityOrderMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="134">
+              <caret line="64" column="102" selection-start-line="64" selection-start-column="102" selection-end-line="64" selection-end-column="102" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/CommodityOrderService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityOrderServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="395">
+              <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/ItemTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="54" column="70" selection-start-line="54" selection-start-column="70" selection-end-line="54" selection-end-column="70" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#test#0;class#ItemTest#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,7 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>LEGALCHECK</find>
       <find>getAllys_LEGALCHECK</find>
       <find>getArea_Cmanager</find>
       <find>getArea_Smanager</find>
@@ -129,6 +164,7 @@
       <find>帘头</find>
       <find>VARCHAR</find>
       <find>CID</find>
+      <find>SAVE</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -141,11 +177,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/yulan/controller/Ctm_orderController.java" />
-        <option value="$PROJECT_DIR$/src/main/resource/jdbc.properties" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/yulan/utils/TransferXML.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/StockShow.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/dao/PostAddressDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/PostAddressService.java" />
@@ -190,8 +221,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCartItem.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainCartItemServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/test/ItemTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CartServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CommodityOrder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/CommodityOrderService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/yulan/dao/CommodityOrderDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityOrderServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/test/ItemTest.java" />
+        <option value="$PROJECT_DIR$/src/main/resource/mappers/CommodityOrderMapper.xml" />
       </list>
     </option>
   </component>
@@ -247,6 +283,120 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="yulan-order" type="58d84e3e:PackageViewProjectNode" />
+              <item name="yulan" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="impl" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="resource" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="resource" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="mappers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="webapp" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="webapp" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="WEB-INF" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="test" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -319,105 +469,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="controller" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="impl" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="test" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="target" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="yulan-order" type="58d84e3e:PackageViewProjectNode" />
-              <item name="yulan" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -432,27 +483,28 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553831142531" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vegetable26" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resource/mappers" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.25041598" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.yulan.dao" />
+      <recent name="com.yulan.pojo" />
       <recent name="com.yulan.controller" />
       <recent name="com.yulan.utils" />
       <recent name="com.yulan.filter" />
-      <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Application\IDEA\yulan-order\src\main\resource\mappers" />
       <recent name="D:\Application\IDEA\yulan\src\main\java\com\yulan\controller" />
       <recent name="D:\Application\IDEA\yulan\src\main\java\com\yulan\service\impl" />
       <recent name="D:\Application\IDEA\yulan\src\main\java\com\yulan\service" />
       <recent name="D:\Application\IDEA\yulan\src\main\java\com\yulan\dao" />
-      <recent name="D:\Application\IDEA\yulan\src\main\java\com\yulan\pojo" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -467,7 +519,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.yulan">
+  <component name="RunManager" selected="JUnit.ItemTest.test1">
     <configuration name="ItemTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yulan" />
       <option name="PACKAGE_NAME" value="" />
@@ -487,11 +539,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="yulan" />
+    <configuration name="ItemTest.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yulan-order" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="test" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="ItemTest" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -593,20 +646,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.test" />
       <item itemvalue="JUnit.test.main" />
       <item itemvalue="JUnit.ItemTest" />
       <item itemvalue="JUnit.test.main (1)" />
       <item itemvalue="JUnit.ItemTest.test" />
       <item itemvalue="Tomcat Server.yulan" />
+      <item itemvalue="JUnit.ItemTest.test1" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ItemTest.test1" />
         <item itemvalue="JUnit.ItemTest.test" />
         <item itemvalue="JUnit.test.main (1)" />
         <item itemvalue="JUnit.ItemTest" />
         <item itemvalue="JUnit.test.main" />
-        <item itemvalue="JUnit.test" />
       </list>
     </recent_temporary>
   </component>
@@ -839,44 +892,50 @@
       <workItem from="1556085623284" duration="56000" />
       <workItem from="1556113001629" duration="765000" />
       <workItem from="1556114362526" duration="561000" />
-      <workItem from="1556115251834" duration="1867000" />
+      <workItem from="1556115251834" duration="2141000" />
+      <workItem from="1556205318782" duration="109000" />
+      <workItem from="1556246999636" duration="793000" />
+      <workItem from="1556334654547" duration="1176000" />
+      <workItem from="1556363528859" duration="588000" />
+      <workItem from="1556370542270" duration="7352000" />
+      <workItem from="1556380908775" duration="3669000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ItemTest - 2019.03.02 at 21h 41m 21s.xml">
-      <configuration name="ItemTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ItemTest - 2019.03.02 at 21h 57m 10s.xml">
-      <configuration name="ItemTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="test_main_(1) - 2019.03.31 at 22h 00m 48s.xml">
-      <configuration name="test.main (1)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="test_main_(1) - 2019.03.31 at 22h 02m 17s.xml">
-      <configuration name="test.main (1)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ItemTest_test - 2019.04.13 at 17h 11m 33s.xml">
+    <history-entry file="ItemTest_test - 2019.04.27 at 22h 53m 11s.xml">
       <configuration name="ItemTest.test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ItemTest_test - 2019.04.13 at 17h 12m 08s.xml">
+    <history-entry file="ItemTest_test - 2019.04.27 at 22h 54m 46s.xml">
       <configuration name="ItemTest.test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ItemTest_test - 2019.04.13 at 17h 12m 49s.xml">
+    <history-entry file="ItemTest_test - 2019.04.27 at 23h 04m 23s.xml">
       <configuration name="ItemTest.test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ItemTest_test - 2019.04.13 at 17h 18m 39s.xml">
+    <history-entry file="ItemTest_test - 2019.04.28 at 00h 44m 51s.xml">
       <configuration name="ItemTest.test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ItemTest_test - 2019.04.13 at 17h 19m 05s.xml">
+    <history-entry file="ItemTest_test - 2019.04.28 at 00h 46m 29s.xml">
       <configuration name="ItemTest.test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ItemTest_test - 2019.04.24 at 22h 30m 12s.xml">
+    <history-entry file="ItemTest_test - 2019.04.28 at 00h 47m 07s.xml">
       <configuration name="ItemTest.test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ItemTest_test1 - 2019.04.28 at 00h 56m 28s.xml">
+      <configuration name="ItemTest.test1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ItemTest_test1 - 2019.04.28 at 00h 58m 35s.xml">
+      <configuration name="ItemTest.test1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ItemTest_test1 - 2019.04.28 at 00h 59m 31s.xml">
+      <configuration name="ItemTest.test1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ItemTest_test1 - 2019.04.28 at 01h 01m 40s.xml">
+      <configuration name="ItemTest.test1" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="866529000" />
+    <option name="totallyTimeSpent" value="880490000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -891,7 +950,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.89099526" visible="true" weight="0.2871212" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.89099526" weight="0.3159091" />
       <window_info id="Structure" order="1" sideWeight="0.15433404" side_tool="true" weight="0.25670242" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -903,7 +962,7 @@
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32907802" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49474534" visible="true" weight="0.31632653" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49474534" visible="true" weight="0.4319728" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.37414965" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -915,7 +974,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Database Changes" order="13" weight="0.32907802" />
       <window_info anchor="bottom" id="Version Control" order="14" />
-      <window_info anchor="bottom" id="Application Servers" order="15" sideWeight="0.49932975" weight="0.05815603" />
+      <window_info anchor="bottom" id="Application Servers" order="15" sideWeight="0.49932975" weight="0.05782313" />
       <window_info anchor="bottom" id="Docker" order="16" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
@@ -990,48 +1049,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/dao/CustomerDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/PostAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/AreaRegionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="45" column="80" selection-start-line="45" selection-start-column="80" selection-end-line="45" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/dao/PostAddressDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/PostAddressMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="64" column="57" selection-start-line="64" selection-start-column="57" selection-end-line="64" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/YLcontractentryMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6569">
-          <caret line="276" column="48" selection-start-line="276" selection-start-column="48" selection-end-line="276" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/AreaRegionMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -1088,13 +1105,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="23" column="93" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="347" column="38" selection-start-line="347" selection-start-column="38" selection-end-line="347" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -1251,19 +1261,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCommodity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="45" lean-forward="true" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
-          <folding>
-            <element signature="method#setManufacturingInstructions#0;class#CurtainCommodity#0" />
-            <element signature="method#equals#0;class#CurtainCommodity#0" />
-            <element signature="method#hashCode#0;class#CurtainCommodity#0" />
-            <element signature="method#toString#0;class#CurtainCommodity#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/ActivityGroupTypeServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -1350,13 +1347,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="62" column="34" lean-forward="true" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/Cart.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-145">
@@ -1375,18 +1365,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/ItemTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="28" lean-forward="true" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
-            <element signature="e#396#397#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CartServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
@@ -1398,10 +1376,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" selection-start-line="5" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="439" column="19" selection-start-line="15" selection-start-column="4" selection-end-line="439" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainCartItemServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="58" column="67" selection-start-line="58" selection-start-column="67" selection-end-line="58" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="151" column="9" lean-forward="true" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
+        <state relative-caret-position="500">
+          <caret line="351" column="70" selection-start-line="351" selection-start-column="70" selection-end-line="351" selection-end-column="70" />
           <folding>
             <element signature="method#addCart#0;class#CartController#0" />
             <element signature="e#1860#2020#1" />
@@ -1418,10 +1417,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainCartItemServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCommodity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        <state relative-caret-position="200">
+          <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+          <folding>
+            <element signature="method#setManufacturingInstructions#0;class#CurtainCommodity#0" />
+            <element signature="method#equals#0;class#CurtainCommodity#0" />
+            <element signature="method#hashCode#0;class#CurtainCommodity#0" />
+            <element signature="method#toString#0;class#CurtainCommodity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/oracle/ojdbc6/11.2.0.4/ojdbc6-11.2.0.4.jar!/oracle/jdbc/driver/OracleStatement.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="1946" selection-start-line="1946" selection-end-line="1946" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CommodityOrder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-660">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding>
+            <element signature="e#4271#5897#0" />
+            <element signature="e#5900#6361#0" />
+            <element signature="e#6364#7354#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/dao/CommodityOrderDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="11" column="50" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityOrderServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/ItemTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="54" column="70" selection-start-line="54" selection-start-column="70" selection-end-line="54" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#test#0;class#ItemTest#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/CommodityOrderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CommodityOrderMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="64" column="102" selection-start-line="64" selection-start-column="102" selection-end-line="64" selection-end-column="102" />
         </state>
       </provider>
     </entry>
