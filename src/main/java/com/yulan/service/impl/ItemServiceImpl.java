@@ -272,8 +272,7 @@ public class ItemServiceImpl implements ItemService {
                               Double multiple, String location,
                               String curtainNo) throws IOException {
         Map map = new HashMap<>();
-        List<ItemMLGY> curtainItemList = new ArrayList<>();
-        curtainItemList = itemDao.getCurtainInfo(curtainNo);
+        List<ItemMLGY> curtainItemList = itemDao.getCurtainInfo(curtainNo);
 
         List<Item> itemList = new ArrayList<>();
         for (int i = 0; i < curtainItemList.size(); i++) {
@@ -476,7 +475,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map changeCurtainItem(Double width, Double height, Double WBH,
                                  Double multiple, String itemNO,
-                                 String itemType, String parentItemNo, String fixType) {
+                                 String itemType, String parentItemNo, String fixType)  throws IOException{
         Map map = new HashMap<>();
         Item curtainItem =
                 itemDao.getItemByItemNO(itemNO);
@@ -532,6 +531,8 @@ public class ItemServiceImpl implements ItemService {
                 }
 
         }
+        changeItemToUTF8(curtainItem);
+        map.put("item",curtainItem);
         map.put("code",0);
         return map;
     }
@@ -539,7 +540,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map getCurtainItemTypeAll(Integer page,Integer lastNum, String itemNO) throws IOException {
         Map map = new HashMap<>();
-        List<Item> itemList = itemList = itemDao.getCurtainItemTypeAll(page, lastNum,itemNO);
+        List<Item> itemList = itemDao.getCurtainItemTypeAll(page, lastNum,itemNO);
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
             changeItemToUTF8(item);

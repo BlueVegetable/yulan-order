@@ -177,7 +177,7 @@ public class ItemController {
      */
     @RequestMapping(value = "changeCurtainItem")
     @ResponseBody
-    public Map changeCurtainItem(@RequestBody Map<String,Object> data){
+    public Map changeCurtainItem(@RequestBody Map<String,Object> data) throws IOException{
         String itemNO = (String) data.get("itemNO");
         String itemType = (String) data.get("itemType");
         String parentItemNo = (String) data.get("parentItemNo");
