@@ -30,6 +30,7 @@ public class CommodityOrder {
 	private String orderNo;
 	private Integer orderItemNumber;
 	private String suggestion;
+	private Integer lineNo;
 
 	public String getId() {
 		return id;
@@ -221,6 +222,14 @@ public class CommodityOrder {
 
 	public void setSuggestion(String suggestion) {
 		this.suggestion = suggestion;
+	}
+
+	public Integer getLineNo() {
+		return lineNo;
+	}
+
+	public void setLineNo(Integer lineNo) {
+		this.lineNo = lineNo;
 	}
 
 	@Override

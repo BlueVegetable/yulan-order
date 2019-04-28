@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommodityOrderServiceImpl implements CommodityOrderService {
@@ -22,7 +23,7 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
     @Autowired
     private CurtainCommodityDao curtainCommodityDao;
     @Override
-    public List<String> submitCommodityOrder(List<String> cartItemIDs) {
+    public List<String> submitCommodityOrder(List<String> cartItemIDs, Map<String,Integer> lineNos) {
         List<String> orderItemIDs = new ArrayList<>();
         for (String cartItemID:cartItemIDs) {
             int orderNumber = 1;
@@ -45,6 +46,7 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
                     case "帘身配布":commodityOrder.setCurtainPartName("lspb");break;
                     default:commodityOrder.setCurtainPartName("other");break;
                 }
+                commodityOrder.setLineNo(lineNos.get(cartItemID));
                 orderNumber++;
                 commodityOrders.add(commodityOrder);
             }

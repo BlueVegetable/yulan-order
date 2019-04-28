@@ -47,7 +47,7 @@
         insert into COMMODITY_ORDER
         (ID, PRICE, ACTIVITY_ID, ITEM_ID, ORDER_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,
         CURTAIN_ITEM_NAME,CURTAIN_PART_NAME,DOSAGE,MANUFACTURING_INSTRUCTIONS,CERTAIN_HEIGHT_WIDTH,
-        SPECIFICATION,ILLUSTRATE,STATUS,ORDER_NO,ORDER_ITEM_NUMBER,SUGGESTION,SAVE_TIME)
+        SPECIFICATION,ILLUSTRATE,STATUS,ORDER_NO,ORDER_ITEM_NUMBER,SUGGESTION,SAVE_TIME,LINE_NO)
         (
         <foreach collection="commodityOrders" item="commodityOrder" separator="union all">
             select
@@ -62,7 +62,8 @@
             #{commodityOrder.illustrate,jdbcType=VARCHAR},
             #{commodityOrder.status,jdbcType=NUMERIC},#{commodityOrder.orderNo,jdbcType=VARCHAR},
             #{commodityOrder.orderItemNumber,jdbcType=NUMERIC},
-            #{commodityOrder.suggestion,jdbcType=VARCHAR},#{commodityOrder.saveTime,jdbcType=TIMESTAMP}
+            #{commodityOrder.suggestion,jdbcType=VARCHAR},#{commodityOrder.saveTime,jdbcType=TIMESTAMP},
+            #{commodityOrder.lineNo,jdbcType=NUMERIC}
             from dual
         </foreach>
         )
