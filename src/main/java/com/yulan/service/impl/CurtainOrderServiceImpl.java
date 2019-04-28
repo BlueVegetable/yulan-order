@@ -75,37 +75,32 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                         entry.setValue(origin);
                     }
                 }
-                List<Map<String,Object>> curtainList=(List) m2.get("curtains");//窗帘详情
 
-//                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
-//                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
-//                        if (entry.getValue() instanceof String) {
-//                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-//                            entry.setValue(origin);
-//                        }
-//                    }
-//                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
-//                    curtainOrder.setOrderNo(orderNo);
-//                    curtainOrder.setLineNo(String.valueOf(lineNo));
-//                    curtainOrder.setDateUpdate(nowTime);
-////                    curtainOrder.setItemNo(m2.get("itemNo").toString());//由前端传，窗帘型号
-//                    curtainOrderDao.insertCurtainOrder(curtainOrder);
-//                }
+
+
                 Ctm_order_detail ctm_order_detail = MapUtils.mapToBean(m2, Ctm_order_detail.class);
                 ctm_order_detail.setOrderNo(orderNo);
 
 
                 ctm_order_detail.setLineNo(lineNo);
                 lineNo++;
-                ctm_orderDao.insertOrderB(ctm_order_detail);
+                if (!ctm_orderDao.insertOrderB(ctm_order_detail)){
+                    m.put("code",1);
+                    m.put("msg","FALS");
+                    return m;
+                }
             }
+            dataMap.put("orderNo",orderNo);
+
+            dataMap.put("curtainStatus",ctm_order.getCurtainStatusId());
+            m.put("data",dataMap);
+            m.put("code",0);
+            m.put("msg","SUCCESS");
+        }else {
+            m.put("code",1);
+            m.put("msg","FALS");
         }
-        dataMap.put("orderNo",orderNo);
-  
-        dataMap.put("curtainStatus",ctm_order.getCurtainStatusId());
-        m.put("data",dataMap);
-        m.put("code",0);
-        m.put("msg","SUCCESS");
+
         return m;
     }
 
