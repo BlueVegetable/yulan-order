@@ -13,6 +13,8 @@ public interface CommodityOrderDao {
 
 	int deleteCommodityOrdersByOrderItemID(String orderItemID);
 
+	List<CommodityOrder> getCommodityOrders(@Param("orderNo") String orderNo,@Param("lineNo") Integer lineNo);
+
 	List<CommodityOrder> getCommodityOrderByOrderItemID(String orderItemID);
 
 	int addOrderNoByOrderItemIDs(@Param("orderItemID") String orderItemID,@Param("orderNo") String orderNo);

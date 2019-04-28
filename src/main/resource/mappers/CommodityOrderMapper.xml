@@ -73,6 +73,10 @@
         delete from COMMODITY_ORDER where ORDER_ITEM_ID = #{orderItemID}
     </delete>
 
+    <select id="getCommodityOrders" parameterType="Map" resultMap="CommodityOrderMap">
+        select * from COMMODITY_ORDER where ORDER_NO = #{orderNo} and LINE_NO = #{lineNo}
+    </select>
+
     <select id="getCommodityOrderByOrderItemID" parameterType="String" resultMap="CommodityOrderMap">
         select * from COMMODITY_ORDER where ORDER_ITEM_ID = #{orderItemID}
     </select>
