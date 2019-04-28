@@ -15,4 +15,6 @@ public interface CommodityOrderDao {
 
 	List<CommodityOrder> getCommodityOrderByOrderItemID(String orderItemID);
 
+	int addOrderNoByOrderItemIDs(@Param("orderItemID") String orderItemID,@Param("orderNo") String orderNo);
+
 }
