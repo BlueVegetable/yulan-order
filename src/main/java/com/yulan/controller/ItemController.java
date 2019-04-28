@@ -219,6 +219,29 @@ public class ItemController {
     }
 
     /**
+     * 获取每个窗帘可更换产品 模糊查询
+     * @param data
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "searchCurtainItemTypeAll")
+    @ResponseBody
+    public Map searchCurtainItemTypeAll(@RequestBody Map<String,Object> data)throws IOException{
+        Integer limit = (Integer) data.get("limit");
+        Integer page = (Integer)data.get("page");
+        String itemType = (String)data.get("itemType");
+        String itemNO = (String) data.get("itemNO");
+        if(limit==null||page==null) {
+            page=null;
+            limit=null;
+        } else {
+            page=(page-1)*limit+1;
+        }
+        int lastNum=page+limit-1;
+        return itemService.searchCurtainItemTypeAll(page,lastNum,itemType,itemNO);
+    }
+
+    /**
      * 获取可以更换的GY类型
      * @param data
      * @return

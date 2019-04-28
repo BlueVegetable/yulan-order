@@ -100,6 +100,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             }
         }
         dataMap.put("orderNo",orderNo);
+  
         dataMap.put("curtainStatus",ctm_order.getCurtainStatusId());
         m.put("data",dataMap);
         m.put("code",0);
@@ -382,21 +383,21 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             int lineNo=1;
             for (Map<String,Object> m2:list){//订单详情录入
 
-                List<Map<String,Object>> curtainList=(List) m2.get("curtains");//窗帘详情
-                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
-                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
-                        if (entry.getValue() instanceof String) {
-                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-                            entry.setValue(origin);
-                        }
-                    }
-                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
-
-//                    curtainOrder.setLineNo(String.valueOf(lineNo));
-                    curtainOrder.setDateUpdate(nowTime);
-//                    curtainOrder.setItemNo(m2.get("itemNo").toString());
-                    curtainOrderDao.updateCurtainOrder(curtainOrder);
-                }
+//                List<Map<String,Object>> curtainList=(List) m2.get("curtains");//窗帘详情
+//                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
+//                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
+//                        if (entry.getValue() instanceof String) {
+//                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
+//                            entry.setValue(origin);
+//                        }
+//                    }
+//                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
+//
+//
+//                    curtainOrder.setDateUpdate(nowTime);
+//
+//                    curtainOrderDao.updateCurtainOrder(curtainOrder);
+//                }//窗帘详情不用更新
 
 
 
@@ -537,6 +538,27 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         return m;
     }
 
+    @Override
+    public Map getCurtainOrder(Map map) throws UnsupportedEncodingException {
+        Map m=new HashMap();
+
+        String orderNo=map.get("orderNo").toString();
+        String lineNo=map.get("lineNo").toString();
+        CurtainOrder curtainOrder=curtainOrderDao.getCurtainOrder(orderNo,lineNo);
+        Map<String, Object> curtainOrderMap=MapUtils.beanToMaplin(curtainOrder);
+        curtainOrderMap.put("type",curtainOrderDao.getTypeName(curtainOrder.getCurtainMenuGroupId()));
+        for (Map.Entry<String, Object> entry : curtainOrderMap.entrySet()) {
+            if (entry.getValue() instanceof String) {
+                String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                entry.setValue(origin);
+            }
+        }
+        m.put("data",curtainOrderMap);
+        m.put("code",0);
+        m.put("msg","SUCCESS");
+
+        return m;
+    }
 
 
 }
