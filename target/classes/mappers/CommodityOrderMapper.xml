@@ -75,4 +75,10 @@
     <select id="getCommodityOrderByOrderItemID" parameterType="String" resultMap="CommodityOrderMap">
         select * from COMMODITY_ORDER where ORDER_ITEM_ID = #{orderItemID}
     </select>
+
+    <update id="addOrderNoByOrderItemIDs" parameterType="Map">
+        update COMMODITY_ORDER
+        set ORDER_NO = #{orderNo}
+        where ORDER_ITEM_ID = #{orderItemID}
+    </update>
 </mapper>

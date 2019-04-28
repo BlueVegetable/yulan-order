@@ -4,7 +4,9 @@ import com.yulan.dao.CommodityOrderDao;
 import com.yulan.dao.CurtainCommodityDao;
 import com.yulan.pojo.Commodity;
 import com.yulan.pojo.CommodityOrder;
+import com.yulan.pojo.CurtainCommodity;
 import com.yulan.service.CommodityOrderService;
+import com.yulan.utils.StringUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +28,23 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
             int orderNumber = 1;
             List<CommodityOrder> commodityOrders = new ArrayList<>();
             List<Commodity> curtainCommodities = curtainCommodityDao.getCommoditiesByCartItemID(cartItemID);
-            for (Commodity curtainCommodity:curtainCommodities) {
-                JSONObject jsonObject = JSONObject.fromObject(curtainCommodity);
+            for (Commodity commodity:curtainCommodities) {
+                JSONObject jsonObject = JSONObject.fromObject(commodity);
                 CommodityOrder commodityOrder = (CommodityOrder) JSONObject.toBean(jsonObject,CommodityOrder.class);
-                commodityOrder.setOrderItemId(curtainCommodity.getCartItemId());
+                commodityOrder.setOrderItemId(commodity.getCartItemId());
                 commodityOrder.setSaveTime(new Timestamp(System.currentTimeMillis()));
                 commodityOrder.setOrderItemNumber(orderNumber);
+                CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
+                String curtainPartName = curtainCommodity.getCurtainPartName();
+                curtainPartName = StringUtil.GBKToUTF8(curtainPartName);
+                switch (curtainPartName) {
+                    case "帘头":commodityOrder.setCurtainPartName("lt");break;
+                    case "帘身":commodityOrder.setCurtainPartName("ls");break;
+                    case "纱":commodityOrder.setCurtainPartName("sha");break;
+                    case "配件":commodityOrder.setCurtainPartName("pj");break;
+                    case "帘身配布":commodityOrder.setCurtainPartName("lspb");break;
+                    default:commodityOrder.setCurtainPartName("other");break;
+                }
                 orderNumber++;
                 commodityOrders.add(commodityOrder);
             }
@@ -40,5 +53,10 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
             }
         }
         return orderItemIDs;
+    }
+
+    @Override
+    public boolean addOrderNoByOrderItemIDs(String orderItemID, String orderNo) {
+        return commodityOrderDao.addOrderNoByOrderItemIDs(orderItemID, orderNo) > 0;
     }
 }

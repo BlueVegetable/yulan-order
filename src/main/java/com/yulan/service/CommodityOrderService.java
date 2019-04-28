@@ -6,4 +6,6 @@ public interface CommodityOrderService {
 
     List<String> submitCommodityOrder(List<String> cartItemIDs);
 
+    boolean addOrderNoByOrderItemIDs(String orderItemID,String orderNo);
+
 }

@@ -52,7 +52,11 @@ public class ItemTest {
     @Test
     public void test1() {
         List<String> cartItemIDs = new ArrayList<>();
-        cartItemIDs.add("1556249868615cf05bd53827d48feb47d2bf55ccffcc8");
-        commodityOrderService.submitCommodityOrder(cartItemIDs);
+        cartItemIDs.add("1556249842365557d56147bbd4c6199f31ec839816172");
+        System.out.println(commodityOrderService.submitCommodityOrder(cartItemIDs));
+    }
+    @Test
+    public void test2() {
+        commodityOrderDao.addOrderNoByOrderItemIDs("1556249842365557d56147bbd4c6199f31ec839816172","WTX001");
     }
 }
