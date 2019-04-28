@@ -4,7 +4,16 @@ import com.yulan.pojo.CurtainOrder;
 import org.apache.ibatis.annotations.Param;
 
 public interface CurtainOrderDao {
-    CurtainOrder getCurtainOrder(@Param("orderNo")String orderNo,@Param("lineNo")String lineNO);
+
+    /**
+     * 查看窗帘
+     * @param orderNo
+     * @param lineNo
+     * @return
+     */
+    CurtainOrder getCurtainOrder(@Param("orderNo")String orderNo,@Param("lineNo")String lineNo);
+
+    String getTypeName(@Param("productType")String productType);
 
 
     Boolean insertCurtainOrder(CurtainOrder curtainOrder);
@@ -23,6 +32,8 @@ public interface CurtainOrderDao {
      * @return
      */
     Boolean updateCurOrderStatus(@Param("orderNo")String orderNo,@Param("curtainStatusId")String curtainStatusId);
+
+
 
 
 }

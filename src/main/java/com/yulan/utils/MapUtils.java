@@ -38,6 +38,7 @@ public class MapUtils {
 
 
     /**
+     * error 在转化为json时报错
      * javaBean 转 Map
      * 将对象装换为map
      * @param bean

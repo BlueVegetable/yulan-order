@@ -314,5 +314,16 @@ public class Ctm_orderController {
         return  curtainOrderService.curOrderCount(m);
     }
 
+    /**
+     * 查看窗帘详情
+     * @param m
+     * @return
+     */
+    @RequestMapping("getCurtainOrder")
+    @ResponseBody
+    public Map getCurtainOrder (@RequestBody Map<String,Object> m) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException {
+        return  curtainOrderService.getCurtainOrder(m);
+    }
+
 
 }
