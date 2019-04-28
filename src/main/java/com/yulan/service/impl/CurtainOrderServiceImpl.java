@@ -3,6 +3,7 @@ package com.yulan.service.impl;
 import com.yulan.dao.Ctm_orderDao;
 import com.yulan.dao.CurtainOrderDao;
 import com.yulan.pojo.*;
+import com.yulan.service.CommodityOrderService;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.service.CurtainOrderService;
 import com.yulan.utils.BackUtil;
@@ -32,6 +33,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     @Autowired
     private Ctm_orderService ctm_orderService;
 
+    @Autowired
+    private CommodityOrderService commodityOrderService;
+
 
 
     @Override
@@ -42,6 +46,11 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         Map<String ,Object> ctm_ordermap=(Map<String, Object>) map.get("ctm_order");//订单头
         String cid=map.get("cid").toString();
         List<Map<String,Object>> list=(List) map.get("ctm_orders");
+
+        List<String> cartItemIDs=(List) map.get("cartItemIDs");//new
+        Map<String,Integer> lineNos=new HashMap<>();
+
+
         String orderNo=ctm_orderService.getOrderNumber("E");//窗帘订单号
         Timestamp nowTime=new Timestamp(System.currentTimeMillis());//获取当前时间
         for (Map.Entry<String, Object> entry : ctm_ordermap.entrySet()) {//转码
@@ -83,13 +92,27 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
 
                 ctm_order_detail.setLineNo(lineNo);
+
+                lineNos.put(cartItemIDs.get(lineNo-1),lineNo);//new
+
                 lineNo++;
                 if (!ctm_orderDao.insertOrderB(ctm_order_detail)){
+
                     m.put("code",1);
-                    m.put("msg","FALS");
+                    m.put("msg","订单详情录入错误");
                     return m;
                 }
             }
+            List<String> orderItemIDs=commodityOrderService.submitCommodityOrder(cartItemIDs,lineNos);
+            for (String orderItemID:orderItemIDs){
+                if (!commodityOrderService.addOrderNoByOrderItemIDs(orderItemID,orderNo)){
+
+                    m.put("code",1);
+                    m.put("msg","窗帘详情订单号录入错误");
+                    return m;
+                }
+            }
+
             dataMap.put("orderNo",orderNo);
 
             dataMap.put("curtainStatus",ctm_order.getCurtainStatusId());
@@ -98,7 +121,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             m.put("msg","SUCCESS");
         }else {
             m.put("code",1);
-            m.put("msg","FALS");
+            m.put("msg","订单头部录入错误");
         }
 
         return m;
@@ -106,6 +129,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
     /**
      * 窗帘审核状态更新 修改/退回
+     * 只修改窗帘详情
      * @param map
      * @return
      * @throws UnsupportedEncodingException
@@ -116,68 +140,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
         Map dataMap=new HashMap();
-        Ctm_order ctm_order=new Ctm_order();
-        Map<String ,Object> ctm_ordermap=(Map<String, Object>) map.get("ctm_order");//订单头
 
-        List<Map<String,Object>> list=(List) map.get("ctm_orders");
-
-        Timestamp nowTime=new Timestamp(System.currentTimeMillis());//获取当前时间
-        for (Map.Entry<String, Object> entry : ctm_ordermap.entrySet()) {//转码
-            if (entry.getValue() instanceof String) {
-                String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-                entry.setValue(origin);
-            }
-        }
-        BeanUtils.populate(ctm_order,ctm_ordermap);//转为Ctm_order类
-
-
-
-        ctm_order.setDateUpdate(nowTime);//获取当前时间
-
-
-
-        if (ctm_orderDao.updateOrder(ctm_order)) {//订单头录入
-
-            int lineNo = 1;
-            for (Map<String, Object> m2 : list) {//订单详情录入
-
-
-                for (Map.Entry<String, Object> entry : m2.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-                        entry.setValue(origin);
-                    }
-                }
-                List<Map<String,Object>> curtainList=(List) m2.get("curtains");//窗帘详情
-                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
-                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
-                        if (entry.getValue() instanceof String) {
-                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-                            entry.setValue(origin);
-                        }
-                    }
-                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
-
-                    curtainOrder.setLineNo(String.valueOf(lineNo));
-                    curtainOrder.setDateUpdate(nowTime);
-//                    curtainOrder.setItemNo(m2.get("itemNo").toString());//由前端传，窗帘型号
-                    curtainOrderDao.updateCurtainOrder(curtainOrder);
-                }
-                Ctm_order_detail ctm_order_detail = MapUtils.mapToBean(m2, Ctm_order_detail.class);
-
-
-
-                ctm_order_detail.setLineNo(lineNo);
-                lineNo++;
-                ctm_orderDao.updateOrderB(ctm_order_detail);
-            }
-        }
-        dataMap.put("orderNo",ctm_order.getOrderNo());
-        dataMap.put("curtainStatusId",ctm_order.getCurtainStatusId());
-        m.put("data",dataMap);
-        m.put("code",0);
-        m.put("msg","SUCCESS");
-        return m;
+       return null;
     }
 
     @Override
