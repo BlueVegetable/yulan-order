@@ -76,20 +76,21 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                     }
                 }
                 List<Map<String,Object>> curtainList=(List) m2.get("curtains");//窗帘详情
-                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
-                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
-                        if (entry.getValue() instanceof String) {
-                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-                            entry.setValue(origin);
-                        }
-                    }
-                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
-                    curtainOrder.setOrderNo(orderNo);
-                    curtainOrder.setLineNo(String.valueOf(lineNo));
-                    curtainOrder.setDateUpdate(nowTime);
-//                    curtainOrder.setItemNo(m2.get("itemNo").toString());//由前端传，窗帘型号
-                    curtainOrderDao.insertCurtainOrder(curtainOrder);
-                }
+
+//                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
+//                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
+//                        if (entry.getValue() instanceof String) {
+//                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
+//                            entry.setValue(origin);
+//                        }
+//                    }
+//                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
+//                    curtainOrder.setOrderNo(orderNo);
+//                    curtainOrder.setLineNo(String.valueOf(lineNo));
+//                    curtainOrder.setDateUpdate(nowTime);
+////                    curtainOrder.setItemNo(m2.get("itemNo").toString());//由前端传，窗帘型号
+//                    curtainOrderDao.insertCurtainOrder(curtainOrder);
+//                }
                 Ctm_order_detail ctm_order_detail = MapUtils.mapToBean(m2, Ctm_order_detail.class);
                 ctm_order_detail.setOrderNo(orderNo);
 
