@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CustomerinfocardgroupDao">
+    <resultMap id="customerinfocardgroupList" type="Customerinfocardgroup" >
+        <result column="Id" property="Id" />
+        <result column="area_code" property="area_code" />
+        <result column="area_district" property="area_district" />
+        <result column="customer_type" property="customer_type" />
+        <result column="descp" property="descp" />
+        <result column="createts" property="createts" />
+        <result column="cardcount" property="cardcount" />
+        <result column="contractyear" property="contractyear" />
+        <result column="deleted" property="deleted" />
+        <result column="erpcopyed" property="erpcopyed" />
+    </resultMap>
+
+    <insert id="addCustomerInfoCardGroup" parameterType="Customerinfocardgroup">
+        insert into
+        CUSTOMERINFOCARDGROUP
+        (ID,DESCP)
+        values
+        (#{Id},#{descp})
+    </insert>
+
+    <select id="getCustomerinfocardgroups" resultMap="customerinfocardgroupList">
+        select
+          *
+
+        from(
+        select rownum rm, t.*  from CUSTOMERINFOCARDGROUP t where 1=1
+            and deleted =#{deleted}
+        <if test="descp!=null">
+            and descp like  '%'||#{descp}||'%'
+        </if>
+
+        ) tm where rm &gt;= #{start} and rm &lt;= #{number }
+    </select>
+
+    <select id="count" resultType="int" parameterType="String">
+        select count(*) from customerinfocardgroup where 1=1
+        <if test="descp!=null">
+            and descp like  '%'||#{descp}||'%'
+        </if>
+    </select>
+
+    <select id="getArea_codeName" resultType="String" parameterType="String">
+         select Area_name from Area_code where Area_code=#{Area_code}
+    </select>
+
+    <select id="getArea_districtName" resultType="String">
+        select district_name from Area_district where district_id=#{area_district}
+    </select>
+
+    <select id="getCustomer_typeName" resultType="String">
+        select customer_type_name from CUSTOMER_TYPE where customer_type_id=#{customer_type}
+    </select>
+
+    <select id="getCustomerInfoCardGroupByName" parameterType="Map" resultType="Customerinfocardgroup">
+        select * from CUSTOMERINFOCARDGROUP where descp = #{descp}
+    </select>
+
+    <update id="updateDelete" parameterType="Customerinfocardgroup" >
+         update customerinfocardgroup set deleted=#{deleted} where Id=#{Id}
+    </update>
+</mapper>

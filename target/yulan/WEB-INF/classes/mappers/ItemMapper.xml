@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.ItemDao" >
+
+    <resultMap id="ItemMap" type="com.yulan.pojo.Item" >
+        <id column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+        <result column="OLD_ITEM_NO" property="oldItemNo" jdbcType="VARCHAR" />
+        <result column="ITEM_VERSION" property="itemVersion" jdbcType="VARCHAR" />
+        <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
+        <result column="NOTE" property="note" jdbcType="VARCHAR" />
+        <result column="SALE_ID" property="saleId" jdbcType="VARCHAR" />
+        <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+        <result column="USE_ID" property="useId" jdbcType="VARCHAR" />
+        <result column="PRODUCT_BRAND" property="productBrand" jdbcType="VARCHAR" />
+        <result column="PRODUCT_FLAG" property="productFlag" jdbcType="VARCHAR" />
+        <result column="ITEM_FLAG" property="itemFlag" jdbcType="VARCHAR" />
+        <result column="ITEM_DZ" property="itemDz" jdbcType="VARCHAR" />
+        <result column="FIX_TYPE" property="fixType" jdbcType="VARCHAR" />
+        <result column="FIX_GRADE" property="fixGrade" jdbcType="DECIMAL" />
+        <result column="RZ_STYLE" property="rzStyle" jdbcType="VARCHAR" />
+        <result column="RZ_GRADE" property="rzGrade" jdbcType="VARCHAR" />
+        <result column="HIGH_JIA" property="highJia" jdbcType="DECIMAL" />
+        <result column="WBH_FLAG" property="wbhFlag" jdbcType="VARCHAR" />
+        <result column="DELETE_FLAG" property="deleteFlag" jdbcType="VARCHAR" />
+        <result column="ML_MODIFY_FLAG" property="mlModifyFlag" jdbcType="VARCHAR" />
+        <result column="WIDTH_HH" property="widthHh" jdbcType="DECIMAL" />
+        <result column="HIGH_HH" property="highHh" jdbcType="DECIMAL" />
+        <result column="DUIHUA" property="duihua" jdbcType="OTHER" />
+        <result column="OAO" property="oao" jdbcType="VARCHAR" />
+        <result column="SALE_PRICE" property="salePrice" jdbcType="DECIMAL" />
+        <result column="PRICE_SALE" property="priceSale" jdbcType="DECIMAL" />
+        <result column="PRICE_FX" property="priceFx" jdbcType="DECIMAL" />
+        <result column="PRICE_HOME" property="priceHome" jdbcType="DECIMAL" />
+        <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
+        <result column="TOTAL" property="total" jdbcType="DECIMAL"/>
+        <result column="DUIHUA_LOSS" property="duihuaLoss" jdbcType="DECIMAL"/>
+        <association property="itemType" javaType="com.yulan.pojo.ItemType"
+                     resultMap="ItemResultMap"/>
+    </resultMap>
+
+    <resultMap type="com.yulan.pojo.ItemType" id="ItemResultMap" >
+            <id column="ITEM_TYPE" property="itemType" jdbcType="VARCHAR" />
+            <result column="bnote" property="note" jdbcType="VARCHAR" />
+            <result column="PRO_TYPE" property="proType" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <resultMap id="StockShowMap" type="com.yulan.pojo.StockShow">
+        <id column="STOCK_NO" property="stockNo" jdbcType="VARCHAR" />
+        <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
+        <result column="QTY" property="qty" jdbcType="DECIMAL" />
+        <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="CurtainMap" type="com.yulan.pojo.ItemMLGY">
+        <id column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+        <id column="ITEM_TYPE" jdbcType="VARCHAR" property="itemType" />
+        <id column="NO" jdbcType="DECIMAL" property="no" />
+        <id column="PARENT_ITEM_NO" jdbcType="VARCHAR" property="parentItemNo" />
+        <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+        <result column="DATE_CRE" jdbcType="TIMESTAMP" property="dateCre" />
+        <result column="PRODUCT_TYPE" jdbcType="VARCHAR" property="productType" />
+        <result column="LSML_RATE" jdbcType="DECIMAL" property="lsmlRate" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="NOTES" jdbcType="VARCHAR" property="notes" />
+        <result column="FIX_TYPE" jdbcType="VARCHAR" property="fixType"/>
+        <result column="DELETE_FLAG" jdbcType="VARCHAR" property="deleteFlag"/>
+        <result column="MODIFY_FLAG" jdbcType="VARCHAR" property="modifyFlag"/>
+        <result column="CHANGE_FLAG" jdbcType="VARCHAR" property="changeFlag"/>
+    </resultMap>
+
+
+    <select id="getItemByItemNO" parameterType="String" resultType="Item">
+        select * from item where ITEM_NO = #{itemNO}
+    </select>
+
+    <select id="getWallpaperInfo" resultMap="ItemMap">
+        select a.*, b.item_type, b.note bnote, b.pro_type from ITEM a,ITEM_TYPE b where a.product_type = b.item_type
+        and b.pro_type in ('qiang','support','other')
+        and a.sale_id in ('A','B','D')
+        and ( a.ITEM_NO = #{paperType} or a.OLD_ITEM_NO = #{paperType})
+        and a.sale_id not in ('C','F')
+    </select>
+
+    <select id="getProductVersion" resultType="String">
+       select PRODUCTVERSION_NAME from PRODUCT_VERSION t where PRODUCTVERSION_ID = #{itemVersion}
+    </select>
+
+    <select id="getProductBrand" resultType="String">
+        select t.brand_name from BRAND_TYPE t where t.brand_id = #{productBrand}
+    </select>
+
+    <select id="userBrandAuthority" resultType="String">
+        select 'Y' from v_customer_brand a,item b  where a.brand = b.product_brand
+        and a.customer_code = #{CID}
+        and b.item_no = #{ITEM_NO}
+
+    </select>
+
+    <select id="getStockShow" resultMap="StockShowMap">
+      select sf.stock_no, mc_get_ph(sf.batch_no)AS batch_no ,sf.qty,sf.item_no from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0
+    </select>
+
+    <select id="getStockShowMax" resultType="com.yulan.pojo.StockShow">
+      select * from (
+      select sf.stock_no,mc_get_ph(sf.batch_no) AS batch_no ,sf.qty,sf.item_no from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0 ORDER BY sf.qty desc nulls last)WHERE ROWNUM =1
+    </select>
+
+    <select id="sumStockShow" resultType="Integer">
+      select sum(sf.qty) from stock_floor sf
+      where sf.item_no = #{ITEM_NO}
+      and sf.stock_no in (
+      select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.qty >0
+    </select>
+
+     <select id="getMLInfo" resultMap="ItemMap">
+         select * from(
+         select rownum rm, c.*  from
+         (
+         select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+         where a.brand = b.product_brand
+         and a.customer_code = #{cid}
+         and b.product_type in ('ML' , 'MLP')
+         and b.sale_id not in ('C','F')
+         ) c)tm
+         <if test="start!=null">
+             where rm &gt;= #{start} and rm &lt;= #{number}
+         </if>
+     </select>
+
+    <select id="getMLSingle" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.* ,COUNT(*) OVER () TOTAL from
+        (
+        select b.* from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('ML' , 'MLP')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+     </select>
+
+    <select id="getXHBInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('XHB')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getXHBSingle" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.* ,COUNT(*) OVER () TOTAL from
+        (
+        select b.* from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('XHB')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getPJBInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('PJB')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getPJBSingle" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('PJB')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getBZInfo" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
+        select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('BZ')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getBZSingle" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('BZ')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getGHInfo" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('GH')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getGHSingle" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.*,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('GH')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getTCInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('TC')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getTCSingle" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.* ,COUNT(*) OVER () TOTAL from
+        (
+        select b.* from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('TC')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+
+    <select id="getOtherInfo" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.product_type in ('TU','DT')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getOtherSingle" resultMap="ItemMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        where a.brand = b.product_brand
+        and a.customer_code = #{cid}
+        and b.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        and b.product_type in ('TU','DT')
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getUnit" resultType="String">
+        select t.note from UNIT t where t.unit = #{unit}
+    </select>
+
+    <select id="getCurtainType" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select t.* ,COUNT(*) OVER () TOTAL from ITEM t where t.product_type = 'KS'
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <select id="getCurtainTypeBySearch" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select t.* ,COUNT(*) OVER () TOTAL from ITEM t where t.product_type = 'KS' and t.item_no like CONCAT(CONCAT('%',#{itemNo}),'%')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <!--获取同一型号窗帘下的系列产品-->
+    <select id="getCurtainInfo" resultMap="CurtainMap">
+        select * from ITEM_ML_GY t where t.parent_item_no = #{curtainNo} ORDER BY t.NO
+    </select>
+
+    <select id="getSingleItemMLGY" resultType="com.yulan.pojo.ItemMLGY">
+        select * from ITEM_ML_GY t where t.item_no = #{itemNO} and t.parent_item_no = #{curtainNo}
+    </select>
+
+    <!--获取每个窗帘可更换 -->
+    <select id="getCurtainItemTypeAll" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* ,COUNT(*) OVER () TOTAL from item b
+        <if test="itemNO == 'LCB'">
+        where b.product_type in ('LCB')
+        </if>
+        <if test="itemNO == 'ML' or itemNO == 'MLP'">
+        where b.product_type in ('ML','MLP')
+        </if>
+        <if test="itemNO == 'PJB'">
+            where b.product_type in ('PJB')
+        </if>
+        and b.sale_id not in ('C','F')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+    <!--获取每个窗帘可更换产品 模糊查询 -->
+    <select id="searchCurtainItemTypeAll" resultMap="ItemMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select b.* ,COUNT(*) OVER () TOTAL from item b
+        <if test="itemType == 'LCB'">
+            where b.product_type in ('LCB')
+        </if>
+        <if test="itemType == 'ML' or itemType == 'MLP'">
+            where b.product_type in ('ML','MLP')
+        </if>
+        <if test="itemType == 'PJB'">
+            where b.product_type in ('PJB')
+        </if>
+        and b.sale_id not in ('C','F')
+        and b.item_no like CONCAT(CONCAT('%',#{itemNO}),'%')
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+
+    <!-- 获取每个窗帘对应的工艺-->
+    <select id="getItemGY" resultType="String">
+        select t.gy_no from ITEM_GY_LIST t where t.parent_item_no = #{itemNO}
+    </select>
+
+</mapper>

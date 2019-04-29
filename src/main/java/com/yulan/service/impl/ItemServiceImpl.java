@@ -296,7 +296,7 @@ public class ItemServiceImpl implements ItemService {
                     usage = (width + WBH * 2) * 1.5;
                 }
                 BigDecimal ltUsage = new BigDecimal(usage);
-                map.put("lt", ltUsage);
+                map.put("lt", ltUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
             } else if (itemMLGY.getItemType().equals("ls")) {
                 BigDecimal lsUsage = BigDecimal.valueOf(0);
                 //判断是否是里衬布
@@ -312,7 +312,7 @@ public class ItemServiceImpl implements ItemService {
                                 if (curtainItem.getWidthHh() != null) {
                                     lsUsage = arith.mul(arith.dbToBD(width),
                                             arith.div( curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
-                                    map.put("ls", lsUsage);
+                                    map.put("ls", lsUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
                                 } else {
                                     map.put("ls ", itemMLGY.getItemNo() +
                                             " has null values and can not be " +
@@ -391,11 +391,11 @@ public class ItemServiceImpl implements ItemService {
             }
             //绣花边
             if (itemMLGY.getProductType().equals("XHB")) {
-                Double XHBusage = 0.0;
-                if (itemMLGY.getItemNo().equals("lt")) {
+                Double XHBusage ;
+                if (itemMLGY.getItemType().equals("lt")) {
                     XHBusage = width * multiple + 0.3;
                     map.put("XHBlt", XHBusage);
-                } else if (itemMLGY.getItemNo().equals("ls")) {
+                } else if (itemMLGY.getItemType().equals("ls")) {
                     XHBusage = height * 2 + 0.4;
                     map.put("XHBls", XHBusage);
                 }
