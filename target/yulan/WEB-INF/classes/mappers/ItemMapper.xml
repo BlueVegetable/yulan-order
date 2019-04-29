@@ -371,6 +371,10 @@
         select * from ITEM_ML_GY t where t.parent_item_no = #{curtainNo} ORDER BY t.NO
     </select>
 
+    <select id="getSingleItemMLGY" resultType="com.yulan.pojo.ItemMLGY">
+        select * from ITEM_ML_GY t where t.item_no = #{itemNO} and t.parent_item_no = #{curtainNo}
+    </select>
+
     <!--获取每个窗帘可更换 -->
     <select id="getCurtainItemTypeAll" resultMap="ItemMap">
         select * from(
