@@ -86,4 +86,47 @@
         set ORDER_NO = #{orderNo}
         where ORDER_ITEM_ID = #{orderItemID}
     </update>
+
+    <update id="updateCommodityOrder" parameterType="CommodityOrder" >
+        update COMMODITY_ORDER
+        <set >
+            <if test="itemId != null" >
+                ITEM_ID = #{itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="dosage != null" >
+                DOSAGE = #{dosage,jdbcType=NUMERIC},
+            </if>
+            <if test="manufacturingInstructions != null" >
+                MANUFACTURING_INSTRUCTIONS = #{manufacturingInstructions,jdbcType=VARCHAR},
+            </if>
+            <if test="certainHeightWidth != null" >
+                CERTAIN_HEIGHT_WIDTH = #{certainHeightWidth,jdbcType=NUMERIC},
+            </if>
+            <if test="specification != null" >
+                SPECIFICATION = #{specification,jdbcType=NUMERIC},
+            </if>
+            <if test="illustrate != null" >
+                ILLUSTRATE = #{illustrate,jdbcType=VARCHAR},
+            </if>
+
+            <if test="suggestion != null" >
+                SUGGESTION = #{suggestion,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+        and LINE_NO = #{lineNo,jdbcType=NUMERIC}
+    </update>
+
+    <update id="updateCommodityOrderSug" parameterType="CommodityOrder" >
+        update COMMODITY_ORDER
+        <set >
+            <if test="suggestion != null" >
+                SUGGESTION = #{suggestion,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+        and LINE_NO = #{lineNo,jdbcType=NUMERIC}
+    </update>
 </mapper>
