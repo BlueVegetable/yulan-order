@@ -51,8 +51,8 @@ public class ItemTest {
     }
     @Test
     public void test1() {
-//        List<String> cartItemIDs = new ArrayList<>();
-//        cartItemIDs.add("1556249842365557d56147bbd4c6199f31ec839816172");
+        List<String> cartItemIDs = new ArrayList<>();
+        cartItemIDs.add("1556249842365557d56147bbd4c6199f31ec839816172");
 //        System.out.println(commodityOrderService.submitCommodityOrder(cartItemIDs));
     }
     @Test
