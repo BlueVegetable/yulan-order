@@ -9,7 +9,7 @@ public interface CommodityOrderService {
 
     /**
      * 将购物车的信息转移到订单
-     * @param cartItemIDs
+     * @param cartItemIDs 前端传回
      * @param lineNos
      * @return
      */

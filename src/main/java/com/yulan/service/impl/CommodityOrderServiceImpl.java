@@ -61,4 +61,9 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
     public boolean addOrderNoByOrderItemIDs(String orderItemID, String orderNo) {
         return commodityOrderDao.addOrderNoByOrderItemIDs(orderItemID, orderNo) > 0;
     }
+
+    @Override
+    public List<CommodityOrder> getCommodityOrders(String orderNo, Integer lineNo) {
+        return commodityOrderDao.getCommodityOrders(orderNo, lineNo);
+    }
 }
