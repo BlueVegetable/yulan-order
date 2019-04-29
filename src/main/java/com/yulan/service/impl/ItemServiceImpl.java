@@ -370,22 +370,7 @@ public class ItemServiceImpl implements ItemService {
                                 "FixGrade(),DuihuaLoss,HighJia");
 
                     } else {
-/*                        if ("02".equals(curtainItem.getFixType())) {
-                            shaUsage = arith.add(arith.dbToBD(width * multiple),
-                                    curtainItem.getDuihuaLoss());
-                        } else {
-                            //定宽
-                            if (curtainItem.getHighHh().doubleValue() > 0) {
-                                //花回
-                                shaUsage =
-                                        arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
-                                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()),arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
-                                                arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
-                            } else if (curtainItem.getHighHh().doubleValue() == 0) {
-                                shaUsage =
-                                        arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
-                            }
-                        }*/
+
                         shaUsage = usageCalculation(width, multiple,height, curtainItem);
                         map.put("sha", shaUsage);
                     }
@@ -409,10 +394,11 @@ public class ItemServiceImpl implements ItemService {
                 Double XHBusage = 0.0;
                 if (itemMLGY.getItemNo().equals("lt")) {
                     XHBusage = width * multiple + 0.3;
+                    map.put("XHBlt", XHBusage);
                 } else if (itemMLGY.getItemNo().equals("ls")) {
                     XHBusage = height * 2 + 0.4;
+                    map.put("XHBls", XHBusage);
                 }
-                map.put("XHB", XHBusage);
             }
             //这行代码有问题是因为item如果型号一样的话，就会地址一样，然后后面的itemMLGY就会覆盖掉前面的，就会产生重复数据
             Item item;
