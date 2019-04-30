@@ -74,7 +74,7 @@
     </delete>
 
     <select id="getCommodityOrders" parameterType="Map" resultMap="CommodityOrderMap">
-        select * from COMMODITY_ORDER where ORDER_NO = #{orderNo} and LINE_NO = #{lineNo}
+        select * from COMMODITY_ORDER where ORDER_NO = #{orderNo} and LINE_NO = #{lineNo} order by ORDER_ITEM_NUMBER
     </select>
 
     <select id="getCommodityOrderByOrderItemID" parameterType="String" resultMap="CommodityOrderMap">
