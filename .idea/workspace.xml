@@ -7,10 +7,92 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e49d8f3b-fac9-412c-952d-2f996440b542" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityOrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityOrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resource/mappers/CommodityMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resource/mappers/CommodityMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/ItemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/ItemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resource/mappers/CurtainCartItemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resource/mappers/CurtainCartItemMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/CartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/CartController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/Ctm_orderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/Ctm_orderController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/CustomerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/CustomerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/CustomerInfoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/CustomerInfoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/EntrustFileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/EntrustFileController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/ExceptionResolver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/ExceptionResolver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/InfoStateController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/InfoStateController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/PackDetailController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/PackDetailController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/SalPromotionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/SalPromotionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/Web_userController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/Web_userController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/WebcontractwfmemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/WebcontractwfmemberController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/YLc_infoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/YLc_infoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/YLcontractentryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/YLcontractentryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/encode/CartItemEncode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/encode/CartItemEncode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/encode/CommodityEncode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/encode/CommodityEncode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/encode/CurtainCommodityEncode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/encode/CurtainCommodityEncode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ActivityGroupType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ActivityGroupType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaDistrict.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaDistrict.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaRegion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaRegion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/AreaUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Cart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Cart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CartItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CartItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Commodity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Commodity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CtmOrderDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CtmOrderDetail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Ctm_order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Ctm_order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Ctm_order_detail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Ctm_order_detail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainCartItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainCartItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainCommodity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainCommodity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainOrder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CurtainOrder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Customer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CustomerType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/CustomerType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/HesEmployee.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/HesEmployee.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Item.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ItemMLGY.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ItemMLGY.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ItemType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ItemType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/PackDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/PackDetail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Pack_detail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Pack_detail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/PostAddress.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/PostAddress.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ProductGroupType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/ProductGroupType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/SalPromotion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/SalPromotion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/SalReturnRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/SalReturnRecord.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Sal_promotion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Sal_promotion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Sal_rebate_certificate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Sal_rebate_certificate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Unit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/Unit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/YLcontract_v2015.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/YLcontract_v2015.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/YLcontract_v2015_paa.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/YLcontract_v2015_paa.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/YLcontractentry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/YLcontractentry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ActivityGroupTypeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ActivityGroupTypeServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/AreaRegionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/AreaRegionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Area_ownerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Area_ownerServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CartItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CartItemServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Ctm_orderServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Ctm_orderServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CurtainCartItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CurtainCartItemServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CurtainOrderServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CurtainOrderServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CustomerInfoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CustomerInfoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CustomerinfocardgroupServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CustomerinfocardgroupServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/InfoStateServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/InfoStateServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ItemServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/PostAddressServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/PostAddressServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/SalPromotionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/SalPromotionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Sal_rebate_certificate_recordServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Sal_rebate_certificate_recordServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/UnitServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/UnitServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Web_userServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/Web_userServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/YLc_infoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/YLc_infoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/YLcontractentryServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/YLcontractentryServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/webcontractwfmemberServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/webcontractwfmemberServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/BackUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/BackUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/FileUpload.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/FileUpload.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/MD5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/MD5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/MapUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/MapUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/NumToChinese.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/NumToChinese.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/ObjectUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/ObjectUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/PasswordUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/PasswordUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/StringUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/StringUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/Token.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/Token.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/utils/TransferXML.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/utils/TransferXML.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/yulan/WEB-INF/classes/com/yulan/service/impl/CurtainOrderServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan/WEB-INF/classes/com/yulan/service/impl/CurtainOrderServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/yulan/WEB-INF/classes/com/yulan/service/impl/ItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan/WEB-INF/classes/com/yulan/service/impl/ItemServiceImpl.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -50,29 +132,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/Commodity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CommodityMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="12" column="58" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CurtainCommodityMapper.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/encode/CommodityEncode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+            <state relative-caret-position="105">
+              <caret line="43" column="69" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="41" column="36" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+              <folding>
+                <element signature="e#1231#1232#0" expanded="true" />
+                <element signature="e#1290#1291#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="13">
+              <caret line="207" column="54" selection-start-line="207" selection-start-column="54" selection-end-line="207" selection-end-column="54" />
+              <folding>
+                <element signature="method#addCart#0;class#CartController#0" />
+                <element signature="e#1860#2020#1" />
+                <element signature="e#1933#2010#1" />
+                <element signature="method#addCartItem#0;class#CartController#0" />
+                <element signature="method#deleteCartItems#0;class#CartController#0" />
+                <element signature="e#9308#9309#0" expanded="true" />
+                <element signature="e#9368#9369#0" expanded="true" />
+                <element signature="method#getSimpleCartByCID#0;class#CartController#0" />
+                <element signature="method#updateCartItem#0;class#CartController#0" />
+                <element signature="method#dealCurtainCartItems#0;class#CartController#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -171,8 +269,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainList.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/Cart.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/controller/EntrustFileController.java" />
-        <option value="$PROJECT_DIR$/src/main/resource/mappers/CurtainCartItemMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCartItem.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainCartItemServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CartServiceImpl.java" />
@@ -184,6 +280,8 @@
         <option value="$PROJECT_DIR$/src/test/ItemTest.java" />
         <option value="$PROJECT_DIR$/src/main/resource/mappers/CommodityMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/resource/mappers/CurtainCommodityMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCartItem.java" />
+        <option value="$PROJECT_DIR$/src/main/resource/mappers/CurtainCartItemMapper.xml" />
       </list>
     </option>
   </component>
@@ -369,57 +467,6 @@
               <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="controller" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="dao" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="pojo" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="yulan" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="impl" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="resource" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
@@ -429,6 +476,11 @@
               <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="resource" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="mappers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="yulan-order" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="yulan-order" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="target" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -451,7 +503,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resource/mappers" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.25041598" />
     <property name="settings.editor.selected.configurable" value="Errors" />
@@ -871,6 +923,8 @@
       <workItem from="1556451203838" duration="1588000" />
       <workItem from="1556459804705" duration="854000" />
       <workItem from="1556540821282" duration="1326000" />
+      <workItem from="1556542387105" duration="823000" />
+      <workItem from="1556595059255" duration="3261000" />
     </task>
     <servers />
   </component>
@@ -907,7 +961,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="893772000" />
+    <option name="totallyTimeSpent" value="897856000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -920,9 +974,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.89099526" visible="true" weight="0.34242424" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.89099526" visible="true" weight="0.25681818" />
       <window_info id="Structure" order="1" sideWeight="0.15433404" side_tool="true" weight="0.25670242" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -934,8 +987,8 @@
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32907802" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32907802" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49474534" visible="true" weight="0.4319728" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.37414965" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49474534" visible="true" weight="0.34353742" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.3809524" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49798927" weight="0.3432624" />
@@ -1009,6 +1062,18 @@
           <line>104</line>
           <properties />
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/yulan/encode/CommodityEncode.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java</url>
+          <line>206</line>
+          <properties />
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1089,24 +1154,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/encode/CommodityEncode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="67" column="72" selection-start-line="67" selection-start-column="72" selection-end-line="67" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="26" />
-          <folding>
-            <element signature="e#1502#1503#0" expanded="true" />
-            <element signature="e#1558#1559#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/CommodityController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="395">
@@ -1132,13 +1179,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="80" selection-start-line="80" selection-end-line="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CartItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1240">
-          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
         </state>
       </provider>
     </entry>
@@ -1208,29 +1248,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="520">
           <caret line="49" column="40" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CurtainCartItemMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCartItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="27" column="33" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
-          <folding>
-            <element signature="e#729#730#0" expanded="true" />
-            <element signature="e#777#778#0" expanded="true" />
-            <element signature="e#817#818#0" expanded="true" />
-            <element signature="method#setOutsourcingBoxWidth#0;class#CurtainCartItem#0" />
-            <element signature="method#equals#0;class#CurtainCartItem#0" />
-            <element signature="method#hashCode#0;class#CurtainCartItem#0" />
-            <element signature="method#toString#0;class#CurtainCartItem#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1359,26 +1376,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1660">
-          <caret line="170" column="83" selection-start-line="170" selection-start-column="83" selection-end-line="170" selection-end-column="83" />
-          <folding>
-            <element signature="method#addCart#0;class#CartController#0" />
-            <element signature="e#1860#2020#1" />
-            <element signature="e#1933#2010#1" />
-            <element signature="method#addCartItem#0;class#CartController#0" />
-            <element signature="method#deleteCartItems#0;class#CartController#0" />
-            <element signature="method#deleteCommodities#0;class#CartController#0" />
-            <element signature="e#9308#9309#0" expanded="true" />
-            <element signature="e#9368#9369#0" expanded="true" />
-            <element signature="method#getSimpleCartByCID#0;class#CartController#0" />
-            <element signature="method#updateCartItem#0;class#CartController#0" />
-            <element signature="method#dealCurtainCartItems#0;class#CartController#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityOrderServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -1424,13 +1421,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/Commodity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/CommodityService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
@@ -1438,17 +1428,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/Commodity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CommodityMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="12" column="58" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="58" />
+          <caret line="12" column="58" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CartItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CurtainCommodityMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+        <state relative-caret-position="180">
+          <caret line="24" column="16" lean-forward="true" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CurtainCartItemMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="40" lean-forward="true" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCartItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
+          <folding>
+            <element signature="method#setOutsourcingBoxWidth#0;class#CurtainCartItem#0" />
+            <element signature="method#equals#0;class#CurtainCartItem#0" />
+            <element signature="method#hashCode#0;class#CurtainCartItem#0" />
+            <element signature="method#toString#0;class#CurtainCartItem#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/CartController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13">
+          <caret line="207" column="54" selection-start-line="207" selection-start-column="54" selection-end-line="207" selection-end-column="54" />
+          <folding>
+            <element signature="method#addCart#0;class#CartController#0" />
+            <element signature="e#1860#2020#1" />
+            <element signature="e#1933#2010#1" />
+            <element signature="method#addCartItem#0;class#CartController#0" />
+            <element signature="method#deleteCartItems#0;class#CartController#0" />
+            <element signature="e#9308#9309#0" expanded="true" />
+            <element signature="e#9368#9369#0" expanded="true" />
+            <element signature="method#getSimpleCartByCID#0;class#CartController#0" />
+            <element signature="method#updateCartItem#0;class#CartController#0" />
+            <element signature="method#dealCurtainCartItems#0;class#CartController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CommodityServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="41" column="36" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+          <folding>
+            <element signature="e#1231#1232#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/encode/CommodityEncode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="43" column="69" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="69" />
         </state>
       </provider>
     </entry>

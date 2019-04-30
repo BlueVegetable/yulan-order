@@ -16,6 +16,8 @@ public class CurtainCartItem extends CartItem {
     private BigDecimal outsourcingBoxWidth;
     private List<CurtainList> curtainLists;
     private Timestamp saveTime;
+    private Integer count;
+    private BigDecimal price;
 
     public String getModelNumber() {
         return modelNumber;
@@ -87,6 +89,33 @@ public class CurtainCartItem extends CartItem {
 
     public void setSaveTime(Timestamp saveTime) {
         this.saveTime = saveTime;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public BigDecimal getPrice() {
+        price = new BigDecimal("0.00");
+        for (CurtainList curtainList:curtainLists) {
+            List<CurtainCommodity> curtainCommodities = curtainList.getCurtainCommodities();
+            for (CurtainCommodity curtainCommodity:curtainCommodities) {
+                price = price.add(curtainCommodity.getPrice().multiply(curtainCommodity.getDosage()));
+            }
+        }
+        if(count == null) {
+            count = 1;
+        }
+        price = price.multiply(new BigDecimal(count));
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override
