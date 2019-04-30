@@ -1,5 +1,6 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.CommodityOrderDao;
 import com.yulan.dao.Ctm_orderDao;
 import com.yulan.dao.CurtainOrderDao;
 import com.yulan.pojo.*;
@@ -35,6 +36,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
     @Autowired
     private CommodityOrderService commodityOrderService;
+
+    @Autowired
+    private CommodityOrderDao commodityOrderDao;
 
 
 
@@ -139,9 +143,26 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     @Override
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
-        Map dataMap=new HashMap();
+        Map<String,Object> commodityOrderMap=(Map<String, Object>) map.get("commodityOrder");
+        for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//转码
+            if (entry.getValue() instanceof String) {
+                String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
+                entry.setValue(origin);
+            }
+        }
+        CommodityOrder commodityOrder=MapUtils.mapToBean(commodityOrderMap,CommodityOrder.class);
+        String orderNo=map.get("orderNo").toString();
+        String curtainStatusId=map.get("curtainStatusId").toString();
+        if (curtainOrderDao.updateCurOrderStatus(orderNo,curtainStatusId)){
+            commodityOrderDao.updateCommodityOrder(commodityOrder);
+            m.put("code",0);
+            m.put("msg","SUCCESS");
+        }else {
+            m.put("code",1);
+            m.put("msg","FLAS");
+        }
 
-       return null;
+       return m;
     }
 
     @Override

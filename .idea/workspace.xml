@@ -8,8 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e49d8f3b-fac9-412c-952d-2f996440b542" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CommodityOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CommodityOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -78,13 +76,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="845" />
+          <entry key="java" value="978" />
           <entry key="xml" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="845" />
+          <entry key="JAVA" value="978" />
           <entry key="XML" value="37" />
         </counts>
       </usages-collector>
@@ -116,8 +114,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2253">
-              <caret line="345" lean-forward="true" selection-start-line="345" selection-end-line="345" />
+            <state relative-caret-position="545">
+              <caret line="164" column="16" lean-forward="true" selection-start-line="164" selection-start-column="16" selection-end-line="164" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -163,7 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getAllys_areaOver</find>
       <find>checkyl</find>
       <find>checkYLcontractentry</find>
       <find>checkYLcontractentryState</find>
@@ -193,6 +190,7 @@
       <find>addOrderNoByOrderItemIDs</find>
       <find>getOrderContent</find>
       <find>itemId</find>
+      <find>updateCurOrderStatus</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -301,10 +299,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-1709" />
+    <option name="y" value="187" />
+    <option name="width" value="1440" />
+    <option name="height" value="780" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -476,7 +474,7 @@
     <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556597074830" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556598582931" />
     <property name="last_opened_file_path" value="F:/vegetable26" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -889,7 +887,7 @@
       <workItem from="1556420106009" duration="3517000" />
       <workItem from="1556456826845" duration="8509000" />
       <workItem from="1556529645593" duration="6833000" />
-      <workItem from="1556584558342" duration="5455000" />
+      <workItem from="1556584558342" duration="6976000" />
     </task>
     <servers />
   </component>
@@ -926,7 +924,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="905356000" />
+    <option name="totallyTimeSpent" value="906877000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -938,7 +936,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.89099526" visible="true" weight="0.17662753" />
@@ -953,13 +951,13 @@
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32907802" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49474534" visible="true" weight="0.26608506" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49474534" weight="0.26608506" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.3740458" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49798927" weight="0.34242094" />
       <window_info anchor="bottom" id="Spring" order="8" weight="0.32907802" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.38495094" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.22028354" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5052546" side_tool="true" weight="0.4397163" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49636218" weight="0.3653217" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
@@ -1421,8 +1419,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2253">
-          <caret line="345" lean-forward="true" selection-start-line="345" selection-end-line="345" />
+        <state relative-caret-position="545">
+          <caret line="164" column="16" lean-forward="true" selection-start-line="164" selection-start-column="16" selection-end-line="164" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
