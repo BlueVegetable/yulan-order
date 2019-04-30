@@ -17,7 +17,13 @@ public class SalPromotionServiceImpl implements SalPromotionService {
     private SalPromotionDao salPromotionDao;
     @Override
     public SalPromotion getSalPromotionByID(String orderType) {
-        SalPromotion salPromotion = salPromotionDao.getSalPromotionByID(orderType);
+        SalPromotion salPromotion;
+        if(orderType != null) {
+            salPromotion = salPromotionDao.getSalPromotionByID(orderType);
+        } else {
+            salPromotion = new SalPromotion();
+            salPromotion.setOrderName("不参与活动");
+        }
         if(salPromotion!=null)
             salPromotion.setOrderName(StringUtil.GBKToUTF8(salPromotion.getOrderName()));
         return salPromotion;
