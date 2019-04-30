@@ -364,12 +364,10 @@ public class ItemServiceImpl implements ItemService {
 
             //工艺用量
             if (itemMLGY.getProductType().equals("GY")) {
-                if (itemMLGY.getItemNo().equals("GY-003")) {
+                //直接返回GY=003的有用量，因为其他的工艺用量等于帘身用量
                     Double GYusage = width * height;
                     map.put("GY", GYusage);
-                } else {
-                    map.put("GY", "工艺用量=帘身用量");
-                }
+
             }
             //绣花边
             if (itemMLGY.getProductType().equals("XHB")) {
