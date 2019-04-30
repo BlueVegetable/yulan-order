@@ -343,21 +343,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             int lineNo=1;
             for (Map<String,Object> m2:list){//订单详情录入
 
-//                List<Map<String,Object>> curtainList=(List) m2.get("curtains");//窗帘详情
-//                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
-//                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
-//                        if (entry.getValue() instanceof String) {
-//                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-//                            entry.setValue(origin);
-//                        }
-//                    }
-//                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
-//
-//
-//                    curtainOrder.setDateUpdate(nowTime);
-//
-//                    curtainOrderDao.updateCurtainOrder(curtainOrder);
-//                }//窗帘详情不用更新
+
 
 
 

@@ -1,5 +1,6 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.CommodityOrderDao;
 import com.yulan.dao.Ctm_orderDao;
 import com.yulan.dao.CurtainOrderDao;
 import com.yulan.pojo.*;
@@ -28,6 +29,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Autowired
     private CurtainOrderDao curtainOrderDao;
+
+    @Autowired
+    private CommodityOrderDao commodityOrderDao;
 
 
     @Override
@@ -125,8 +129,20 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     BigDecimal unit_price=(BigDecimal)m2.get("UNIT_PRICE");
                     BigDecimal num=(BigDecimal)m2.get("QTY_REQUIRED");
                     m2.put("all_cost",unit_price.multiply(num));
-                    CurtainOrder curtainOrder=curtainOrderDao.getCurtainOrder(order_no,m2.get("LINE_NO").toString());
-                    m2.put("curtains",curtainOrder);
+                    List<CommodityOrder> list1=commodityOrderDao.getCommodityOrders(order_no,Integer.parseInt(m2.get("LINE_NO").toString()));
+                    List<Map<String,Object>> list4=new ArrayList<>();
+                    for (CommodityOrder commodityOrder:list1){
+                        Map<String,Object> commodityOrderMap=MapUtils.beanToMaplin(commodityOrder);
+                        for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//将窗帘内容转码
+                            if (entry.getValue() instanceof String) {
+                                String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
+                                entry.setValue(origin);
+                            }
+                        }
+                        list4.add(commodityOrderMap);
+
+                    }
+                    m2.put("curtains",list4);
                     orderB_num++;
 
                 }
@@ -138,6 +154,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
             map.put("data",data);
+
 
             return map;
         }

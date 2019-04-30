@@ -31,6 +31,15 @@ public class CommodityOrder {
 	private Integer orderItemNumber;
 	private String suggestion;
 	private Integer lineNo;
+	private String itemId;
+
+	public String getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
 
 	public String getId() {
 		return id;
