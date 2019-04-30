@@ -389,9 +389,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
             }
-          /*  if (null != item.getItemVersion()) {
+            if (null != item.getItemVersion()) {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
-            }*/
+            }
             if (null != item.getProductBrand()) {
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
             }
@@ -454,9 +454,8 @@ public class ItemServiceImpl implements ItemService {
 
             if (parentItemNo.equals("Z340004") || parentItemNo.equals("U310111")) {
                         if (curtainItem.getWidthHh() != null) {
-                            lsUsage = arith.mul(arith.dbToBD(width),
-                                    arith.div( curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
-                            map.put("ls", lsUsage);
+                            lsUsage = arith.add( arith.dbToBD(width),curtainItem.getWidthHh());
+                            map.put("ls", lsUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
                         } else {
                             map.put("ls ", itemNO +
                                     " has null values and can not be " +
