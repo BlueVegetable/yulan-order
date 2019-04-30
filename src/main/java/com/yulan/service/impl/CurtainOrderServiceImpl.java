@@ -143,18 +143,29 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     @Override
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
-        Map<String,Object> commodityOrderMap=(Map<String, Object>) map.get("commodityOrder");
-        for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//转码
-            if (entry.getValue() instanceof String) {
-                String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-                entry.setValue(origin);
-            }
-        }
-        CommodityOrder commodityOrder=MapUtils.mapToBean(commodityOrderMap,CommodityOrder.class);
-        String orderNo=map.get("orderNo").toString();
+        String orderNo=map.get("2").toString();
         String curtainStatusId=map.get("curtainStatusId").toString();
+        List<Map<String,Object>> commodityOrderMaps=(List<Map<String,Object>>) map.get("commodityOrders");
+
+
+
         if (curtainOrderDao.updateCurOrderStatus(orderNo,curtainStatusId)){
-            commodityOrderDao.updateCommodityOrder(commodityOrder);
+            for (Map<String,Object> commodityOrderMap:commodityOrderMaps ){
+                for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//转码
+                    if (entry.getValue() instanceof String) {
+                        String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
+                        entry.setValue(origin);
+                    }
+                }
+                CommodityOrder commodityOrder=MapUtils.mapToBean(commodityOrderMap,CommodityOrder.class);
+                if (!commodityOrderDao.updateCommodityOrder(commodityOrder)){
+                    m.put("code",1);
+                    m.put("msg","FLAS");
+                    return  m;
+                }
+            }
+
+
             m.put("code",0);
             m.put("msg","SUCCESS");
         }else {

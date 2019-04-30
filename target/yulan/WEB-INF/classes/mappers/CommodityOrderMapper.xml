@@ -116,6 +116,7 @@
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
         and LINE_NO = #{lineNo,jdbcType=NUMERIC}
+        and 
     </update>
 
     <update id="updateCommodityOrderSug" parameterType="CommodityOrder" >
