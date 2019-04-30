@@ -390,6 +390,9 @@
         <if test="itemNO == 'PJB'">
             where b.product_type in ('PJB')
         </if>
+        <if test="itemNO == 'XHB'">
+            where b.product_type in ('XHB')
+        </if>
         and b.sale_id not in ('C','F')
         ) c)tm
         <if test="start!=null">
@@ -410,6 +413,9 @@
         </if>
         <if test="itemType == 'PJB'">
             where b.product_type in ('PJB')
+        </if>
+        <if test="itemType == 'XHB'">
+            where b.product_type in ('XHB')
         </if>
         and b.sale_id not in ('C','F')
         and b.item_no like CONCAT(CONCAT('%',#{itemNO}),'%')

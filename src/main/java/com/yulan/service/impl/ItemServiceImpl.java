@@ -296,7 +296,7 @@ public class ItemServiceImpl implements ItemService {
                     usage = (width + WBH * 2) * 1.5;
                 }
                 BigDecimal ltUsage = new BigDecimal(usage);
-                map.put("lt", ltUsage);
+                map.put("lt", ltUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
             } else if (itemMLGY.getItemType().equals("ls")) {
                 BigDecimal lsUsage = BigDecimal.valueOf(0);
                 //判断是否是里衬布
@@ -309,14 +309,13 @@ public class ItemServiceImpl implements ItemService {
                     if (itemMLGY.getParentItemNo().equals("Z340004") || itemMLGY.getParentItemNo().equals("U310111")) {
                         if (itemMLGY.getProductType().equals("ML")) {
                             {
-                                if (curtainItem.getWidthHh() != null) {
-                                    lsUsage = arith.mul(arith.dbToBD(width),
-                                            arith.div( curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
-                                    map.put("ls", lsUsage);
-                                } else {
+                                if (curtainItem.getWidthHh() == null) {
                                     map.put("ls ", itemMLGY.getItemNo() +
                                             " has null values and can not be " +
                                             "calculated,please checkout WidthHh");
+                                } else {
+                                    lsUsage = arith.add( arith.dbToBD(width),curtainItem.getWidthHh());
+                                    map.put("ls", lsUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
                                 }
                             }
                         }
@@ -332,23 +331,6 @@ public class ItemServiceImpl implements ItemService {
                                         "FixType,DuihuaLoss,HighJia");
 
                             } else {
-                               /* if ("02".equals(curtainItem.getFixType())) {
-                                    lsUsage =
-                                            arith.add(arith.dbToBD(width * multiple),
-                                                    curtainItem.getDuihuaLoss());
-                                } else {
-                                    //定宽
-                                    if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
-                                        lsUsage =
-                                                arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
-                                    } else if (curtainItem.getHighHh().doubleValue() > 0) {
-                                        //花回
-                                        lsUsage =
-                                                arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
-                                                        arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
-                                                        arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
-                                    }
-                                }*/
                                 lsUsage = usageCalculation(width, multiple,height, curtainItem);
                                 //获取每种产品的用量
                                 map.put("ls", lsUsage);
@@ -359,7 +341,7 @@ public class ItemServiceImpl implements ItemService {
                     }
                 }
             } else if (itemMLGY.getItemType().equals("sha")) {
-                BigDecimal shaUsage = BigDecimal.valueOf(0);
+                BigDecimal shaUsage ;
                 //纱
                 if (itemMLGY.getProductType().equals("ML")) {
                     if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
@@ -370,22 +352,7 @@ public class ItemServiceImpl implements ItemService {
                                 "FixGrade(),DuihuaLoss,HighJia");
 
                     } else {
-/*                        if ("02".equals(curtainItem.getFixType())) {
-                            shaUsage = arith.add(arith.dbToBD(width * multiple),
-                                    curtainItem.getDuihuaLoss());
-                        } else {
-                            //定宽
-                            if (curtainItem.getHighHh().doubleValue() > 0) {
-                                //花回
-                                shaUsage =
-                                        arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
-                                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()),arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
-                                                arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
-                            } else if (curtainItem.getHighHh().doubleValue() == 0) {
-                                shaUsage =
-                                        arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
-                            }
-                        }*/
+
                         shaUsage = usageCalculation(width, multiple,height, curtainItem);
                         map.put("sha", shaUsage);
                     }
@@ -399,20 +366,21 @@ public class ItemServiceImpl implements ItemService {
             if (itemMLGY.getProductType().equals("GY")) {
                 if (itemMLGY.getItemNo().equals("GY-003")) {
                     Double GYusage = width * height;
-                    map.put("GY-003", GYusage);
+                    map.put("GY", GYusage);
                 } else {
                     map.put("GY", "工艺用量=帘身用量");
                 }
             }
             //绣花边
             if (itemMLGY.getProductType().equals("XHB")) {
-                Double XHBusage = 0.0;
-                if (itemMLGY.getItemNo().equals("lt")) {
+                Double XHBusage ;
+                if (itemMLGY.getItemType().equals("lt")) {
                     XHBusage = width * multiple + 0.3;
-                } else if (itemMLGY.getItemNo().equals("ls")) {
+                    map.put("XHBlt", XHBusage);
+                } else if (itemMLGY.getItemType().equals("ls")) {
                     XHBusage = height * 2 + 0.4;
+                    map.put("XHBls", XHBusage);
                 }
-                map.put("XHB", XHBusage);
             }
             //这行代码有问题是因为item如果型号一样的话，就会地址一样，然后后面的itemMLGY就会覆盖掉前面的，就会产生重复数据
             Item item;
@@ -566,10 +534,17 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public Map getGYList(String itemNO) {
+    public Map getGYList(String itemNO) throws IOException{
         Map map = new HashMap<>();
         List<String> GYList = itemDao.getItemGY(itemNO);
+        List<Item> GYItemList  = new ArrayList<>();
+        for(int i = 0; i < GYList.size(); i++){
+            Item GYItem = itemDao.getItemByItemNO(GYList.get(i));
+            changeItemToUTF8(GYItem);
+            GYItemList.add(GYItem);
+        }
         map.put("GYLis",GYList);
+        map.put("itemList",GYItemList);
         map.put("code",0);
         return map;
     }
