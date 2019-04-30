@@ -31,5 +31,5 @@ public interface ItemService {
 
     Map searchCurtainItemTypeAll(Integer page,Integer lastNum, String itemType, String itemNO)throws IOException;
 
-    Map getGYList(String itemNO);
+    Map getGYList(String itemNO)throws IOException;
 }

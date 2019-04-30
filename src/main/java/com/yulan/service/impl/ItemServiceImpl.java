@@ -366,7 +366,7 @@ public class ItemServiceImpl implements ItemService {
             if (itemMLGY.getProductType().equals("GY")) {
                 if (itemMLGY.getItemNo().equals("GY-003")) {
                     Double GYusage = width * height;
-                    map.put("GY-003", GYusage);
+                    map.put("GY", GYusage);
                 } else {
                     map.put("GY", "工艺用量=帘身用量");
                 }
@@ -534,10 +534,17 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public Map getGYList(String itemNO) {
+    public Map getGYList(String itemNO) throws IOException{
         Map map = new HashMap<>();
         List<String> GYList = itemDao.getItemGY(itemNO);
+        List<Item> GYItemList  = new ArrayList<>();
+        for(int i = 0; i < GYList.size(); i++){
+            Item GYItem = itemDao.getItemByItemNO(GYList.get(i));
+            changeItemToUTF8(GYItem);
+            GYItemList.add(GYItem);
+        }
         map.put("GYLis",GYList);
+        map.put("itemList",GYItemList);
         map.put("code",0);
         return map;
     }

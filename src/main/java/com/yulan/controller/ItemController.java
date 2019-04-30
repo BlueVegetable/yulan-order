@@ -248,7 +248,7 @@ public class ItemController {
      */
     @RequestMapping(value = "getGYList")
     @ResponseBody
-    public Map getGYList(@RequestBody Map<String,Object> data){
+    public Map getGYList(@RequestBody Map<String,Object> data)throws IOException{
         String itemNO = (String)data.get("itemNO");
         return itemService.getGYList(itemNO);
     }
