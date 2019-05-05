@@ -1,5 +1,6 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.CommodityOrderDao;
 import com.yulan.dao.Ctm_orderDao;
 import com.yulan.dao.CurtainOrderDao;
 import com.yulan.pojo.*;
@@ -10,6 +11,7 @@ import com.yulan.utils.BackUtil;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
     @Autowired
     private CommodityOrderService commodityOrderService;
+
+    @Autowired
+    private CommodityOrderDao commodityOrderDao;
 
 
 
@@ -139,9 +144,44 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     @Override
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
-        Map dataMap=new HashMap();
+        String orderNo=map.get("orderNo").toString();
+        String curtainStatusId=map.get("curtainStatusId").toString();
+        List<List<Map<String,Object>>> commodityOrderList=(List<List<Map<String,Object>>>) map.get("allCurtains");
 
-       return null;
+
+
+
+        if (curtainOrderDao.updateCurOrderStatus(orderNo,curtainStatusId)){
+             for (List<Map<String,Object>> commodityOrderMaps:commodityOrderList){
+                 for (Map<String,Object> commodityOrderMap:commodityOrderMaps ){
+                     for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//转码
+                         if (entry.getValue() instanceof String) {
+                             String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
+                             entry.setValue(origin);
+                         }
+                     }
+//                     CommodityOrder commodityOrder=MapUtils.mapToBean(commodityOrderMap,CommodityOrder.class);
+                     CommodityOrder commodityOrder = new CommodityOrder();
+                     BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
+                     BeanUtils.populate(commodityOrder,commodityOrderMap);
+                     if (!commodityOrderDao.updateCommodityOrder(commodityOrder)){
+                         m.put("code",1);
+                         m.put("msg","FLAS");
+                         return  m;
+                     }
+                 }
+             }
+
+
+
+            m.put("code",0);
+            m.put("msg","SUCCESS");
+        }else {
+            m.put("code",1);
+            m.put("msg","FLAS");
+        }
+
+       return m;
     }
 
     @Override
@@ -343,21 +383,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             int lineNo=1;
             for (Map<String,Object> m2:list){//订单详情录入
 
-//                List<Map<String,Object>> curtainList=(List) m2.get("curtains");//窗帘详情
-//                for (Map<String, Object> m3 : curtainList){//窗帘详情录入
-//                    for (Map.Entry<String, Object> entry : m3.entrySet()) {//窗帘详情转码
-//                        if (entry.getValue() instanceof String) {
-//                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-//                            entry.setValue(origin);
-//                        }
-//                    }
-//                    CurtainOrder curtainOrder= MapUtils.mapToBean(m3, CurtainOrder.class);
-//
-//
-//                    curtainOrder.setDateUpdate(nowTime);
-//
-//                    curtainOrderDao.updateCurtainOrder(curtainOrder);
-//                }//窗帘详情不用更新
+
 
 
 
