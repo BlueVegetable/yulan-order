@@ -108,7 +108,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                     return m;
                 }
             }
-            List<String> orderItemIDs=commodityOrderService.submitCommodityOrder(cartItemIDs,lineNos);
+            List<String> orderItemIDs=commodityOrderService.submitCommodityOrder(cartItemIDs,lineNos);//窗帘详情录入
             for (String orderItemID:orderItemIDs){
                 if (!commodityOrderService.addOrderNoByOrderItemIDs(orderItemID,orderNo)){
 
@@ -166,7 +166,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                      BeanUtils.populate(commodityOrder,commodityOrderMap);
                      if (!commodityOrderDao.updateCommodityOrder(commodityOrder)){
                          m.put("code",1);
-                         m.put("msg","FLAS");
+                         m.put("msg","窗帘详情修改错误");
                          return  m;
                      }
                  }
@@ -178,7 +178,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             m.put("msg","SUCCESS");
         }else {
             m.put("code",1);
-            m.put("msg","FLAS");
+            m.put("msg","订单头部修改错误");
         }
 
        return m;
