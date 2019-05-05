@@ -10,7 +10,7 @@
         <result column="NOTE" property="note" jdbcType="VARCHAR" />
         <result column="UNIT" property="unit" jdbcType="VARCHAR" />
         <result column="SPLIT_SHIPMENT" property="splitShipment" />
-        <result column="ITEM_ID" property="item.itemNo" />
+        <association property="item" column="ITEM_ID" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 
     <insert id="addCommodity" parameterType="Commodity">
