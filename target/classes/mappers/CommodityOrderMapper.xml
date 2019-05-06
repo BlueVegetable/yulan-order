@@ -90,6 +90,9 @@
     <update id="updateCommodityOrder" parameterType="CommodityOrder" >
         update COMMODITY_ORDER
         <set >
+            <if test="lineNo != null" >
+                LINE_NO = #{lineNo,jdbcType=NUMERIC}
+            </if>
             <if test="itemId != null" >
                 ITEM_ID = #{itemId,jdbcType=VARCHAR},
             </if>
