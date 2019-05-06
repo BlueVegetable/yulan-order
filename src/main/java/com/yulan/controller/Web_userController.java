@@ -52,7 +52,12 @@ public class Web_userController {
             /*session.setAttribute("token",token);
             sessions.put(token,session);*/
 //            map.put("token", token );
-            map.put("customerType",customerTypeService.getCustomerTypeByCID((String) m.get("loginName")).getCustomerTypeId());
+            if(customerTypeService.getCustomerTypeByCID((String) m.get("loginName"))==null){
+                map.put("customerType","");
+            }else{
+                map.put("customerType",customerTypeService.getCustomerTypeByCID((String) m.get("loginName")).getCustomerTypeId());
+            }
+
             map.put("logintime", TimeUtil.getTime());
             return map;
         }

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改文章类型</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="./layui/css/layui.css"  media="all">
+    <script src="./js/jquery-3.1.1.min.js"></script>
+    <script src="./js/url.js" charset="utf-8"></script>
+    <script src="./layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改文章类型</legend>
+</fieldset>
+
+<form class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width:100px">文章ID</label>
+            <div class="layui-input-inline">
+                <input id="id" type="text" name="id" class="layui-input" value="100" disabled="disabled">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width:100px">类型名称</label>
+            <div class="layui-input-inline">
+                <input id="type" type="text" name="name" autocomplete="off" class="layui-input" lay-verify="type">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+
+        form.verify({
+            type: function(value){
+                if(value.length <= 0){
+                    return '请输入文章类型';
+                } else if(value.length >= 50) {
+                    return "文章类型长度不能超过50个字符";
+                }
+            }
+        });
+
+        form.on('submit(submit)', function(data) {
+            console.log(data.field);
+            $.ajax({
+                type: "POST",
+                url:  remoteURL+"/articleType/alterArticleTypeName.do",
+                data: {id:data.field.id,name:data.field.name},
+                dataType: "json",
+                success: function(res){
+                    console.log(res);
+                    if(res.code==0) {
+                        layer.alert("修改成功", {icon: 6},function () {
+                            var table=parent.layui.table;
+                            table.reload('article-list', {
+                                url:remoteURL+"/articleType/getAllArticleTypes.do"
+                            });
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
+                    }
+                    else {
+                        layer.alert(res.msg,function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<script type="text/javascript">
+    // var callbackdata = function () {
+    //     var data = {
+    //         name: $("#name").val()
+    //         ,password:$("#password").val()
+    //     };
+    //     return data;
+    // }
+</script>
+</body>
+</html>

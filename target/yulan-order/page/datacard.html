@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./js/jquery-3.1.1.min.js"></script>
+    <script src="./js/url.js"></script>
+    <script src="./layui/layui.js"></script>
+</head>
+<body>
+<div>
+    <script>
+        var popedWindow = null;
+
+        function checkPopedWindow()
+        {
+            if(!popedWindow)
+                return;
+            popedWindow.focus();
+        }
+
+        document.addEventListener('click', function() {
+            checkPopedWindow();
+        });
+
+        function contractStateChangeMonitor()
+        {
+        }
+
+        function viewCard(cid)
+        {
+            popedWindow = window.open("/ylb2b/WebContract_V20141103/salemanager/manageCard.jsp?TS="+(new Date()).getTime()
+                +"&CID="+cid
+                ,""
+                ,"top=50px,left=200px,width=1200px,height=800px,scrollbars=yes,location=no;addressbar=no");
+        }
+
+        function viewContract(cid,_type,_year)
+        {
+            popedWindow = window.open("/ylb2b/WebContract_V20141103/contractView/checkContract.jsp?TS="+(new Date()).getTime()
+                +"&CID="+cid+"&TYPE="+_type+"&OPYEAR="+_year
+                ,""
+                ,"top=50px,left=200px,width=1200px,height=800px,scrollbars=yes,location=no;addressbar=no");
+        }
+    </script>
+    <div id="TAB_WCWFRBACSET_COND" style="padding:0.1em;display:none;">
+        资料卡状态:
+        <select id="CARD_STATE_SELECT" onchange="javascript:getWCWFYLContractCardList(1)" style="font-size:1.2em;">
+            <option value="0">显示全部</option>
+            <option class="C_ONCREATE" value="ONCREATE">初始状态</option>
+            <option class="C_CUSTOMERPORCESSING" value="CUSTOMERPORCESSING">客户填写中</option>
+            <option class="C_CUSTOMERPORCESSING2" value="CUSTOMERPORCESSING2">客户修改中</option>
+            <option class="C_BUSINESSCHECKING" value="BUSINESSCHECKING">业务员确认中</option>
+            <option class="C_BIILDEPCHECKING" value="BIILDEPCHECKING">订单部文员审核中</option>
+            <option class="C_APPROVED" value="APPROVED">已通过</option>
+
+        </select>
+        协议状态:
+        <select id="WEBCONTRACT_STATE_SELECT" onchange="javascript:getWCWFYLContractCardList(1)" style="font-size:1.2em;">
+            <option value="0">显示全部</option>
+            <option class="C_ONCREATE" value="ONCREATE">初始状态</option>
+            <option class="C_SALEMANFILLING" value="SALEMANFILLING">业务员填写中</option>
+            <option class="C_SALEMANMODIFYING" value="SALEMANMODIFYING">业务员修改中</option>
+            <option class="C_CUSTOMERAFFIRM" value="CUSTOMERAFFIRM">客户查看确认中</option>
+            <option class="C_DEP_MARKET_CHECK" value="DEP_MARKET_CHECK">市场部审核中</option>
+            <option class="C_DEP_BILL_CHECK" value="DEP_BILL_CHECK">订单部审核</option>
+            <option class="C_CSA_CHECK" value="CSA_CHECK">营销总监批准</option>
+            <option class="C_APPROVED" value="APPROVED">已通过</option>
+            <option class="C_CANCELED" value="CANCELED">作废</option>
+            <option class="C_SD_CHECKING" value="SD_CHECKING">销售总监最后审核中</option>
+            <option class="C_ASM_CHECKING" value="ASM_CHECKING">销售中心经理确认中</option>
+
+        </select>
+
+        <select id="WEBCONTRACT_YEAR_SELECT" onchange="javascript:getWCWFYLContractCardList(1)" style="font-size:1.2em;">
+            <option value="2018">2018年度</option>
+            <option value="2017">2017年度</option>
+            <option value="2016">2016年度</option>
+            <option value="2015">2015年度</option>
+
+        </select>
+
+
+        <span style="float:right">
+客户号/客户名:<input type="TEXT" value="" size="20" style="font-size:1.2em;" id="WEBCONTRACT_KEY_INPUT">
+			 <input type="BUTTON" value="查询" size="20" style="font-size:1.2em;" onclick="javascript:getWCWFYLContractCardListX()">
+</span>
+    </div>
+    <div id="TAB_WCWFRBACSET_LIST" style="height:700px;padding:0.1em;overflow:scroll;">
+        <style>
+            TABLE.CARDCREATEFILTERTABLE {font-size:0.75em;
+                width:100%;
+                border:groove 2px blue;
+                background-color:#eeeedd;
+                margin-bottom:0.3em;}
+            TABLE.CARDCREATEFILTERTABLE TH{border-bottom:solid 1px blue;}
+        </style>
+        <div>
+            <table width="100%"><tbody><tr>
+                <td valign="top">
+                    <div style="border:outset 3px gray;padding-bottom:2em;padding-left:1em;">
+                        <h4 style="padding:0em;margin:0.3em;">客户资料卡批量创建目标客户群过滤</h4>
+                        <input type="HIDDEN" name="$1FORANNUALCONTRACT">
+                        <input type="CHECKBOX" disabled="" checked="" name="NOUSE" onclick="javascript:WCWFCustomerCard_setDescp(2018)">
+                        仅用于2018年网络协议签订<br>
+                        <input type="CHECKBOX" checked="" name="CHECK_EXAMINE_FLAG">限已核对客户	<br>
+                        本批次说明：<br>
+                        <input type="TEXT" name="$1DESCP" id="$1DESCP" style="width:80%" value="2019年网络协议客户分组"><br>
+                        <button onclick="createDataCards()">执行创建</button>
+                        <input type="RESET" value="重置输入">
+
+
+                        <hr>
+                        <table width="100%">
+                            <tbody><tr><th>客户号</th><td><input type="TEXT" placeholder="请输入正确的客户号" id="WCWFCustomerCard_SINGLEID" onclick="javascritp:this.value='';">
+                            </td><td><input type="BUTTON" value="创建资料卡" onclick="javascript:createDataCardByCustomerCode();">
+                            </td></tr><tr><td colspan="3">
+                                <select id="WCWFCustomerCard_GROUPID">
+                                    <option value="">--------请选择所属分组，如无请先创建----------</option>
+                                    <option value="2019年网络协议客户分组">2019年网络协议客户分组</option>
+                                </select>
+                            </td></tr></tbody></table>
+
+                    </div>
+                </td><td width="750px">
+                <table class="CARDCREATEFILTERTABLE">
+                    <tbody><tr><th colspan="2">
+                        <span style="float:left">全选－目标市场<input type="CHECKBOX" onclick="selectAll(this,'$AREA_CODE')"></span>
+                    </th></tr><tr>
+                        <td valign="top">
+                            <table style="border-collapse:collapse;">
+                                <tbody><tr>
+                                    <td colspan="5" align="left">
+                                        <input type="CHECKBOX" name="$AREA_CODE" value="C000">国内市场
+                                    </td></tr><tr>
+                                    <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C051" pid="C000">
+                                        本厂部门</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C031" pid="C000">
+                                    北京办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C032" pid="C000">
+                                    太原办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C033" pid="C000">
+                                    上海办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C034" pid="C000">
+                                    南京办事处</td></tr><tr>
+                                    <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C035" pid="C000">
+                                        杭州办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C036" pid="C000">
+                                    广州办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C037" pid="C000">
+                                    南宁办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C038" pid="C000">
+                                    成都办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C039" pid="C000">
+                                    重庆办事处</td></tr><tr>
+                                    <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C040" pid="C000">
+                                        郑州办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C041" pid="C000">
+                                    济南办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C042" pid="C000">
+                                    沈阳办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C043" pid="C000">
+                                    长春办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C044" pid="C000">
+                                    兰州办事处</td></tr><tr>
+                                    <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C045" pid="C000">
+                                        西安办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C047" pid="C000">
+                                    武汉办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C048" pid="C000">
+                                    福州办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C049" pid="C000">
+                                    深圳办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C050" pid="C000">
+                                    电商直营部</td></tr><tr>
+                                    <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C054" pid="C000">
+                                        石家庄办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C055" pid="C000">
+                                    呼和浩特办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C056" pid="C000">
+                                    合肥办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C057" pid="C000">
+                                    昆明办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C058" pid="C000">
+                                    贵阳办事处</td></tr><tr>
+                                    <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C053" pid="C000">
+                                        南昌办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C059" pid="C000">
+                                    乌鲁木齐办事处</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="C046" pid="C000">
+                                    长沙办事处</td></tr>
+                                </tbody></table>
+                        </td><td valign="top">
+                        <table style="border-collapse:collapse;">
+                            <tbody><tr>
+                                <td colspan="3" align="left">
+                                    <input type="CHECKBOX" name="$AREA_CODE" value="F000" onclick="WCWFCustomerCard_selectSubArea(this,'$AREA_CODE','F000')">国际市场
+                                </td></tr><tr>
+                                <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F012" pid="F000">
+                                    美洲</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F013" pid="F000">
+                                南亚</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F002" pid="F000">
+                                中东</td></tr><tr>
+                                <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F003" pid="F000">
+                                    中东直销</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F004" pid="F000">
+                                东亚</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F005" pid="F000">
+                                独联体</td></tr><tr>
+                                <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F007" pid="F000">
+                                    边贸</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F008" pid="F000">
+                                非洲</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F001" pid="F000">
+                                东南亚</td></tr><tr>
+                                <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F006" pid="F000">
+                                    港澳</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F009" pid="F000">
+                                拉美</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F010" pid="F000">
+                                欧州</td></tr><tr>
+                                <td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F014" pid="F000">
+                                    台湾</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F110" pid="F000">
+                                北美洲</td><td align="left"><input type="CHECKBOX" name="$AREA_CODE" value="F111" pid="F000">
+                                伊朗
+                            </td></tr></tbody></table>
+                    </td></tr></tbody></table>
+
+            </td></tr></tbody></table>
+
+            <table class="CARDCREATEFILTERTABLE">
+
+                <tbody><tr><th colspan="10">
+                    <span style="float:left">全选－目标区域<input type="CHECKBOX" onclick="selectAll(this,'$AREA_DISTRICT')"></span>
+
+                </th></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="01">
+                        广东省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="02">
+                    河北省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="03">
+                    山西省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="04">
+                    内蒙古自治区</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="05">
+                    辽宁省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="06">
+                    吉林省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="07">
+                    黑龙江省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="08">
+                    江苏省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="09">
+                    浙江省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="10">
+                    安徽省</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="11">
+                        福建省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="12">
+                    江西省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="13">
+                    山东省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="14">
+                    河南省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="15">
+                    湖北省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="16">
+                    湖南省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="17">
+                    广西壮族自治区</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="18">
+                    海南省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="19">
+                    四川省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="20">
+                    贵州省</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="21">
+                        云南省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="22">
+                    西藏自治区</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="23">
+                    陕西省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="24">
+                    甘肃省 </td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="25">
+                    宁夏回族自治区</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="26">
+                    青海省</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="27">
+                    新疆维吾尔自治区</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="28">
+                    其它(工厂)</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="29">
+                    布鲁斯特</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="30">
+                    北京市</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="31">
+                        天津市</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="32">
+                    上海市</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="33">
+                    重庆市</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="34">
+                    粤北</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="35">
+                    苏南</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="36">
+                    浙南</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="38">
+                    鄂西</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="39">
+                    粤西</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="40">
+                    辽西南</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="41">
+                    鲁西南</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="42">
+                        江苏其他</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="43">
+                    川南</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="44">
+                    豫南</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="45">
+                    川北</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="46">
+                    科丽</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="47">
+                    广西其他</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="48">
+                    直营</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="49">
+                    电商</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="50">
+                    陕南</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="51">
+                    成都市</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="AF">
+                        阿富汗</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="AG">
+                    阿尔及利亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="AL">
+                    安哥拉</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="AR">
+                    亚美尼亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="AU">
+                    澳大利亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="AZ">
+                    阿塞拜疆</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="BD">
+                    孟加拉</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="BL">
+                    BAHRAIN</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="BM">
+                    边贸</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="BU">
+                    缅甸</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="BV">
+                        玻利维亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="BZ">
+                    巴西</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="CA">
+                    加拿大</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="CL">
+                    智利</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="CM">
+                    柬埔寨</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="CN">
+                    中国</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="COL">
+                    哥伦比亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="CT">
+                    卡塔尔</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="CY">
+                    塞浦路斯</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="CZ">
+                    捷克</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="DB">
+                        迪拜</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="DL">
+                    大陆</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="EG">
+                    埃及</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="GE">
+                    格鲁吉亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="GR">
+                    希腊</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="GV">
+                    保加利亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="HK">
+                    香港</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="ID">
+                    印尼</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="IL">
+                    以色列</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="IN">
+                    印度</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="IR">
+                        伊朗</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="JD">
+                    约旦</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="JP">
+                    日本</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="KK">
+                    韩国</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="KR">
+                    朝鲜</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="KU">
+                    科威特</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="KY">
+                    肯尼亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="KZ">
+                    哈萨克斯坦</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="LB">
+                    黎巴嫩</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="LT">
+                    立陶宛</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="LV">
+                        爱沙尼亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="LY">
+                    利比亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="MA">
+                    马其顿</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="MC">
+                    澳门</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="MN">
+                    蒙古</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="MR">
+                    摩洛哥</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="MU">
+                    毛里求斯</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="MX">
+                    墨西哥</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="MY">
+                    马来西亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="NE">
+                    北欧</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="NR">
+                        尼日利亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="PE">
+                    巴勒斯坦</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="PH">
+                    菲律宾</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="PK">
+                    巴基斯坦</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="PL">
+                    波兰</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="PR">
+                    巴拉圭</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="PT">
+                    葡萄牙</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="QT">
+                    其它(公司)</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="RO">
+                    罗马尼亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="RU">
+                    俄罗斯</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SA">
+                        沙特阿伯</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SF">
+                    南非</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SF01">
+                    约翰内斯堡</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SF0101">
+                    Santon</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SG">
+                    新加坡</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SK">
+                    斯里兰卡</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SL">
+                    斯洛文莱亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SM">
+                    索马利</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SP">
+                    西班牙</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="SY">
+                    叙利亚</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="TH">
+                        泰国</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="TK">
+                    土耳其</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="TM">
+                    土库曼</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="TW">
+                    台湾</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="TZ">
+                    坦桑尼亚</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="UA">
+                    乌克兰</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="UE">
+                    阿联酋</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="UK">
+                    英国</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="UN">
+                    国外</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="US">
+                    美国</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="VE">
+                        委内瑞拉</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="VN">
+                    越南</td><td align="left"><input type="CHECKBOX" name="$AREA_DISTRICT" value="ZG">
+                    中国
+                </td></tr></tbody></table>
+
+            <table class="CARDCREATEFILTERTABLE">
+
+                <tbody><tr><th colspan="5">
+                    <span style="float:left">全选－客户类型<input type="CHECKBOX" onclick="selectAll(this,'$CUSTOMER_TYPE')"></span>
+
+                </th></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="09">
+                        家装客户</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="01">
+                    工程客户</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="02">
+                    经销客户</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="03">
+                    批发客户</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="04">
+                    分公司</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="05">
+                        零售客户</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="99">
+                    内部客户</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="06">
+                    分销客户</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="07">
+                    加工厂</td><td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="08">
+                    专业市场客户</td></tr><tr>
+                    <td align="left"><input type="CHECKBOX" name="$CUSTOMER_TYPE" value="10">
+                        电子商务
+                    </td></tr></tbody></table>
+        </form>
+    </div>
+</div>
+
+</body>
+<script>
+    function createDataCards() {
+        var areaCodes = new Array();
+        var areasCodeElems = document.getElementsByName("$AREA_CODE");
+        for(var i=0;i<areasCodeElems.length;i++) {
+            if(areasCodeElems[i].checked) {
+                areaCodes.push(areasCodeElems[i].value);
+            }
+        }
+        var areaDistricts = new Array();
+        var areaDistrictElems = document.getElementsByName("$AREA_DISTRICT");
+        for(var i=0;i<areaDistrictElems.length;i++) {
+            if(areaDistrictElems[i].checked) {
+                areaDistricts.push(areaDistrictElems[i].value);
+            }
+        }
+        var customerTypes = new Array();
+        var customerTypeElems = document.getElementsByName("$CUSTOMER_TYPE");
+        for(var i=0;i<customerTypeElems.length;i++) {
+            if(customerTypeElems[i].checked) {
+                customerTypes.push(customerTypeElems[i].value);
+            }
+        }
+        var all = {areaCodes:areaCodes,areaDistricts:areaDistricts,customerTypes:customerTypes};
+        all.descp = document.getElementById("$1DESCP").value;
+        layui.use('layer',function() {
+            layer.load();
+            $.ajax({
+                type: "POST",
+                url:  remoteURL+"/customer/createDataCards.do",
+                data: JSON.stringify(all),
+                contentType : "application/json",
+                dataType: "json",
+                success: function(res){
+                    layer.closeAll("loading");
+                    layer.alert(res.msg);
+                },
+                error:function() {
+                    layer.closeAll("loading");
+                    layer.alert(res.msg);
+                }
+            });
+        })
+    }
+    function createDataCardByCustomerCode() {
+        var all = {customerCode:document.getElementById("WCWFCustomerCard_SINGLEID").value};
+        all.descp = $("#WCWFCustomerCard_GROUPID").val();
+        if(all.descp == "") {
+            layui.use('layer',function() {
+                layer.alert("请选择所属分组")
+            })
+        } else {
+            if(all.customerCode==null||all.customerCode == "") {
+                layui.use('layer',function() {
+                    layer.alert("请输入客户号");
+                })
+            } else {
+                layui.use('layer',function() {
+                    layer.load();
+                    $.ajax({
+                        type: "POST",
+                        url:  remoteURL+"/customer/createDataCards.do",
+                        data: JSON.stringify(all),
+                        contentType : "application/json",
+                        dataType: "json",
+                        success: function(res){
+                            layer.closeAll("loading");
+                            layer.alert(res.msg);
+                        },
+                        error:function() {
+                            layer.closeAll("loading");
+                            layer.alert(res.msg);
+                        }
+                    });
+                });
+            }
+        }
+    }
+    function selectAll(checkClass,name) {
+        var areasCodeElems = document.getElementsByName(name);
+        if(checkClass.checked) {
+            for(var i=0;i<areasCodeElems.length;i++) {
+                areasCodeElems[i].checked = true;
+            }
+        } else {
+            for(var i=0;i<areasCodeElems.length;i++) {
+                areasCodeElems[i].checked = false;
+            }
+        }
+    }
+</script>
+</html>
