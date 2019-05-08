@@ -21,10 +21,10 @@
         <result column="SPECIFICATION" property="specification" jdbcType="DECIMAL" />
         <result column="ILLUSTRATE" property="illustrate" jdbcType="VARCHAR" />
         <result column="SAVE_TIME" property="saveTime" jdbcType="VARCHAR" />
-        <result column="ITEM_ID" property="item.itemNo" jdbcType="VARCHAR" />
         <result column="DELETE_FLAG" property="deleteFlag" jdbcType="VARCHAR" />
         <result column="MODIFY_FLAG" property="modifyFlag" jdbcType="VARCHAR" />
         <result column="CHANGE_FLAG" property="changeFlag" jdbcType="VARCHAR" />
+        <association column="ITEM_ID" property="item" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 
     <insert id="addCommodity" parameterType="CurtainCommodity">
