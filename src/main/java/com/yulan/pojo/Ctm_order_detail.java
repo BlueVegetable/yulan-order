@@ -86,6 +86,16 @@ public class Ctm_order_detail  {
 
     private String promotionType;
 
+    private String ljSuggestion;
+
+    public String getLjSuggestion() {
+        return ljSuggestion;
+    }
+
+    public void setLjSuggestion(String ljSuggestion) {
+        this.ljSuggestion = ljSuggestion;
+    }
+
     public String getPromotionType() {
         return promotionType;
     }

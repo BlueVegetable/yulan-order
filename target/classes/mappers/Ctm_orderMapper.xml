@@ -19,7 +19,7 @@
     CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
     ML_NON_STANDARD, CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,to_char(DATE_DELIVER_KF,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_KF,to_char(DATE_DELIVER_NB,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_NB,
     to_char(DATE_DELIVER_FH,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_FH,NVL(UNIT_PRICE,0) UNIT_PRICE,NVL(PROMOTION_COST,0) PROMOTION_COST,NVL(PROMOTION,' ') PROMOTION,NVL(PART_SEND_ID,' ')PART_SEND_ID,
-    NVL(BACK_Y,0)BACK_Y,NVL(BACK_M,0)BACK_M,NVL(FINAL_COST,0)FINAL_COST,NVL(PROMOTION_TYPE,' ')PROMOTION_TYPE
+    NVL(BACK_Y,0)BACK_Y,NVL(BACK_M,0)BACK_M,NVL(FINAL_COST,0)FINAL_COST,NVL(PROMOTION_TYPE,' ')PROMOTION_TYPE,NVL(LJ_SUGGESTION,' ')LJ_SUGGESTION
   </sql>
 
     <select id="getOrders" resultType="Map">
@@ -635,6 +635,9 @@
             <if test="promotionType != null" >
                 PROMOTION_TYPE,
             </if>
+            <if test="ljSuggestion != null" >
+                LJ_SUGGESTION,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="orderNo != null" >
@@ -750,6 +753,9 @@
             </if>
             <if test="promotionType != null" >
                 #{promotionType,jdbcType=VARCHAR},
+            </if>
+            <if test="ljSuggestion != null" >
+                #{ljSuggestion,jdbcType=VARCHAR},
             </if>
         </trim>
   </insert>
@@ -1188,6 +1194,9 @@
             </if>
             <if test="promotionType != null" >
                 PROMOTION_TYPE = #{promotionType,jdbcType=VARCHAR},
+            </if>
+            <if test="ljSuggestion != null" >
+                LJ_SUGGESTION = #{ljSuggestion,jdbcType=VARCHAR},
             </if>
 
         </set>
