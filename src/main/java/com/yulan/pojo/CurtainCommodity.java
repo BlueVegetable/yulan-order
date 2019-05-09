@@ -14,6 +14,9 @@ public class CurtainCommodity extends Commodity {
     private BigDecimal specification;
     private String illustrate;
     private Timestamp saveTime;
+    private String deleteFlag;
+    private String modifyFlag;
+    private String changeFlag;
 
     public String getCurtainItemName() {
         return curtainItemName;
@@ -77,6 +80,30 @@ public class CurtainCommodity extends Commodity {
 
     public void setSaveTime(Timestamp saveTime) {
         this.saveTime = saveTime;
+    }
+
+    public String getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
+    public String getModifyFlag() {
+        return modifyFlag;
+    }
+
+    public void setModifyFlag(String modifyFlag) {
+        this.modifyFlag = modifyFlag;
+    }
+
+    public String getChangeFlag() {
+        return changeFlag;
+    }
+
+    public void setChangeFlag(String changeFlag) {
+        this.changeFlag = changeFlag;
     }
 
     @Override

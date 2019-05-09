@@ -47,6 +47,7 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
                     default:commodityOrder.setCurtainPartName("other");break;
                 }
                 commodityOrder.setLineNo(lineNos.get(cartItemID));
+                commodityOrder.setId(System.currentTimeMillis()+StringUtil.createStringID());
                 orderNumber++;
                 commodityOrders.add(commodityOrder);
             }

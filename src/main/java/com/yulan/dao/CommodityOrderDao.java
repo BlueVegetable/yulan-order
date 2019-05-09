@@ -19,4 +19,20 @@ public interface CommodityOrderDao {
 
 	int addOrderNoByOrderItemIDs(@Param("orderItemID") String orderItemID,@Param("orderNo") String orderNo);
 
+	/**
+	 * 修改全部
+	 * @param commodityOrder
+	 * @return
+	 */
+	Boolean updateCommodityOrder(CommodityOrder commodityOrder);
+
+
+	/**
+	 * 修改兰居审核意见
+	 * @param commodityOrder
+	 * @return
+	 */
+	Boolean updateCommodityOrderSug(CommodityOrder commodityOrder);
+
+
 }

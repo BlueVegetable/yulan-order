@@ -31,6 +31,18 @@ public class CommodityOrder {
 	private Integer orderItemNumber;
 	private String suggestion;
 	private Integer lineNo;
+	private String itemId;
+	private String deleteFlag;
+	private String modifyFlag;
+	private String changeFlag;
+
+	public String getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
 
 	public String getId() {
 		return id;
@@ -230,6 +242,30 @@ public class CommodityOrder {
 
 	public void setLineNo(Integer lineNo) {
 		this.lineNo = lineNo;
+	}
+
+	public String getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(String deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
+	public String getModifyFlag() {
+		return modifyFlag;
+	}
+
+	public void setModifyFlag(String modifyFlag) {
+		this.modifyFlag = modifyFlag;
+	}
+
+	public String getChangeFlag() {
+		return changeFlag;
+	}
+
+	public void setChangeFlag(String changeFlag) {
+		this.changeFlag = changeFlag;
 	}
 
 	@Override
