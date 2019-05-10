@@ -84,5 +84,23 @@
         </if>
     </update>
 
+    <update id="alterCommoditiesStatusByCartItemId" parameterType="Map">
+        update commodity set status = #{status}
+        <if test="cartItemIDs!=null and cartItemIDs.size()>0">
+            <where>
+                CART_ITEM_ID in(
+                <foreach collection="cartItemIDs" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </where>
+        </if>
+        <if test="cartItemIDs==null or cartItemIDs.size()==0">
+            <where>
+                1!=1
+            </where>
+        </if>
+    </update>
+
 
 </mapper>

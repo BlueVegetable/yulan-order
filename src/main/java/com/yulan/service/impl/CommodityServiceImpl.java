@@ -61,4 +61,9 @@ public class CommodityServiceImpl implements CommodityService {
 	public int alterCommoditiesStatus(List<String> commodityIDs, int status) {
 		return commodityEncode.alterCommoditiesStatus(commodityIDs, status);
 	}
+
+	@Override
+	public int alterCommoditiesStatusByCartItemId(List<String> cartItemIDs, int status) {
+		return commodityEncode.alterCommoditiesStatusByCartItemId(cartItemIDs, status);
+	}
 }

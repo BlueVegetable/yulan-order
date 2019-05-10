@@ -25,4 +25,6 @@ public interface CommodityService {
 
 	int alterCommoditiesStatus(List<String> commodityIDs,int status);
 
+	int alterCommoditiesStatusByCartItemId(List<String> cartItemIDs,int status);
+
 }

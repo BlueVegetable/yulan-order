@@ -61,4 +61,9 @@ public class CurtainCommodityServiceImpl implements CommodityService {
 	public int alterCommoditiesStatus(List<String> commodityIDs, int status) {
 		return 0;
 	}
+
+	@Override
+	public int alterCommoditiesStatusByCartItemId(List<String> cartItemIDs, int status) {
+		return 0;
+	}
 }
