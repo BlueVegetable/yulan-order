@@ -429,7 +429,7 @@ public class ItemServiceImpl implements ItemService {
             } else if (curtainItem.getHighHh().doubleValue() > 0) {
                 //花回
                 usage =
-                        arith.mul(arith.mul(arith.round(arith.mul(arith.dbToBD(width),arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0))), 2),
+                        arith.mul(arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2),
                                 arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
                                 arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
             }
