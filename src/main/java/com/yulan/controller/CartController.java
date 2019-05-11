@@ -339,6 +339,7 @@ public class CartController{
 					CurtainCommodity curtainCommodity;
 					JSONObject inline = JSONObject.fromObject(commodityParameter);
 					curtainCommodity = (CurtainCommodity) JSONObject.toBean(inline,CurtainCommodity.class);
+					curtainCommodity.setStatus(CurtainCommodity.COMMODITY_EXIST_STATUS);
 					curtainCommodities.add(curtainCommodity);
 				}
 				curtainList.setCurtainCommodities(curtainCommodities);
