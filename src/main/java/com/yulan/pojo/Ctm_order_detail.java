@@ -88,6 +88,12 @@ public class Ctm_order_detail  {
 
     private String ljSuggestion;
 
+    public Ctm_order_detail(String orderNo, Integer lineNo, String ljSuggestion) {
+        this.orderNo = orderNo;
+        this.lineNo = lineNo;
+        this.ljSuggestion = ljSuggestion;
+    }
+
     public String getLjSuggestion() {
         return ljSuggestion;
     }
