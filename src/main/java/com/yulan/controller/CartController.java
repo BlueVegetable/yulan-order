@@ -300,19 +300,20 @@ public class CartController{
 		} else {
 			commodity.setNote(note);
 		}
-		Commodity commodityMayBe = commodityService.getCommodityAppoint(commodity.getActivityId(),
-                commodity.getItem().getItemNo(),commodity.getCartItemId());
-		if(commodityMayBe == null||commodityMayBe.getId().equals(commodity.getId())) {
-            commodityService.updateCommodity(commodity);
-        } else {
-		    if(commodityMayBe.getQuantity()!=null) {
-		        commodityMayBe.setQuantity(commodity.getQuantity().add(commodityMayBe.getQuantity()));
-		        commodityService.updateCommodity(commodityMayBe);
-		        commodityService.deleteCommodityByID(commodity.getId());
-            } else {
-		        return Response.getResponseMap(2,"该产品在此活动下已存在",null);
-            }
-        }
+		commodityService.updateCommodity(commodity);
+//		Commodity commodityMayBe = commodityService.getCommodityAppoint(commodity.getActivityId(),
+//                commodity.getItem().getItemNo(),commodity.getCartItemId());
+//		if(commodityMayBe == null||commodityMayBe.getId().equals(commodity.getId())) {
+//            commodityService.updateCommodity(commodity);
+//        } else {
+//		    if(commodityMayBe.getQuantity()!=null) {
+//		        commodityMayBe.setQuantity(commodity.getQuantity().add(commodityMayBe.getQuantity()));
+//		        commodityService.updateCommodity(commodityMayBe);
+//		        commodityService.deleteCommodityByID(commodity.getId());
+//            } else {
+//		        return Response.getResponseMap(2,"该产品在此活动下已存在",null);
+//            }
+//        }
 		long count = commodityService.countByCartItemID(cartItem.getCartItemId());
 		if(count == 0) {
 		    cartItemService.deleteCartItemByID(cartItem.getCartItemId());
