@@ -61,4 +61,10 @@ public class CommodityController{
 		return Response.getResponseMap(0,"",null);
 	}
 
+	@ResponseBody@RequestMapping("alterCommoditiesStatusByCartItemID")
+	public Map<String,Object> alterCommoditiesStatusByCartItemID(@RequestBody List<String> cartItemIDs) {
+		commodityService.alterCommoditiesStatusByCartItemId(cartItemIDs,0);
+		return Response.getResponseMap(0,"",null);
+	}
+
 }

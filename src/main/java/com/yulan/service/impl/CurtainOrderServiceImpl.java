@@ -145,6 +145,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
         String orderNo=map.get("orderNo").toString();
+
+
         String curtainStatusId=map.get("curtainStatusId").toString();
         List<List<Map<String,Object>>> commodityOrderList=(List<List<Map<String,Object>>>) map.get("allCurtains");
         List<Map<String,Object>> ctmOrderDetails=(List<Map<String,Object>>) map.get("ctmOrderDetails");
@@ -176,6 +178,15 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                     }
                 }
             }
+//            if (map.get("ljSuggestion")!=null){
+//                String ljSuggestion=map.get("ljSuggestion").toString();
+//                Ctm_order_detail ctm_order_detail=new Ctm_order_detail(orderNo,Integer.parseInt(lineNo),ljSuggestion);
+//                if (!ctm_orderDao.updateOrderB(ctm_order_detail)){
+//                        m.put("code",1);
+//                        m.put("msg","订单详情修改错误");
+//                        return  m;
+//                    }
+//            }
 
 
             /**

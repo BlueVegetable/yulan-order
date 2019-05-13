@@ -68,4 +68,8 @@ public class CommodityEncode {
         return commodityDao.alterCommoditiesStatus(commodityIDs,status);
     }
 
+    public int alterCommoditiesStatusByCartItemId(List<String> cartItemIDs,int status) {
+        return commodityDao.alterCommoditiesStatusByCartItemId(cartItemIDs, status);
+    }
+
 }
