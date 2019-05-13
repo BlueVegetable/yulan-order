@@ -42,7 +42,7 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
                     case "帘头":commodityOrder.setCurtainPartName("lt");break;
                     case "帘身":commodityOrder.setCurtainPartName("ls");break;
                     case "纱":commodityOrder.setCurtainPartName("sha");break;
-                    case "配件":commodityOrder.setCurtainPartName("pj");break;
+                    case "配件":commodityOrder.setCurtainPartName("pjb");break;
                     case "帘身配布":commodityOrder.setCurtainPartName("lspb");break;
                     default:commodityOrder.setCurtainPartName("other");break;
                 }
