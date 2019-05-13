@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.Area_ownerDao">
+
+    <select id="getAreaOwnerByAreaCode" parameterType="Map" resultType="Area_owner">
+        select * from AREA_OWNER where AREA_CODE = #{areaCode}
+    </select>
+
+    <resultMap id="Area_ownerList" type="Area_owner" >
+        <result column="owner" property="owner" />
+        <result column="area" property="area" />
+        <result column="status_id" property="status_id" />
+        <result column="date_cre" property="date_cre" />
+        <result column="updater" property="updater" />
+        <result column="date_update" property="date_update" />
+        <result column="area_code" property="area_code" />
+        <result column="base_pay" property="base_pay" />
+        <result column="center_manager" property="center_manager" />
+    </resultMap>
+
+    <select id="getArea_owners" parameterType="java.util.Map" resultMap="Area_ownerList">
+        select * from(
+        select rownum rm, t.*  from Area_owner t where 1=1
+
+        <if test="owner!=null">
+            and owner like  '%'||#{owner}||'%'
+        </if>
+
+        ) tm where rm &gt;= #{start} and rm &lt;= #{number }
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from Area_owner where 1=1
+        <if test="owner!=null">
+            and owner like  '%'||#{owner}||'%'
+        </if>
+    </select>
+
+    <select id="getArea_code" resultType="String">
+        select Area_name from Area_code where Area_code=#{Area_code}
+    </select>
+
+    <select id="getArea" resultType="String">
+        select district_name from Area_district where district_id=#{Area}
+    </select>
+
+    <select id="getOwnerName" resultType="String">
+        select name from HES_EMPLOYEE where employee_no=#{owner}
+    </select>
+
+    <select id="getManageName" resultType="String">
+        select name from HES_EMPLOYEE where employee_no=#{center_manage,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

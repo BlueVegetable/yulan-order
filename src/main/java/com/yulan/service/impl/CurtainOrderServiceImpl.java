@@ -145,7 +145,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
         String orderNo=map.get("orderNo").toString();
-        String lineNo=map.get("lineNo").toString();
+
 
         String curtainStatusId=map.get("curtainStatusId").toString();
         List<List<Map<String,Object>>> commodityOrderList=(List<List<Map<String,Object>>>) map.get("allCurtains");
@@ -160,33 +160,33 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             /**
              * 订单详情审核意见
              */
-//            if (ctmOrderDetails!=null){
-//                for (Map<String,Object> ctmOrderDetailMap:ctmOrderDetails ){
-//                    for (Map.Entry<String, Object> entry : ctmOrderDetailMap.entrySet()) {//转码
-//                        if (entry.getValue() instanceof String) {
-//                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
-//                            entry.setValue(origin);
-//                        }
-//                    }
-//                    Ctm_order_detail ctm_order_detail=new Ctm_order_detail();
-//                    BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
-//                    BeanUtils.populate(ctm_order_detail,ctmOrderDetailMap);
-//                    if (!ctm_orderDao.updateOrderB(ctm_order_detail)){
-//                        m.put("code",1);
-//                        m.put("msg","订单详情修改错误");
-//                        return  m;
-//                    }
-//                }
-//            }
-            if (map.get("ljSuggestion")!=null){
-                String ljSuggestion=map.get("ljSuggestion").toString();
-                Ctm_order_detail ctm_order_detail=new Ctm_order_detail(orderNo,Integer.parseInt(lineNo),ljSuggestion);
-                if (!ctm_orderDao.updateOrderB(ctm_order_detail)){
+            if (ctmOrderDetails!=null){
+                for (Map<String,Object> ctmOrderDetailMap:ctmOrderDetails ){
+                    for (Map.Entry<String, Object> entry : ctmOrderDetailMap.entrySet()) {//转码
+                        if (entry.getValue() instanceof String) {
+                            String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
+                            entry.setValue(origin);
+                        }
+                    }
+                    Ctm_order_detail ctm_order_detail=new Ctm_order_detail();
+                    BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
+                    BeanUtils.populate(ctm_order_detail,ctmOrderDetailMap);
+                    if (!ctm_orderDao.updateOrderB(ctm_order_detail)){
                         m.put("code",1);
                         m.put("msg","订单详情修改错误");
                         return  m;
                     }
+                }
             }
+//            if (map.get("ljSuggestion")!=null){
+//                String ljSuggestion=map.get("ljSuggestion").toString();
+//                Ctm_order_detail ctm_order_detail=new Ctm_order_detail(orderNo,Integer.parseInt(lineNo),ljSuggestion);
+//                if (!ctm_orderDao.updateOrderB(ctm_order_detail)){
+//                        m.put("code",1);
+//                        m.put("msg","订单详情修改错误");
+//                        return  m;
+//                    }
+//            }
 
 
             /**
