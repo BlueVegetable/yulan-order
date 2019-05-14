@@ -108,7 +108,7 @@ public interface Ctm_orderDao {
     /**
      * 获取客户优惠券
      */
-    List<Sal_rebate_certificate> getRebate(@Param("cid")String cid,@Param("currentTime")java.sql.Date currentTime);
+    List<Sal_rebate_certificate> getRebate(@Param("cid")String cid,@Param("currentTime")java.sql.Date currentTime,@Param("beforeTime")java.sql.Date beforeTime);
 
     /**
      * 获取特点优惠券
