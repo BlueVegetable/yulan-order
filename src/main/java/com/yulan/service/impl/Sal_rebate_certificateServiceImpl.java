@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class Sal_rebate_certificateServiceImpl implements Sal_rebate_certificateService {
@@ -32,7 +29,14 @@ public class Sal_rebate_certificateServiceImpl implements Sal_rebate_certificate
         List<Map<String,Object>> dateBefore=new ArrayList<>();
         List<Map<String,Object>> dateUsefull=new ArrayList<>();
         List<Map<String,Object>> data=new ArrayList<>();
+
+
+
+
+
+
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
+        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
         List<Sal_rebate_certificate> list=sal_rebate_certificateDao.getRebate(cid);
         for (Sal_rebate_certificate sal_rebate_certificate:list){
             Map<String,Object> map1= MapUtils.beanToMap(sal_rebate_certificate);
@@ -46,7 +50,7 @@ public class Sal_rebate_certificateServiceImpl implements Sal_rebate_certificate
 
                 map1.put("dateId",0);
                 dateBefore.add(map1);
-            }else if (currentDate.after(sal_rebate_certificate.getDateEnd())){//过期
+            }else if (beforeDate.after(sal_rebate_certificate.getDateEnd())){//过期
                 map1.put("dateId",2);
                 dateLate.add(map1);
             }else {//生效

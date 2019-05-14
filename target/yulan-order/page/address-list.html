@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        校区列表
+    </title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="./layui/css/layui.css" media="all">
+    <script src="./js/url.js" charset="utf-8"></script>
+    <script src="./js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div class="x-nav">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>首页 / 校区管理 / 校区列表</legend>
+    </fieldset>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:35px">&#xe9aa;</i>
+    </a>
+</div>
+
+<div class="x-body">
+    <xblock>
+        <button class="layui-btn" onclick="address_add('添加校区','./address-add.html',460,430)">
+            <i class="layui-icon">&#xe608;</i>
+            添加
+        </button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+    <div class="layui-form-item" style="text-align: center">
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" name="name" placeholder="请输入校区所在地" id="nameReload" class="layui-input"  autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-radius layui-btn-normal" data-type="reload" id="select"><i class="layui-icon">&#xe615;</i></button>
+        </div>
+    </div>
+    <table class="layui-hide" id="address-list" lay-filter="bar" ></table>
+</div>
+
+<script src="./layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['element','layer','table'], function(){
+        var table=layui.table;
+        var layer=layui.layer;
+
+        table.render({
+            elem: '#address-list'
+            ,url:remoteURL+"/address/getAddress.do"
+            ,page:true
+            ,cols: [[
+                {field:'name', title: '校区所在地',align:"center", sort: true}
+                ,{field:'address', title: '校区地址',align:"center"}
+                ,{field:'route', title: '路线'}
+                ,{align:'center',class:"jdk", toolbar: '#bar',title:'操作'}
+            ]]
+            ,limits:['10']
+        });
+        //监听事件
+        table.on('tool(bar)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if(layEvent === 'detail'){ //查看
+                layer.msg(data.id);
+                //do somehing
+            } else if(layEvent === 'del'){ //删除
+                layer.confirm('确认是否删除', function(index){
+                    $.ajax({
+                        type: "POST",
+                        url:  remoteURL+"/address/deleteAddress.do",
+                        data: {addressID:data.id},
+                        dataType: "json",
+                        success: function(res){
+                            if(res.code==0) {
+                                layer.msg("删除成功");
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                layer.close(index);
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        }
+                    });
+
+                    //向服务端发送删除指令
+                });
+            } else if(layEvent === 'edit'){ //编辑
+                //do something
+                layer.open({
+                    type:2
+                    ,title:"修改校区信息"
+                    ,content:"./address-edit.html"
+                    ,area:['460px','480px']
+                    // ,btn:['确定','取消']
+                    ,success:function (layero, index) {
+                        var body = layer.getChildFrame('body',index);
+                        var form = layui.form;
+                        if(data) {
+                            body.find("#id").val(data.id);
+                            body.find("#name").val(data.name);
+                            body.find("#address").val();
+                            body.find("#route").val();
+                            //这行代码是为了保证修改完用户之后展示的页面还是原来选择过的界面
+                           // body.find("#flag").attr("name",$("#flag").attr("name"))
+                        }
+                    }
+                });
+
+                //同步更新缓存对应的值
+                obj.update({
+                    // username: '123'
+                    // ,title: 'xxx
+                });
+            }
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                var nameReload=$('#nameReload');
+                //执行重载
+                table.reload('address-list', {
+                    url: remoteURL+"/address/getAddress.do"
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        name:nameReload.val()
+                    }
+                });
+            }
+        };
+        //#select
+        $('#select').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+<script type="text/html" id="bar">
+    <!--<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="detail">查看</a>-->
+    <a class="layui-btn layui-btn-xs " lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+
+    <!-- 这里同样支持 laytpl 语法，如： -->
+    {{#  if(d.id == 1){ }}
+    <!--<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="check">审核</a>-->
+    {{#  } }}
+</script>
+<script>
+    function address_add(title, url, width, height) {
+        layui.use(['layer'],function () {
+            var layer = layui.layer;
+            layer.open({
+                type:2
+                ,title:title
+                ,content:url
+                ,area:[width+'px',height+'px']
+            });
+        });
+    }
+</script>
+
+</body>
+</html>

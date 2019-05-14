@@ -820,7 +820,7 @@
         from SAL_REBATE_CERTIFICATE t
         where t.customer_code=#{cid}
         and t.DATE_START &lt;=#{currentTime}
-        and t.DATE_END &gt;=#{currentTime}
+        and t.DATE_END &gt;=#{beforeTime}
         and t.REBATE_MONEY_OVER!=0
         and  t.STATUS='1'
     </select>
