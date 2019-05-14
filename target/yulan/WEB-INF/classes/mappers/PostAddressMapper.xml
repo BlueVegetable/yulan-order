@@ -41,18 +41,14 @@
             <if test="city != null">
                 CITY = #{city,jdbcType=VARCHAR},
             </if>
-            <if test="country != null">
                 COUNTRY = #{country,jdbcType=VARCHAR},
-            </if>
-            <if test="country != null">
+            <if test="provinceID != null">
                 PROVINCE_ID = #{provinceID,jdbcType=VARCHAR},
             </if>
-            <if test="country != null">
+            <if test="cityID != null">
                 CITY_ID = #{cityID,jdbcType=VARCHAR},
             </if>
-            <if test="country != null">
                 COUNTRY_ID = #{countryID,jdbcType=VARCHAR}
-            </if>
         </set>
         where CID = #{cid,jdbcType=VARCHAR} and ADDRESS_ID = #{addressId}
     </update>
