@@ -103,6 +103,8 @@ public class PostAddressServiceImpl implements PostAddressService {
         postAddress2.setCid(customer.getCustomerCode());
         postAddress2.setPostAddress(stringUtil.getUtf8(customer.getDeliveryAdress()));
         postAddress2.setAddressId(0);
+        postAddress2.setWlTel(customer.getHandset());
+        postAddress2.setWlContacts(customer.getCustomerAgent1());
         addressList.add(0,postAddress2);
 
         map.put("data",addressList);

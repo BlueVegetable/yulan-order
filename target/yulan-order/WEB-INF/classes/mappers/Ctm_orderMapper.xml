@@ -820,7 +820,7 @@
         from SAL_REBATE_CERTIFICATE t
         where t.customer_code=#{cid}
         and t.DATE_START &lt;=#{currentTime}
-        and t.DATE_END &gt;=#{currentTime}
+        and t.DATE_END &gt;=#{beforeTime}
         and t.REBATE_MONEY_OVER!=0
         and  t.STATUS='1'
     </select>
@@ -1086,6 +1086,9 @@
     <update id="updateOrderB" parameterType="Ctm_order_detail" >
         update CTM_ORDER_DETAIL
         <set >
+            <if test="lineNo != null" >
+                LINE_NO = #{lineNo,jdbcType=DECIMAL},
+            </if>
             <if test="itemNo != null" >
                 ITEM_NO = #{itemNo,jdbcType=VARCHAR},
             </if>
