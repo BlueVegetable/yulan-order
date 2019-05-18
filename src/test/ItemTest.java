@@ -10,7 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +60,16 @@ public class ItemTest {
     @Test
     public void test2() {
         commodityOrderDao.addOrderNoByOrderItemIDs("1556249842365557d56147bbd4c6199f31ec839816172","WTX001");
+    }
+    @Test
+    public void test3() {
+        long time = System.currentTimeMillis();
+        SimpleDateFormat all = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat month = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        System.out.println(month.format(new Date(System.currentTimeMillis())));
+//        System.out.println(time);
+//        Date date = new Date(time);
+//        System.out.println(date.getTime());
     }
 }

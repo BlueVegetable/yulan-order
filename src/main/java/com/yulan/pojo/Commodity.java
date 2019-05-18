@@ -18,6 +18,7 @@ public class Commodity {
 	private String unit;
 	private Integer splitShipment;
 	private Integer status;
+	private Boolean activityEffective;
 
 	public static final Integer COMMODITY_EXIST_STATUS = 1;
 	public static final Integer COMMODITY_NONE_EXIST_STATUS = 0;
@@ -124,6 +125,14 @@ public class Commodity {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Boolean getActivityEffective() {
+		return activityEffective;
+	}
+
+	public void setActivityEffective(Boolean activityEffective) {
+		this.activityEffective = activityEffective;
 	}
 
 	@Override

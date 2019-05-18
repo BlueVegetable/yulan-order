@@ -18,6 +18,7 @@ public class Web_user {
     private String passwordX;
     private Integer stopped;
     private String userState;//账号状态，""第一次，“10”未修改初始名密码但已经阅读了网络签定提示书，“01”修改了初始密码，但未阅读网络签定书，‘11’修改
+    private Integer isManager;
 
     public String getUserState() {
         return userState;
@@ -95,6 +96,14 @@ public class Web_user {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Integer getIsManager() {
+        return isManager;
+    }
+
+    public void setIsManager(Integer isManager) {
+        this.isManager = isManager;
     }
 
     public Web_user(String loginName, String password, String realName, String company, String tel, String email, String memo, Date ts, String userId, Date modifyDate, String macAddress, String type, String passwordX, Integer stopped, String creatAdmin) {
