@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller @RequestMapping("cart")
@@ -242,9 +244,17 @@ public class CartController{
     public Cart getAllCartByCID(String CID) throws Exception {
         Cart cart = getSimpleCartByCID(CID);
         Map<String, Object> cartItems = new HashMap<>();
-        cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN)));
-        cartItems.put(WALLPAPER,cartItemService.getCartItems(cart.getCartId(),WALLPAPER));
-        cartItems.put(SOFT,cartItemService.getCartItems(cart.getCartId(),SOFT));
+        List<CartItem> curtainCartItems = curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN);
+        List<CartItem> wallPaperCartItems = cartItemService.getCartItems(cart.getCartId(),WALLPAPER);
+        List<CartItem> softCartItems = cartItemService.getCartItems(cart.getCartId(),SOFT);
+
+        dealCommodityEffective(curtainCartItems);
+        dealCommodityEffective(wallPaperCartItems);
+        dealCommodityEffective(softCartItems);
+
+        cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItems));
+        cartItems.put(WALLPAPER,wallPaperCartItems);
+        cartItems.put(SOFT,softCartItems);
         cart.setCartItems(cartItems);
         return cart;
     }
@@ -406,6 +416,66 @@ public class CartController{
 			result.add(oneResult);
 		}
 		return result;
+	}
+
+	private void dealCommodityEffective(List<CartItem> cartItems) {
+		for (CartItem cartItem:cartItems) {
+			if (cartItem.getCommodities()!=null) {
+				List<Commodity> commodities = cartItem.getCommodities();
+				for (Commodity commodity:commodities) {
+					String activityID = commodity.getActivityId();
+					SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
+					if(salPromotion!=null) {
+						Date dateEnd = salPromotion.getDateEnd();
+						if(dateEnd == null) {
+							commodity.setActivityEffective(null);
+						} else {
+							SimpleDateFormat all = new SimpleDateFormat("yyyy-MM-dd");
+							String dateEndString = all.format(dateEnd);
+							dateEndString = dateEndString + " 23:59:59";
+							Timestamp timestamp = Timestamp.valueOf(dateEndString);
+							long time = timestamp.getTime();
+							if(time<System.currentTimeMillis()) {
+								commodity.setActivityEffective(false);
+							} else {
+								commodity.setActivityEffective(true);
+							}
+						}
+					} else {
+						commodity.setActivityEffective(null);
+					}
+				}
+			} else {
+				CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
+				List<CurtainList> curtainLists = curtainCartItem.getCurtainLists();
+				for (CurtainList curtainList:curtainLists) {
+					List<CurtainCommodity> curtainCommodities = curtainList.getCurtainCommodities();
+					for (CurtainCommodity curtainCommodity:curtainCommodities) {
+						String activityID = curtainCommodity.getActivityId();
+						SalPromotion salPromotion = salPromotionService.getSalPromotionByID(activityID);
+						if(salPromotion!=null) {
+							Date dateEnd = salPromotion.getDateEnd();
+							if(dateEnd==null) {
+								curtainCommodity.setActivityEffective(null);
+							} else {
+								SimpleDateFormat all = new SimpleDateFormat("yyyy-MM-dd");
+								String dateEndString = all.format(dateEnd);
+								dateEndString = dateEndString + " 23:59:59";
+								Timestamp timestamp = Timestamp.valueOf(dateEndString);
+								long time = timestamp.getTime();
+								if(time<System.currentTimeMillis()) {
+									curtainCommodity.setActivityEffective(false);
+								} else {
+									curtainCommodity.setActivityEffective(true);
+								}
+							}
+						} else {
+							curtainCommodity.setActivityEffective(null);
+						}
+					}
+				}
+			}
+		}
 	}
 
 }
