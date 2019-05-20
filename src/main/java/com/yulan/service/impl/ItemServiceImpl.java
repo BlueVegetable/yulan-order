@@ -98,9 +98,7 @@ public class ItemServiceImpl implements ItemService {
 
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
-            if (null != item.getNote()) {
-                item.setNote(stringUtil.getUtf8(item.getNote()));
-            }
+            changeItemToUTF8(item);
         }
 
         if (null == itemList || itemList.size() == 0) {

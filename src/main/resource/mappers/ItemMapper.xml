@@ -126,7 +126,7 @@
          select * from(
          select rownum rm, c.*  from
          (
-         select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+         select  b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
          where a.brand = b.product_brand
          and a.customer_code = #{cid}
          and b.product_type in ('ML' , 'MLP')
@@ -157,7 +157,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        select  b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('XHB')
@@ -188,7 +188,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        select  b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('PJB')
@@ -219,7 +219,7 @@
        select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        select b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('BZ')
@@ -250,7 +250,7 @@
        select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        select  b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('GH')
@@ -281,7 +281,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        select  b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('TC')
@@ -313,7 +313,7 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select b.item_no, b.note, b.fix_type, b.fix_grade ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
+        select  b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
         where a.brand = b.product_brand
         and a.customer_code = #{cid}
         and b.product_type in ('TU','DT')
