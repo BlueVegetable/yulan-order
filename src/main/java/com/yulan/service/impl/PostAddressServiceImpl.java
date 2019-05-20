@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,19 +26,19 @@ public class PostAddressServiceImpl implements PostAddressService {
     @Override
     public boolean addPostAddress(PostAddress postAddress) throws IOException {
         if(null != postAddress.getPostAddress()){
-            postAddress.setPostAddress(stringUtil.setUtf8(postAddress.getPostAddress()));
+            postAddress.setPostAddress(stringUtil.UTF8ToGBK(postAddress.getPostAddress()));
         }
         if(null != postAddress.getWlContacts()){
-            postAddress.setWlContacts(stringUtil.setUtf8(postAddress.getWlContacts()));
+            postAddress.setWlContacts(stringUtil.UTF8ToGBK(postAddress.getWlContacts()));
         }
         if(null != postAddress.getProvince()){
-            postAddress.setProvince(stringUtil.setUtf8(postAddress.getProvince()));
+            postAddress.setProvince(stringUtil.UTF8ToGBK(postAddress.getProvince()));
         }
         if(null != postAddress.getCity()){
-            postAddress.setCity(stringUtil.setUtf8(postAddress.getCity()));
+            postAddress.setCity(stringUtil.UTF8ToGBK(postAddress.getCity()));
         }
         if(null != postAddress.getCountry()){
-            postAddress.setCountry(stringUtil.setUtf8(postAddress.getCountry()));
+            postAddress.setCountry(stringUtil.UTF8ToGBK(postAddress.getCountry()));
         }
         return postAddressDao.addPostAddress(postAddress);
     }
@@ -47,19 +46,19 @@ public class PostAddressServiceImpl implements PostAddressService {
     @Override
     public boolean updatePostAddress(PostAddress postAddress) throws IOException {
         if(null != postAddress.getPostAddress()){
-            postAddress.setPostAddress(stringUtil.setUtf8(postAddress.getPostAddress()));
+            postAddress.setPostAddress(stringUtil.UTF8ToGBK(postAddress.getPostAddress()));
         }
         if(null != postAddress.getWlContacts()){
-            postAddress.setWlContacts(stringUtil.setUtf8(postAddress.getWlContacts()));
+            postAddress.setWlContacts(stringUtil.UTF8ToGBK(postAddress.getWlContacts()));
         }
         if(null != postAddress.getProvince()){
-            postAddress.setProvince(stringUtil.setUtf8(postAddress.getProvince()));
+            postAddress.setProvince(stringUtil.UTF8ToGBK(postAddress.getProvince()));
         }
         if(null != postAddress.getCity()){
-            postAddress.setCity(stringUtil.setUtf8(postAddress.getCity()));
+            postAddress.setCity(stringUtil.UTF8ToGBK(postAddress.getCity()));
         }
         if(null != postAddress.getCountry()){
-            postAddress.setCountry(stringUtil.setUtf8(postAddress.getCountry()));
+            postAddress.setCountry(stringUtil.UTF8ToGBK(postAddress.getCountry()));
         }
         return postAddressDao.updatePostAddress(postAddress);
     }
@@ -72,7 +71,7 @@ public class PostAddressServiceImpl implements PostAddressService {
     @Override
     public Map getPostAddress(String cid) throws IOException {
         Map map = new HashMap();
-        List<PostAddress> addressList = new ArrayList<>();
+        List<PostAddress> addressList ;
 
 
 
@@ -101,10 +100,10 @@ public class PostAddressServiceImpl implements PostAddressService {
         Customer customer = customerDao.getCustomerByID(cid);
         PostAddress postAddress2 = new PostAddress();
         postAddress2.setCid(customer.getCustomerCode());
-        postAddress2.setPostAddress(stringUtil.getUtf8(customer.getDeliveryAdress()));
+        postAddress2.setPostAddress(stringUtil.GBKToUTF8(customer.getDeliveryAdress()));
         postAddress2.setAddressId(0);
         postAddress2.setWlTel(customer.getHandset());
-        postAddress2.setWlContacts(customer.getCustomerAgent1());
+        postAddress2.setWlContacts(stringUtil.GBKToUTF8(customer.getCustomerAgent1()));
         addressList.add(0,postAddress2);
 
         map.put("data",addressList);
