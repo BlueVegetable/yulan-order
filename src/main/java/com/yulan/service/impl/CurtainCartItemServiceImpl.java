@@ -111,6 +111,10 @@ public class CurtainCartItemServiceImpl implements CartItemService {
         return curtainCartItemEncode.updateCartItem(cartItem);
     }
 
+    public boolean alterCurtainCartItem(String cartItemID,Integer count) {
+        return curtainCartItemEncode.alterCurtainCartItem(cartItemID, count);
+    }
+
     private List<List<Commodity>> dealCommodities(List<Commodity> commodities) {
         List<List<Commodity>> result = new ArrayList<>();
         Long time = null;

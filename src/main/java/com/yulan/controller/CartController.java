@@ -2,6 +2,7 @@ package com.yulan.controller;
 
 import com.yulan.pojo.*;
 import com.yulan.service.*;
+import com.yulan.service.impl.CurtainCartItemServiceImpl;
 import com.yulan.utils.Response;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
@@ -381,6 +383,12 @@ public class CartController{
 		}
 		return Response.getResponseMap(0,"",null);
 	}
+
+	@ResponseBody@RequestMapping("alterCurtainCartItem")
+    public Map alterCurtainCartItem(@RequestParam("cartItemID")String cartItemID, @RequestParam("count")Integer count) {
+        CurtainCartItemServiceImpl curtainCartItemServiceImpl = new CurtainCartItemServiceImpl();
+        return Response.getResponseMap(0,"",curtainCartItemServiceImpl.alterCurtainCartItem(cartItemID, count));
+    }
 
 	private List<Map<String,Object>> dealCurtainCartItems(List<CartItem> cartItems) {
 		List<Map<String,Object>> result = new ArrayList<>();

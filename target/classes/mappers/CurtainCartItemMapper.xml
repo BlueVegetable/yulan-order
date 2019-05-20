@@ -59,4 +59,10 @@
         OUTSOURCING_BOX_WIDTH = #{outsourcingBoxWidth,jdbcType=NUMERIC}
         where CART_ITEM_ID = #{cartItemId}
     </update>
+
+    <update id="alterCurtainCartItem" parameterType="Map">
+        update CART_ITEM
+        set count = #{count}
+        where CART_ITEM_ID = #{cartItemID}
+    </update>
 </mapper>
