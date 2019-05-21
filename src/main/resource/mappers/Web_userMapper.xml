@@ -44,4 +44,8 @@
     <select id="getArea_position" resultType="Map">
         select position from AREA_OWNER t where t.owner=#{cid}
     </select>
+
+    <select id="getAllUserByCom" resultType="Map">
+        select LOGINNAME from WEB_USER t where t.company=#{company}
+    </select>
 </mapper>

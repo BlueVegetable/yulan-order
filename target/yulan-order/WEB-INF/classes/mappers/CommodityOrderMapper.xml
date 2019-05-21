@@ -121,6 +121,9 @@
             <if test="suggestion != null" >
                 SUGGESTION = #{suggestion,jdbcType=VARCHAR},
             </if>
+            <if test="note != null" >
+                NOTE = #{note,jdbcType=VARCHAR},
+            </if>
 
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
