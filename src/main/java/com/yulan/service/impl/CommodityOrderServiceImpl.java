@@ -6,8 +6,8 @@ import com.yulan.pojo.Commodity;
 import com.yulan.pojo.CommodityOrder;
 import com.yulan.pojo.CurtainCommodity;
 import com.yulan.service.CommodityOrderService;
+import com.yulan.utils.BlueVegetableBean;
 import com.yulan.utils.StringUtil;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +30,8 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
             List<CommodityOrder> commodityOrders = new ArrayList<>();
             List<Commodity> curtainCommodities = curtainCommodityDao.getCommoditiesByCartItemID(cartItemID);
             for (Commodity commodity:curtainCommodities) {
-                JSONObject jsonObject = JSONObject.fromObject(commodity);
-                CommodityOrder commodityOrder = (CommodityOrder) JSONObject.toBean(jsonObject,CommodityOrder.class);
+                Map<String,Object> commodityMap = BlueVegetableBean.objectToMap(commodity);
+                CommodityOrder commodityOrder = (CommodityOrder) BlueVegetableBean.mapToObject(commodityMap,CommodityOrder.class);
                 commodityOrder.setOrderItemId(commodity.getCartItemId());
                 commodityOrder.setSaveTime(new Timestamp(System.currentTimeMillis()));
                 commodityOrder.setOrderItemNumber(orderNumber);
