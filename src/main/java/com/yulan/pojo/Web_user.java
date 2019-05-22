@@ -19,6 +19,7 @@ public class Web_user {
     private Integer stopped;
     private String userState;//账号状态，""第一次，“10”未修改初始名密码但已经阅读了网络签定提示书，“01”修改了初始密码，但未阅读网络签定书，‘11’修改
 
+
     public String getUserState() {
         return userState;
     }
