@@ -35,7 +35,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
     @Override
-    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType,String curtainStatusId) throws UnsupportedEncodingException {
+    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType,String curtainStatusId,String company) throws UnsupportedEncodingException {
         Map<String,Object> map=new HashMap<>();
         List<Map<String,Object>> list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId);
         List<Map<String,Object>> data=new ArrayList<>();
@@ -88,9 +88,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
-    public Map getOrderContent(String order_no,String cid) throws UnsupportedEncodingException {
+    public Map getOrderContent(String order_no,String cid,String compny) throws UnsupportedEncodingException {
         if (order_no.indexOf("X")==-1){//非窗帘
-            return this.getOrders(1,1,cid,null,order_no,null,null,null,null);
+            return this.getOrders(1,1,cid,null,order_no,null,null,null,null,compny);
         }else{
             Map<String,Object> map=new HashMap<>();
             List<Map<String,Object>> list=ctm_orderDao.getOrderContent(order_no);
