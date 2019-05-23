@@ -127,4 +127,6 @@
 					  expression="execution(* com.yulan.service.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
+
+	<import resource="classpath:quartz.xml" />
 </beans>
