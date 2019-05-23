@@ -269,20 +269,20 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         String beginTime=m.get("beginTime").toString();
         String finishTime=m.get("finishTime").toString();
         String curtainStatusId=m.get("curtainStatusId").toString();
-        String companyId=m.get("companyId").toString();
-        List<String> users=new ArrayList<>();
-        if (companyId.equals("")){
-            users=null;
-        }else{
-            List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
-
-
-            if (userMaps.size()!=0){
-                for (Map<String,Object> map1:userMaps){
-                    users.add(map1.get("LOGINNAME").toString());
-                }
-            }
-        }
+//        String companyId=m.get("companyId").toString();
+//        List<String> users=new ArrayList<>();
+//        if (companyId.equals("")){
+//            users=null;
+//        }else{
+//            List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+//
+//
+//            if (userMaps.size()!=0){
+//                for (Map<String,Object> map1:userMaps){
+//                    users.add(map1.get("LOGINNAME").toString());
+//                }
+//            }
+//        }
 
 
         if (curtainStatusId.equals("") ||curtainStatusId.equals("")) {
@@ -308,9 +308,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
 
         Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(page,lastNum,null,"0",find,beginTime,finishTime,null,curtainStatusId,users);
+        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(page,lastNum,null,"0",find,beginTime,finishTime,null,curtainStatusId,null);
         List<Map<String,Object>> data=new ArrayList<>();
-        map.put("count",ctm_orderDao.countOrdersH(null,"0",find,beginTime,finishTime,null,curtainStatusId,users));
+        map.put("count",ctm_orderDao.countOrdersH(null,"0",find,beginTime,finishTime,null,curtainStatusId,null));
         for (Map<String,Object> m1:list) {
 
             for (Map.Entry<String, Object> entry : m1.entrySet()) {//将订单头内容转码
