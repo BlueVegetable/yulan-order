@@ -32,7 +32,7 @@ public interface CurtainOrderService {
      * @param map
      * @return
      */
-    Map gatAllCurOrders(Map map) throws UnsupportedEncodingException;
+    Map getAllCurOrders(Map map) throws UnsupportedEncodingException;
 
 
     /**

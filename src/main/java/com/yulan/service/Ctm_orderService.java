@@ -11,7 +11,7 @@ public interface Ctm_orderService {
    Map getOrders(Integer st,Integer number,String cid,String state_id,String find,String beginTime,String finishTime,String orderType,String curtainStatusId,String companyId) throws UnsupportedEncodingException;
 
    //获取订单详情
-   Map getOrderContent(String order_no,String cid,String companyId) throws UnsupportedEncodingException;
+   Map getOrderContent(String order_no,String cid) throws UnsupportedEncodingException;
 
    //获取活动价
    Map getPromotion(List<Map<String,Object>> list);

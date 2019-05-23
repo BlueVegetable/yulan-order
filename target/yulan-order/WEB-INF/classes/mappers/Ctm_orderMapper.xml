@@ -57,9 +57,7 @@
         <include refid="Base_Column_List_H" />
 
         from CTM_ORDER t where 1=1
-            <if test="cid!=null">
-               and t.customer_code=#{cid}
-            </if>
+
 
             <if test="state_id!=null">
                 and STATUS_ID=#{state_id}
@@ -80,6 +78,14 @@
             <if test="orderType!=null">
                 and order_no like  '%'||#{orderType}||'%'
             </if>
+            <if test="users !=null and users.size>0">
+                and CUSTOMER_CODE in
+                <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+
         order by t.date_update  DESC
         ) l
         where rownum &lt;= #{number})
@@ -168,6 +174,12 @@
         </if>
         <if test="beginTime!=null">
             and date_cre between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
+        </if>
+        <if test="users !=null and users.size>0">
+            and CUSTOMER_CODE in
+            <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
 
     </select>
@@ -763,8 +775,7 @@
     <select id="getPackDetail" resultType="Map">
         select SALE_NO,ITEM_NO,QTY_DELIVER,mc_get_ph(BATCH_NO)PH,to_char(DATE_OUT_STOCK,'yyyy-MM-dd HH:mm:ss')DATE_OUT_STOCK,TRANSCOMPANY,NVL(TRANS_ID,' ')TRANS_ID
        from PACK_DETAIL
-       WHERE CUSTOMER_CODE = #{cid}
-       AND WEB_ORDER_NO =#{order_no}
+       WHERE WEB_ORDER_NO =#{order_no}
        and item_no = #{item_no}
     </select>
 

@@ -775,8 +775,7 @@
     <select id="getPackDetail" resultType="Map">
         select SALE_NO,ITEM_NO,QTY_DELIVER,mc_get_ph(BATCH_NO)PH,to_char(DATE_OUT_STOCK,'yyyy-MM-dd HH:mm:ss')DATE_OUT_STOCK,TRANSCOMPANY,NVL(TRANS_ID,' ')TRANS_ID
        from PACK_DETAIL
-       WHERE CUSTOMER_CODE = #{cid}
-       AND WEB_ORDER_NO =#{order_no}
+       WHERE WEB_ORDER_NO =#{order_no}
        and item_no = #{item_no}
     </select>
 

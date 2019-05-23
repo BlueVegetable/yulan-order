@@ -44,6 +44,12 @@
     </select>
 
     <select id="getAllUserByComId" resultType="Map">
-        select LOGINNAME from WEB_USER t where t.companyId=#{companyId}
+        select LOGINNAME from WEB_USER t where 1=1
+        <if test="companyId!=null">
+           and t.company_Id=#{companyId}
+        </if>
+
+
+
     </select>
 </mapper>
