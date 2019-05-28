@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CustomerBalancePeriodDetailDao">
+    <resultMap id="CustomerBalancePeriodDetailMap" type="com.yulan.pojo.CustomerBalancePeriodDetail" >
+        <id column="SALE_NO" property="saleNo" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+        <result column="BILL_NO" property="billNo" jdbcType="VARCHAR" />
+        <result column="DATE_OUT_STOCK" property="dateOutStock" jdbcType="TIMESTAMP" />
+        <result column="QTY" property="qty" jdbcType="DECIMAL" />
+        <result column="MONEY" property="money" jdbcType="DECIMAL" />
+        <result column="FREIGHT" property="freight" jdbcType="DECIMAL" />
+        <result column="GATHER_MONEY_FAX" property="gatherMoneyFax" jdbcType="DECIMAL" />
+        <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+        <result column="TRANS_FLAG" property="transFlag" jdbcType="VARCHAR" />
+        <result column="MONEY_REBATE" property="moneyRebate" jdbcType="DECIMAL" />
+    </resultMap>
+    <select id="getCustomerBalanceInfo" resultMap="CustomerBalancePeriodDetailMap">
+       select * from(
+        select rownum rm, c.*  from
+        (
+        select * from CUSTOMER_BALANCE_PERIOD_DETAIL t where t.CUSTOMER_CODE = #{CID} and order by t.date_start desc
+
+       ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+</mapper>
