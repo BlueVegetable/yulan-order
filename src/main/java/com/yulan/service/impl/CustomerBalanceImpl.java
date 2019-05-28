@@ -62,7 +62,13 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
     public Map getCustomerBalancePeriodDetailInfo(String cid, Date startDate, Date endDate){
         Map<String, Object> map = new HashMap<>();
         List<CustomerBalancePeriodDetail> customerBalancePeriodDetailList = customerBalancePeriodDetailDao.getCustomerBalancePeriodDetailInfo(cid,startDate,endDate);
-
+        for(int i = 0; i<customerBalancePeriodDetailList.size() ; i++){
+            CustomerBalancePeriodDetail customerBalancePeriodDetail = customerBalancePeriodDetailList.get(i);
+            if(customerBalancePeriodDetail.getNotes() != null) {
+                customerBalancePeriodDetail.setNotes(stringUtil.GBKToUTF8(customerBalancePeriodDetail.getNotes()));
+            }
+        }
+        map.put("customerBalancePeriodDetailList",customerBalancePeriodDetailList);
         map.put("code",0);
         return map;
     }
