@@ -194,4 +194,15 @@ public interface Ctm_orderDao {
      */
     Boolean updateRecord(@Param("statusId")String statusId,@Param("orderNo")String orderNo);
 
+
+    /**
+     * 任务查询是获取月任务的订单
+     * @param beginTime
+     * @param finishTime
+     * @param cid
+     * @return
+     */
+    List<Map<String,Object>> getOrderCusAss(@Param("beginTime") String beginTime,@Param("finishTime") String finishTime,@Param("cid")String cid);
+
+
 }

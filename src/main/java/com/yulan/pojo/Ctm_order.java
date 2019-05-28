@@ -104,6 +104,25 @@ public class Ctm_order {
     private BigDecimal allBackM;
     private String curtainStatusId;
 
+    private BigDecimal rebateMoney;
+    private String rebateNotes;
+
+    public BigDecimal getRebateMoney() {
+        return rebateMoney;
+    }
+
+    public void setRebateMoney(BigDecimal rebateMoney) {
+        this.rebateMoney = rebateMoney;
+    }
+
+    public String getRebateNotes() {
+        return rebateNotes;
+    }
+
+    public void setRebateNotes(String rebateNotes) {
+        this.rebateNotes = rebateNotes;
+    }
+
     public String getCurtainStatusId() {
         return curtainStatusId;
     }
