@@ -38,13 +38,14 @@
         <result column="MONEY_FL_TOTAL" property="moneyFlTotal" jdbcType="DECIMAL" />
         <result column="MONEY_FL_SY" property="moneyFlSy" jdbcType="DECIMAL" />
         <result column="MONEY_FL" property="moneyFl" jdbcType="DECIMAL" />
+        <result column="TOTAL" property="total" jdbcType="DECIMAL"/>
     </resultMap>
 
     <select id="getCustomerBalanceInfo" parameterType="String" resultMap="CustomerBalancePeriodMap">
         select * from(
         select rownum rm, c.*  from
         (
-        select * from CUSTOMER_BALANCE_PERIOD t where t.CUSTOMER_CODE = #{CID} order by t.date_start desc
+        select t.* ,COUNT(*) OVER () TOTAL  from CUSTOMER_BALANCE_PERIOD t where t.CUSTOMER_CODE = #{CID} order by t.date_start desc
 
         ) c)tm
         <if test="start!=null">
