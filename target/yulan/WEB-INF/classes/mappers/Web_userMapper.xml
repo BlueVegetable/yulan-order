@@ -43,13 +43,7 @@
         select position from AREA_OWNER t where t.owner=#{cid}
     </select>
 
-    <select id="getAllUserByComId" resultType="Map">
-        select LOGINNAME from WEB_USER t where 1=1
-        <if test="companyId!=null">
-           and t.company_Id=#{companyId}
-        </if>
-
-
-
+    <select id="getAllUserByCom" resultType="Map">
+        select LOGINNAME from WEB_USER t where t.company=#{company}
     </select>
 </mapper>
