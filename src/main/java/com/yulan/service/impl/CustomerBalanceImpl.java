@@ -12,7 +12,6 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,9 +58,9 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
     }
 
     @Override
-    public Map getCustomerBalancePeriodDetailInfo(String cid, Date startDate, Date endDate){
+    public Map getCustomerBalancePeriodDetailInfo(String cid, String startDate, String endDate, Integer page, Integer lastNum){
         Map<String, Object> map = new HashMap<>();
-        List<CustomerBalancePeriodDetail> customerBalancePeriodDetailList = customerBalancePeriodDetailDao.getCustomerBalancePeriodDetailInfo(cid,startDate,endDate);
+        List<CustomerBalancePeriodDetail> customerBalancePeriodDetailList = customerBalancePeriodDetailDao.getCustomerBalancePeriodDetailInfo(cid,startDate,endDate, page, lastNum);
         for(int i = 0; i<customerBalancePeriodDetailList.size() ; i++){
             CustomerBalancePeriodDetail customerBalancePeriodDetail = customerBalancePeriodDetailList.get(i);
             if(customerBalancePeriodDetail.getNotes() != null) {
