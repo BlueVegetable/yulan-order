@@ -150,10 +150,7 @@ public class CustomerInfoController {
     @RequestMapping(value = "updateCustomerInfo")
     @ResponseBody
     public Map updateCustomerInfo(@RequestBody CustomerInfoCard customerInfoCard)throws Exception{
-
-        Map map = new HashMap();
-        map = customerInfoService.updateCustomerInfo(customerInfoCard);
-            return map;
+            return customerInfoService.updateCustomerInfo(customerInfoCard);
 
     }
 

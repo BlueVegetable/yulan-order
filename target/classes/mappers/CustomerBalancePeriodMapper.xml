@@ -52,4 +52,19 @@
         </if>
     </select>
 
+    <update id="customerCheck" parameterType="String">
+        update CUSTOMER_BALANCE_PERIOD t
+        <set>
+            <if test="customerCheckState != null">
+                t.customer_check_state  = #{customerCheckState,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCheckComment != null">
+                t.customer_check_comment = #{customerCheckComment,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where t.CUSTOMER_CODE = #{CID} AND t.date_start = #{startDate}
+    </update>
+
+
+
 </mapper>
