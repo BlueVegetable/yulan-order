@@ -3,10 +3,12 @@ package com.yulan.utils;
 import com.google.common.collect.Maps;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.springframework.cglib.beans.BeanMap;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +71,7 @@ public class MapUtils {
         try {
             bean = class1.newInstance();
             ConvertUtils.register(new org.apache.commons.beanutils.converters.DateConverter(null), java.util.Date.class);
+            ConvertUtils.register(new BigDecimalConverter(BigDecimal.valueOf(-1)), java.math.BigDecimal.class);//当BigDecimal为null时转为-1
             BeanUtilEx.populate(bean,map);
          //   BeanUtils.populate(bean, map);
         } catch (InstantiationException e) {

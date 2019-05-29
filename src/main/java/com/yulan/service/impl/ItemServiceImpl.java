@@ -300,7 +300,8 @@ public class ItemServiceImpl implements ItemService {
                 //判断是否是里衬布
                 if (itemMLGY.getProductType().equals("LCB")) {
                     Double LCBUsage = width * multiple + 0.2;
-                    map.put("LCB", LCBUsage);
+                    BigDecimal LCB = new BigDecimal(LCBUsage);
+                    map.put("LCB", LCB.setScale(2,BigDecimal.ROUND_HALF_UP));
                 } else {
                     //帘身
                     //特殊款式

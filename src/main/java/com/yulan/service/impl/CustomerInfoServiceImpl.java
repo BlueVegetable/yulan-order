@@ -35,6 +35,7 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
     private static MapUtils mapUtils;
 
 
+
     @Override
     public List<Map<String,Object>> getAllStates() {
         List<Map<String,Object>> list=customerInfoDao.getAllStates();
@@ -86,7 +87,7 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
             if(yLcontractentryDao.getYLcontract_v2015ByYear(customerInfoCard.getCid(),customerInfoCard.getContractyear()) != null) {
                 customerInfoCard.setPrivateAccountAuthed(yLcontractentryDao.getYLcontract_v2015ByYear(customerInfoCard.getCid(),customerInfoCard.getContractyear()).getPrivateAccountAuthed());
             }
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map ;
             map = mapUtils.beanToMap(customerInfoCard);
 
             for (Map.Entry<String,Object> entry : map.entrySet()) {
