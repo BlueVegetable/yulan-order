@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.Web_userDao">
+
+    <select id="login" parameterType="java.util.Map" resultType="Web_user">
+        select
+          LOGINNAME,PASSWORD,REALNAME,COMPANY, TEL
+          ,EMAIL,MEMO,to_char(TS,'yyyy-mm-dd'),USERID,to_char(MODIFYDATE,'yyyy-mm-dd')
+          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE,IS_MANAGER
+        from WEB_USER where LOGINNAME = #{loginName} and PASSWORD=#{password}
+    </select>
+
+    <select id="check" resultType="String" parameterType="String">
+        select password from web_user where loginName=#{loginName}
+    </select>
+
+    <update id="updateuserState" parameterType="String">
+        update web_user
+        <set>
+            userState = #{userState}
+        </set>
+
+        where LOGINNAME = #{cid}
+    </update>
+
+    <select id="getUser" resultType="Web_user">
+         select
+          LOGINNAME,PASSWORD,REALNAME,COMPANY, TEL
+          ,EMAIL,MEMO,to_char(TS,'yyyy-mm-dd'),USERID,to_char(MODIFYDATE,'yyyy-mm-dd')
+          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE
+        from WEB_USER where LOGINNAME = #{cid}
+    </select>
+
+    <select id="getPosition" resultType="String">
+        select roleid from
+       (select b.descp,a.* from WEBCONTRACTWFMEMBER a,WEBCONTRACTWFROLE b where a.roleid=b.id)c
+        where
+        c.binduserid=#{cid} and cyear=#{year}
+        group by roleid
+    </select>
+
+    <select id="getArea_position" resultType="Map">
+        select position from AREA_OWNER t where t.owner=#{cid}
+    </select>
+
+    <select id="getAllUserByComId" resultType="Map">
+        select LOGINNAME from WEB_USER t where 1=1
+        <if test="companyId!=null">
+           and t.company_Id=#{companyId}
+        </if>
+
+
+
+    </select>
+</mapper>

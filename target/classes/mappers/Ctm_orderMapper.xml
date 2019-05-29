@@ -10,7 +10,8 @@
     DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
     BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND,
-    NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y,NVL(CURTAIN_STATUS_ID,' ') CURTAIN_STATUS_ID
+    NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y,NVL(CURTAIN_STATUS_ID,' ') CURTAIN_STATUS_ID,NVL(REBATE_MONEY,0) REBATE_MONEY,
+    NVL(REBATE_NOTES,' ') REBATE_NOTES
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
@@ -57,9 +58,7 @@
         <include refid="Base_Column_List_H" />
 
         from CTM_ORDER t where 1=1
-            <if test="cid!=null">
-               and t.customer_code=#{cid}
-            </if>
+
 
             <if test="state_id!=null">
                 and STATUS_ID=#{state_id}
@@ -80,6 +79,14 @@
             <if test="orderType!=null">
                 and order_no like  '%'||#{orderType}||'%'
             </if>
+            <if test="users !=null and users.size>0">
+                and CUSTOMER_CODE in
+                <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+
         order by t.date_update  DESC
         ) l
         where rownum &lt;= #{number})
@@ -168,6 +175,12 @@
         </if>
         <if test="beginTime!=null">
             and date_cre between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
+        </if>
+        <if test="users !=null and users.size>0">
+            and CUSTOMER_CODE in
+            <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
 
     </select>
@@ -763,8 +776,7 @@
     <select id="getPackDetail" resultType="Map">
         select SALE_NO,ITEM_NO,QTY_DELIVER,mc_get_ph(BATCH_NO)PH,to_char(DATE_OUT_STOCK,'yyyy-MM-dd HH:mm:ss')DATE_OUT_STOCK,TRANSCOMPANY,NVL(TRANS_ID,' ')TRANS_ID
        from PACK_DETAIL
-       WHERE CUSTOMER_CODE = #{cid}
-       AND WEB_ORDER_NO =#{order_no}
+       WHERE WEB_ORDER_NO =#{order_no}
        and item_no = #{item_no}
     </select>
 
@@ -1255,6 +1267,19 @@
     </resultMap>
     <select id="getOrderB" resultMap="Ctm_order_detailMap" >
         select * from CTM_ORDER_DETAIL where order_no=#{orderNo}
+    </select>
+
+    <select id="getOrderCusAss" resultType="Map">
+        select
+        <include refid="Base_Column_List_H" />
+
+        from CTM_ORDER t where 1=1
+
+          and DATE_CRE between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
+          and CUSTOMER_CODE=#{cid}
+          and STATUS_ID in ('1','12','2','4','7')
+
+        order by t.date_update  DESC
     </select>
 
 

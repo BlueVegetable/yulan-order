@@ -153,6 +153,9 @@ public class CartController{
 				curtainLists.add(curtainList);
 			}
 			curtainCartItem.setCurtainLists(curtainLists);
+			if(curtainCartItem.getOutsourcingBoxWidth()!=null) {
+				curtainCartItem.setOutsourcingBoxExist(1);
+			}
 		}
 
 		String CID = (String) parameters.get("CID");

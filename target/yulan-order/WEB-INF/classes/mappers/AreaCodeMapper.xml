@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.AreaCodeDao">
+    <resultMap id="AreaCodeMap" type="AreaCode" >
+        <id column="AREA_BELONG" property="areaBelong" />
+        <result column="AREA_CODE" property="areaCode" />
+        <result column="AREA_NAME" property="areaName" />
+        <result column="LEVEL_NO" property="levelNo" />
+        <result column="USE_ID" property="useId" />
+    </resultMap>
+
+    <select id="getAreaCodeByAreaCode" parameterType="String" resultMap="AreaCodeMap">
+        select * from area_code where area_code=#{areaCode}
+    </select>
+
+</mapper>

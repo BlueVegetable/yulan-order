@@ -2,6 +2,8 @@ package com.yulan.encode;
 
 import com.yulan.dao.CurtainCartItemDao;
 import com.yulan.pojo.CartItem;
+import com.yulan.pojo.CurtainCartItem;
+import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ public class CurtainCartItemEncode {
     private CurtainCartItemDao curtainCartItemDao;
 
     public boolean addCartItem(CartItem cartItem) {
+        CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
+        curtainCartItem.setLocation(StringUtil.UTF8ToGBK(curtainCartItem.getLocation()));
         return curtainCartItemDao.addCartItem(cartItem) > 0;
     }
 
@@ -26,7 +30,12 @@ public class CurtainCartItemEncode {
     }
 
     public List<CartItem> getCartItems(String cartID, String commodityType) {
-        return curtainCartItemDao.getCartItems(cartID,commodityType);
+        List<CartItem> cartItems = curtainCartItemDao.getCartItems(cartID,commodityType);
+        for (CartItem cartItem:cartItems) {
+            CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
+            curtainCartItem.setLocation(StringUtil.GBKToUTF8(curtainCartItem.getLocation()));
+        }
+        return cartItems;
     }
 
     public CartItem getCartItemOrder(String cartID, String commodityType, String activityGroupType, String productGroupType) {

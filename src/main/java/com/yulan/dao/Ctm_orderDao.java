@@ -25,7 +25,7 @@ public interface Ctm_orderDao {
                                        @Param("cid")String cid, @Param("state_id")String state_id,
                                        @Param("find")String find,@Param("beginTime") String beginTime,
                                         @Param("finishTime") String finishTime ,@Param("orderType")String orderType,
-                                        @Param("curtainStatusId")String curtainStatusId);
+                                        @Param("curtainStatusId")String curtainStatusId,@Param("users")List<String> users);
     //获取订单具体内容
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
 
@@ -33,7 +33,7 @@ public interface Ctm_orderDao {
     List<PackDetail> findPackDetail(@Param("orderNo")String orderNo,@Param("itemNo")String itemNo );
 
     //获取订单提货单号及其订单运输详情
-    List<Map<String,Object>> getPackDetail(@Param("cid")String cid,@Param("order_no")String order_no,@Param("item_no") String item_no);
+    List<Map<String,Object>> getPackDetail(@Param("order_no")String order_no,@Param("item_no") String item_no);
 
     //获取订单型号数量
     BigDecimal getNum(@Param("order_no")String order_no,@Param("item_no")String item_no);
@@ -41,7 +41,7 @@ public interface Ctm_orderDao {
     Integer countOrdersH(@Param("cid")String cid,@Param("state_id")String state_id,
                         @Param("find")String find,@Param("beginTime") String beginTime,
                          @Param("finishTime") String finishTime,@Param("orderType")String orderType,
-                         @Param("curtainStatusId")String curtainStatusId);
+                         @Param("curtainStatusId")String curtainStatusId,@Param("users")List<String> users);
 
     /**
      * 获取订单详情
@@ -193,5 +193,16 @@ public interface Ctm_orderDao {
      * @return
      */
     Boolean updateRecord(@Param("statusId")String statusId,@Param("orderNo")String orderNo);
+
+
+    /**
+     * 任务查询是获取月任务的订单
+     * @param beginTime
+     * @param finishTime
+     * @param cid
+     * @return
+     */
+    List<Map<String,Object>> getOrderCusAss(@Param("beginTime") String beginTime,@Param("finishTime") String finishTime,@Param("cid")String cid);
+
 
 }

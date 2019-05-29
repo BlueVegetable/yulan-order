@@ -14,7 +14,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -54,8 +56,10 @@ public class ItemTest {
     @Test
     public void test1() {
         List<String> cartItemIDs = new ArrayList<>();
-        cartItemIDs.add("1556249842365557d56147bbd4c6199f31ec839816172");
-//        System.out.println(commodityOrderService.submitCommodityOrder(cartItemIDs));
+        cartItemIDs.add("15582584725009e65338d18e04ab2ae21e9564a2d7707");
+        Map<String,Integer> lineNos = new HashMap<>();
+        lineNos.put("15582584725009e65338d18e04ab2ae21e9564a2d7707",1);
+        System.out.println(commodityOrderService.submitCommodityOrder(cartItemIDs,lineNos));
     }
     @Test
     public void test2() {
