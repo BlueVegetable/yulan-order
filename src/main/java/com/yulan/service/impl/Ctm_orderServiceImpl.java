@@ -840,6 +840,30 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     /**
+     * 24小时自动取消订单
+     * @return
+     */
+    @Override
+    public Integer autoCancelOrder() {
+        List<Ctm_order> list=ctm_orderDao.getAllCtms();
+        java.sql.Timestamp currentDate = new java.sql.Timestamp(System.currentTimeMillis());//当前时间
+
+
+        for (Ctm_order ctm_order:list){
+            java.sql.Timestamp dateCre=ctm_order.getDateCre();//提交时间
+            java.sql.Timestamp dateCre24=new java.sql.Timestamp(dateCre.getTime()+(24*60*60*1000));//加24小时
+            if (currentDate.after(dateCre24)){
+                if (!ctm_orderDao.updateOrderStatus(ctm_order.getOrderNo(),ctm_order.getCustomerCode(),"3",currentDate)){
+                   return 0;
+                }
+            }else {
+                continue;
+            }
+        }
+        return 1;
+    }
+
+    /**
      * 计算返利点
      * @param promotion_cost 商品总价
      * @param allMoney 返利券总价

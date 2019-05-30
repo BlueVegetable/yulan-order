@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.UserDao">
+    <resultMap id="UserMap" type="User" >
+        <id column="CUSTOMER_CODE" property="customerId" />
+        <result column="CUSTOMER_NAME" property="customerName" />
+        <result column="DISTRICT" property="district" />
+    </resultMap>
+
+    <select id="getUser" parameterType="java.util.Map" resultMap="UserMap">
+        select CUSTOMER_CODE,CUSTOMER_NAME,DISTRICT from CUSTOMER where CUSTOMER_CODE = #{userId}
+    </select>
+
+</mapper>

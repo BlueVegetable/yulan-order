@@ -1282,6 +1282,67 @@
         order by t.date_update  DESC
     </select>
 
+    <resultMap id="CtmOrderMap" type="Ctm_order" >
+        <id column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CODE2" property="customerCode2" jdbcType="VARCHAR" />
+        <result column="CURRENCY_ID" property="currencyId" jdbcType="VARCHAR" />
+        <result column="LINKPERSON" property="linkperson" jdbcType="VARCHAR" />
+        <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+        <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+        <result column="DELIVERY_TYPE" property="deliveryType" jdbcType="VARCHAR" />
+        <result column="DELIVERY_NOTES" property="deliveryNotes" jdbcType="VARCHAR" />
+        <result column="POST_ADDRESS" property="postAddress" jdbcType="VARCHAR" />
+        <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+        <result column="DATE_CRE" property="dateCre" jdbcType="TIMESTAMP" />
+        <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+        <result column="DATE_UPDATE" property="dateUpdate" jdbcType="TIMESTAMP" />
+        <result column="PERSON_UPDATE" property="personUpdate" jdbcType="VARCHAR" />
+        <result column="CONTRACT_NO" property="contractNo" jdbcType="VARCHAR" />
+        <result column="PERSON_ACCEPT" property="personAccept" jdbcType="VARCHAR" />
+        <result column="DATE_ACCEPT" property="dateAccept" jdbcType="TIMESTAMP" />
+        <result column="YULAN_NOTES" property="yulanNotes" jdbcType="VARCHAR" />
+        <result column="WEB_TJ_TIME" property="webTjTime" jdbcType="TIMESTAMP" />
+        <result column="DATE_DEAL" property="dateDeal" jdbcType="TIMESTAMP" />
+        <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+        <result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+        <result column="PROJECT_NO" property="projectNo" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CODE_O2O" property="customerCodeO2o" jdbcType="VARCHAR" />
+        <result column="ORDER_FLAG" property="orderFlag" jdbcType="VARCHAR" />
+        <result column="POST_ADDRESS_MODIFIED" property="postAddressModified" jdbcType="DECIMAL" />
+        <result column="DS_LINKMAN" property="dsLinkman" jdbcType="VARCHAR" />
+        <result column="DS_TEL" property="dsTel" jdbcType="VARCHAR" />
+        <result column="DS_USER_NAME" property="dsUserName" jdbcType="VARCHAR" />
+        <result column="DS_ORDER_NO" property="dsOrderNo" jdbcType="VARCHAR" />
+        <result column="IS_DS_ORDER" property="isDsOrder" jdbcType="VARCHAR" />
+        <result column="ERP_PROCESS_NOTE" property="erpProcessNote" jdbcType="VARCHAR" />
+        <result column="INVOICE_FLAG" property="invoiceFlag" jdbcType="VARCHAR" />
+        <result column="INVOICE_TITLE" property="invoiceTitle" jdbcType="VARCHAR" />
+        <result column="WL_CONTACTS" property="wlContacts" jdbcType="VARCHAR" />
+        <result column="WL_TEL" property="wlTel" jdbcType="VARCHAR" />
+        <result column="RECIVER_AREA1" property="reciverArea1" jdbcType="VARCHAR" />
+        <result column="RECIVER_AREA2" property="reciverArea2" jdbcType="VARCHAR" />
+        <result column="RECIVER_AREA3" property="reciverArea3" jdbcType="VARCHAR" />
+        <result column="BILL_TYPE_X" property="billTypeX" jdbcType="CHAR" />
+        <result column="DELIVERY_FLAG" property="deliveryFlag" jdbcType="VARCHAR" />
+        <result column="OAO_FLAG" property="oaoFlag" jdbcType="VARCHAR" />
+        <result column="OAO_STATUS" property="oaoStatus" jdbcType="VARCHAR" />
+        <result column="OAO_PERSON" property="oaoPerson" jdbcType="VARCHAR" />
+        <result column="OAO_TIME" property="oaoTime" jdbcType="TIMESTAMP" />
+        <result column="ALL_SPEND" property="allSpend" jdbcType="DECIMAL" />
+        <result column="BUYUSER" property="buyUser" jdbcType="VARCHAR" />
+        <result column="BUYUSERPHONE" property="buyUserPhone" jdbcType="VARCHAR" />
+        <result column="ALLBACK_M" property="allBackM" jdbcType="DECIMAL" />
+        <result column="ALLBACK_Y" property="allBackY" jdbcType="DECIMAL" />
+        <result column="CURTAIN_STATUS_ID" property="curtainStatusId" jdbcType="VARCHAR" />
+        <result column="REBATE_MONEY" property="rebateMoney" jdbcType="DECIMAL" />
+        <result column="REBATE_NOTES" property="rebateNotes" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getAllCtms" resultMap="CtmOrderMap">
+        select * from CTM_ORDER where STATUS_ID='5'
+    </select>
+
 
 
 </mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.HesEmployeeDao" >
+    <resultMap id="BaseResultMap" type="HesEmployee" >
+        <id column="EMPLOYEE_NO" property="employeeNo" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="SEX" property="sex" jdbcType="VARCHAR" />
+        <result column="NATION" property="nation" jdbcType="VARCHAR" />
+        <result column="PORGY" property="porgy" jdbcType="VARCHAR" />
+        <result column="BIRTHDATE" property="birthdate" jdbcType="TIMESTAMP" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="DEPT_NO" property="deptNo" jdbcType="VARCHAR" />
+        <result column="MINISTRATION" property="ministration" jdbcType="VARCHAR" />
+        <result column="HIRE_DATE" property="hireDate" jdbcType="TIMESTAMP" />
+        <result column="SALARY" property="salary" jdbcType="DECIMAL" />
+        <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+        <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+        <result column="WAGE_SCALE" property="wageScale" jdbcType="VARCHAR" />
+        <result column="SPECIALITY" property="speciality" jdbcType="VARCHAR" />
+        <result column="KULTUR_DEGREE" property="kulturDegree" jdbcType="VARCHAR" />
+        <result column="SCHOOL_GRADUATION" property="schoolGraduation" jdbcType="VARCHAR" />
+        <result column="DATE_GRADUATION" property="dateGraduation" jdbcType="TIMESTAMP" />
+        <result column="DAET_WORK" property="daetWork" jdbcType="TIMESTAMP" />
+        <result column="DATE_EMPLOYEE" property="dateEmployee" jdbcType="TIMESTAMP" />
+        <result column="PROFESSION_APPELLATION" property="professionAppellation" jdbcType="VARCHAR" />
+        <result column="WORK_CLASSES" property="workClasses" jdbcType="VARCHAR" />
+        <result column="POLITY_FACE" property="polityFace" jdbcType="VARCHAR" />
+        <result column="HOME_SITE" property="homeSite" jdbcType="VARCHAR" />
+        <result column="HOME_TEL" property="homeTel" jdbcType="VARCHAR" />
+        <result column="INSUR_NO" property="insurNo" jdbcType="VARCHAR" />
+        <result column="SELF_INSURE" property="selfInsure" jdbcType="VARCHAR" />
+        <result column="CONTRACT_CLASSES" property="contractClasses" jdbcType="VARCHAR" />
+        <result column="HEALTH" property="health" jdbcType="VARCHAR" />
+        <result column="WORK_PROPERTIES" property="workProperties" jdbcType="VARCHAR" />
+        <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+        <result column="DATE_POLICY" property="datePolicy" jdbcType="TIMESTAMP" />
+        <result column="ASSOCIATOR" property="associator" jdbcType="VARCHAR" />
+        <result column="DATE_ASSOCIATOR" property="dateAssociator" jdbcType="TIMESTAMP" />
+        <result column="RETIREMENT_CLASS" property="retirementClass" jdbcType="VARCHAR" />
+        <result column="SELF_ADDRESS" property="selfAddress" jdbcType="VARCHAR" />
+        <result column="SELF_TEL" property="selfTel" jdbcType="VARCHAR" />
+        <result column="SPECICAL" property="specical" jdbcType="VARCHAR" />
+        <result column="FOREIGN_LANGUAGE" property="foreignLanguage" jdbcType="VARCHAR" />
+        <result column="WORK_TYPE" property="workType" jdbcType="VARCHAR" />
+        <result column="NOTE" property="note" jdbcType="VARCHAR" />
+        <result column="DT_ZHENG" property="dtZheng" jdbcType="TIMESTAMP" />
+        <result column="LEAVE_DATE" property="leaveDate" jdbcType="TIMESTAMP" />
+        <result column="CLASS_NO" property="classNo" jdbcType="VARCHAR" />
+        <result column="WORK_STATION_NO" property="workStationNo" jdbcType="VARCHAR" />
+        <result column="WORK_STATION_NO2" property="workStationNo2" jdbcType="VARCHAR" />
+        <result column="JOY_ID" property="joyId" jdbcType="VARCHAR" />
+        <result column="PAY_GRADE" property="payGrade" jdbcType="VARCHAR" />
+        <result column="PAY_GRADE2" property="payGrade2" jdbcType="VARCHAR" />
+        <result column="JOB_RESUME" property="jobResume" jdbcType="VARCHAR" />
+        <result column="TRAIN_RECORD" property="trainRecord" jdbcType="VARCHAR" />
+        <result column="LEAVEDATE_APPLY" property="leavedateApply" jdbcType="TIMESTAMP" />
+        <result column="CLOTHES_SIZE" property="clothesSize" jdbcType="VARCHAR" />
+        <result column="NEW_FLAG" property="newFlag" jdbcType="VARCHAR" />
+        <result column="ADVISE_TIME" property="adviseTime" jdbcType="DECIMAL" />
+        <result column="JOB_RESUME1" property="jobResume1" jdbcType="VARCHAR" />
+        <result column="TRAIN_RECORD1" property="trainRecord1" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getHesEmployeeNameByNO" resultType="String" parameterType="String">
+        select name from HES_EMPLOYEE where EMPLOYEE_NO = #{employeeNO}
+    </select>
+</mapper>
