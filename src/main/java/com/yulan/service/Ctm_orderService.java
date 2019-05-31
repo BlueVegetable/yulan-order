@@ -48,4 +48,10 @@ public interface Ctm_orderService {
     * @return
     */
    String getOrderNumber(String product_group_tpye);
+
+   /**
+    * 自动取消订单
+    * @return
+    */
+   Integer autoCancelOrder();
 }

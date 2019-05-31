@@ -26,6 +26,14 @@ public interface Ctm_orderDao {
                                        @Param("find")String find,@Param("beginTime") String beginTime,
                                         @Param("finishTime") String finishTime ,@Param("orderType")String orderType,
                                         @Param("curtainStatusId")String curtainStatusId,@Param("users")List<String> users);
+
+    //管理员获取所有订单
+    List<Map<String,Object>> getOrdersManager(@Param("start")Integer start, @Param("number") Integer number,
+                                        @Param("cid")String cid, @Param("state_id")String state_id,
+                                        @Param("find")String find,@Param("beginTime") String beginTime,
+                                        @Param("finishTime") String finishTime ,@Param("orderType")String orderType,
+                                        @Param("curtainStatusId")String curtainStatusId);
+
     //获取订单具体内容
     List<Map<String,Object>> getOrdersB(@Param("order_no")String order_no);
 
@@ -42,6 +50,11 @@ public interface Ctm_orderDao {
                         @Param("find")String find,@Param("beginTime") String beginTime,
                          @Param("finishTime") String finishTime,@Param("orderType")String orderType,
                          @Param("curtainStatusId")String curtainStatusId,@Param("users")List<String> users);
+
+    Integer countOrdersManager(@Param("cid")String cid,@Param("state_id")String state_id,
+                         @Param("find")String find,@Param("beginTime") String beginTime,
+                         @Param("finishTime") String finishTime,@Param("orderType")String orderType,
+                         @Param("curtainStatusId")String curtainStatusId);
 
     /**
      * 获取订单详情
@@ -74,7 +87,7 @@ public interface Ctm_orderDao {
 
     /**
      * 获取订单头部字母
-     * @param item_no
+     * @param item_noupdateOrderStatus
      * @return
      */
     String getType_word(@Param("item_no")String item_no);//Y则是订单W
@@ -203,6 +216,15 @@ public interface Ctm_orderDao {
      * @return
      */
     List<Map<String,Object>> getOrderCusAss(@Param("beginTime") String beginTime,@Param("finishTime") String finishTime,@Param("cid")String cid);
+
+
+    /**
+     * 获取所有欠款未提交的订单
+     * @return
+     */
+    List<Ctm_order> getAllCtms();
+
+
 
 
 }

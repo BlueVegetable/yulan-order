@@ -8,4 +8,6 @@ public interface CustomerBalanceService {
 
     Map getCustomerBalancePeriodDetailInfo(String cid, String startDate, String endDate, Integer page, Integer lastNum);
 
+    Map customerCheck(String cid, String startDate, String customerCheckState, String customerCheckComment);
+
 }

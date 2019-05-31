@@ -58,4 +58,19 @@ public class CustomerBalanceController {
         int lastNum=page+limit-1;
         return customerBalanceService.getCustomerBalancePeriodDetailInfo(cid, startDate ,endDate, page,lastNum);
     }
+
+    /**
+     * 客户意见确认的接口
+     * @param data
+     * @return
+     */
+    @RequestMapping(value = "customerCheck")
+    @ResponseBody
+    public Map customerCheck(@RequestBody Map<String,Object> data){
+        String cid = (String)data.get("cid");
+        String startDate = (String)data.get("startDate");
+        String customerCheckState = (String)data.get("customerCheckState");
+        String customerCheckComment = (String)data.get("customerCheckComment");
+        return customerBalanceService.customerCheck(cid,startDate,customerCheckState,customerCheckComment);
+    }
 }

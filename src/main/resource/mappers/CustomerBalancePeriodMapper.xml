@@ -38,18 +38,34 @@
         <result column="MONEY_FL_TOTAL" property="moneyFlTotal" jdbcType="DECIMAL" />
         <result column="MONEY_FL_SY" property="moneyFlSy" jdbcType="DECIMAL" />
         <result column="MONEY_FL" property="moneyFl" jdbcType="DECIMAL" />
+        <result column="TOTAL" property="total" jdbcType="DECIMAL"/>
     </resultMap>
 
     <select id="getCustomerBalanceInfo" parameterType="String" resultMap="CustomerBalancePeriodMap">
         select * from(
         select rownum rm, c.*  from
         (
-        select * from CUSTOMER_BALANCE_PERIOD t where t.CUSTOMER_CODE = #{CID} order by t.date_start desc
+        select t.* ,COUNT(*) OVER () TOTAL  from CUSTOMER_BALANCE_PERIOD t where t.CUSTOMER_CODE = #{CID} order by t.date_start desc
 
         ) c)tm
         <if test="start!=null">
             where rm &gt;= #{start} and rm &lt;= #{number}
         </if>
     </select>
+
+    <update id="customerCheck" parameterType="String">
+        update CUSTOMER_BALANCE_PERIOD t
+        <set>
+            <if test="customerCheckState != null">
+                t.customer_check_state  = #{customerCheckState,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCheckComment != null">
+                t.customer_check_comment = #{customerCheckComment,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where t.CUSTOMER_CODE = #{CID} AND t.date_start = #{startDate}
+    </update>
+
+
 
 </mapper>

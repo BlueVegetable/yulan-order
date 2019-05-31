@@ -71,4 +71,20 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
         map.put("code",0);
         return map;
     }
+
+    @Override
+    public Map customerCheck(String cid, String startDate,
+                             String customerCheckState,
+                             String customerCheckComment) {
+        Map<String, Object> map = new HashMap<>();
+        customerCheckState = stringUtil.UTF8ToGBK(customerCheckState);
+        customerCheckComment = stringUtil.UTF8ToGBK(customerCheckComment);
+        if(customerBalancePeriodDao.customerCheck(cid,startDate,customerCheckState,customerCheckComment)){
+            map.put("msg","SUCCESS");
+        }else{
+            map.put("msg","FALSE");
+        }
+        map.put("code",0);
+        return map;
+    }
 }
