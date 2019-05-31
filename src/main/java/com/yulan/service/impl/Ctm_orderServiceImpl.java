@@ -1,9 +1,6 @@
 package com.yulan.service.impl;
 
-import com.yulan.dao.CommodityOrderDao;
-import com.yulan.dao.Ctm_orderDao;
-import com.yulan.dao.CurtainOrderDao;
-import com.yulan.dao.Web_userDao;
+import com.yulan.dao.*;
 import com.yulan.pojo.*;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.MapUtils;
@@ -37,6 +34,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     @Autowired
     private Web_userDao web_userDao;
 
+    @Autowired
+    private ItemDao itemDao;
+
 
     @Override
     public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType,String curtainStatusId,String companyId) throws UnsupportedEncodingException {
@@ -51,11 +51,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     users.add(map1.get("LOGINNAME").toString());
                 }
             }
-            list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId,users);;
+            list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId,users);
             map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId,users));
         }else {
-            list=ctm_orderDao.getOrdersH(start,number,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId,null);;
-            map.put("count",ctm_orderDao.countOrdersH(cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId,null));
+            list=ctm_orderDao.getOrdersManager(start,number,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId);
+            map.put("count",ctm_orderDao.countOrdersManager(cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId));
         }
 
         //一个公司的员工可以查看该公司所有订单
@@ -75,6 +75,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             List<Map<String,Object>> list2=ctm_orderDao.getOrdersB(order_no);
             int orderB_num=0;
             for (Map<String,Object> m2:list2) {//将订单具体内容转码
+                String itemNo=m2.get("ITEM_NO").toString();//关联型号
+                Item item=itemDao.getItemByItemNO(itemNo);
+                m2.put("item",item);
+
                 List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
                 if(list3.size()!=0){
                     m2.put("pack_id",1);//是否可以查看物流判断，1可以，0不可以
@@ -113,7 +117,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     @Override
     public Map getOrderContent(String order_no,String cid) throws UnsupportedEncodingException {
         if (order_no.indexOf("X")==-1){//非窗帘
-            return this.getOrders(1,1,cid,null,order_no,null,null,null,null,"补空");//公司id"补空"
+            return this.getOrders(1,1,cid,null,order_no,null,null,null,null,"");//公司id"补空"
         }else{
             Map<String,Object> map=new HashMap<>();
             List<Map<String,Object>> list=ctm_orderDao.getOrderContent(order_no);
@@ -131,6 +135,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 List<Map<String,Object>> list2=ctm_orderDao.getOrdersB(order_no);
                 int orderB_num=0;
                 for (Map<String,Object> m2:list2) {//将订单具体内容转码
+                    String itemNo=m2.get("ITEM_NO").toString();//关联型号
+                    Item item=itemDao.getItemByItemNO(itemNo);
+                    m2.put("item",item);
+
                     List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
                     if(list3.size()!=0){
                         m2.put("pack_id",1);//是否可以查看物流判断，1可以，0不可以

@@ -308,9 +308,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
 
         Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> list=ctm_orderDao.getOrdersH(page,lastNum,null,"0",find,beginTime,finishTime,null,curtainStatusId,null);
+        List<Map<String,Object>> list=ctm_orderDao.getOrdersManager(page,lastNum,null,"0",find,beginTime,finishTime,null,curtainStatusId);
         List<Map<String,Object>> data=new ArrayList<>();
-        map.put("count",ctm_orderDao.countOrdersH(null,"0",find,beginTime,finishTime,null,curtainStatusId,null));
+        map.put("count",ctm_orderDao.countOrdersManager(null,"0",find,beginTime,finishTime,null,curtainStatusId));
         for (Map<String,Object> m1:list) {
 
             for (Map.Entry<String, Object> entry : m1.entrySet()) {//将订单头内容转码

@@ -79,12 +79,55 @@
             <if test="orderType!=null">
                 and order_no like  '%'||#{orderType}||'%'
             </if>
-            <if test="users !=null and users.size>0">
+            <if test="users !=null and users.size()>0">
                 and CUSTOMER_CODE in
                 <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
+            <if test="users ==null or users.size()==0">
+                and 1!=1
+            </if>
+
+
+        order by t.date_update  DESC
+        ) l
+        where rownum &lt;= #{number})
+        where rn &gt;=#{start}
+
+    </select>
+
+    <select id="getOrdersManager" resultType="Map">
+        select
+        *
+
+        from (
+        select rownum rn,l.* from
+        (select
+        <include refid="Base_Column_List_H" />
+
+        from CTM_ORDER t where 1=1
+
+
+        <if test="state_id!=null">
+            and STATUS_ID=#{state_id}
+        </if>
+        <if test="curtainStatusId!=null">
+            and CURTAIN_STATUS_ID=#{curtainStatusId}
+        </if>
+        <if test="state_id ==null">
+            and STATUS_ID !='0'
+        </if>
+
+        <if test="find!=null">
+            and order_no like  '%'||#{find}||'%'
+        </if>
+        <if test="beginTime!=null">
+            and DATE_CRE between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
+        </if>
+        <if test="orderType!=null">
+            and order_no like  '%'||#{orderType}||'%'
+        </if>
 
 
         order by t.date_update  DESC
@@ -176,11 +219,42 @@
         <if test="beginTime!=null">
             and date_cre between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
         </if>
+
         <if test="users !=null and users.size>0">
             and CUSTOMER_CODE in
             <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
                 #{item}
             </foreach>
+        </if>
+        <if test="users ==null or users.size()==0">
+            and 1!=1
+        </if>
+
+    </select>
+
+    <select id="countOrdersManager" resultType="Integer">
+        select count(*) from CTM_ORDER t where 1=1
+        <if test="cid!=null">
+            and t.customer_code=#{cid}
+        </if>
+
+        <if test="state_id!=null">
+            and STATUS_ID=#{state_id}
+        </if>
+        <if test="curtainStatusId!=null">
+            and CURTAIN_STATUS_ID=#{curtainStatusId}
+        </if>
+        <if test="state_id ==null">
+            and STATUS_ID !='0'
+        </if>
+        <if test="find!=null">
+            and order_no like  '%'||#{find}||'%'
+        </if>
+        <if test="orderType!=null">
+            and order_no like  '%'||#{orderType}||'%'
+        </if>
+        <if test="beginTime!=null">
+            and date_cre between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
         </if>
 
     </select>
