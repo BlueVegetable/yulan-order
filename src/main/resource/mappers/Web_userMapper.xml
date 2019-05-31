@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yulan.dao.Web_userDao">
+    <resultMap id="WebUserMap" type="Web_user" >
+        <id column="USERID" property="userId" jdbcType="VARCHAR" />
+        <result column="LOGINNAME" property="loginName" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="REALNAME" property="realName" jdbcType="VARCHAR" />
+        <result column="COMPANY" property="company" jdbcType="VARCHAR" />
+        <result column="TEL" property="tel" jdbcType="VARCHAR" />
+        <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+        <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+        <result column="TS" property="ts" jdbcType="TIMESTAMP" />
+        <result column="MODIFYDATE" property="modifyDate" jdbcType="TIMESTAMP" />
+        <result column="MACADDRESS" property="macAddress" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="VARCHAR" />
+        <result column="PASSWORDX" property="passwordX" jdbcType="VARCHAR" />
+        <result column="STOPPED" property="stopped" jdbcType="DECIMAL" />
+        <result column="CREATADMIN" property="creatadmin" jdbcType="VARCHAR" />
+        <result column="USERSTATE" property="userstate" jdbcType="VARCHAR" />
+        <result column="IS_MANAGER" property="isManager" jdbcType="DECIMAL" />
+        <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
+    </resultMap>
 
     <select id="login" parameterType="java.util.Map" resultType="Web_user">
         select
@@ -29,6 +49,10 @@
           ,EMAIL,MEMO,to_char(TS,'yyyy-mm-dd'),USERID,to_char(MODIFYDATE,'yyyy-mm-dd')
           ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE
         from WEB_USER where LOGINNAME = #{cid}
+    </select>
+
+    <select id="getWebUsersByCompanyId" parameterType="String" resultMap="WebUserMap">
+        select * from WEB_USER where company_id = #{companyId}
     </select>
 
     <select id="getPosition" resultType="String">

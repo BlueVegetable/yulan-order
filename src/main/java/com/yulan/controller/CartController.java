@@ -23,6 +23,8 @@ import java.util.*;
 public class CartController{
 
 	@Autowired
+	private Web_userService webUserService;
+	@Autowired
 	private ItemService itemService;
 	@Autowired
 	private CartService cartService;
@@ -246,22 +248,45 @@ public class CartController{
     }
 
     @ResponseBody@RequestMapping("getAllCartByCID")
-    public Cart getAllCartByCID(String CID) throws Exception {
-        Cart cart = getSimpleCartByCID(CID);
-        Map<String, Object> cartItems = new HashMap<>();
-        List<CartItem> curtainCartItems = curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN);
-        List<CartItem> wallPaperCartItems = cartItemService.getCartItems(cart.getCartId(),WALLPAPER);
-        List<CartItem> softCartItems = cartItemService.getCartItems(cart.getCartId(),SOFT);
+    public List<Map<String,Object>> getAllCartByCID(String CID) throws Exception {
+		Web_user webUser = webUserService.getWebUserByCID(CID);
+		List<String> webUserIDs = new ArrayList<>();
+		if(webUser.getCompanyId() == null) {
+			webUserIDs.add(CID);
+		} else {
+			List<Web_user> webUsers = webUserService.getWebUsersByCompanyId(webUser.getCompanyId());
+			for (Web_user inline:webUsers) {
+				webUserIDs.add(inline.getCompanyId());
+			}
+		}
 
-        dealCommodityEffective(curtainCartItems);
-        dealCommodityEffective(wallPaperCartItems);
-        dealCommodityEffective(softCartItems);
+		List<Map<String,Object>> result = new ArrayList<>();
 
-        cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItems));
-        cartItems.put(WALLPAPER,wallPaperCartItems);
-        cartItems.put(SOFT,softCartItems);
-        cart.setCartItems(cartItems);
-        return cart;
+		for (String webUserID:webUserIDs) {
+			Map<String,Object> inline = new HashMap<>();
+
+			Cart cart = getSimpleCartByCID(CID);
+			Map<String, Object> cartItems = new HashMap<>();
+			List<CartItem> curtainCartItems = curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN);
+			List<CartItem> wallPaperCartItems = cartItemService.getCartItems(cart.getCartId(),WALLPAPER);
+			List<CartItem> softCartItems = cartItemService.getCartItems(cart.getCartId(),SOFT);
+
+			dealCommodityEffective(curtainCartItems);
+			dealCommodityEffective(wallPaperCartItems);
+			dealCommodityEffective(softCartItems);
+
+			cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItems));
+			cartItems.put(WALLPAPER,wallPaperCartItems);
+			cartItems.put(SOFT,softCartItems);
+			cart.setCartItems(cartItems);
+
+			inline.put("CID",webUserID);
+			inline.put("cart",cart);
+
+			result.add(inline);
+		}
+
+        return result;
     }
 
 	@ResponseBody@RequestMapping("updateCartItem")
