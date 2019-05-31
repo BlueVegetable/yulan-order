@@ -15,6 +15,10 @@ public class CartItem {
 	 */
 	private Boolean checked;
  	private String cartId;
+	/**
+	 * @deprecated 购物车条目所属的客户ID
+	 */
+	private String CID;
 
 	public String getCartItemId() {
 		return this.cartItemId;
@@ -70,6 +74,14 @@ public class CartItem {
 
 	public void setCartId(String cartId) {
 		this.cartId=cartId;
+	}
+
+	public String getCID() {
+		return CID;
+	}
+
+	public void setCID(String CID) {
+		this.CID = CID;
 	}
 
 	@Override

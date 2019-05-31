@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CustomerBalancePeriodDao">
+    <resultMap id="CustomerBalancePeriodMap" type="com.yulan.pojo.CustomerBalancePeriod" >
+        <id column="DATE_START" property="dateStart" jdbcType="VARCHAR" />
+        <id column="DATE_END" property="dateEnd" jdbcType="VARCHAR" />
+        <id column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+        <result column="YEAR_START_RECEIVE_ZT" property="yearStartReceiveZt" jdbcType="DECIMAL" />
+        <result column="CONSIGNMENT_MONEY" property="consignmentMoney" jdbcType="DECIMAL" />
+        <result column="FREIGHT" property="freight" jdbcType="DECIMAL" />
+        <result column="GATHER_MONEY_FAX" property="gatherMoneyFax" jdbcType="DECIMAL" />
+        <result column="CZYSK" property="czysk" jdbcType="DECIMAL" />
+        <result column="MONEY_DH_TOTAL" property="moneyDhTotal" jdbcType="DECIMAL" />
+        <result column="MONEY_DH" property="moneyDh" jdbcType="DECIMAL" />
+        <result column="MONEY_BH_TOTAL" property="moneyBhTotal" jdbcType="DECIMAL" />
+        <result column="MONEY_BH" property="moneyBh" jdbcType="DECIMAL" />
+        <result column="CTM_VER_TOP" property="ctmVerTop" jdbcType="VARCHAR" />
+        <result column="CTM_BH_BILL" property="ctmBhBill" jdbcType="VARCHAR" />
+        <result column="DATE_DEAL" property="dateDeal" jdbcType="TIMESTAMP" />
+        <result column="FLAG_TEMP" property="flagTemp" jdbcType="VARCHAR" />
+        <result column="VER_TOP" property="verTop" jdbcType="VARCHAR" />
+        <result column="FLAG_DEAL" property="flagDeal" jdbcType="VARCHAR" />
+        <result column="CONSIGNMENT_MONEY_UNCLOSE" property="consignmentMoneyUnclose" jdbcType="DECIMAL" />
+        <result column="FREIGHT_UNCLOSE" property="freightUnclose" jdbcType="DECIMAL" />
+        <result column="GATHER_MONEY_FAX_UNCLOSE" property="gatherMoneyFaxUnclose" jdbcType="DECIMAL" />
+        <result column="QCCZYSK" property="qcczysk" jdbcType="DECIMAL" />
+        <result column="FHJE_MONTH" property="fhjeMonth" jdbcType="DECIMAL" />
+        <result column="FREIGHT_MONTH" property="freightMonth" jdbcType="DECIMAL" />
+        <result column="CZSK_MONTH" property="czskMonth" jdbcType="DECIMAL" />
+        <result column="MONEY_REBATE_TOTAL" property="moneyRebateTotal" jdbcType="DECIMAL" />
+        <result column="MONEY_REBATE_YF" property="moneyRebateYf" jdbcType="DECIMAL" />
+        <result column="RELEASE_STATE" property="releaseState" jdbcType="VARCHAR" />
+        <result column="RELEASE_TS" property="releaseTs" jdbcType="TIMESTAMP" />
+        <result column="RELEASE_DEADLINE" property="releaseDeadline" jdbcType="TIMESTAMP" />
+        <result column="CUSTOMER_CHECK_STATE" property="customerCheckState" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CHECK_COMMENT" property="customerCheckComment" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CHECK_TS" property="customerCheckTs" jdbcType="TIMESTAMP" />
+        <result column="MONEY_FL_TOTAL" property="moneyFlTotal" jdbcType="DECIMAL" />
+        <result column="MONEY_FL_SY" property="moneyFlSy" jdbcType="DECIMAL" />
+        <result column="MONEY_FL" property="moneyFl" jdbcType="DECIMAL" />
+        <result column="TOTAL" property="total" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="getCustomerBalanceInfo" parameterType="String" resultMap="CustomerBalancePeriodMap">
+        select * from(
+        select rownum rm, c.*  from
+        (
+        select t.* ,COUNT(*) OVER () TOTAL  from CUSTOMER_BALANCE_PERIOD t where t.CUSTOMER_CODE = #{CID} order by t.date_start desc
+
+        ) c)tm
+        <if test="start!=null">
+            where rm &gt;= #{start} and rm &lt;= #{number}
+        </if>
+    </select>
+
+    <update id="customerCheck" parameterType="String">
+        update CUSTOMER_BALANCE_PERIOD t
+        <set>
+            <if test="customerCheckState != null">
+                t.customer_check_state  = #{customerCheckState,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCheckComment != null">
+                t.customer_check_comment = #{customerCheckComment,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where t.CUSTOMER_CODE = #{CID} AND t.date_start = #{startDate}
+    </update>
+
+
+
+</mapper>
