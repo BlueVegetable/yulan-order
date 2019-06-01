@@ -6,7 +6,7 @@
         select
           LOGINNAME,PASSWORD,REALNAME,COMPANY, TEL
           ,EMAIL,MEMO,to_char(TS,'yyyy-mm-dd'),USERID,to_char(MODIFYDATE,'yyyy-mm-dd')
-          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE,IS_MANAGER
+          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE,IS_MANAGER,company_id
         from WEB_USER where LOGINNAME = #{loginName} and PASSWORD=#{password}
     </select>
 
