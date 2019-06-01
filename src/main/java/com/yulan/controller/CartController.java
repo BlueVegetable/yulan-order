@@ -256,11 +256,10 @@ public class CartController{
 		} else {
 			List<Web_user> webUsers = webUserService.getWebUsersByCompanyId(webUser.getCompanyId());
 			for (Web_user inline:webUsers) {
-				webUserIDs.add(inline.getCompanyId());
+				webUserIDs.add(inline.getLoginName());
 			}
 		}
 
-		List<Cart> result = new ArrayList<>();
 		List<CartItem> curtainCartItems = new ArrayList<>();
 		List<CartItem> wallPaperCartItems = new ArrayList<>();
 		List<CartItem> softCartItems = new ArrayList<>();

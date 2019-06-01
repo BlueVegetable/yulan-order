@@ -16,8 +16,7 @@
         <result column="TYPE" property="type" jdbcType="VARCHAR" />
         <result column="PASSWORDX" property="passwordX" jdbcType="VARCHAR" />
         <result column="STOPPED" property="stopped" jdbcType="DECIMAL" />
-        <result column="CREATADMIN" property="creatadmin" jdbcType="VARCHAR" />
-        <result column="USERSTATE" property="userstate" jdbcType="VARCHAR" />
+        <result column="USERSTATE" property="userState" jdbcType="VARCHAR" />
         <result column="IS_MANAGER" property="isManager" jdbcType="DECIMAL" />
         <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
     </resultMap>
@@ -47,7 +46,7 @@
          select
           LOGINNAME,PASSWORD,REALNAME,COMPANY, TEL
           ,EMAIL,MEMO,to_char(TS,'yyyy-mm-dd'),USERID,to_char(MODIFYDATE,'yyyy-mm-dd')
-          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE
+          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE,COMPANY_ID
         from WEB_USER where LOGINNAME = #{cid}
     </select>
 
