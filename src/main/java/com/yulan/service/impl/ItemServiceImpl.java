@@ -50,6 +50,9 @@ public class ItemServiceImpl implements ItemService {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+                if (null != item.getRzGrade()) {
+                    item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+                }
                 map.put("data", item);
                 map.put("code", 0);
             }
@@ -150,6 +153,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.GBKToUTF8(itemDao.getUnit(item.getUnit())));
             }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+            }
 
         }
 
@@ -213,6 +219,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
             }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+            }
         }
         map.put("data", curtainList);
         map.put("code", 0);
@@ -246,6 +255,9 @@ public class ItemServiceImpl implements ItemService {
             }
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
+            }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
             }
         }
         map.put("data", curtainList);
@@ -397,6 +409,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getRzStyle()) {
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
             }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+            }
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
             }
@@ -449,7 +464,7 @@ public class ItemServiceImpl implements ItemService {
         }
 
         if(itemType.equals("ls")){
-            BigDecimal lsUsage = BigDecimal.valueOf(0);
+            BigDecimal lsUsage ;
 
             if (parentItemNo.equals("Z340004") || parentItemNo.equals("U310111")) {
                         if (curtainItem.getWidthHh() != null) {
@@ -560,6 +575,9 @@ public class ItemServiceImpl implements ItemService {
         }
         if (null != item.getUnit()) {
             item.setUnit(stringUtil.GBKToUTF8(itemDao.getUnit(item.getUnit())));
+        }
+        if (null != item.getRzGrade()) {
+            item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
         }
     }
 
