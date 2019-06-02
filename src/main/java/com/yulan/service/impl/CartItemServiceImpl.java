@@ -1,21 +1,28 @@
 package com.yulan.service.impl;
 
+import com.yulan.encode.BrandTypeEncode;
 import com.yulan.encode.CartItemEncode;
+import com.yulan.pojo.BrandType;
 import com.yulan.pojo.CartItem;
 import com.yulan.pojo.Commodity;
+import com.yulan.pojo.Item;
 import com.yulan.service.CartItemService;
+import com.yulan.utils.BlueVegetableBean;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service("cartItemService")
 public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
 	private CartItemEncode cartItemEncode;
+	@Autowired
+	private BrandTypeEncode brandTypeEncode;
 
 	@Override
 	public boolean addCartItem(CartItem cartItem) {
@@ -45,6 +52,17 @@ public class CartItemServiceImpl implements CartItemService {
 		for (CartItem cartItem:cartItems) {
 			List<Commodity> commodities = cartItem.getCommodities();
 			if(commodities.size()!=0) {
+				for (Commodity commodity:commodities) {
+					Item item = commodity.getItem();
+					Map<String,Object> itemMap = BlueVegetableBean.objectToMap(item);
+					Item copyItem = (Item) BlueVegetableBean.mapToObject(itemMap,Item.class);
+					String brandTypeID = copyItem.getProductBrand();
+					BrandType brandType = brandTypeEncode.getBrandTypeByID(brandTypeID);
+					if(brandType!=null) {
+						copyItem.setProductBrand(brandType.getBrandName());
+					}
+					commodity.setItem(copyItem);
+				}
 				cartItemsDeal.add(cartItem);
 			}
 		}

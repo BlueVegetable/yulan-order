@@ -23,6 +23,8 @@ import java.util.*;
 public class CartController{
 
 	@Autowired
+	private Web_userService webUserService;
+	@Autowired
 	private ItemService itemService;
 	@Autowired
 	private CartService cartService;
@@ -247,20 +249,49 @@ public class CartController{
 
     @ResponseBody@RequestMapping("getAllCartByCID")
     public Cart getAllCartByCID(String CID) throws Exception {
-        Cart cart = getSimpleCartByCID(CID);
-        Map<String, Object> cartItems = new HashMap<>();
-        List<CartItem> curtainCartItems = curtainCartItemService.getCartItems(cart.getCartId(),CURTAIN);
-        List<CartItem> wallPaperCartItems = cartItemService.getCartItems(cart.getCartId(),WALLPAPER);
-        List<CartItem> softCartItems = cartItemService.getCartItems(cart.getCartId(),SOFT);
+		Web_user webUser = webUserService.getWebUserByCID(CID);
+		List<String> webUserIDs = new ArrayList<>();
+		if(webUser.getCompanyId() == null) {
+			webUserIDs.add(CID);
+		} else {
+			List<Web_user> webUsers = webUserService.getWebUsersByCompanyId(webUser.getCompanyId());
+			for (Web_user inline:webUsers) {
+				webUserIDs.add(inline.getLoginName());
+			}
+		}
 
-        dealCommodityEffective(curtainCartItems);
-        dealCommodityEffective(wallPaperCartItems);
-        dealCommodityEffective(softCartItems);
+		List<CartItem> curtainCartItems = new ArrayList<>();
+		List<CartItem> wallPaperCartItems = new ArrayList<>();
+		List<CartItem> softCartItems = new ArrayList<>();
 
-        cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItems));
-        cartItems.put(WALLPAPER,wallPaperCartItems);
-        cartItems.put(SOFT,softCartItems);
-        cart.setCartItems(cartItems);
+		Cart cart = new Cart();
+		Map<String, Object> cartItems = new HashMap<>();
+
+		for (String webUserID:webUserIDs) {
+			Cart inline = getSimpleCartByCID(webUserID);
+			List<CartItem> curtainCartItemsPart = curtainCartItemService.getCartItems(inline.getCartId(),CURTAIN);
+			List<CartItem> wallPaperCartItemsPart = cartItemService.getCartItems(inline.getCartId(),WALLPAPER);
+			List<CartItem> softCartItemsPart = cartItemService.getCartItems(inline.getCartId(),SOFT);
+
+			setCartItemsCID(curtainCartItemsPart,webUserID);
+			setCartItemsCID(wallPaperCartItemsPart,webUserID);
+			setCartItemsCID(softCartItemsPart,webUserID);
+
+			dealCommodityEffective(curtainCartItemsPart);
+			dealCommodityEffective(wallPaperCartItemsPart);
+			dealCommodityEffective(softCartItemsPart);
+
+			curtainCartItems.addAll(curtainCartItemsPart);
+			wallPaperCartItems.addAll(wallPaperCartItemsPart);
+			softCartItems.addAll(softCartItemsPart);
+		}
+
+		cartItems.put(CURTAIN,dealCurtainCartItems(curtainCartItems));
+		cartItems.put(WALLPAPER,wallPaperCartItems);
+		cartItems.put(SOFT,softCartItems);
+
+		cart.setCartItems(cartItems);
+
         return cart;
     }
 
@@ -486,6 +517,12 @@ public class CartController{
 					}
 				}
 			}
+		}
+	}
+
+	private void setCartItemsCID(List<CartItem> cartItems,String CID) {
+		for (CartItem cartItem:cartItems) {
+			cartItem.setCID(CID);
 		}
 	}
 

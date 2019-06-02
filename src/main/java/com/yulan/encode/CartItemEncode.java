@@ -3,6 +3,7 @@ package com.yulan.encode;
 import com.yulan.dao.CartItemDao;
 import com.yulan.pojo.CartItem;
 import com.yulan.pojo.Commodity;
+import com.yulan.pojo.Item;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,10 @@ public class CartItemEncode {
         for (CartItem cartItem:cartItems) {
             List<Commodity> commodities = cartItem.getCommodities();
             for (Commodity commodity:commodities) {
+                Item item = commodity.getItem();
+                if(item!=null) {
+                    item.setRzGrade(StringUtil.GBKToUTF8(item.getRzGrade()));
+                }
                 commodity.setNote(StringUtil.GBKToUTF8(commodity.getNote()));
                 commodity.setUnit(StringUtil.GBKToUTF8(commodity.getUnit()));
             }

@@ -20,6 +20,8 @@ public interface Web_userDao {
 
     Web_user getUser(@Param("cid")String cid);
 
+    List<Web_user> getWebUsersByCompanyId(String companyId);
+
     String getPosition(@Param("cid")String cid,@Param("year")Integer year);//获取内部审核人员职位
 
     List<Map<String,Object>> getArea_position(@Param("cid") String cid);//获取业务员职位

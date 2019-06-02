@@ -3,6 +3,7 @@ package com.yulan.encode;
 import com.yulan.dao.CurtainCommodityDao;
 import com.yulan.pojo.Commodity;
 import com.yulan.pojo.CurtainCommodity;
+import com.yulan.pojo.Item;
 import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,10 @@ public class CurtainCommodityEncode {
             curtainCommodity.setCurtainPartName(StringUtil.GBKToUTF8(curtainCommodity.getCurtainPartName()));
             curtainCommodity.setManufacturingInstructions(StringUtil.GBKToUTF8(curtainCommodity.getManufacturingInstructions()));
             curtainCommodity.setIllustrate(StringUtil.GBKToUTF8(curtainCommodity.getIllustrate()));
+            Item item = commodity.getItem();
+            if(item != null) {
+                item.setRzGrade(StringUtil.GBKToUTF8(item.getRzGrade()));
+            }
         }
         return commodities;
     }

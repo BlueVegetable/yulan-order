@@ -79,6 +79,16 @@ public class Web_userServiceImpl implements Web_userService {
     }
 
     @Override
+    public Web_user getWebUserByCID(String CID) {
+        return web_userDao.getUser(CID);
+    }
+
+    @Override
+    public List<Web_user> getWebUsersByCompanyId(String companyId) {
+        return web_userDao.getWebUsersByCompanyId(companyId);
+    }
+
+    @Override
     public Map updateuserState(String userState, String cid,Integer year) throws UnsupportedEncodingException {
         Map<String,Object> map=new HashMap<>();
         if (web_userDao.updateuserState(userState,cid)){
