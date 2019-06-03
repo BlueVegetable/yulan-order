@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface PostAddressService {
 
-    boolean  addPostAddress(PostAddress postAddress)throws IOException;
+    boolean  addPostAddress(PostAddress postAddress);
 
-    boolean updatePostAddress(PostAddress postAddress)throws IOException;
+    boolean updatePostAddress(PostAddress postAddress);
 
     boolean deletePostAddress(PostAddress postAddress);
 

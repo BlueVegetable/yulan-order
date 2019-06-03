@@ -1,6 +1,7 @@
 package com.yulan.service.impl;
 
 import com.yulan.dao.ItemDao;
+import com.yulan.dao.Web_userDao;
 import com.yulan.pojo.Item;
 import com.yulan.pojo.ItemMLGY;
 import com.yulan.pojo.StockShow;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemDao itemDao;
+    @Autowired
+    private Web_userDao web_userDao;
 
     private StringUtil stringUtil;
 
@@ -37,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Map getWallpaperInfo(String cid, String paperType) throws IOException {
+        cid = changeLoginNameToCompanyID(cid);
         Map<String, Object> map = new HashMap<>();
         Item item = new Item();
         item = itemDao.getWallpaperInfo(paperType);
@@ -81,6 +85,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map getSoftDecorationInfo(String itemType, String cid,
                                      Integer page, Integer lastNum) throws IOException {
+
+        cid = changeLoginNameToCompanyID(cid);
+
         Map<String, Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if (itemType.equals("ML")) {
@@ -117,6 +124,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map getSoftInfoSingle(String itemType, String cid, String itemNo,
                                  Integer page, Integer lastNum) throws IOException {
+
+        cid = changeLoginNameToCompanyID(cid);
+
         Map<String, Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if (itemType.equals("ML")) {
@@ -591,6 +601,10 @@ public class ItemServiceImpl implements ItemService {
         if (null != item.getRzGrade()) {
             item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
         }
+    }
+
+    private String changeLoginNameToCompanyID(String cid){
+        return web_userDao.changeLoginNameToCompanyID(cid);
     }
 
 

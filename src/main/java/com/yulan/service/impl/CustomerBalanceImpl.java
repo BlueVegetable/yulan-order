@@ -3,6 +3,7 @@ package com.yulan.service.impl;
 import com.yulan.dao.CustomerBalancePeriodDao;
 import com.yulan.dao.CustomerBalancePeriodDetailDao;
 import com.yulan.dao.CustomerDao;
+import com.yulan.dao.Web_userDao;
 import com.yulan.pojo.Customer;
 import com.yulan.pojo.CustomerBalancePeriod;
 import com.yulan.pojo.CustomerBalancePeriodDetail;
@@ -25,6 +26,8 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
     private CustomerBalancePeriodDetailDao customerBalancePeriodDetailDao;
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private Web_userDao web_userDao;
 
     private StringUtil stringUtil;
 
@@ -32,6 +35,7 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
 
     @Override
     public Map getCustomerBalanceInfo(String cid, Integer page, Integer lastNum) {
+        cid = changeLoginNameToCompanyID(cid);
         Map<String, Object> map = new HashMap<>();
         Customer customerInfo = customerDao.getCustomerByID(cid);
         customerInfo.setCustomerName(stringUtil.GBKToUTF8(customerInfo.getCustomerName()));
@@ -59,6 +63,7 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
 
     @Override
     public Map getCustomerBalancePeriodDetailInfo(String cid, String startDate, String endDate, Integer page, Integer lastNum){
+        cid = changeLoginNameToCompanyID(cid);
         Map<String, Object> map = new HashMap<>();
         List<CustomerBalancePeriodDetail> customerBalancePeriodDetailList = customerBalancePeriodDetailDao.getCustomerBalancePeriodDetailInfo(cid,startDate,endDate, page, lastNum);
         for(int i = 0; i<customerBalancePeriodDetailList.size() ; i++){
@@ -76,6 +81,7 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
     public Map customerCheck(String cid, String startDate,
                              String customerCheckState,
                              String customerCheckComment) {
+        cid = changeLoginNameToCompanyID(cid);
         Map<String, Object> map = new HashMap<>();
         customerCheckState = stringUtil.UTF8ToGBK(customerCheckState);
         customerCheckComment = stringUtil.UTF8ToGBK(customerCheckComment);
@@ -86,5 +92,9 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
         }
         map.put("code",0);
         return map;
+    }
+
+    private String changeLoginNameToCompanyID(String cid){
+        return web_userDao.changeLoginNameToCompanyID(cid);
     }
 }

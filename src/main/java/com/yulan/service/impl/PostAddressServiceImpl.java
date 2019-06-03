@@ -2,6 +2,7 @@ package com.yulan.service.impl;
 
 import com.yulan.dao.CustomerDao;
 import com.yulan.dao.PostAddressDao;
+import com.yulan.dao.Web_userDao;
 import com.yulan.pojo.Customer;
 import com.yulan.pojo.PostAddress;
 import com.yulan.service.PostAddressService;
@@ -21,10 +22,15 @@ public class PostAddressServiceImpl implements PostAddressService {
     private PostAddressDao postAddressDao;
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private Web_userDao web_userDao;
 
 
     @Override
-    public boolean addPostAddress(PostAddress postAddress) throws IOException {
+    public boolean addPostAddress(PostAddress postAddress) {
+
+        postAddress.setCid(changeLoginNameToCompanyID(postAddress.getCid()));
+
         if(null != postAddress.getPostAddress()){
             postAddress.setPostAddress(stringUtil.UTF8ToGBK(postAddress.getPostAddress()));
         }
@@ -44,7 +50,10 @@ public class PostAddressServiceImpl implements PostAddressService {
     }
 
     @Override
-    public boolean updatePostAddress(PostAddress postAddress) throws IOException {
+    public boolean updatePostAddress(PostAddress postAddress){
+
+        postAddress.setCid(changeLoginNameToCompanyID(postAddress.getCid()));
+
         if(null != postAddress.getPostAddress()){
             postAddress.setPostAddress(stringUtil.UTF8ToGBK(postAddress.getPostAddress()));
         }
@@ -65,16 +74,15 @@ public class PostAddressServiceImpl implements PostAddressService {
 
     @Override
     public boolean deletePostAddress(PostAddress postAddress) {
+        postAddress.setCid(changeLoginNameToCompanyID(postAddress.getCid()));
         return postAddressDao.deletePostAddress(postAddress);
     }
 
     @Override
     public Map getPostAddress(String cid) throws IOException {
+        cid = changeLoginNameToCompanyID(cid);
         Map map = new HashMap();
         List<PostAddress> addressList ;
-
-
-
         addressList = postAddressDao.getPostAddress(cid);
         for(int i=0 ; i<addressList.size() ; i++){
             PostAddress postAddress = addressList.get(i);
@@ -95,7 +103,6 @@ public class PostAddressServiceImpl implements PostAddressService {
             }
         }
 
-
         //添加默认地址
         Customer customer = customerDao.getCustomerByID(cid);
         PostAddress postAddress2 = new PostAddress();
@@ -108,5 +115,9 @@ public class PostAddressServiceImpl implements PostAddressService {
 
         map.put("data",addressList);
         return map;
+    }
+
+    private String changeLoginNameToCompanyID(String cid){
+        return web_userDao.changeLoginNameToCompanyID(cid);
     }
 }

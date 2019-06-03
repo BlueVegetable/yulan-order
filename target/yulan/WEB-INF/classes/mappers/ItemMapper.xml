@@ -128,7 +128,7 @@
          (
          select  b.* ,COUNT(*) OVER () TOTAL from v_customer_brand a,item b
          where a.brand = b.product_brand
-         and a.customer_code = #{cid}
+         and a.customer_code like CONCAT(#{cid},'%')
          and b.product_type in ('ML' , 'MLP')
          and b.sale_id not in ('C','F')
          ) c)tm

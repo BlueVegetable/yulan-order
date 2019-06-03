@@ -24,7 +24,7 @@ public class PostAddressController {
      */
     @RequestMapping(value = "addPostAddress")
     @ResponseBody
-    public Map addPostAddress(@RequestBody PostAddress postAddress)throws IOException {
+    public Map addPostAddress(@RequestBody PostAddress postAddress){
         if(postAddressService.addPostAddress(postAddress)){
             return Response.getResponseMap(0,"SUCCESS",null);
         }else{
@@ -40,7 +40,7 @@ public class PostAddressController {
      */
     @RequestMapping(value = "updatePostAddress")
     @ResponseBody
-    public Map updatePostAddress(@RequestBody PostAddress postAddress)throws IOException {
+    public Map updatePostAddress(@RequestBody PostAddress postAddress){
         if(postAddressService.updatePostAddress(postAddress)){
             return Response.getResponseMap(0,"SUCCESS",null);
         }else{
