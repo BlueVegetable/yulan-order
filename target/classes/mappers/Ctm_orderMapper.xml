@@ -90,7 +90,7 @@
             </if>
 
 
-        order by t.date_update  DESC
+        order by t.DATE_CRE  DESC
         ) l
         where rownum &lt;= #{number})
         where rn &gt;=#{start}
@@ -197,9 +197,7 @@
 
     <select id="countOrdersH" resultType="Integer">
         select count(*) from CTM_ORDER t where 1=1
-        <if test="cid!=null">
-            and t.customer_code=#{cid}
-        </if>
+       
 
         <if test="state_id!=null">
             and STATUS_ID=#{state_id}
@@ -234,9 +232,7 @@
 
     <select id="countOrdersManager" resultType="Integer">
         select count(*) from CTM_ORDER t where 1=1
-        <if test="cid!=null">
-            and t.customer_code=#{cid}
-        </if>
+
 
         <if test="state_id!=null">
             and STATUS_ID=#{state_id}
@@ -1353,7 +1349,7 @@
           and CUSTOMER_CODE=#{cid}
           and STATUS_ID in ('1','12','2','4','7')
 
-        order by t.date_update  DESC
+        order by t.DATE_CRE  DESC
     </select>
 
     <resultMap id="CtmOrderMap" type="Ctm_order" >
