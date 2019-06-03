@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改咨询</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="./layui/css/layui.css"  media="all">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="./js/url.js" charset="utf-8"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改咨询单</legend>
+</fieldset>
+<form class="layui-form" action="">
+    <input type="hidden" id="id" name="id" value="" />
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name" placeholder="请输入咨询者姓名" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline">
+                <input type="tel" id="phoneNumber" name="phoneNumber" lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" id="remark" name="remark" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="./layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+
+        form.on('submit(submit)', function(data){
+            console.log(data);
+            $.post(remoteURL+"/Consult/updateConsult.do",data.field,function(res){
+                if(res==1) {
+                    var table=parent.layui.table;
+                    table.reload('consult-list', {
+                        url: remoteURL+"/Consult/getConsultsLimit.do?applyMethod=0"
+                    });
+                    layer.alert("修改成功", {icon: 6},function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    });
+                }
+                else {
+                    layer.alert("修改失败", {icon: 6},function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    window.onload=function () {
+        var href=window.location.href;
+        var parameterLine=href.split("?")[1];
+        var parameters=parameterLine.split("&");
+        for (var i=parameters.length-1;i>=0;i--) {
+            if(parameters[i].split("=")[0]=="id") {
+                init(parameters[i].split("=")[1]);
+                break;
+            }
+        }
+    }
+    function init(id) {
+        $.ajax({
+            type: "POST",
+            url:  remoteURL+"/Consult/getConsultById.do",
+            data: {id:id},
+            dataType: "json",
+            success: function(data){
+                document.getElementById("id").value=data.id;
+                document.getElementById("name").value=data.name;
+                document.getElementById("phoneNumber").value=data.phoneNumber;
+                document.getElementById("remark").value=data.remark;
+            }
+        });
+    }
+</script>
+</body>
+</html>
