@@ -87,7 +87,7 @@ public interface Ctm_orderDao {
 
     /**
      * 获取订单头部字母
-     * @param item_noupdateOrderStatus
+     * @param
      * @return
      */
     String getType_word(@Param("item_no")String item_no);//Y则是订单W
@@ -112,10 +112,10 @@ public interface Ctm_orderDao {
 
     /**
      * 获取订单头经办人和电话
-     * @param cid
+     * @param users
      * @return
      */
-    Map<String,Object> getlinkpersonandTel(@Param("cid") String cid );
+    Map<String,Object> getlinkpersonandTel(@Param("users")List<String> users);
 
 
     /**
@@ -212,10 +212,10 @@ public interface Ctm_orderDao {
      * 任务查询是获取月任务的订单
      * @param beginTime
      * @param finishTime
-     * @param cid
+     * @param users
      * @return
      */
-    List<Map<String,Object>> getOrderCusAss(@Param("beginTime") String beginTime,@Param("finishTime") String finishTime,@Param("cid")String cid);
+    List<Map<String,Object>> getOrderCusAss(@Param("beginTime") String beginTime,@Param("finishTime") String finishTime,@Param("users")List<String> users);
 
 
     /**

@@ -197,7 +197,7 @@
 
     <select id="countOrdersH" resultType="Integer">
         select count(*) from CTM_ORDER t where 1=1
-       
+
 
         <if test="state_id!=null">
             and STATUS_ID=#{state_id}
@@ -877,7 +877,17 @@
     </select>
 
     <select id="getlinkpersonandTel" resultType="Map">
-        select t.customer_agent,t.office_tel from CUSTOMER t where t.customer_code=#{cid}
+        select t.customer_agent,t.office_tel from CUSTOMER t where 1=1
+        <if test="users !=null and users.size>0">
+            and CUSTOMER_CODE in
+            <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="users ==null or users.size()==0">
+            and 1!=1
+        </if>
+
     </select>
 
     <resultMap id="rebateMap" type="Sal_rebate_certificate" >
@@ -1346,7 +1356,15 @@
         from CTM_ORDER t where 1=1
 
           and DATE_CRE between to_date(#{beginTime},'yyyy/mm/dd hh24:mi:ss') and to_date(#{finishTime},'yyyy/mm/dd hh24:mi:ss')
-          and CUSTOMER_CODE=#{cid}
+        <if test="users !=null and users.size()>0">
+            and CUSTOMER_CODE in
+            <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="users ==null or users.size()==0">
+            and 1!=1
+        </if>
           and STATUS_ID in ('1','12','2','4','7')
 
         order by t.DATE_CRE  DESC

@@ -246,6 +246,16 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
+        String companyId=map.get("companyId").toString();//公司id
+        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        List<String> users=new ArrayList<>();
+        if (userMaps.size()!=0){
+            for (Map<String,Object> map1:userMaps){
+                users.add(map1.get("LOGINNAME").toString());
+            }
+        }
+
+
         Map<String ,Object> dataMap=new HashMap();
         Map m=new HashMap();
         Ctm_order ctm_order=new Ctm_order();
@@ -269,11 +279,15 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
 
-        Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(cid);
+        Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(users);
 
-        ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
 
-        ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话
+        if (linkpersonandTelmap!=null){
+            ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
+
+            ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话
+        }
+
 
         List<Map<String,Object>> list=(List) map.get("ctm_orders");
         ctm_order.setWebTjTime(nowTime);//获取当前时间
@@ -505,11 +519,24 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
-    public Map getlinkpersonandTel(String cid) throws UnsupportedEncodingException {
-        Map<String ,Object> map=ctm_orderDao.getlinkpersonandTel(cid);
-        String CUSTOMER_AGENT=StringUtil.getUtf8(map.get("CUSTOMER_AGENT").toString());
-        Object c=CUSTOMER_AGENT;
-        map.put("CUSTOMER_AGENT",CUSTOMER_AGENT);
+    public Map getlinkpersonandTel(String companyId) throws UnsupportedEncodingException {
+        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        List<String> users=new ArrayList<>();
+        if (userMaps.size()!=0){
+            for (Map<String,Object> map1:userMaps){
+                users.add(map1.get("LOGINNAME").toString());
+            }
+        }
+
+        Map<String ,Object> map=ctm_orderDao.getlinkpersonandTel(users);
+        String CUSTOMER_AGENT="";
+        if (map!=null){
+             CUSTOMER_AGENT=StringUtil.getUtf8(map.get("CUSTOMER_AGENT").toString());
+            Object c=CUSTOMER_AGENT;
+            map.put("CUSTOMER_AGENT",CUSTOMER_AGENT);
+        }
+
+
 
         return map;
     }
