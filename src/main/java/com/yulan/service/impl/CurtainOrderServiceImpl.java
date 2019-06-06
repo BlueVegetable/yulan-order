@@ -57,6 +57,15 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         List<Map<String,Object>> list=(List) map.get("ctm_orders");
 
         List<String> cartItemIDs=(List) map.get("cartItemIDs");//new
+        String companyId=map.get("companyId").toString();//公司id
+        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        List<String> users=new ArrayList<>();
+        if (userMaps.size()!=0){
+            for (Map<String,Object> map1:userMaps){
+                users.add(map1.get("LOGINNAME").toString());
+            }
+        }
+
         Map<String,Integer> lineNos=new HashMap<>();
 
 
@@ -75,11 +84,15 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         ctm_order.setDateUpdate(nowTime);//获取当前时间
         ctm_order.setCurtainStatusId("0");//待审核状态
         ctm_order.setCustomerCode(cid);
-        Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(cid);
+        Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(users);
 
-        ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
+        if (linkpersonandTelmap!=null){
+            ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
 
-        ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话q
+            ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话q
+        }
+
+
 
         if (ctm_orderDao.insertOrderH(ctm_order)) {//订单头录入
 
@@ -361,6 +374,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     public Map curOrderCount(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Timestamp nowTime=new Timestamp(System.currentTimeMillis());//获取当前时间
         String product_group_tpye=map.get("product_group_tpye").toString();
+        String companyId=map.get("companyId").toString();
 
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
@@ -431,7 +445,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
         ctm_order.setAllSpend(allSpend);
 
-        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid).add(money);//加上优惠券
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(companyId).add(money);//加上优惠券
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
