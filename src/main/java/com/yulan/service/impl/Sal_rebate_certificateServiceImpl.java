@@ -24,6 +24,7 @@ public class Sal_rebate_certificateServiceImpl implements Sal_rebate_certificate
     @Override
     public Map getRebate(Map<String, Object> map) throws UnsupportedEncodingException {
         String cid=map.get("cid").toString();
+        String clompanyId=map.get("companyId").toString();
         Map m=new HashMap();
         List<Map<String,Object>> dateLate=new ArrayList<>();
         List<Map<String,Object>> dateBefore=new ArrayList<>();
@@ -37,7 +38,7 @@ public class Sal_rebate_certificateServiceImpl implements Sal_rebate_certificate
 
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
         java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
-        List<Sal_rebate_certificate> list=sal_rebate_certificateDao.getRebate(cid);
+        List<Sal_rebate_certificate> list=sal_rebate_certificateDao.getRebate(clompanyId);
         for (Sal_rebate_certificate sal_rebate_certificate:list){
             Map<String,Object> map1= MapUtils.beanToMap(sal_rebate_certificate);
             for (Map.Entry<String, Object> entry : map1.entrySet()) {//转码

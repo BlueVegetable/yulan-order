@@ -8,28 +8,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e49d8f3b-fac9-412c-952d-2f996440b542" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/controller/Ctm_orderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/controller/Ctm_orderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/dao/Ctm_orderDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/dao/Ctm_orderDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/dao/CustomerAssignmentsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/dao/CustomerAssignmentsDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/Ctm_orderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/Ctm_orderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CustomerAssignmentsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CustomerAssignmentsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resource/mappers/Ctm_orderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resource/mappers/Ctm_orderMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resource/mappers/CustomerAssignmentsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resource/mappers/CustomerAssignmentsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/controller/CartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/controller/CartController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/encode/BrandTypeEncode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/encode/BrandTypeEncode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/pojo/BrandType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/pojo/BrandType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CartItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/CartItemServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yulan/service/impl/ItemServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mappers/Ctm_orderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/Ctm_orderMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/controller/CartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/controller/CartController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/encode/BrandTypeEncode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/encode/BrandTypeEncode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/pojo/BrandType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/pojo/BrandType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/service/impl/CartItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/service/impl/CartItemServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/service/impl/ItemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/com/yulan/service/impl/ItemServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/mappers/Ctm_orderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/yulan-order/WEB-INF/classes/mappers/Ctm_orderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -69,13 +50,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="2" />
-          <entry key="java" value="2836" />
+          <entry key="java" value="2964" />
           <entry key="xml" value="370" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2836" />
+          <entry key="JAVA" value="2964" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="SQL" value="53" />
           <entry key="XML" value="317" />
@@ -106,7 +87,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="1" />
-          <entry key="java" value="88" />
+          <entry key="java" value="89" />
           <entry key="md" value="1" />
           <entry key="properties" value="1" />
           <entry key="xml" value="37" />
@@ -115,7 +96,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="88" />
+          <entry key="JAVA" value="89" />
           <entry key="Markdown" value="1" />
           <entry key="Properties" value="1" />
           <entry key="XML" value="37" />
@@ -149,17 +130,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/Ctm_orderController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="167" column="31" selection-start-line="167" selection-start-column="21" selection-end-line="167" selection-end-column="31" />
+            <state relative-caret-position="157">
+              <caret line="195" column="42" selection-start-line="195" selection-start-column="33" selection-end-line="195" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="522">
+              <caret line="40" column="88" selection-start-line="40" selection-start-column="88" selection-end-line="40" selection-end-column="88" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="335" selection-start-line="335" selection-end-line="335" />
+            <state relative-caret-position="103">
+              <caret line="549" column="24" selection-start-line="549" selection-start-column="15" selection-end-line="549" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -167,13 +157,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="66" column="9" lean-forward="true" selection-start-line="60" selection-start-column="8" selection-end-line="66" selection-end-column="9" />
+            <state relative-caret-position="190">
+              <caret line="120" selection-start-line="120" selection-end-line="120" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/Ctm_orderMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="166">
@@ -205,7 +195,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>VARCHAR</find>
       <find>CID</find>
       <find>SAVE</find>
       <find>case &quot;帘头&quot;</find>
@@ -213,9 +202,6 @@
       <find>updateOrderB</find>
       <find>orderCount</find>
       <find>conte'</find>
-      <find>getReturnRecord</find>
-      <find>getRebate</find>
-      <find>findRebate</find>
       <find>updateCommodityOrder</find>
       <find>WIDTH</find>
       <find>countOrdersH</find>
@@ -233,8 +219,12 @@
       <find>curOrderCount</find>
       <find>getlinkpersonandTel</find>
       <find>getOrderCusAss</find>
-      <find>getLink</find>
+      <find>BigDecimal resideMoney=ctm_orderDao.getResideMoney(companyId).add(money);</find>
       <find>getResideMoney</find>
+      <find>getLink</find>
+      <find>getReturnRecord</find>
+      <find>findRebate</find>
+      <find>getRebate</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -275,7 +265,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/CurtainCommodity.java" />
         <option value="$PROJECT_DIR$/src/main/resource/mappers/CurtainCommodityMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/Ctm_order_detail.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/resource/mappers/CommodityOrderMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/utils/MapUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/pojo/Web_user.java" />
@@ -289,7 +278,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/controller/CustomerAssignmentsController.java" />
         <option value="$PROJECT_DIR$/src/test/UserTest.java" />
         <option value="$PROJECT_DIR$/src/main/resource/quartz.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/Ctm_orderService.java" />
         <option value="$PROJECT_DIR$/src/main/resource/mappers/CustomerAssignmentsMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/dao/CustomerAssignmentsDao.java" />
@@ -297,7 +285,9 @@
         <option value="$PROJECT_DIR$/src/main/resource/mappers/Ctm_orderMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CustomerAssignmentsServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/controller/Ctm_orderController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -580,7 +570,7 @@
     <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1559838502746" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1559842444824" />
     <property name="last_opened_file_path" value="$USER_HOME$/.m2/repository/com/oracle/ojdbc6/11.2.0.4/ojdbc6-11.2.0.4.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -1044,7 +1034,7 @@
       <workItem from="1559529015628" duration="1276000" />
       <workItem from="1559654127191" duration="1879000" />
       <workItem from="1559809947611" duration="617000" />
-      <workItem from="1559828536398" duration="6424000" />
+      <workItem from="1559828536398" duration="10361000" />
     </task>
     <servers />
   </component>
@@ -1081,7 +1071,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1002124000" />
+    <option name="totallyTimeSpent" value="1006061000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1108,13 +1098,13 @@
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32907802" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49474534" visible="true" weight="0.42202836" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49474534" visible="true" weight="0.39367503" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.30098146" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49798927" weight="0.3432624" />
       <window_info anchor="bottom" id="Spring" order="8" weight="0.32907802" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49893278" weight="0.14503817" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49893278" weight="0.23009814" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5010672" side_tool="true" weight="0.390642" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49636218" weight="0.2508179" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
@@ -1183,13 +1173,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/SalReturnRecordMapper.xml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="38" column="95" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="95" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resource/mappers/CommodityOrderMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -1417,13 +1400,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="66" column="9" lean-forward="true" selection-start-line="60" selection-start-column="8" selection-end-line="66" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/CustomerAssignmentsService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -1466,20 +1442,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/Ctm_orderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="167" column="31" selection-start-line="167" selection-start-column="21" selection-end-line="167" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="335" selection-start-line="335" selection-end-line="335" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/dao/Ctm_orderDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
@@ -1491,6 +1453,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="280" column="50" lean-forward="true" selection-start-line="280" selection-start-column="5" selection-end-line="280" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/CurtainOrderServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="120" selection-start-line="120" selection-end-line="120" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Sal_rebate_certificateServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="40" column="88" selection-start-line="40" selection-start-column="88" selection-end-line="40" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/controller/Ctm_orderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="195" column="42" selection-start-line="195" selection-start-column="33" selection-end-line="195" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/yulan/service/impl/Ctm_orderServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="549" column="24" selection-start-line="549" selection-start-column="15" selection-end-line="549" selection-end-column="24" />
         </state>
       </provider>
     </entry>

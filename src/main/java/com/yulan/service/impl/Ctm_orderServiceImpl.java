@@ -333,7 +333,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
         ctm_order.setAllSpend(allSpend);
 
-        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid).add(money);//加上优惠券
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(companyId).add(money);//加上优惠券
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
@@ -552,9 +552,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());//当前时间
         java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
         String cid=map.get("cid").toString();
+        String companyId=map.get("companyId").toString();
         String type=map.get("typeId").toString();
 
-        List<Sal_rebate_certificate> list=ctm_orderDao.getRebate(cid,currentDate,beforeDate);
+        List<Sal_rebate_certificate> list=ctm_orderDao.getRebate(companyId,currentDate,beforeDate);
         List< Map<String, Object>> data=new ArrayList<>();
         if (!(type.equals("D")||type.equals("E")||type.equals("F"))){
             for (Sal_rebate_certificate sal_rebate_certificate:list){
