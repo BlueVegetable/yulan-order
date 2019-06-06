@@ -438,6 +438,7 @@ public class ItemServiceImpl implements ItemService {
      * @param multiple
      * @param curtainItem
      * @return
+     * getHighJia没转换单位，是因为在类里面已经转换了
      */
     private BigDecimal usageCalculation(Double width, Double multiple,Double height, Item curtainItem){
         BigDecimal usage = BigDecimal.valueOf(0);
