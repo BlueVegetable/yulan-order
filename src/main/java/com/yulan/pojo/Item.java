@@ -236,8 +236,11 @@ public class Item {
     }
 
     public BigDecimal getHighJia() {
-        //因为玉兰的单位问题
-        return arith.div( highJia,arith.dbToBD(1000.0));
+        if(highJia == null){
+            return highJia;
+        }else {
+            return arith.div(highJia,arith.dbToBD(1000.0));
+        }
     }
 
     public void setHighJia(BigDecimal highJia) {
