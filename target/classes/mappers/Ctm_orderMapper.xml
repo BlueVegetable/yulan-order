@@ -278,7 +278,7 @@
     </select>
     
     <select id="getResideMoney" resultType="BigDecimal">
-     select f_get_customer_money(#{cid}) from dual
+     select f_get_customer_money(#{companyId}) from dual
     </select>
 
     <insert id="insertOrderH" parameterType="Ctm_order" >

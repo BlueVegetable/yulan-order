@@ -139,9 +139,10 @@ public class Ctm_orderController {
     @RequestMapping("getResidemoney")
     @ResponseBody
     public Map getResidemoney(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
-        String cid = (String)m.get("cid");
+//        String cid = (String)m.get("cid");
+        String companyId=m.get("companyId").toString();
 
-        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getResidemoney(cid));
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getResidemoney(companyId));
     }
 
     /**

@@ -17,7 +17,7 @@ public interface Ctm_orderService {
    Map getPromotion(List<Map<String,Object>> list);
 
    //获取用户余额
-   BigDecimal getResidemoney(String cid);
+   BigDecimal getResidemoney(String companyId);
 
    boolean updateOrderStatus(String orderNo, String customerCode, String statusId);
 

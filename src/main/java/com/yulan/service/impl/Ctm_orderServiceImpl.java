@@ -235,8 +235,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
-    public BigDecimal getResidemoney(String cid) {
-        return ctm_orderDao.getResideMoney(cid);
+    public BigDecimal getResidemoney(String companyId) {
+        return ctm_orderDao.getResideMoney(companyId);
     }
 
     @Override

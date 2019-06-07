@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        文章列表
+    </title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="./layui/css/layui.css" media="all">
+    <script src="./js/url.js" charset="utf-8"></script>
+    <script src="./js/echarts.min.js" charset="utf-8"></script>
+    <script src="./js/jquery-3.1.1.min.js"></script>
+    <script src="./layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="x-nav">
+
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:35px">&#xe9aa;</i>
+    </a>
+</div>
+
+<div class="x-body">
+    <div class="layui-input-inline" style="z-index: 10;">
+        <input type="text" class="layui-input" id="test1" placeholder="请选择年份">
+    </div>
+    <button class="layui-btn layui-btn-normal" onclick="info()">资料卡总汇</button> <button class="layui-btn layui-btn-normal"onclick="YLc()">协议书总汇</button>
+
+
+    <div id='consume_y_bar' style="width:1200px;height:300px;margin-left:20px;"> </div>
+    <table class="layui-hide" id="article-list" lay-filter="bar" ></table>
+</div>
+</body>
+<script>
+    layui.use(['element','layer','table'], function(){
+        var table=layui.table;
+        var layer=layui.layer;
+        var $=layui.$;
+        // var element=layui.element;
+        var token = sessionStorage.getItem("token");
+        var year =$("#test1").val();
+        table.render({
+            elem: '#article-list'
+            ,url:remoteURL+"/customerInfo/getAllSta.do"
+            ,page:true
+            ,where:{
+                token:token,
+                year:'2018'
+            }
+            ,cols: [[
+                {field:'MARKETNAME', title: '大区'}
+                ,{field:'SUBMARKETMANAGERNAME', title: '片区经理',align:"center"}
+                ,{field:'STATE', title: '状态',templet:function (data){
+                    switch (data.STATE) {
+                        case "ONCREATE":
+                            return "初始状态";
+
+                            break;
+                        case "CUSTOMERPORCESSING":
+                            return "客户填写中";
+                            break;
+                        case "CUSTOMERPORCESSING2":
+                            return"客户修改中";
+                            break;
+                        case "BUSINESSCHECKING":
+                            return "业务员审核中";
+                            break;
+                        case "APPROVED":
+                            return "已通过";
+                            break;
+                        case "BIILDEPCHECKING":
+                            return "订单部审核";
+                            break;
+                        case "ASM_CHECKING":
+                            return "销售中心经理审核中";
+                            break;
+                        case "CSA_CHECK":
+                            return "销售副总批准中";
+                            break;
+                        case "CUSTOMERAFFIRM":
+                            return "客户查看确认中";
+                            break;
+                        case "DEP_MARKET_CHECK":
+                            return "市场部审核中";
+                            break;
+                        case "SALEMANFILLING":
+                            return "业务员填写中";
+                            break;
+                        case "SALEMANMODIFYING":
+                            return "业务员修改中";
+                            break;
+                        default:break;
+
+                    }
+                    }}
+                ,{field:'NUMS', title: '统计数'}
+
+            ]]
+
+        });
+
+
+
+        var $ = layui.$, active = {
+            reload: function(){
+                var nameReload=$('#nameReload');
+                $("#flag").attr("name",nameReload.val());
+                //执行重载
+                table.reload('admin-list', {
+                    url: remoteURL+"/admin/getAdmins.do"
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        name:nameReload.val()
+                    }
+                });
+            }
+        };
+        //#select
+        $('#select').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    /*
+	 * @todo 加载echarts方法
+	 * @url:异步请求路径
+	 * @chartId:请求的echart的id
+	 * @title:标题
+	 * @legend_name:图例名
+	*/
+    function dayComment(url,chartId, legend_name) {
+        var year =$("#test1").val();
+
+        $.ajax({//Ajax请求你要展现的数据
+            url :remoteURL+url,
+            type : 'post',
+            cache : false,
+            dataType : 'json',
+            async:false,	//改为同步
+            data : {year:'2018' },	//查看方式
+            success : function(data) {
+                chartTool.registerFunnelChart( chartId,data.textname,  legend_name, data.y, data.x);
+            },
+            error : function() {
+                alert('服务器异常！')
+            }
+        });
+        //Ajax模拟数据前台暂时写死
+        // var data = getStaticJsonData();
+        // chartTool.registerFunnelChart( chartId,data.textname, legend_name, data.yAxisData, data.seriesData);
+    }
+
+    var chartTool = {
+        /**
+         * @todo Echarts 横向柱状图
+         * @param chartId	插件的div的ID
+         * @param textname  标题名
+         * @param legendData 图例名字
+         * @param yAxisData  Y轴的数据
+         * @param seriesData 实际展现的数据
+         */
+        registerFunnelChart : function( chartId, textname, legendData, yAxisData, seriesData ){
+            var myChart = echarts.init(document.getElementById( chartId ));
+            var option = {
+                color:['#37dbb7'],
+                title: {
+                    text:textname,	// '注册转化漏斗(总体转化率10%)',
+                    left:'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {
+                    data: [legendData], //['用户数']
+                    top:30,
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01]
+                },
+                yAxis: {
+                    type: 'category',
+                    data: yAxisData,	//['后续操作(3%)','完成注册(98%)','点击注册']
+                },
+                series: [
+                    {
+                        name: legendData, 	//'用户数',
+                        barWidth: 30,		//设置柱子宽度
+                        type: 'bar',
+                        data: seriesData, //[ 104970, 131744, 630230]
+                        itemStyle:{
+                            normal:{
+
+                                label:{
+                                    show: true,   //显示文本
+                                    position: 'inside',  //数据值位置
+                                    textStyle:{
+                                        color:'#000',
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption( option );
+        },
+    };
+
+    //模拟AJax请求获取返回的json数据
+    /*function getStaticJsonData(){
+        var data = '{"textname":"\\u6ce8\\u518c\\u8f6c\\u5316\\u6f0f\\u6597(\\u603b\\u4f53\\u8f6c\\u5316\\u738740%)","yAxisData":["\\u5df2\\u6d88\\u8d39(50%)","\\u5df2\\u767b\\u5f55(80%)","\\u5df2\\u6ce8\\u518c"],"seriesData":[20,40,50]}';
+        data = eval('(' + data + ')');
+        return data;
+    }*/
+
+    dayComment('/customerInfo/showStateEchart.do', 'consume_y_bar', '资料卡统计数');
+</script>
+<script>
+    function info() {
+        var year =$("#test1").val();
+
+        dayComment('/customerInfo/showStateEchart.do', 'consume_y_bar', '资料卡统计数');
+        layui.use(['element','layer','table'], function(){
+            var table=layui.table;
+            table.reload('article-list',{
+                url: remoteURL+"/customerInfo/getAllSta.do"
+                ,where: {
+                    year:year
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+
+
+            })
+        })
+    }
+</script>
+<script>
+    function YLc() {
+        var year =$("#test1").val();
+        dayComment('/YLcontractentry/showEchart.do', 'consume_y_bar', '协议网签执行统计数');
+        layui.use(['element','layer','table'], function(){
+            var table=layui.table;
+            table.reload('article-list',{
+                url: remoteURL+"/YLcontractentry/getAllSta.do"
+                ,where: {
+                    year:year
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+
+
+            })
+        })
+    }
+</script>
+<script>
+    layui.use(['laydate','element','layer','table'], function(){
+        var laydate = layui.laydate;
+        var table=layui.table;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test1' //指定元素
+            ,type: 'year'
+            ,isInitValue: false
+          
+            ,isInitValue: true
+            ,change: function(value, date, endDate){
+
+                console.log(value); //得到日期生成的值，如：2017-08-18
+                console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+                console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+
+
+            }
+        });
+    });
+</script>
+
+</html>
