@@ -1,9 +1,14 @@
 package com.yulan.pojo;
 
+import com.yulan.utils.Arith;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Item {
+
+    private static Arith arith;
+
     private String itemNo;
 
     private String oldItemNo;
@@ -231,7 +236,11 @@ public class Item {
     }
 
     public BigDecimal getHighJia() {
-        return highJia;
+        if(highJia == null){
+            return highJia;
+        }else {
+            return arith.div(highJia,arith.dbToBD(1000.0));
+        }
     }
 
     public void setHighJia(BigDecimal highJia) {

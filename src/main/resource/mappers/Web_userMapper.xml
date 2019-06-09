@@ -71,8 +71,9 @@
         <if test="companyId!=null">
            and t.company_Id=#{companyId}
         </if>
+    </select>
 
-
-
+    <select id="changeLoginNameToCompanyID" resultType="String">
+        select t.company_id from WEB_USER t where t.loginname = #{cid}
     </select>
 </mapper>

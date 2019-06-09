@@ -8,7 +8,17 @@
         select
         <include refid="Base_Column_List" />
         from CUSTOMER_ASSIGNMENTS
-        where CUSTOMER_CODE = #{cid,jdbcType=VARCHAR}
+        where 1=1
+
+        <if test="users !=null and users.size()>0">
+            and CUSTOMER_CODE in
+            <foreach collection="users" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="users ==null or users.size()==0">
+            and 1!=1
+        </if>
         and YEAR = #{year,jdbcType=VARCHAR}
         and MONTH = #{month,jdbcType=VARCHAR}
     </select>

@@ -1,6 +1,7 @@
 package com.yulan.service.impl;
 
 import com.yulan.dao.ItemDao;
+import com.yulan.dao.Web_userDao;
 import com.yulan.pojo.Item;
 import com.yulan.pojo.ItemMLGY;
 import com.yulan.pojo.StockShow;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemDao itemDao;
+    @Autowired
+    private Web_userDao web_userDao;
 
     private StringUtil stringUtil;
 
@@ -37,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Map getWallpaperInfo(String cid, String paperType) throws IOException {
+        cid = changeLoginNameToCompanyID(cid);
         Map<String, Object> map = new HashMap<>();
         Item item = new Item();
         item = itemDao.getWallpaperInfo(paperType);
@@ -50,6 +54,9 @@ public class ItemServiceImpl implements ItemService {
                 item.setItemVersion(stringUtil.getUtf8(itemDao.getProductVersion(item.getItemVersion())));
                 item.setProductBrand(stringUtil.getUtf8(itemDao.getProductBrand(item.getProductBrand())));
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
+                if (null != item.getRzGrade()) {
+                    item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+                }
                 map.put("data", item);
                 map.put("code", 0);
             }
@@ -78,6 +85,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map getSoftDecorationInfo(String itemType, String cid,
                                      Integer page, Integer lastNum) throws IOException {
+
+        cid = changeLoginNameToCompanyID(cid);
+
         Map<String, Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if (itemType.equals("ML")) {
@@ -114,6 +124,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Map getSoftInfoSingle(String itemType, String cid, String itemNo,
                                  Integer page, Integer lastNum) throws IOException {
+
+        cid = changeLoginNameToCompanyID(cid);
+
         Map<String, Object> map = new HashMap<>();
         List<Item> itemList = new ArrayList<>();
         if (itemType.equals("ML")) {
@@ -149,6 +162,9 @@ public class ItemServiceImpl implements ItemService {
             }
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.GBKToUTF8(itemDao.getUnit(item.getUnit())));
+            }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
             }
 
         }
@@ -213,6 +229,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
             }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+            }
         }
         map.put("data", curtainList);
         map.put("code", 0);
@@ -246,6 +265,9 @@ public class ItemServiceImpl implements ItemService {
             }
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
+            }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
             }
         }
         map.put("data", curtainList);
@@ -397,6 +419,9 @@ public class ItemServiceImpl implements ItemService {
             if (null != item.getRzStyle()) {
                 item.setRzStyle(stringUtil.getUtf8(item.getRzStyle()));
             }
+            if (null != item.getRzGrade()) {
+                item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+            }
             if (null != item.getUnit()) {
                 item.setUnit(stringUtil.getUtf8(itemDao.getUnit(item.getUnit())));
             }
@@ -413,6 +438,7 @@ public class ItemServiceImpl implements ItemService {
      * @param multiple
      * @param curtainItem
      * @return
+     * getHighJia没转换单位，是因为在类里面已经转换了
      */
     private BigDecimal usageCalculation(Double width, Double multiple,Double height, Item curtainItem){
         BigDecimal usage = BigDecimal.valueOf(0);
@@ -447,22 +473,33 @@ public class ItemServiceImpl implements ItemService {
         if(curtainItem.getHighJia()== null){
             curtainItem.setHighJia(BigDecimal.valueOf(0));
         }
+        //绣花边
+        if (curtainItem.getProductType().equals("XHB")) {
+            Double XHBusage ;
+            if (itemType.equals("lt")) {
+                XHBusage = width * multiple + 0.3;
+                map.put("XHBlt", XHBusage);
+            } else if (itemType.equals("ls")) {
+                XHBusage = height * 2 + 0.4;
+                map.put("XHBls", XHBusage);
+            }
+        }else {
 
-        if(itemType.equals("ls")){
-            BigDecimal lsUsage = BigDecimal.valueOf(0);
+            if (itemType.equals("ls")) {
+                BigDecimal lsUsage;
 
-            if (parentItemNo.equals("Z340004") || parentItemNo.equals("U310111")) {
-                        if (curtainItem.getWidthHh() != null) {
-                            lsUsage = arith.add( arith.dbToBD(width),curtainItem.getWidthHh());
-                            map.put("ls", lsUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
-                        } else {
-                            map.put("ls ", itemNO +
-                                    " has null values and can not be " +
-                                    "calculated,please checkout WidthHh");
-                        }
-            } else {
+                if (parentItemNo.equals("Z340004") || parentItemNo.equals("U310111")) {
+                    if (curtainItem.getWidthHh() != null) {
+                        lsUsage = arith.add(arith.dbToBD(width), curtainItem.getWidthHh());
+                        map.put("ls", lsUsage.setScale(2, BigDecimal.ROUND_HALF_UP));
+                    } else {
+                        map.put("ls ", itemNO +
+                                " has null values and can not be " +
+                                "calculated,please checkout WidthHh");
+                    }
+                } else {
                     //定高
-                    if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade()  == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
+                    if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
                         map.put("ls", itemNO +
                                 " has null values and can not be " +
                                 "calculated,please checkout WidthHh," +
@@ -470,17 +507,16 @@ public class ItemServiceImpl implements ItemService {
 
                     } else {
                         curtainItem.setFixType(fixType);
-                        lsUsage = usageCalculation(width, multiple,height, curtainItem);
+                        lsUsage = usageCalculation(width, multiple, height, curtainItem);
                         //获取每种产品的用量
                         map.put("ls", lsUsage);
                     }
 
 
-
-            }
-        }else if(itemType.equals("sha")){
-            BigDecimal shaUsage = BigDecimal.valueOf(0);
-            //纱
+                }
+            } else if (itemType.equals("sha")) {
+                BigDecimal shaUsage = BigDecimal.valueOf(0);
+                //纱
                 if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade() == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
                     map.put("sha", itemNO +
@@ -490,11 +526,13 @@ public class ItemServiceImpl implements ItemService {
 
                 } else {
                     curtainItem.setFixType(fixType);
-                    shaUsage = usageCalculation(width, multiple,height, curtainItem);
+                    shaUsage = usageCalculation(width, multiple, height, curtainItem);
                     map.put("sha", shaUsage);
                 }
 
+            }
         }
+
         changeItemToUTF8(curtainItem);
         map.put("item",curtainItem);
         map.put("code",0);
@@ -561,6 +599,13 @@ public class ItemServiceImpl implements ItemService {
         if (null != item.getUnit()) {
             item.setUnit(stringUtil.GBKToUTF8(itemDao.getUnit(item.getUnit())));
         }
+        if (null != item.getRzGrade()) {
+            item.setRzGrade(stringUtil.getUtf8(item.getRzGrade()));
+        }
+    }
+
+    private String changeLoginNameToCompanyID(String cid){
+        return web_userDao.changeLoginNameToCompanyID(cid);
     }
 
 

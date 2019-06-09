@@ -17,7 +17,7 @@ public interface Ctm_orderService {
    Map getPromotion(List<Map<String,Object>> list);
 
    //获取用户余额
-   BigDecimal getResidemoney(String cid);
+   BigDecimal getResidemoney(String companyId);
 
    boolean updateOrderStatus(String orderNo, String customerCode, String statusId);
 
@@ -28,7 +28,7 @@ public interface Ctm_orderService {
    Map getPack(Map<String,Object> m) throws UnsupportedEncodingException;
 
    //获取经办人/联系方式
-   Map getlinkpersonandTel(String cid) throws UnsupportedEncodingException;
+   Map getlinkpersonandTel(String companyId) throws UnsupportedEncodingException;
 
    //获取客户优惠券
    Map getRebate(Map<String,Object>map) throws UnsupportedEncodingException;

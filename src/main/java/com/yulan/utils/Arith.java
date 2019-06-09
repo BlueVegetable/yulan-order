@@ -51,7 +51,7 @@ public class Arith {
      * @return 两个参数的商
      */
     public static BigDecimal div(BigDecimal v1,BigDecimal v2){
-        return div(v1,v2,DEF_DIV_SCALE);
+        return div(v2,v1,DEF_DIV_SCALE);
     }
     /**
      * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指

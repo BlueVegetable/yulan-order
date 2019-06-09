@@ -19,7 +19,11 @@
         select * from(
         select rownum rm, c.*  from
         (
-        select t.* ,COUNT(*) OVER () TOTAL from CUSTOMER_BALANCE_PERIOD_DETAIL t where t.date_out_stock &gt;= to_date(#{START_DATE},'yyyy/mm/dd hh24:mi:ss')and t.date_out_stock &lt;= to_date(#{END_DATE},'yyyy/mm/dd hh24:mi:ss') and t.customer_code = #{CID}
+        select t.* ,COUNT(*) OVER () TOTAL from CUSTOMER_BALANCE_PERIOD_DETAIL t
+        where t.date_out_stock &gt;= to_date(#{START_DATE},'yyyy/mm/dd hh24:mi:ss')
+        and t.date_out_stock &lt;= to_date(#{END_DATE},'yyyy/mm/dd hh24:mi:ss')
+        and t.customer_code = #{CID}
+        order by t.date_out_stock asc
         ) c)tm
         <if test="start!=null">
             where rm &gt;= #{start} and rm &lt;= #{number}
