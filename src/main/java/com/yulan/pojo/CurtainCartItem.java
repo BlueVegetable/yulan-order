@@ -18,6 +18,7 @@ public class CurtainCartItem extends CartItem {
     private Timestamp saveTime;
     private Integer count;
     private BigDecimal price;
+    private BigDecimal falseShadeHigh;
 
     public String getModelNumber() {
         return modelNumber;
@@ -97,6 +98,14 @@ public class CurtainCartItem extends CartItem {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public BigDecimal getFalseShadeHigh() {
+        return falseShadeHigh;
+    }
+
+    public void setFalseShadeHigh(BigDecimal falseShadeHigh) {
+        this.falseShadeHigh = falseShadeHigh;
     }
 
     public BigDecimal getPrice() {
