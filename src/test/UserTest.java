@@ -1,4 +1,6 @@
 import com.yulan.dao.Ctm_orderDao;
+import com.yulan.dao.ItemDao;
+import com.yulan.pojo.Item;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.Arith;
 import org.junit.Test;
@@ -19,17 +21,32 @@ public class UserTest {
     private Ctm_orderService ctm_orderService;
 
     private Arith arith;
+    @Autowired
+    private ItemDao itemDao;
 
 
     @Test
     public void test1() throws UnsupportedEncodingException {
-        BigDecimal a = BigDecimal.valueOf(500.123);
-        BigDecimal b = BigDecimal.valueOf(1000);
-            System.out.println(arith.div(a,b));
+
+        Double width = 3.00;
+        Double multiple = 2.0;
+        Double height = 2.0;
+        Item curtainItem = itemDao.getItemByItemNO("MLTB201742");
+
+        if(curtainItem.getHighJia()== null){
+            curtainItem.setHighJia(BigDecimal.valueOf(0));
         }
 
+        BigDecimal usage =
+                arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
 
+        System.out.println(usage);
+        System.out.println("arith.dbToBD(width * multiple)" + arith.dbToBD(width * multiple));
+        System.out.println("arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))" + arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))));
+        System.out.println("arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0)"+arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0));
+        System.out.println(" arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia())" +  arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
     }
+}
 
 
 

@@ -234,7 +234,7 @@ public class Item {
     public void setRzGrade(String rzGrade) {
         this.rzGrade = rzGrade == null ? null : rzGrade.trim();
     }
-
+    //玉兰数据库的单位是mm，但是展示和计算都要是m
     public BigDecimal getHighJia() {
         if(highJia == null){
             return highJia;

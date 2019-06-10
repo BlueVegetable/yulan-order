@@ -9,7 +9,7 @@ public class ItemMLGY {
 
     private String itemType;
 
-    private Short no;
+    private Double no;
 
     private String parentItemNo;
 
@@ -52,11 +52,11 @@ public class ItemMLGY {
         this.itemType = itemType == null ? null : itemType.trim();
     }
 
-    public Short getNo() {
+    public Double getNo() {
         return no;
     }
 
-    public void setNo(Short no) {
+    public void setNo(Double no) {
         this.no = no;
     }
 

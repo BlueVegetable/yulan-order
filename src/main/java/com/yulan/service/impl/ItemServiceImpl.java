@@ -343,7 +343,6 @@ public class ItemServiceImpl implements ItemService {
 
                     } else {
                         if (itemMLGY.getProductType().equals("ML")) {
-                            //定高
                             if (curtainItem.getWidthHh() == null || curtainItem.getFixGrade()  == null || curtainItem.getDuihuaLoss() == null || curtainItem.getHighJia() == null) {
 
                                 map.put("ls", itemMLGY.getItemNo() +
@@ -438,10 +437,11 @@ public class ItemServiceImpl implements ItemService {
      * @param multiple
      * @param curtainItem
      * @return
-     * getHighJia没转换单位，是因为在类里面已经转换了
+     * getHighJia这里不需要转换单位，是因为在类里面已经转换了
      */
     private BigDecimal usageCalculation(Double width, Double multiple,Double height, Item curtainItem){
         BigDecimal usage = BigDecimal.valueOf(0);
+        //定高
         if ("02".equals(curtainItem.getFixType())) {
             usage =
                     arith.add(arith.dbToBD(width * multiple),
@@ -450,12 +450,12 @@ public class ItemServiceImpl implements ItemService {
             //定宽
             if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
                 usage =
-                        arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
+                        arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
             } else if (curtainItem.getHighHh().doubleValue() > 0) {
                 //花回
                 usage =
-                        arith.mul(arith.mul(arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2),
-                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 2)),
+                        arith.mul(arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0),
+                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
                                 arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
             }
         }
