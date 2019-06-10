@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CurtainCartItemDao">
+    <resultMap id="CurtainCartItemMap" type="CurtainCartItem" >
+        <id column="CART_ITEM_ID" property="cartItemId" jdbcType="VARCHAR" />
+        <result column="COMMODITY_TYPE" property="commodityType" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_GROUP_TYPE" property="activityGroupType" jdbcType="VARCHAR" />
+        <result column="PRODUCT_GROUP_TYPE" property="productGroupType" jdbcType="VARCHAR" />
+        <result column="CART_ID" property="cartId" jdbcType="VARCHAR" />
+        <result column="WIDTH" property="width" jdbcType="DECIMAL" />
+        <result column="HEIGHT" property="height" jdbcType="DECIMAL" />
+        <result column="DRAPE" property="drape" jdbcType="DECIMAL" />
+        <result column="OUTSOURCING_BOX_EXIST" property="outsourcingBoxExist" jdbcType="DECIMAL" />
+        <result column="OUTSOURCING_BOX_WIDTH" property="outsourcingBoxWidth" jdbcType="DECIMAL" />
+        <result column="MODEL_NUMBER" property="modelNumber" jdbcType="VARCHAR" />
+        <result column="COUNT" property="count" jdbcType="DECIMAL" />
+        <result column="FALSE_SHADE_HIGH" property="falseShadeHigh" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <insert id="addCartItem" parameterType="CurtainCartItem">
+        insert into CART_ITEM
+        (CART_ITEM_ID, COMMODITY_TYPE, ACTIVITY_GROUP_TYPE, PRODUCT_GROUP_TYPE, CART_ID,WIDTH,HEIGHT,
+        DRAPE,OUTSOURCING_BOX_EXIST,OUTSOURCING_BOX_WIDTH,MODEL_NUMBER,LOCATION,COUNT,FALSE_SHADE_HIGH)
+        VALUES
+        (#{cartItemId},#{commodityType},#{activityGroupType,jdbcType=VARCHAR},#{productGroupType,jdbcType=VARCHAR},
+        #{cartId},#{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{drape,jdbcType=NUMERIC},
+        #{outsourcingBoxExist,jdbcType=NUMERIC},#{outsourcingBoxWidth,jdbcType=NUMERIC},#{modelNumber,jdbcType=VARCHAR},
+        #{location,jdbcType=VARCHAR},#{count,jdbcType=NUMERIC},#{falseShadeHigh,jdbcType=NUMERIC})
+    </insert>
+
+    <delete id="deleteCartItemByID" parameterType="String">
+        delete from CART_ITEM where CART_ITEM_ID = #{cartItemID}
+    </delete>
+
+    <select id="getCartItemByID" parameterType="String" resultMap="CurtainCartItemMap">
+        select * from CART_ITEM where CART_ITEM_ID = #{cartItemId}
+    </select>
+
+    <select id="getCartItems" parameterType="String" resultMap="CurtainCartItemMap">
+        select * from cart_item where CART_ID = #{cartID,jdbcType=VARCHAR} and COMMODITY_TYPE = #{commodityType,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getCartItemOrder" parameterType="Map" resultType="CurtainCartItem">
+        select * from CART_ITEM
+        where
+        CART_ID = #{cartID} and COMMODITY_TYPE = #{commodityType}
+        <if test="activityGroupType!=null">
+            and ACTIVITY_GROUP_TYPE = #{activityGroupType,jdbcType=VARCHAR}
+        </if>
+        <if test="activityGroupType==null">
+            and ACTIVITY_GROUP_TYPE is null
+        </if>
+        and PRODUCT_GROUP_TYPE = #{productGroupType,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateCartItem" parameterType="CurtainCartItem">
+        update CART_ITEM
+        set WIDTH = #{width,jdbcType=NUMERIC},HEIGHT = #{height,jdbcType=NUMERIC},
+        DRAPE = #{drape,jdbcType=NUMERIC},OUTSOURCING_BOX_EXIST = #{outsourcingBoxExist,jdbcType=NUMERIC},
+        OUTSOURCING_BOX_WIDTH = #{outsourcingBoxWidth,jdbcType=NUMERIC}
+        where CART_ITEM_ID = #{cartItemId}
+    </update>
+
+    <update id="alterCurtainCartItem" parameterType="Map">
+        update CART_ITEM
+        set count = #{count}
+        where CART_ITEM_ID = #{cartItemID}
+    </update>
+</mapper>

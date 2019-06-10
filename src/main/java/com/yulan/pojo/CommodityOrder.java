@@ -35,6 +35,7 @@ public class CommodityOrder {
 	private String deleteFlag;
 	private String modifyFlag;
 	private String changeFlag;
+	private Integer inlineNo;
 
 	public String getItemId() {
 		return itemId;
@@ -266,6 +267,14 @@ public class CommodityOrder {
 
 	public void setChangeFlag(String changeFlag) {
 		this.changeFlag = changeFlag;
+	}
+
+	public Integer getInlineNo() {
+		return inlineNo;
+	}
+
+	public void setInlineNo(Integer inlineNo) {
+		this.inlineNo = inlineNo;
 	}
 
 	@Override

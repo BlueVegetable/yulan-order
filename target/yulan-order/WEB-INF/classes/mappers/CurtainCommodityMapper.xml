@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CurtainCommodityDao">
+    <resultMap id="CurtainCommodityMap" type="CurtainCommodity" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="PRICE" property="price" jdbcType="DECIMAL" />
+        <result column="ACTIVITY_ID" property="activityId" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_PRICE" property="activityPrice" jdbcType="DECIMAL" />
+        <result column="CART_ITEM_ID" property="cartItemId" jdbcType="VARCHAR" />
+        <result column="QUANTITY" property="quantity" jdbcType="DECIMAL" />
+        <result column="WIDTH" property="width" jdbcType="DECIMAL" />
+        <result column="HEIGHT" property="height" jdbcType="DECIMAL" />
+        <result column="NOTE" property="note" jdbcType="VARCHAR" />
+        <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+        <result column="SPLIT_SHIPMENT" property="splitShipment" jdbcType="DECIMAL" />
+        <result column="CURTAIN_ITEM_NAME" property="curtainItemName" jdbcType="VARCHAR" />
+        <result column="CURTAIN_PART_NAME" property="curtainPartName" jdbcType="VARCHAR" />
+        <result column="DOSAGE" property="dosage" jdbcType="DECIMAL" />
+        <result column="MANUFACTURING_INSTRUCTIONS" property="manufacturingInstructions" jdbcType="VARCHAR" />
+        <result column="CERTAIN_HEIGHT_WIDTH" property="certainHeightWidth" jdbcType="DECIMAL" />
+        <result column="SPECIFICATION" property="specification" jdbcType="DECIMAL" />
+        <result column="ILLUSTRATE" property="illustrate" jdbcType="VARCHAR" />
+        <result column="SAVE_TIME" property="saveTime" jdbcType="VARCHAR" />
+        <result column="DELETE_FLAG" property="deleteFlag" jdbcType="VARCHAR" />
+        <result column="MODIFY_FLAG" property="modifyFlag" jdbcType="VARCHAR" />
+        <result column="CHANGE_FLAG" property="changeFlag" jdbcType="VARCHAR" />
+        <result column="INLINE_NO" property="inlineNo" jdbcType="DECIMAL" />
+        <association column="ITEM_ID" property="item" select="com.yulan.dao.ItemDao.getItemByItemNO" />
+    </resultMap>
+
+    <insert id="addCommodity" parameterType="CurtainCommodity">
+        insert into COMMODITY
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, CART_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,
+        CURTAIN_ITEM_NAME,CURTAIN_PART_NAME,DOSAGE,MANUFACTURING_INSTRUCTIONS,CERTAIN_HEIGHT_WIDTH,
+        SPECIFICATION,ILLUSTRATE,STATUS,DELETE_FLAG,MODIFY_FLAG,CHANGE_FLAG,INLINE_NO)
+        VALUES
+        (#{id},#{price},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{cartItemId},#{quantity,jdbcType=NUMERIC},
+        #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR},
+        #{splitShipment,jdbcType=NUMERIC},#{curtainItemName,jdbcType=VARCHAR},#{curtainPartName,jdbcType=VARCHAR},
+        #{dosage,jdbcType=NUMERIC},#{manufacturingInstructions,jdbcType=VARCHAR},
+        #{certainHeightWidth,jdbcType=NUMERIC},#{specification,jdbcType=NUMERIC},#{illustrate,jdbcType=VARCHAR},
+        #{status},#{deleteFlag},#{modifyFlag},#{changeFlag},#{inlineNo,jdbcType=NUMERIC})
+    </insert>
+
+    <delete id="deleteCommodityByID" parameterType="String">
+        delete from COMMODITY where ID = #{commodityID}
+    </delete>
+
+    <delete id="deleteCommoditiesByCartItemID" parameterType="String">
+        delete from COMMODITY where CART_ITEM_ID = #{cartItemID}
+    </delete>
+
+    <select id="getCommodityByID" parameterType="String" resultMap="CurtainCommodityMap">
+        select * from COMMODITY where ID = #{commodityID}
+    </select>
+
+    <select id="getCommodityAppoint" parameterType="Map" resultMap="CurtainCommodityMap">
+        select * from COMMODITY where 1=1
+        <if test="activityID!=null">
+            and ACTIVITY_ID = #{activityID,jdbcType=VARCHAR}
+        </if>
+        <if test="activityID==null">
+            and ACTIVITY_ID is null
+        </if>
+        and ITEM_ID = #{itemID,jdbcType=VARCHAR}
+        and CART_ITEM_ID = #{cartItemID,jdbcType=VARCHAR}
+    </select>
+
+    <select id="countByCartItemID" parameterType="String" resultType="long">
+        select count(*) from COMMODITY where CART_ITEM_ID = #{cartItemID}
+    </select>
+
+    <select id="getCommoditiesByCartItemID" parameterType="String" resultMap="CurtainCommodityMap">
+        select * from COMMODITY where CART_ITEM_ID = #{cartItemID} and status = 1
+    </select>
+
+    <update id="updateCommodity" parameterType="CurtainCommodity">
+        update COMMODITY
+        set PRICE=#{price,jdbcType=VARCHAR},ACTIVITY_ID = #{activityId,jdbcType=VARCHAR},ITEM_ID = #{item.itemNo},
+        CART_ITEM_ID = #{cartItemId},QUANTITY = #{quantity,jdbcType=NUMERIC},WIDTH = #{width,jdbcType=NUMERIC},
+        HEIGHT = #{height,jdbcType=NUMERIC},NOTE = #{note,jdbcType=VARCHAR},SPLIT_SHIPMENT=#{splitShipment,jdbcType=NUMERIC},
+        CURTAIN_ITEM_NAME = #{curtainItemName,jdbcType=VARCHAR},CURTAIN_PART_NAME = #{curtainPartName,jdbcType=VARCHAR},
+        DOSAGE = #{dosage,jdbcType=NUMERIC},MANUFACTURING_INSTRUCTIONS = #{manufacturingInstructions,jdbcType=VARCHAR},
+        CERTAIN_HEIGHT_WIDTH = #{certainHeightWidth,jdbcType=NUMERIC},SPECIFICATION = #{specification,jdbcType=NUMERIC},
+        ILLUSTRATE = #{illustrate,jdbcType=VARCHAR}
+        where ID = #{id}
+    </update>
+
+    <update id="alterCommodityStatus" parameterType="Map">
+        update commodity set status = #{status} where ID = #{commodityID}
+    </update>
+</mapper>

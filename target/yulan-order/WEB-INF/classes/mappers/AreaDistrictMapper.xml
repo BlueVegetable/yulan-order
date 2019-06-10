@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.AreaDistrictDao">
+    <resultMap id="AreaDistrictMap" type="AreaDistrict" >
+        <id column="DISTRICT_ID" property="districtId" />
+        <result column="DISTRICT_NAME" property="districtName" />
+        <result column="PARENT_DISTRICT" property="parentDistrict" />
+        <result column="DISTRICT_LEVEL" property="districtLevel" />
+        <result column="NOTES" property="notes" />
+        <result column="USE_ID" property="useId" />
+        <result column="AREA_CODE" property="areaCode" />
+    </resultMap>
+
+    <select id="getAreaDistrictByDistrictID" parameterType="String" resultMap="AreaDistrictMap">
+        select * from area_district where DISTRICT_ID=#{districtID}
+    </select>
+
+    <select id="getAreaDistrictByName" parameterType="String" resultMap="AreaDistrictMap">
+        select * from area_district where DISTRICT_NAME = #{districtName}
+    </select>
+
+</mapper>
