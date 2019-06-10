@@ -30,12 +30,12 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
             List<CommodityOrder> commodityOrders = new ArrayList<>();
             List<Commodity> curtainCommodities = curtainCommodityDao.getCommoditiesByCartItemID(cartItemID);
             for (Commodity commodity:curtainCommodities) {
-                Map<String,Object> commodityMap = BlueVegetableBean.objectToMap(commodity);
+                CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
+                Map<String,Object> commodityMap = BlueVegetableBean.objectToMap(curtainCommodity);
                 CommodityOrder commodityOrder = (CommodityOrder) BlueVegetableBean.mapToObject(commodityMap,CommodityOrder.class);
                 commodityOrder.setOrderItemId(commodity.getCartItemId());
                 commodityOrder.setSaveTime(new Timestamp(System.currentTimeMillis()));
                 commodityOrder.setOrderItemNumber(orderNumber);
-                CurtainCommodity curtainCommodity = (CurtainCommodity) commodity;
                 String curtainPartName = curtainCommodity.getCurtainPartName();
                 curtainPartName = StringUtil.GBKToUTF8(curtainPartName);
                 switch (curtainPartName) {
