@@ -17,6 +17,7 @@ public class CurtainCommodity extends Commodity {
     private String deleteFlag;
     private String modifyFlag;
     private String changeFlag;
+    private Integer lineNo;
 
     public String getCurtainItemName() {
         return curtainItemName;
@@ -104,6 +105,14 @@ public class CurtainCommodity extends Commodity {
 
     public void setChangeFlag(String changeFlag) {
         this.changeFlag = changeFlag;
+    }
+
+    public Integer getLineNo() {
+        return lineNo;
+    }
+
+    public void setLineNo(Integer lineNo) {
+        this.lineNo = lineNo;
     }
 
     @Override

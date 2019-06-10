@@ -139,9 +139,10 @@ public class Ctm_orderController {
     @RequestMapping("getResidemoney")
     @ResponseBody
     public Map getResidemoney(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
-        String cid = (String)m.get("cid");
+//        String cid = (String)m.get("cid");
+        String companyId=m.get("companyId").toString();
 
-        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getResidemoney(cid));
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getResidemoney(companyId));
     }
 
     /**
@@ -171,11 +172,17 @@ public class Ctm_orderController {
         return  ctm_orderService.orderCount(m);
     }
 
+    /**
+     * 获取经办人
+     * @param m
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     @RequestMapping("getlink")
     @ResponseBody
     public Map getlinkpersonandTel (@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
-        String cid= m.get("cid").toString();
-        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getlinkpersonandTel(cid));
+        String companyId= m.get("companyId").toString();
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getlinkpersonandTel(companyId));
     }
 
 

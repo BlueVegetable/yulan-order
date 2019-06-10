@@ -38,12 +38,12 @@ public class UserTest {
         }
 
         BigDecimal usage =
-                arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 2), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
+                arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
 
         System.out.println(usage);
         System.out.println("arith.dbToBD(width * multiple)" + arith.dbToBD(width * multiple));
         System.out.println("arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))" + arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))));
-        System.out.println("arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2)"+arith.round(arith.div(arith.div(arith.dbToBD(width * multiple), curtainItem.getFixGrade()), arith.dbToBD(1000.0)), 2));
+        System.out.println("arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0)"+arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0));
         System.out.println(" arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia())" +  arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
     }
 }
