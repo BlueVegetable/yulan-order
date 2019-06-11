@@ -114,7 +114,8 @@ public class CartController{
 			case "06":commodity.setPrice(item.getPriceFx());break;
 			case "09":commodity.setPrice(item.getPriceHome());break;
 			case "05":commodity.setPrice(item.getSalePrice());break;
-			case "10":break;
+			case "08":commodity.setPrice(item.getPriceSale());break;
+			case "10":commodity.setPrice(item.getPriceSale());break;
 			default:return Response.getResponseMap(1,"添加失败",null);
 		}
 		if(quantity==null||quantity.equals("")) {
@@ -178,7 +179,8 @@ public class CartController{
 					case "06":curtainCommodity.setPrice(item.getPriceFx());break;
 					case "09":curtainCommodity.setPrice(item.getPriceHome());break;
 					case "05":curtainCommodity.setPrice(item.getSalePrice());break;
-					case "10":curtainCommodity.setPrice(new BigDecimal(price));break;
+					case "08":curtainCommodity.setPrice(item.getPriceSale());break;
+					case "10":curtainCommodity.setPrice(item.getPriceSale());break;
 					default:return Response.getResponseMap(1,"添加失败",null);
 				}
 				curtainCommodity.setCartItemId(curtainCartItem.getCartItemId());
@@ -404,7 +406,8 @@ public class CartController{
 					case "06":curtainCommodity.setPrice(item.getPriceFx());break;
 					case "09":curtainCommodity.setPrice(item.getPriceHome());break;
 					case "05":curtainCommodity.setPrice(item.getSalePrice());break;
-					case "10":curtainCommodity.setPrice(new BigDecimal(price));break;
+					case "08":curtainCommodity.setPrice(item.getPriceSale());break;
+					case "10":curtainCommodity.setPrice(item.getPriceSale());break;
 					default:return Response.getResponseMap(1,"添加失败",null);
 				}
 			}
