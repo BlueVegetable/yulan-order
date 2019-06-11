@@ -1,13 +1,8 @@
 package com.yulan.service.impl;
 
-import com.yulan.dao.CommodityOrderDao;
-import com.yulan.dao.Ctm_orderDao;
-import com.yulan.dao.CurtainOrderDao;
-import com.yulan.dao.Web_userDao;
+import com.yulan.dao.*;
 import com.yulan.pojo.*;
-import com.yulan.service.CommodityOrderService;
-import com.yulan.service.Ctm_orderService;
-import com.yulan.service.CurtainOrderService;
+import com.yulan.service.*;
 import com.yulan.utils.BackUtil;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
@@ -44,6 +39,14 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
     @Autowired
     private Web_userDao web_userDao;
+
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private CustomerTypeDao customerTypeDao;
+
+
 
 
 
@@ -162,12 +165,20 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
         String orderNo=map.get("orderNo").toString();
-
-
         String curtainStatusId=map.get("curtainStatusId").toString();
         List<List<Map<String,Object>>> commodityOrderList=(List<List<Map<String,Object>>>) map.get("allCurtains");
         List<Map<String,Object>> ctmOrderDetails=(List<Map<String,Object>>) map.get("ctmOrderDetails");
 
+
+        /**
+         * 通过订单号获取客户类型
+         */
+        String companyId=ctm_orderDao.getCidByOrderNo(orderNo);
+        CustomerType customerType=customerTypeDao.getCustomerTypeByCID(companyId);
+        String customerTypeId="";
+        if (customerType!=null){
+            customerTypeId=customerType.getCustomerTypeId();
+        }
 
 
 
@@ -206,12 +217,15 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 //            }
 
 
+            BigDecimal oneAllCost=BigDecimal.valueOf(0);//单个窗帘总花费
             /**
              * 窗帘审核意见
              */
             if (commodityOrderList!=null){
                 for (List<Map<String,Object>> commodityOrderMaps:commodityOrderList){
+                    BigDecimal smallOne=BigDecimal.valueOf(0);//配件单价
                     for (Map<String,Object> commodityOrderMap:commodityOrderMaps ){
+
                         for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//转码
                             if (entry.getValue() instanceof String) {
                                 String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
@@ -237,7 +251,30 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                             m.put("msg","窗帘详情修改错误");
                             return  m;
                         }
+
+                        /**
+                         * 计算价格（new）
+                         */
+
+
+                        String itemId=commodityOrderMap.get("itemId").toString();//型号
+                        BigDecimal dosage=(BigDecimal) commodityOrderMap.get("dosage");//用量
+                        BigDecimal onePrice=BigDecimal.valueOf(0);//单价
+                        Item itemPrice = itemService.getItemByItemNO(itemId);//计算价格所需
+                        switch (customerTypeId) {//通过客户类别判断销售单价
+                            case "02":onePrice=item.getPriceSale();break;
+                            case "06":onePrice=item.getPriceFx();break;
+                            case "09":onePrice=item.getPriceHome();break;
+                            case "05":onePrice=item.getSalePrice();break;
+                            case "08":onePrice=item.getPriceSale();break;
+                            case "10":onePrice=item.getPriceSale();break;
+                            default: m.put("code",1);
+                                     m.put("msg","窗帘计算错误");
+                        }
+
+                        smallOne=dosage.multiply(onePrice);
                     }
+                    oneAllCost=oneAllCost.add(smallOne);
                 }
             }
 
@@ -245,6 +282,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
 
             m.put("code",0);
+            m.put("data",oneAllCost);//单个窗帘花费
             m.put("msg","SUCCESS");
         }else {
             m.put("code",1);
