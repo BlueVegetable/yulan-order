@@ -48,6 +48,10 @@ public class CartItemEncode {
         return cartItemDao.getCartItemOrder(cartID,commodityType,activityGroupType,productGroupType);
     }
 
+    public boolean alterCurtainCartItem(String cartItemID,Integer count) {
+        return cartItemDao.alterCartItemCount(cartItemID, count) > 0;
+    }
+
     public boolean updateCartItem(CartItem cartItem) {
         return cartItemDao.updateCartItem(cartItem)>0;
     }

@@ -75,6 +75,11 @@ public class CartItemServiceImpl implements CartItemService {
 	}
 
 	@Override
+	public boolean alterCartItemCount(String cartItemID, Integer count) {
+		return cartItemEncode.alterCurtainCartItem(cartItemID,count);
+	}
+
+	@Override
 	public boolean updateCartItem(CartItem cartItem) {
 		return cartItemEncode.updateCartItem(cartItem);
 	}

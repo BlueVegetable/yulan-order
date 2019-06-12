@@ -2,7 +2,6 @@ package com.yulan.controller;
 
 import com.yulan.pojo.*;
 import com.yulan.service.*;
-import com.yulan.service.impl.CurtainCartItemServiceImpl;
 import com.yulan.utils.Response;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -421,10 +420,9 @@ public class CartController{
 		return Response.getResponseMap(0,"",null);
 	}
 
-	@ResponseBody@RequestMapping("alterCurtainCartItem")
+	@ResponseBody@RequestMapping("alterCurtainCartItemCount")
     public Map alterCurtainCartItem(@RequestParam("cartItemID")String cartItemID, @RequestParam("count")Integer count) {
-        CurtainCartItemServiceImpl curtainCartItemServiceImpl = new CurtainCartItemServiceImpl();
-        return Response.getResponseMap(0,"",curtainCartItemServiceImpl.alterCurtainCartItem(cartItemID, count));
+        return Response.getResponseMap(0,"",curtainCartItemService.alterCartItemCount(cartItemID, count));
     }
 
 	private List<Map<String,Object>> dealCurtainCartItems(List<CartItem> cartItems) {

@@ -47,6 +47,6 @@ public class CurtainCartItemEncode {
     }
 
     public boolean alterCurtainCartItem(String cartItemID,Integer count) {
-        return curtainCartItemDao.alterCurtainCartItem(cartItemID, count) > 0;
+        return curtainCartItemDao.alterCartItemCount(cartItemID, count) > 0;
     }
 }

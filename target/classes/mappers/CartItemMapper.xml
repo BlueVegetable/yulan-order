@@ -40,4 +40,10 @@
         </if>
         and PRODUCT_GROUP_TYPE = #{productGroupType,jdbcType=VARCHAR}
     </select>
+
+    <update id="alterCartItemCount" parameterType="Map">
+        update CART_ITEM
+        set count = #{count}
+        where CART_ITEM_ID = #{cartItemID}
+    </update>
 </mapper>
