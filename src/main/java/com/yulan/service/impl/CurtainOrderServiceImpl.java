@@ -89,10 +89,13 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         ctm_order.setCustomerCode(cid);
         Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(users);
 
-        if (linkpersonandTelmap!=null){
+        if (linkpersonandTelmap.get("CUSTOMER_AGENT")!=null){
+
             ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
 
-            ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话q
+        }
+        if (linkpersonandTelmap.get("OFFICE_TEL")!=null){
+            ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话
         }
 
 
@@ -173,7 +176,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         /**
          * 通过订单号获取客户类型
          */
-        String companyId=ctm_orderDao.getCidByOrderNo(orderNo);
+        String cid=ctm_orderDao.getCidByOrderNo(orderNo);
+        String companyId=web_userDao.changeLoginNameToCompanyID(cid);
         CustomerType customerType=customerTypeDao.getCustomerTypeByCID(companyId);
         String customerTypeId="";
         if (customerType!=null){
@@ -224,8 +228,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             if (commodityOrderList!=null){
                 for (List<Map<String,Object>> commodityOrderMaps:commodityOrderList){
                     BigDecimal smallOne=BigDecimal.valueOf(0);//配件单价
+                    String lineNo="";//商品行号
                     for (Map<String,Object> commodityOrderMap:commodityOrderMaps ){
-
+                        lineNo=commodityOrderMap.get("lineNo").toString();
                         for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//转码
                             if (entry.getValue() instanceof String) {
                                 String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
@@ -258,23 +263,32 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
 
                         String itemId=commodityOrderMap.get("itemId").toString();//型号
-                        BigDecimal dosage=(BigDecimal) commodityOrderMap.get("dosage");//用量
+                        BigDecimal dosage=new BigDecimal(commodityOrderMap.get("dosage").toString());//用量
                         BigDecimal onePrice=BigDecimal.valueOf(0);//单价
                         Item itemPrice = itemService.getItemByItemNO(itemId);//计算价格所需
                         switch (customerTypeId) {//通过客户类别判断销售单价
-                            case "02":onePrice=item.getPriceSale();break;
-                            case "06":onePrice=item.getPriceFx();break;
-                            case "09":onePrice=item.getPriceHome();break;
-                            case "05":onePrice=item.getSalePrice();break;
-                            case "08":onePrice=item.getPriceSale();break;
-                            case "10":onePrice=item.getPriceSale();break;
+                            case "02":onePrice=itemPrice.getPriceSale();break;
+                            case "06":onePrice=itemPrice.getPriceFx();break;
+                            case "09":onePrice=itemPrice.getPriceHome();break;
+                            case "05":onePrice=itemPrice.getSalePrice();break;
+                            case "08":onePrice=itemPrice.getPriceSale();break;
+                            case "10":onePrice=itemPrice.getPriceSale();break;
                             default: m.put("code",1);
                                      m.put("msg","窗帘计算错误");
                         }
 
                         smallOne=dosage.multiply(onePrice);
+                        oneAllCost=oneAllCost.add(smallOne);
                     }
-                    oneAllCost=oneAllCost.add(smallOne);
+
+                    if(ctm_orderDao.getCtmdeatailunitPrice(orderNo,lineNo).compareTo(oneAllCost)!=0){//（型号）价格变动
+                        if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost)){//更新价格
+                            m.put("code",1);
+                            m.put("msg","窗帘单价更新错误");
+                        }
+                    }
+
+
                 }
             }
 

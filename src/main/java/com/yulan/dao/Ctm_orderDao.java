@@ -232,6 +232,23 @@ public interface Ctm_orderDao {
     String getCidByOrderNo(@Param("orderNo") String orderNo);
 
 
+    /**
+     * 获取订单详情商品单价
+     * @param orderNo
+     * @param lineNo
+     * @return
+     */
+    BigDecimal getCtmdeatailunitPrice(@Param("orderNo") String orderNo,@Param("lineNo") String lineNo);
+
+    /**
+     * 更新订单详情商品单价
+     * @param orderNo
+     * @param lineNo
+     * @return
+     */
+    Boolean updateCtmdeatailunitPrice(@Param("orderNo") String orderNo,@Param("lineNo") String lineNo,@Param("unitPrice")BigDecimal unitPrice);
+
+
 
 
 }
