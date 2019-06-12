@@ -224,6 +224,13 @@ public interface Ctm_orderDao {
      */
     List<Ctm_order> getAllCtms();
 
+    /**
+     * 通过订单号获取客户号
+     * @param orderNo
+     * @return
+     */
+    String getCidByOrderNo(@Param("orderNo") String orderNo);
+
 
 
 

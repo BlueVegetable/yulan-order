@@ -1431,6 +1431,10 @@
         select * from CTM_ORDER where STATUS_ID='5'
     </select>
 
+    <select id="getCidByOrderNo" resultType="String" parameterType="String">
+        select t.CUSTOMER_CODE from CTM_ORDER t where t.ORDER_NO=#{orderNo}
+    </select>
+
 
 
 </mapper>
