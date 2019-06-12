@@ -1435,6 +1435,14 @@
         select t.CUSTOMER_CODE from CTM_ORDER t where t.ORDER_NO=#{orderNo}
     </select>
 
+    <select id="getCtmdeatailunitPrice" resultType="BigDecimal">
+        select t.UNIT_PRICE from CTM_ORDER_DETAIL t where t.ORDER_NO=#{orderNo} and t.LINE_NO=#{lineNo}
+    </select>
+
+    <update id="updateCtmdeatailunitPrice">
+        update CTM_ORDER_DETAIL t set t.UNIT_PRICE=#{unitPrice} where t.ORDER_NO=#{orderNo} and t.LINE_NO=#{lineNo}
+    </update>
+
 
 
 </mapper>
