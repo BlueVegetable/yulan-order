@@ -3,6 +3,7 @@ package com.yulan.service;
 import com.yulan.pojo.Commodity;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CommodityService {
@@ -26,5 +27,7 @@ public interface CommodityService {
 	int alterCommoditiesStatus(List<String> commodityIDs,int status);
 
 	int alterCommoditiesStatusByCartItemId(List<String> cartItemIDs,int status);
+
+	boolean alterCommodityPrice(String commodityID, BigDecimal price);
 
 }

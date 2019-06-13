@@ -89,4 +89,10 @@
     <update id="alterCommodityStatus" parameterType="Map">
         update commodity set status = #{status} where ID = #{commodityID}
     </update>
+
+    <update id="alterCommodityPrice" parameterType="Map">
+        update commodity
+        set PRICE = #{price}
+        where ID = #{commodityID}
+    </update>
 </mapper>

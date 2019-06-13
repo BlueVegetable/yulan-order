@@ -3,6 +3,7 @@ package com.yulan.dao;
 import com.yulan.pojo.Commodity;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CurtainCommodityDao {
@@ -25,5 +26,7 @@ public interface CurtainCommodityDao {
 	int updateCommodity(Commodity commodity);
 
 	int alterCommodityStatus(@Param("commodityID") String commodityID,@Param("status") int status);
+
+	int alterCommodityPrice(@Param("commodityID") String commodityID, @Param("price") BigDecimal price);
 
 }

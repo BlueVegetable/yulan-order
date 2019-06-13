@@ -7,6 +7,7 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service("commodityService")
@@ -65,5 +66,10 @@ public class CommodityServiceImpl implements CommodityService {
 	@Override
 	public int alterCommoditiesStatusByCartItemId(List<String> cartItemIDs, int status) {
 		return commodityEncode.alterCommoditiesStatusByCartItemId(cartItemIDs, status);
+	}
+
+	@Override
+	public boolean alterCommodityPrice(String commodityID, BigDecimal price) {
+		return commodityEncode.alterCommodityPrice(commodityID, price);
 	}
 }

@@ -425,6 +425,15 @@ public class CartController{
         return Response.getResponseMap(0,"",curtainCartItemService.alterCartItemCount(cartItemID, count));
     }
 
+    @ResponseBody@RequestMapping("alterCommodityPrice")
+    public Map alterCommodityPrice(@RequestParam("commodityID")String commodityID,@RequestParam("price")BigDecimal price,
+                                   @RequestParam("customerType")String customerType) {
+	    if(!customerType.equals("10")) {
+	        return Response.getResponseMap(2,"该账号无权限修改价格",null);
+        }
+	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID, price));
+    }
+
 	private List<Map<String,Object>> dealCurtainCartItems(List<CartItem> cartItems) {
 		List<Map<String,Object>> result = new ArrayList<>();
 		if(cartItems == null||cartItems.size()==0) {

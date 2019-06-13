@@ -8,6 +8,7 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -72,6 +73,10 @@ public class CurtainCommodityEncode {
 
     public boolean alterCommodityStatus(String commodityID,int status) {
         return curtainCommodityDao.alterCommodityStatus(commodityID, status) > 0;
+    }
+
+    public boolean alterCommodityPrice(String commodityID, BigDecimal price) {
+        return curtainCommodityDao.alterCommodityPrice(commodityID, price) > 0;
     }
 
 }
