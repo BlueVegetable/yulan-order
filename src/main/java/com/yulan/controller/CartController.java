@@ -235,19 +235,6 @@ public class CartController{
         return cartService.getSimpleCartByID(cartID);
     }
 
-    @ResponseBody@RequestMapping("getSimpleCartByCID")
-    public Cart getSimpleCartByCID(String CID) throws Exception {
-        Cart cart = cartService.getSimpleCartByCID(CID);
-        if(cart == null) {
-            cart = new Cart();
-            cart.setCustomerId(CID);
-            if(!cartService.addCart(cart)) {
-                throw new Exception("服务器出错");
-            }
-        }
-        return cart;
-    }
-
     @ResponseBody@RequestMapping("getAllCartByCID")
     public Cart getAllCartByCID(String CID) throws Exception {
 		Web_user webUser = webUserService.getWebUserByCID(CID);
@@ -534,6 +521,18 @@ public class CartController{
 		for (CartItem cartItem:cartItems) {
 			cartItem.setCID(CID);
 		}
+	}
+
+	private synchronized Cart getSimpleCartByCID(String CID) throws Exception {
+		Cart cart = cartService.getSimpleCartByCID(CID);
+		if(cart == null) {
+			cart = new Cart();
+			cart.setCustomerId(CID);
+			if(!cartService.addCart(cart)) {
+				throw new Exception("服务器出错");
+			}
+		}
+		return cart;
 	}
 
 }
