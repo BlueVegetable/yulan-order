@@ -172,6 +172,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         List<List<Map<String,Object>>> commodityOrderList=(List<List<Map<String,Object>>>) map.get("allCurtains");
         List<Map<String,Object>> ctmOrderDetails=(List<Map<String,Object>>) map.get("ctmOrderDetails");
 
+        List<String> deleteIds=(List<String>)map.get("deleteIds");//需要删除的配件id
+
+
 
         /**
          * 通过订单号获取客户类型
@@ -301,6 +304,16 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }else {
             m.put("code",1);
             m.put("msg","订单头部修改错误");
+        }
+
+        if(deleteIds!=null||deleteIds.size()!=0){
+            for (String id:deleteIds){
+                if (!commodityOrderDao.deleteCommodityOrder(id)){
+                    m.put("code",1);
+                    m.put("msg","配件删除改错误");
+                    break;
+                }
+            }
         }
 
        return m;

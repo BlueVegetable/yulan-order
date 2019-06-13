@@ -144,4 +144,8 @@
         and LINE_NO = #{lineNo,jdbcType=NUMERIC}
         and order_item_number=#{orderItemNumber}
     </update>
+
+    <delete id="deleteCommodityOrder" parameterType="String">
+       delete from COMMODITY_ORDER where ID = #{id}
+    </delete>
 </mapper>

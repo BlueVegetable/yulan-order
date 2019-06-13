@@ -34,5 +34,12 @@ public interface CommodityOrderDao {
 	 */
 	Boolean updateCommodityOrderSug(CommodityOrder commodityOrder);
 
+	/**
+	 * 删除某条数据
+	 * @param id
+	 * @return
+	 */
+	Boolean deleteCommodityOrder(@Param("id")String id);
+
 
 }
