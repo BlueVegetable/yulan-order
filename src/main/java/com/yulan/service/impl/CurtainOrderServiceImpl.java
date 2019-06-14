@@ -280,7 +280,14 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                                      m.put("msg","窗帘计算错误");
                         }
 
+                        if(onePrice==null){//判断价格是否为空
+                            m.put("code",1);
+                            m.put("data","编号itemId为"+itemId+"的配件销售价格为空");
+                            m.put("msg","价格重新计算错误，数据库没有维护好！");
+                            return  m;
+                        }
                         smallOne=dosage.multiply(onePrice);
+
                         oneAllCost=oneAllCost.add(smallOne);
                     }
 
@@ -306,7 +313,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             m.put("msg","订单头部修改错误");
         }
 
-        if(deleteIds!=null||deleteIds.size()!=0){
+        if(deleteIds!=null){
             for (String id:deleteIds){
                 if (!commodityOrderDao.deleteCommodityOrder(id)){
                     m.put("code",1);
