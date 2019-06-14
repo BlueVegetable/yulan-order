@@ -1,5 +1,6 @@
 package com.yulan.controller;
 
+import com.yulan.pojo.Web_user;
 import com.yulan.service.CustomerTypeService;
 import com.yulan.service.Web_userService;
 import com.yulan.utils.Response;
@@ -51,10 +52,15 @@ public class Web_userController {
             /*session.setAttribute("token",token);
             sessions.put(token,session);*/
 //            map.put("token", token );
-            if(customerTypeService.getCustomerTypeByCID((String) m.get("loginName"))==null){
+            Web_user webUser = web_userService.getWebUserByCID(loginName);
+            String companyId = webUser.getCompanyId();
+            if(companyId == null) {
+                companyId = loginName;
+            }
+            if(customerTypeService.getCustomerTypeByCID(companyId)==null){
                 map.put("customerType","");
             }else{
-                map.put("customerType",customerTypeService.getCustomerTypeByCID((String) m.get("loginName")).getCustomerTypeId());
+                map.put("customerType",customerTypeService.getCustomerTypeByCID(companyId).getCustomerTypeId());
             }
 
             map.put("logintime", TimeUtil.getTime());

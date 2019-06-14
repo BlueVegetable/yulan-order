@@ -19,6 +19,8 @@ public interface CartItemDao {
 							  @Param("activityGroupType") String activityGroupType,
 							  @Param("productGroupType") String productGroupType);
 
+	int alterCartItemCount(@Param("cartItemID")String cartItemID, @Param("count")Integer count);
+
 	int updateCartItem(CartItem cartItem);
 
 }

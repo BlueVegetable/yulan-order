@@ -1,13 +1,8 @@
 package com.yulan.service.impl;
 
-import com.yulan.dao.CommodityOrderDao;
-import com.yulan.dao.Ctm_orderDao;
-import com.yulan.dao.CurtainOrderDao;
-import com.yulan.dao.Web_userDao;
+import com.yulan.dao.*;
 import com.yulan.pojo.*;
-import com.yulan.service.CommodityOrderService;
-import com.yulan.service.Ctm_orderService;
-import com.yulan.service.CurtainOrderService;
+import com.yulan.service.*;
 import com.yulan.utils.BackUtil;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
@@ -44,6 +39,14 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
     @Autowired
     private Web_userDao web_userDao;
+
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private CustomerTypeDao customerTypeDao;
+
+
 
 
 
@@ -86,10 +89,13 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         ctm_order.setCustomerCode(cid);
         Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(users);
 
-        if (linkpersonandTelmap!=null){
+        if (linkpersonandTelmap.get("CUSTOMER_AGENT")!=null){
+
             ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
 
-            ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话q
+        }
+        if (linkpersonandTelmap.get("OFFICE_TEL")!=null){
+            ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话
         }
 
 
@@ -162,12 +168,24 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
     public Map updateCurtainOrder(Map map) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException {
         Map m=new HashMap();
         String orderNo=map.get("orderNo").toString();
-
-
         String curtainStatusId=map.get("curtainStatusId").toString();
         List<List<Map<String,Object>>> commodityOrderList=(List<List<Map<String,Object>>>) map.get("allCurtains");
         List<Map<String,Object>> ctmOrderDetails=(List<Map<String,Object>>) map.get("ctmOrderDetails");
 
+        List<String> deleteIds=(List<String>)map.get("deleteIds");//需要删除的配件id
+
+
+
+        /**
+         * 通过订单号获取客户类型
+         */
+        String cid=ctm_orderDao.getCidByOrderNo(orderNo);
+        String companyId=web_userDao.changeLoginNameToCompanyID(cid);
+        CustomerType customerType=customerTypeDao.getCustomerTypeByCID(companyId);
+        String customerTypeId="";
+        if (customerType!=null){
+            customerTypeId=customerType.getCustomerTypeId();
+        }
 
 
 
@@ -206,12 +224,16 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 //            }
 
 
+            BigDecimal oneAllCost=BigDecimal.valueOf(0);//单个窗帘总花费
             /**
              * 窗帘审核意见
              */
             if (commodityOrderList!=null){
                 for (List<Map<String,Object>> commodityOrderMaps:commodityOrderList){
+                    BigDecimal smallOne=BigDecimal.valueOf(0);//配件单价
+                    String lineNo="";//商品行号
                     for (Map<String,Object> commodityOrderMap:commodityOrderMaps ){
+                        lineNo=commodityOrderMap.get("lineNo").toString();
                         for (Map.Entry<String, Object> entry : commodityOrderMap.entrySet()) {//转码
                             if (entry.getValue() instanceof String) {
                                 String origin = StringUtil.setUtf8(String.valueOf(entry.getValue()));
@@ -221,7 +243,6 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 //                     CommodityOrder commodityOrder=MapUtils.mapToBean(commodityOrderMap,CommodityOrder.class);
                         CommodityOrder commodityOrder = new CommodityOrder();
                         BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
-
                         /**
                          * 处理类中的类item
                          */
@@ -237,7 +258,50 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                             m.put("msg","窗帘详情修改错误");
                             return  m;
                         }
-                    }
+                        if (commodityOrderMap.get("itemId")!=null){//当不传itemId时，为退回接口，不需要以下操作
+
+
+                            /**
+                             * 计算价格（new）
+                             */
+
+
+                            String itemId=commodityOrderMap.get("itemId").toString();//型号
+                            BigDecimal dosage=new BigDecimal(commodityOrderMap.get("dosage").toString());//用量
+                            BigDecimal onePrice=BigDecimal.valueOf(0);//单价
+                            Item itemPrice = itemService.getItemByItemNO(itemId);//计算价格所需
+                            switch (customerTypeId) {//通过客户类别判断销售单价
+                                case "02":onePrice=itemPrice.getPriceSale();break;
+                                case "06":onePrice=itemPrice.getPriceFx();break;
+                                case "09":onePrice=itemPrice.getPriceHome();break;
+                                case "05":onePrice=itemPrice.getSalePrice();break;
+                                case "08":onePrice=itemPrice.getPriceSale();break;
+                                case "10":onePrice=itemPrice.getPriceSale();break;
+                                default: m.put("code",1);
+                                    m.put("msg","窗帘计算错误");
+                            }
+
+                            if(onePrice==null){//判断价格是否为空
+                                m.put("code",1);
+                                m.put("data","编号itemId为"+itemId+"的配件销售价格为空");
+                                m.put("msg","价格重新计算错误，数据库没有维护好！");
+                                return  m;
+                            }
+                            smallOne=dosage.multiply(onePrice);
+
+                            oneAllCost=oneAllCost.add(smallOne);
+                        }
+
+                        if(ctm_orderDao.getCtmdeatailunitPrice(orderNo,lineNo).compareTo(oneAllCost)!=0){//（型号）价格变动
+                            if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost)){//更新价格
+                                m.put("code",1);
+                                m.put("msg","窗帘单价更新错误");
+                            }
+                        }
+                        }
+
+
+
                 }
             }
 
@@ -245,10 +309,21 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
 
             m.put("code",0);
+            m.put("data",oneAllCost);//单个窗帘花费
             m.put("msg","SUCCESS");
         }else {
             m.put("code",1);
             m.put("msg","订单头部修改错误");
+        }
+
+        if(deleteIds!=null){
+            for (String id:deleteIds){
+                if (!commodityOrderDao.deleteCommodityOrder(id)){
+                    m.put("code",1);
+                    m.put("msg","配件删除改错误");
+                    break;
+                }
+            }
         }
 
        return m;

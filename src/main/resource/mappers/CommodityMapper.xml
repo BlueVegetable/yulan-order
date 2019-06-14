@@ -102,5 +102,10 @@
         </if>
     </update>
 
+    <update id="alterCommodityPrice" parameterType="Map">
+        update commodity
+        set PRICE = #{price}
+        where ID = #{commodityID}
+    </update>
 
 </mapper>

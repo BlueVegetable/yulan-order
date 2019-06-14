@@ -18,6 +18,8 @@ public interface CartItemService {
 
 	CartItem getCartItemOrder(String cartID, String commodityType, String activityGroupType, String productGroupType);
 
+	boolean alterCartItemCount(String cartItemID,Integer count);
+
 	boolean updateCartItem(CartItem cartItem);
 
 }

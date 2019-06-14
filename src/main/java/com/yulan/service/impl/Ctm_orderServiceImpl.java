@@ -282,12 +282,14 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(users);
 
 
-        if (linkpersonandTelmap!=null){
+        if (linkpersonandTelmap.get("CUSTOMER_AGENT")!=null){
+
             ctm_order.setLinkperson(linkpersonandTelmap.get("CUSTOMER_AGENT").toString());//经办人
 
+        }
+        if (linkpersonandTelmap.get("OFFICE_TEL")!=null){
             ctm_order.setTelephone(linkpersonandTelmap.get("OFFICE_TEL").toString());//经办人电话
         }
-
 
         List<Map<String,Object>> list=(List) map.get("ctm_orders");
         ctm_order.setWebTjTime(nowTime);//获取当前时间

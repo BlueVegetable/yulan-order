@@ -6,6 +6,7 @@ import com.yulan.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -70,6 +71,10 @@ public class CommodityEncode {
 
     public int alterCommoditiesStatusByCartItemId(List<String> cartItemIDs,int status) {
         return commodityDao.alterCommoditiesStatusByCartItemId(cartItemIDs, status);
+    }
+
+    public boolean alterCommodityPrice(String commodityID, BigDecimal price) {
+        return commodityDao.alterCommodityPrice(commodityID,price) > 0;
     }
 
 }

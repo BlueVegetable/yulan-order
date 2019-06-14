@@ -2,7 +2,6 @@ package com.yulan.controller;
 
 import com.yulan.pojo.*;
 import com.yulan.service.*;
-import com.yulan.service.impl.CurtainCartItemServiceImpl;
 import com.yulan.utils.Response;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +113,8 @@ public class CartController{
 			case "06":commodity.setPrice(item.getPriceFx());break;
 			case "09":commodity.setPrice(item.getPriceHome());break;
 			case "05":commodity.setPrice(item.getSalePrice());break;
-			case "10":break;
+			case "08":commodity.setPrice(item.getPriceSale());break;
+			case "10":commodity.setPrice(item.getPriceSale());break;
 			default:return Response.getResponseMap(1,"添加失败",null);
 		}
 		if(quantity==null||quantity.equals("")) {
@@ -178,7 +178,8 @@ public class CartController{
 					case "06":curtainCommodity.setPrice(item.getPriceFx());break;
 					case "09":curtainCommodity.setPrice(item.getPriceHome());break;
 					case "05":curtainCommodity.setPrice(item.getSalePrice());break;
-					case "10":curtainCommodity.setPrice(new BigDecimal(price));break;
+					case "08":curtainCommodity.setPrice(item.getPriceSale());break;
+					case "10":curtainCommodity.setPrice(item.getPriceSale());break;
 					default:return Response.getResponseMap(1,"添加失败",null);
 				}
 				curtainCommodity.setCartItemId(curtainCartItem.getCartItemId());
@@ -404,7 +405,8 @@ public class CartController{
 					case "06":curtainCommodity.setPrice(item.getPriceFx());break;
 					case "09":curtainCommodity.setPrice(item.getPriceHome());break;
 					case "05":curtainCommodity.setPrice(item.getSalePrice());break;
-					case "10":curtainCommodity.setPrice(new BigDecimal(price));break;
+					case "08":curtainCommodity.setPrice(item.getPriceSale());break;
+					case "10":curtainCommodity.setPrice(item.getPriceSale());break;
 					default:return Response.getResponseMap(1,"添加失败",null);
 				}
 			}
@@ -418,10 +420,18 @@ public class CartController{
 		return Response.getResponseMap(0,"",null);
 	}
 
-	@ResponseBody@RequestMapping("alterCurtainCartItem")
+	@ResponseBody@RequestMapping("alterCurtainCartItemCount")
     public Map alterCurtainCartItem(@RequestParam("cartItemID")String cartItemID, @RequestParam("count")Integer count) {
-        CurtainCartItemServiceImpl curtainCartItemServiceImpl = new CurtainCartItemServiceImpl();
-        return Response.getResponseMap(0,"",curtainCartItemServiceImpl.alterCurtainCartItem(cartItemID, count));
+        return Response.getResponseMap(0,"",curtainCartItemService.alterCartItemCount(cartItemID, count));
+    }
+
+    @ResponseBody@RequestMapping("alterCommodityPrice")
+    public Map alterCommodityPrice(@RequestParam("commodityID")String commodityID,@RequestParam("price")BigDecimal price,
+                                   @RequestParam("customerType")String customerType) {
+	    if(!customerType.equals("10")) {
+	        return Response.getResponseMap(2,"该账号无权限修改价格",null);
+        }
+	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID, price));
     }
 
 	private List<Map<String,Object>> dealCurtainCartItems(List<CartItem> cartItems) {
