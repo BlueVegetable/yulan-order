@@ -14,17 +14,18 @@
         <result column="OUTSOURCING_BOX_WIDTH" property="outsourcingBoxWidth" jdbcType="DECIMAL" />
         <result column="MODEL_NUMBER" property="modelNumber" jdbcType="VARCHAR" />
         <result column="COUNT" property="count" jdbcType="DECIMAL" />
+        <result column="FALSE_SHADE_HIGH" property="falseShadeHigh" jdbcType="DECIMAL" />
     </resultMap>
 
     <insert id="addCartItem" parameterType="CurtainCartItem">
         insert into CART_ITEM
         (CART_ITEM_ID, COMMODITY_TYPE, ACTIVITY_GROUP_TYPE, PRODUCT_GROUP_TYPE, CART_ID,WIDTH,HEIGHT,
-        DRAPE,OUTSOURCING_BOX_EXIST,OUTSOURCING_BOX_WIDTH,MODEL_NUMBER,LOCATION,COUNT)
+        DRAPE,OUTSOURCING_BOX_EXIST,OUTSOURCING_BOX_WIDTH,MODEL_NUMBER,LOCATION,COUNT,FALSE_SHADE_HIGH)
         VALUES
         (#{cartItemId},#{commodityType},#{activityGroupType,jdbcType=VARCHAR},#{productGroupType,jdbcType=VARCHAR},
         #{cartId},#{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{drape,jdbcType=NUMERIC},
         #{outsourcingBoxExist,jdbcType=NUMERIC},#{outsourcingBoxWidth,jdbcType=NUMERIC},#{modelNumber,jdbcType=VARCHAR},
-        #{location,jdbcType=VARCHAR},#{count,jdbcType=NUMERIC})
+        #{location,jdbcType=VARCHAR},#{count,jdbcType=NUMERIC},#{falseShadeHigh,jdbcType=NUMERIC})
     </insert>
 
     <delete id="deleteCartItemByID" parameterType="String">

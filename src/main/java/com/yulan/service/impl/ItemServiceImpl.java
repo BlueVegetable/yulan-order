@@ -72,6 +72,14 @@ public class ItemServiceImpl implements ItemService {
     public Map getStockShow(String itemNo) {
         Map<String, Object> map = new HashMap<>();
         List<StockShow> stockList = itemDao.getStockShow(itemNo);
+
+        for (int i = 0; i < stockList.size(); i++) {
+            StockShow stockShow = stockList.get(i);
+            if(null != stockShow.getStockNo()) {
+                stockShow.setStockNo(stringUtil.GBKToUTF8(stockShow.getStockNo()));
+            }
+        }
+
         if (null == stockList || stockList.size() == 0) {
             map.put("data", "没有查询到数据");
             map.put("code", 1);

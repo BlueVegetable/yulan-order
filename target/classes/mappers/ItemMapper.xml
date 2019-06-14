@@ -46,7 +46,7 @@
 
 
     <resultMap id="StockShowMap" type="com.yulan.pojo.StockShow">
-        <id column="STOCK_NO" property="stockNo" jdbcType="VARCHAR" />
+        <id column="NOTE" property="stockNo" jdbcType="VARCHAR" />
         <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
         <result column="QTY" property="qty" jdbcType="DECIMAL" />
         <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
@@ -98,10 +98,11 @@
     </select>
 
     <select id="getStockShow" resultMap="StockShowMap">
-      select sf.stock_no, mc_get_ph(sf.batch_no)AS batch_no ,sf.qty,sf.item_no from stock_floor sf
+       select t.note, sf.batch_no ,sf.qty,sf.item_no from stock_floor sf, stock_id t
       where sf.item_no = #{ITEM_NO}
       and sf.stock_no in (
       select t.stock_no from stock_customer t where t.flag = 1 )
+      and sf.stock_no = t.stock_no
       and sf.qty >0
     </select>
 
