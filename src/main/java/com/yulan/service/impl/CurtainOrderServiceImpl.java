@@ -243,23 +243,23 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 //                     CommodityOrder commodityOrder=MapUtils.mapToBean(commodityOrderMap,CommodityOrder.class);
                         CommodityOrder commodityOrder = new CommodityOrder();
                         BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
+                        /**
+                         * 处理类中的类item
+                         */
+                        Item item=new Item();
+                        Map itemMap=(Map) commodityOrderMap.get("item");
+                        BeanUtils.populate(item,itemMap);
+                        commodityOrderMap.remove("item");
 
+                        BeanUtils.populate(commodityOrder,commodityOrderMap);
+                        commodityOrder.setItem(item);
+                        if (!commodityOrderDao.updateCommodityOrder(commodityOrder)){
+                            m.put("code",1);
+                            m.put("msg","窗帘详情修改错误");
+                            return  m;
+                        }
                         if (commodityOrderMap.get("itemId")!=null){//当不传itemId时，为退回接口，不需要以下操作
-                            /**
-                             * 处理类中的类item
-                             */
-                            Item item=new Item();
-                            Map itemMap=(Map) commodityOrderMap.get("item");
-                            BeanUtils.populate(item,itemMap);
-                            commodityOrderMap.remove("item");
 
-                            BeanUtils.populate(commodityOrder,commodityOrderMap);
-                            commodityOrder.setItem(item);
-                            if (!commodityOrderDao.updateCommodityOrder(commodityOrder)){
-                                m.put("code",1);
-                                m.put("msg","窗帘详情修改错误");
-                                return  m;
-                            }
 
                             /**
                              * 计算价格（new）
