@@ -18,7 +18,12 @@ public class CommodityServiceImpl implements CommodityService {
 
 	@Override
 	public boolean addCommodity(Commodity commodity) {
-		commodity.setId(System.currentTimeMillis()+ StringUtil.createStringID());
+		commodity.setId(System.currentTimeMillis() + StringUtil.createStringID());
+		return commodityEncode.addCommodity(commodity);
+	}
+
+	@Override
+	public boolean addCommodityWithID(Commodity commodity) {
 		return commodityEncode.addCommodity(commodity);
 	}
 

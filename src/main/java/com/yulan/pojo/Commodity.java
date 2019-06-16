@@ -19,9 +19,11 @@ public class Commodity {
 	private Integer splitShipment;
 	private Integer status;
 	private Boolean activityEffective;
+	private Integer hasBeenModified;
 
 	public static final Integer COMMODITY_EXIST_STATUS = 1;
 	public static final Integer COMMODITY_NONE_EXIST_STATUS = 0;
+	public static final Integer COMMODITY_PRICE_HAS_MODIFIED = 1;
 
 	public String getId() {
 		return this.id;
@@ -133,6 +135,14 @@ public class Commodity {
 
 	public void setActivityEffective(Boolean activityEffective) {
 		this.activityEffective = activityEffective;
+	}
+
+	public Integer getHasBeenModified() {
+		return hasBeenModified;
+	}
+
+	public void setHasBeenModified(Integer hasBeenModified) {
+		this.hasBeenModified = hasBeenModified;
 	}
 
 	@Override

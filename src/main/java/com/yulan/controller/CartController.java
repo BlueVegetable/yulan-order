@@ -39,6 +39,8 @@ public class CartController{
 	private SalPromotionService salPromotionService;
 	@Autowired
 	private UnitService unitService;
+	@Autowired
+	private AnotherService anotherService;
 
 	private final static String WALLPAPER = "wallpaper";
 	private final static String SOFT = "soft";
@@ -413,12 +415,21 @@ public class CartController{
     }
 
     @ResponseBody@RequestMapping("alterCommodityPrice")
-    public Map alterCommodityPrice(@RequestParam("commodityID")String commodityID,@RequestParam("price")BigDecimal price,
-                                   @RequestParam("customerType")String customerType) {
+    public Map alterCommodityPrice(@RequestBody Map<String,String> parameters) {
+		String commodityID = parameters.get("commodityID");
+		String price = parameters.get("price");
+		String customerType = parameters.get("customerType");
 	    if(!customerType.equals("10")) {
 	        return Response.getResponseMap(2,"该账号无权限修改价格",null);
         }
-	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID, price));
+	    Commodity commodity = commodityService.getCommodityByID(commodityID);
+	    if(commodity == null) {
+	    	return Response.getResponseMap(2,"该产品已失效",null);
+		}
+	    if(commodity.getHasBeenModified()!=null&&commodity.getHasBeenModified()==Commodity.COMMODITY_PRICE_HAS_MODIFIED) {
+	    	return Response.getResponseMap(2,"该产品已经修改过价格了",null);
+		}
+	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID,new BigDecimal(price)));
     }
 
 	private List<Map<String,Object>> dealCurtainCartItems(List<CartItem> cartItems) {
