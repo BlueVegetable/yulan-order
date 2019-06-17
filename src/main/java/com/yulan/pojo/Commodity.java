@@ -19,7 +19,8 @@ public class Commodity {
 	private Integer splitShipment;
 	private Integer status;
 	private Boolean activityEffective;
-	private Integer hasBeenModified;
+	private BigDecimal priceAfterModified;
+	private String softType;
 
 	public static final Integer COMMODITY_EXIST_STATUS = 1;
 	public static final Integer COMMODITY_NONE_EXIST_STATUS = 0;
@@ -137,12 +138,20 @@ public class Commodity {
 		this.activityEffective = activityEffective;
 	}
 
-	public Integer getHasBeenModified() {
-		return hasBeenModified;
+	public BigDecimal getPriceAfterModified() {
+		return priceAfterModified;
 	}
 
-	public void setHasBeenModified(Integer hasBeenModified) {
-		this.hasBeenModified = hasBeenModified;
+	public void setPriceAfterModified(BigDecimal priceAfterModified) {
+		this.priceAfterModified = priceAfterModified;
+	}
+
+	public String getSoftType() {
+		return softType;
+	}
+
+	public void setSoftType(String softType) {
+		this.softType = softType;
 	}
 
 	@Override

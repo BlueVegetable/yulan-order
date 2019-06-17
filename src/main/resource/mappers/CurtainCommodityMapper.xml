@@ -25,7 +25,7 @@
         <result column="MODIFY_FLAG" property="modifyFlag" jdbcType="VARCHAR" />
         <result column="CHANGE_FLAG" property="changeFlag" jdbcType="VARCHAR" />
         <result column="INLINE_NO" property="inlineNo" jdbcType="DECIMAL" />
-        <result column="HAS_BEEN_MODIFIED" property="hasBeenModified" jdbcType="DECIMAL" />
+        <result column="PRICE_AFTER_MODIFIED" property="priceAfterModified" jdbcType="DECIMAL" />
         <association column="ITEM_ID" property="item" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 
@@ -93,7 +93,7 @@
 
     <update id="alterCommodityPrice" parameterType="Map">
         update commodity
-        set PRICE = #{price}
+        set PRICE_AFTER_MODIFIED = #{price}
         where ID = #{commodityID}
     </update>
 </mapper>

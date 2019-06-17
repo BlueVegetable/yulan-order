@@ -62,6 +62,9 @@ public class CartItemServiceImpl implements CartItemService {
 						copyItem.setProductBrand(brandType.getBrandName());
 					}
 					commodity.setItem(copyItem);
+					if(commodity.getPriceAfterModified()!=null) {
+						commodity.setPrice(commodity.getPriceAfterModified());
+					}
 				}
 				cartItemsDeal.add(cartItem);
 			}

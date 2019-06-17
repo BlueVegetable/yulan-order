@@ -78,6 +78,7 @@ public class CartController{
 		String width = (String) parameters.get("width");
 		String height = (String) parameters.get("height");
 		String note = (String) parameters.get("note");
+		String softType = (String) parameters.get("softType");
 		Integer splitShipment = parameters.get("splitShipment")==null||parameters.get("splitShipment").equals("")?
 				null:Integer.parseInt((String) parameters.get("splitShipment"));
 
@@ -110,6 +111,7 @@ public class CartController{
 		commodity.setNote(note);
 		commodity.setSplitShipment(splitShipment);
 		commodity.setStatus(Commodity.COMMODITY_EXIST_STATUS);
+		commodity.setSoftType(softType);
 		switch (customer_type) {
 			case "02":commodity.setPrice(item.getPriceSale());break;
 			case "06":commodity.setPrice(item.getPriceFx());break;
@@ -426,7 +428,7 @@ public class CartController{
 	    if(commodity == null) {
 	    	return Response.getResponseMap(2,"该产品已失效",null);
 		}
-	    if(commodity.getHasBeenModified()!=null&&commodity.getHasBeenModified()==Commodity.COMMODITY_PRICE_HAS_MODIFIED) {
+	    if(commodity.getPriceAfterModified()!=null) {
 	    	return Response.getResponseMap(2,"该产品已经修改过价格了",null);
 		}
 	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID,new BigDecimal(price)));
