@@ -292,12 +292,16 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                             oneAllCost=oneAllCost.add(smallOne);
                         }
 
-                        if(ctm_orderDao.getCtmdeatailunitPrice(orderNo,lineNo).compareTo(oneAllCost)!=0){//（型号）价格变动
-                            if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost)){//更新价格
-                                m.put("code",1);
-                                m.put("msg","窗帘单价更新错误");
-                            }
+
                         }
+
+                        if (oneAllCost.compareTo(BigDecimal.valueOf(0))!=0){//价格不为零
+                            if(ctm_orderDao.getCtmdeatailunitPrice(orderNo,lineNo).compareTo(oneAllCost)!=0){//（型号）价格变动
+                                if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost)){//更新价格
+                                    m.put("code",1);
+                                    m.put("msg","窗帘单价更新错误");
+                                }
+                            }
                         }
 
 
