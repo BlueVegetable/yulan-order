@@ -428,9 +428,6 @@ public class CartController{
 	    if(commodity == null) {
 	    	return Response.getResponseMap(2,"该产品已失效",null);
 		}
-	    if(commodity.getPriceAfterModified()!=null) {
-	    	return Response.getResponseMap(2,"该产品已经修改过价格了",null);
-		}
 	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID,new BigDecimal(price)));
     }
 
