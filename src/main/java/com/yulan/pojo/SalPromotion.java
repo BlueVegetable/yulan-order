@@ -27,6 +27,7 @@ public class SalPromotion {
     private Date dateEnd;
     private String groupType;
     private String pId;
+    private String arrearsFlag;
 
     public String getCustomerCode() {
         return customerCode;
@@ -194,6 +195,14 @@ public class SalPromotion {
 
     public void setpId(String pId) {
         this.pId = pId;
+    }
+
+    public String getArrearsFlag() {
+        return arrearsFlag;
+    }
+
+    public void setArrearsFlag(String arrearsFlag) {
+        this.arrearsFlag = arrearsFlag;
     }
 
     @Override

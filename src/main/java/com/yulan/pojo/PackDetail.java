@@ -32,6 +32,7 @@ public class PackDetail{
     private Date billDate;
     private String accouType;
     private String webOrderNo;
+    private BigDecimal freight;
 
     public String getSaleNo() {
         return saleNo;
@@ -239,6 +240,14 @@ public class PackDetail{
 
     public void setWebOrderNo(String webOrderNo) {
         this.webOrderNo = webOrderNo;
+    }
+
+    public BigDecimal getFreight() {
+        return freight;
+    }
+
+    public void setFreight(BigDecimal freight) {
+        this.freight = freight;
     }
 
     @Override
