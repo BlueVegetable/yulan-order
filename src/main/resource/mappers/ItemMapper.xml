@@ -98,12 +98,13 @@
     </select>
 
     <select id="getStockShow" resultMap="StockShowMap">
-       select t.note, sf.batch_no ,sf.qty,sf.item_no from stock_floor sf, stock_id t
-      where sf.item_no = #{ITEM_NO}
-      and sf.stock_no in (
-      select t.stock_no from stock_customer t where t.flag = 1 )
-      and sf.stock_no = t.stock_no
-      and sf.qty >0
+    select SC.note,sf.batch_no,sf.qty - nvl(sf.qty_allocate,0) + nvl(sf.qty_adj,0) as qty,sf.item_no
+     from stock_floor sf,stock_customer sc
+     where sf.item_no = #{ITEM_NO}
+     and sf.stock_no = sc.stock_no
+     and sc.flag = '1'
+     and sf.STATUS_ID = 'Y'
+     and sf.qty - nvl(sf.qty_allocate,0) + nvl(sf.qty_adj,0) > 0
     </select>
 
     <select id="getStockShowMax" resultType="com.yulan.pojo.StockShow">
