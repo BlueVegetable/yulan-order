@@ -23,6 +23,11 @@ public class CurtainCommodityServiceImpl implements CommodityService {
 	}
 
 	@Override
+	public boolean addCommodityWithID(Commodity commodity) {
+		return curtainCommodityEncode.addCommodity(commodity);
+	}
+
+	@Override
 	public Commodity getCommodityAppoint(String activityID, String itemID, String cartItemID) {
 		Commodity commodity = curtainCommodityEncode.getCommodityAppoint(activityID, itemID, cartItemID);
 		return commodity;

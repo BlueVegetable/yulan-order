@@ -1,8 +1,4 @@
-import com.yulan.dao.CommodityOrderDao;
-import com.yulan.pojo.CommodityOrder;
-import com.yulan.pojo.Item;
-import com.yulan.service.CommodityOrderService;
-import com.yulan.utils.StringUtil;
+import com.yulan.service.CommodityService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,70 +6,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class ItemTest {
     @Autowired
-    private CommodityOrderDao commodityOrderDao;
-    @Autowired
-    private CommodityOrderService commodityOrderService;
-    @Test
-    public void test() {
-        CommodityOrder commodityOrder = new CommodityOrder();
-        commodityOrder.setId(System.currentTimeMillis()+ StringUtil.createStringID());
-        Item item = new Item();
-        item.setItemNo("E350001");
-        commodityOrder.setItem(item);
-        commodityOrder.setOrderItemId("");
-        commodityOrder.setWidth(new BigDecimal("1.0"));
-        commodityOrder.setHeight(new BigDecimal("1.0"));
-        commodityOrder.setOrderItemId(System.currentTimeMillis()+StringUtil.createStringID());
-        commodityOrder.setUnit("jian");
-        commodityOrder.setCurtainItemName("chuanglian");
-        commodityOrder.setCurtainPartName("lt");
-        commodityOrder.setDosage(new BigDecimal("3"));
-        commodityOrder.setManufacturingInstructions("ManufacturingInstruction");
-        commodityOrder.setCertainHeightWidth(0);
-        commodityOrder.setIllustrate("illustrate");
-        commodityOrder.setSaveTime(new Timestamp(System.currentTimeMillis()));
-        commodityOrder.setOrderItemNumber(1);
-        commodityOrder.setSuggestion("suggestion");
-//        commodityOrderDao.addCommodityOrder(commodityOrder);
-        List<CommodityOrder> commodityOrders = new ArrayList<>();
-        commodityOrders.add(commodityOrder);
-        commodityOrders.add(commodityOrder);
-        commodityOrders.add(commodityOrder);
-        System.out.println(commodityOrderDao.addCommodityOrders(commodityOrders));
-    }
+    private CommodityService commodityService;
     @Test
     public void test1() {
-        List<String> cartItemIDs = new ArrayList<>();
-        cartItemIDs.add("15582584725009e65338d18e04ab2ae21e9564a2d7707");
-        Map<String,Integer> lineNos = new HashMap<>();
-        lineNos.put("15582584725009e65338d18e04ab2ae21e9564a2d7707",1);
-        System.out.println(commodityOrderService.submitCommodityOrder(cartItemIDs,lineNos));
-    }
-    @Test
-    public void test2() {
-        commodityOrderDao.addOrderNoByOrderItemIDs("1556249842365557d56147bbd4c6199f31ec839816172","WTX001");
-    }
-    @Test
-    public void test3() {
-        long time = System.currentTimeMillis();
-        SimpleDateFormat all = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat month = new SimpleDateFormat("yyyy-MM");
-        SimpleDateFormat day = new SimpleDateFormat("dd");
-        System.out.println(month.format(new Date(System.currentTimeMillis())));
-//        System.out.println(time);
-//        Date date = new Date(time);
-//        System.out.println(date.getTime());
+        commodityService.alterCommodityPrice("1560340254184a0eff79299a04238906e1e577d841d29",new BigDecimal("1"));
     }
 }

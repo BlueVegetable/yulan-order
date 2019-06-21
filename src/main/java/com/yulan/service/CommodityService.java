@@ -10,6 +10,8 @@ public interface CommodityService {
 
 	boolean addCommodity(Commodity commodity);
 
+	boolean addCommodityWithID(Commodity commodity);
+
 	boolean deleteCommodityByID(String commodityID);
 
 	boolean deleteCommoditiesByCartItemID(String cartItemID);

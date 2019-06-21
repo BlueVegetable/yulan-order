@@ -23,6 +23,7 @@
         <result column="DATE_END" property="dateEnd" jdbcType="TIMESTAMP" />
         <result column="GROUP_TYPE" property="groupType" jdbcType="VARCHAR" />
         <result column="P_ID" property="pId" jdbcType="VARCHAR" />
+        <result column="ARREARS_FLAG" property="arrearsFlag" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="SalPromotionNameMap" type="String" >

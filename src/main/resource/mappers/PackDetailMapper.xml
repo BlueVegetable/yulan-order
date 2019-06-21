@@ -28,6 +28,7 @@
         <result column="BILL_DATE" property="billDate" jdbcType="TIMESTAMP" />
         <result column="ACCOU_TYPE" property="accouType" jdbcType="VARCHAR" />
         <result column="WEB_ORDER_NO" property="webOrderNo" jdbcType="VARCHAR" />
+        <result column="FREIGHT" property="freight" jdbcType="DECIMAL" />
     </resultMap>
 
     <select id="getPackDetailAppoint" resultMap="PackDetailMap" parameterType="Map">

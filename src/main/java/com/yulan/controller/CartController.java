@@ -39,6 +39,8 @@ public class CartController{
 	private SalPromotionService salPromotionService;
 	@Autowired
 	private UnitService unitService;
+	@Autowired
+	private AnotherService anotherService;
 
 	private final static String WALLPAPER = "wallpaper";
 	private final static String SOFT = "soft";
@@ -76,6 +78,7 @@ public class CartController{
 		String width = (String) parameters.get("width");
 		String height = (String) parameters.get("height");
 		String note = (String) parameters.get("note");
+		String softType = (String) parameters.get("softType");
 		Integer splitShipment = parameters.get("splitShipment")==null||parameters.get("splitShipment").equals("")?
 				null:Integer.parseInt((String) parameters.get("splitShipment"));
 
@@ -108,6 +111,7 @@ public class CartController{
 		commodity.setNote(note);
 		commodity.setSplitShipment(splitShipment);
 		commodity.setStatus(Commodity.COMMODITY_EXIST_STATUS);
+		commodity.setSoftType(softType);
 		switch (customer_type) {
 			case "02":commodity.setPrice(item.getPriceSale());break;
 			case "06":commodity.setPrice(item.getPriceFx());break;
@@ -233,19 +237,6 @@ public class CartController{
     @ResponseBody@RequestMapping("getCartByID")
     public Cart getCartByID(String cartID) {
         return cartService.getSimpleCartByID(cartID);
-    }
-
-    @ResponseBody@RequestMapping("getSimpleCartByCID")
-    public Cart getSimpleCartByCID(String CID) throws Exception {
-        Cart cart = cartService.getSimpleCartByCID(CID);
-        if(cart == null) {
-            cart = new Cart();
-            cart.setCustomerId(CID);
-            if(!cartService.addCart(cart)) {
-                throw new Exception("服务器出错");
-            }
-        }
-        return cart;
     }
 
     @ResponseBody@RequestMapping("getAllCartByCID")
@@ -426,12 +417,18 @@ public class CartController{
     }
 
     @ResponseBody@RequestMapping("alterCommodityPrice")
-    public Map alterCommodityPrice(@RequestParam("commodityID")String commodityID,@RequestParam("price")BigDecimal price,
-                                   @RequestParam("customerType")String customerType) {
+    public Map alterCommodityPrice(@RequestBody Map<String,String> parameters) {
+		String commodityID = parameters.get("commodityID");
+		String price = parameters.get("price");
+		String customerType = parameters.get("customerType");
 	    if(!customerType.equals("10")) {
 	        return Response.getResponseMap(2,"该账号无权限修改价格",null);
         }
-	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID, price));
+	    Commodity commodity = commodityService.getCommodityByID(commodityID);
+	    if(commodity == null) {
+	    	return Response.getResponseMap(2,"该产品已失效",null);
+		}
+	    return Response.getResponseMap(0, "", commodityService.alterCommodityPrice(commodityID,new BigDecimal(price)));
     }
 
 	private List<Map<String,Object>> dealCurtainCartItems(List<CartItem> cartItems) {
@@ -534,6 +531,18 @@ public class CartController{
 		for (CartItem cartItem:cartItems) {
 			cartItem.setCID(CID);
 		}
+	}
+
+	private synchronized Cart getSimpleCartByCID(String CID) throws Exception {
+		Cart cart = cartService.getSimpleCartByCID(CID);
+		if(cart == null) {
+			cart = new Cart();
+			cart.setCustomerId(CID);
+			if(!cartService.addCart(cart)) {
+				throw new Exception("服务器出错");
+			}
+		}
+		return cart;
 	}
 
 }
