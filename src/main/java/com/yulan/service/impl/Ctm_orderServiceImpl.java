@@ -77,6 +77,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             for (Map<String,Object> m2:list2) {//将订单具体内容转码
                 String itemNo=m2.get("ITEM_NO").toString();//关联型号
                 Item item=itemDao.getItemByItemNO(itemNo);
+                String UNIT=itemDao.getUnit(item.getUnit());
+                UNIT=StringUtil.getUtf8(UNIT);//单位转码
+                m2.put("UNIT",UNIT);
                 m2.put("item",item);
 
                 List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());

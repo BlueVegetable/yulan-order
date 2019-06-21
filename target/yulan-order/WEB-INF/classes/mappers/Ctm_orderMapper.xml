@@ -7,11 +7,11 @@
     DELIVERY_TYPE, DELIVERY_NOTES, POST_ADDRESS, NVL(NOTES,' ') NOTES, to_char(DATE_CRE,'yyyy-mm-dd hh24:mi:ss') DATE_CRE, OPERATOR, to_char(DATE_UPDATE,'yyyy-mm-dd hh24:mi:ss') DATE_UPDATE,
     PERSON_UPDATE, CONTRACT_NO, PERSON_ACCEPT, to_char(DATE_ACCEPT,'yyyy-mm-dd hh24:mi:ss') DATE_ACCEPT, NVL(YULAN_NOTES,' ') YULAN_NOTES, to_char(WEB_TJ_TIME,'yyyy-mm-dd hh24:mi:ss') WEB_TJ_TIME,
     DATE_DEAL, FLAG, USER_NO, PROJECT_NO, CUSTOMER_CODE_O2O, ORDER_FLAG, POST_ADDRESS_MODIFIED,
-    DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER, ERP_PROCESS_NOTE, INVOICE_FLAG,
+    DS_LINKMAN, DS_TEL, DS_USER_NAME, DS_ORDER_NO, IS_DS_ORDER,NVL(ERP_PROCESS_NOTE,' ') ERP_PROCESS_NOTE, INVOICE_FLAG,
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
     BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND,
     NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y,NVL(CURTAIN_STATUS_ID,' ') CURTAIN_STATUS_ID,NVL(REBATE_MONEY,0) REBATE_MONEY,
-    NVL(REBATE_NOTES,' ') REBATE_NOTES
+    NVL(REBATE_NOTES,' ') REBATE_NOTES,NVL(ALL_ADDRESS,' ') ALL_ADDRESS
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
@@ -440,6 +440,9 @@
             <if test="curtainStatusId != null" >
                 CURTAIN_STATUS_ID,
             </if>
+            <if test="allAddress != null" >
+                ALL_ADDRESS,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="orderNo != null" >
@@ -598,6 +601,9 @@
             <if test="curtainStatusId != null" >
                 #{curtainStatusId,jdbcType=VARCHAR},
             </if>
+            <if test="allAddress != null" >
+                #{allAddress,jdbcType=VARCHAR},
+            </if>
         </trim>
   </insert>
 
@@ -721,6 +727,7 @@
             <if test="ljSuggestion != null" >
                 LJ_SUGGESTION,
             </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="orderNo != null" >
@@ -840,6 +847,7 @@
             <if test="ljSuggestion != null" >
                 #{ljSuggestion,jdbcType=VARCHAR},
             </if>
+
         </trim>
   </insert>
     
@@ -1171,6 +1179,9 @@
             <if test="curtainStatusId != null" >
                 CURTAIN_STATUS_ID = #{curtainStatusId,jdbcType=VARCHAR},
             </if>
+            <if test="allAddress != null" >
+                ALL_ADDRESS = #{allAddress,jdbcType=VARCHAR},
+            </if>
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
     </update>
@@ -1293,6 +1304,7 @@
             <if test="ljSuggestion != null" >
                 LJ_SUGGESTION = #{ljSuggestion,jdbcType=VARCHAR},
             </if>
+
 
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
@@ -1425,6 +1437,7 @@
         <result column="CURTAIN_STATUS_ID" property="curtainStatusId" jdbcType="VARCHAR" />
         <result column="REBATE_MONEY" property="rebateMoney" jdbcType="DECIMAL" />
         <result column="REBATE_NOTES" property="rebateNotes" jdbcType="VARCHAR" />
+        <result column="ALL_ADDRESS" property="allAddress" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="getAllCtms" resultMap="CtmOrderMap">
