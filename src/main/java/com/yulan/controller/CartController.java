@@ -127,6 +127,9 @@ public class CartController{
 		} else {
 			commodity.setQuantity(new BigDecimal(quantity));
 		}
+		if(salPromotion!=null) {
+			commodity.setOrderType(salPromotion.getOrderType());
+		}
 		if(commodity.getPrice() == null) {
 			return Response.getResponseMap(2,"该产品正在上架，暂时不能加入购物车",null);
 		}
@@ -185,6 +188,14 @@ public class CartController{
 					case "08":curtainCommodity.setPrice(item.getPriceSale());break;
 					case "10":curtainCommodity.setPrice(item.getPriceSale());break;
 					default:return Response.getResponseMap(1,"添加失败",null);
+				}
+				String activityID = curtainCommodity.getActivityId();
+				SalPromotion salPromotion = null;
+				if(activityID!=null&&!activityID.equals("")) {
+					salPromotion = salPromotionService.getSalPromotionByID(activityID);
+				}
+				if(salPromotion!=null) {
+					curtainCommodity.setOrderType(salPromotion.getOrderType());
 				}
 				curtainCommodity.setCartItemId(curtainCartItem.getCartItemId());
 			}
@@ -323,6 +334,7 @@ public class CartController{
 		}
 		if(salPromotion!=null) {
 		    commodity.setActivityId(salPromotion.getpId());
+		    commodity.setOrderType(salPromotion.getOrderType());
         } else {
 		    commodity.setActivityId(null);
         }
@@ -399,6 +411,14 @@ public class CartController{
 					case "08":curtainCommodity.setPrice(item.getPriceSale());break;
 					case "10":curtainCommodity.setPrice(item.getPriceSale());break;
 					default:return Response.getResponseMap(1,"添加失败",null);
+				}
+				String activityID = curtainCommodity.getActivityId();
+				SalPromotion salPromotion = null;
+				if(activityID!=null&&!activityID.equals("")) {
+					salPromotion = salPromotionService.getSalPromotionByID(activityID);
+				}
+				if(salPromotion!=null) {
+					curtainCommodity.setOrderType(salPromotion.getOrderType());
 				}
 			}
 		}

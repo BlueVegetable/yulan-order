@@ -26,6 +26,7 @@
         <result column="CHANGE_FLAG" property="changeFlag" jdbcType="VARCHAR" />
         <result column="INLINE_NO" property="inlineNo" jdbcType="DECIMAL" />
         <result column="PRICE_AFTER_MODIFIED" property="priceAfterModified" jdbcType="DECIMAL" />
+        <result column="ORDER_TYPE" property="orderType" jdbcType="VARCHAR" />
         <association column="ITEM_ID" property="item" select="com.yulan.dao.ItemDao.getItemByItemNO" />
     </resultMap>
 
