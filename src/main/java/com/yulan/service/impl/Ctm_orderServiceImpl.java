@@ -555,7 +555,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     public Map getRebate(Map<String, Object> map) throws UnsupportedEncodingException {
         Map map1=new HashMap();
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());//当前时间
-        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
+//        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
+        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime());
         String cid=map.get("cid").toString();
         String companyId=map.get("companyId").toString();
         String type=map.get("typeId").toString();
