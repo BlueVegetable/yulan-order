@@ -250,6 +250,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
         String companyId=map.get("companyId").toString();//公司id
+
+        String arrearsFlag=map.get("arrearsFlag").toString();
+
         List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
         if (userMaps.size()!=0){
@@ -342,12 +345,18 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
-        if (resideMoney.compareTo(promotion_cost)!=-1){
+        if(arrearsFlag.equals("N")){//不选活动，要检查欠帐，选活动了，就判断状态是否为y。当y时，要检查欠帐，为n时，不检查余额，直接提交成功变成已提交
+
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
-        }else{
-            statusId="5";
-            ctm_order.setStatusId(statusId);//欠款待提交
+        }else {
+            if (resideMoney.compareTo(promotion_cost)!=-1){
+                statusId="1";
+                ctm_order.setStatusId(statusId);//已经提交
+            }else{
+                statusId="5";
+                ctm_order.setStatusId(statusId);//欠款待提交
+            }
         }
 
 
