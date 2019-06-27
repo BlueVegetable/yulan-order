@@ -121,6 +121,15 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
                 ctm_order_detail.setLineNo(lineNo);
 
+
+                /**
+                 * 为了窗帘订单还未选择优惠券时总价也不为零
+                 */
+                BigDecimal unitPrice=ctm_order_detail.getUnitPrice();//单价
+                BigDecimal qtyRequired=ctm_order_detail.getQtyRequired();//数量
+                BigDecimal finalCost=unitPrice.multiply(qtyRequired);//原总价
+                ctm_order_detail.setFinalCost(finalCost.setScale(2, BigDecimal.ROUND_HALF_UP));//四舍五入，保留两位小数
+
                 lineNos.put(cartItemIDs.get(lineNo-1),lineNo);//new
 
                 lineNo++;
@@ -296,8 +305,14 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                         }
 
                         if (oneAllCost.compareTo(BigDecimal.valueOf(0))!=0){//价格不为零
-                            if(ctm_orderDao.getCtmdeatailunitPrice(orderNo,lineNo).compareTo(oneAllCost)!=0){//（型号）价格变动
-                                if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost)){//更新价格
+                            Ctm_order_detail ctm_order_detail=ctm_orderDao.findCtmBbylineNo(orderNo,lineNo);
+                            if(ctm_order_detail.getUnitPrice().compareTo(oneAllCost)!=0){//（型号）价格变动
+                                BigDecimal unitPrice=ctm_order_detail.getUnitPrice();//单价
+                                BigDecimal qtyRequired=ctm_order_detail.getQtyRequired();//数量
+                                BigDecimal finalCost=unitPrice.multiply(qtyRequired);//原总价
+                                BigDecimal finalCost2=finalCost.setScale(2, BigDecimal.ROUND_HALF_UP);//四舍五入，保留两位小数
+
+                                if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost,finalCost2)){//更新价格
                                     m.put("code",1);
                                     m.put("msg","窗帘单价更新错误");
                                 }

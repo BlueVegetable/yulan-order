@@ -77,6 +77,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             for (Map<String,Object> m2:list2) {//将订单具体内容转码
                 String itemNo=m2.get("ITEM_NO").toString();//关联型号
                 Item item=itemDao.getItemByItemNO(itemNo);
+                String UNIT=itemDao.getUnit(item.getUnit());
+                UNIT=StringUtil.getUtf8(UNIT);//单位转码
+                m2.put("UNIT",UNIT);
                 m2.put("item",item);
 
                 List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
@@ -552,7 +555,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     public Map getRebate(Map<String, Object> map) throws UnsupportedEncodingException {
         Map map1=new HashMap();
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());//当前时间
-        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
+//        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
+        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime());
         String cid=map.get("cid").toString();
         String companyId=map.get("companyId").toString();
         String type=map.get("typeId").toString();

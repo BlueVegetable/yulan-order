@@ -246,7 +246,15 @@ public interface Ctm_orderDao {
      * @param lineNo
      * @return
      */
-    Boolean updateCtmdeatailunitPrice(@Param("orderNo") String orderNo,@Param("lineNo") String lineNo,@Param("unitPrice")BigDecimal unitPrice);
+    Boolean updateCtmdeatailunitPrice(@Param("orderNo") String orderNo,@Param("lineNo") String lineNo,@Param("unitPrice")BigDecimal unitPrice,@Param("finalCost")BigDecimal finalCost);
+
+    /**
+     * 查找订单详情Ctm_order_detail
+     * @param orderNo
+     * @param lineNo
+     * @return
+     */
+    Ctm_order_detail findCtmBbylineNo(@Param("orderNo") String orderNo,@Param("lineNo") String lineNo);
 
 
 
