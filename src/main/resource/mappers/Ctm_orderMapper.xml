@@ -1456,7 +1456,8 @@
         update CTM_ORDER_DETAIL t set t.UNIT_PRICE=#{unitPrice},t.FINAL_COST=#{finalCost} where t.ORDER_NO=#{orderNo} and t.LINE_NO=#{lineNo}
     </update>
 
-    <select id="findCtmBbylineNo" resultType="Ctm_order_detail">
+    <select id="findCtmBbylineNo
+" resultType="Ctm_order_detail">
         select * from CTM_ORDER_DETAIL t where t.ORDER_NO=#{orderNo} and t.LINE_NO=#{lineNo}
     </select>
 

@@ -470,6 +470,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         String product_group_tpye=map.get("product_group_tpye").toString();
         String companyId=map.get("companyId").toString();
 
+        String arrearsFlag=map.get("arrearsFlag").toString();//不选活动，要检查欠帐，选活动了，就判断状态是否为Y。当Y时，要检查欠帐，为N时，不检查余额，直接提交成功变成已提交
+
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
         Map<String ,Object> dataMap=new HashMap();
@@ -543,13 +545,27 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
-        if (resideMoney.compareTo(promotion_cost)!=-1){
+        if(arrearsFlag.equals("N")){//不选活动，要检查欠帐，选活动了，就判断状态是否为y。当y时，要检查欠帐，为n时，不检查余额，直接提交成功变成已提交
+
+            statusId="1";
+            ctm_order.setStatusId(statusId);//已经提交
+        }else {
+            if (resideMoney.compareTo(promotion_cost)!=-1){
+                statusId="1";
+                ctm_order.setStatusId(statusId);//已经提交
+            }else{
+                statusId="5";
+                ctm_order.setStatusId(statusId);//欠款待提交
+            }
+        }
+
+        /*if (resideMoney.compareTo(promotion_cost)!=-1){
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
         }else{
             statusId="5";
             ctm_order.setStatusId(statusId);//欠款待提交
-        }
+        }*/
 
 
         //统计所花券金额
