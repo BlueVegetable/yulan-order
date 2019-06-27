@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller @RequestMapping("cart")
-public class CartController{
+public class CartController {
 
 	@Autowired
 	private Web_userService webUserService;
@@ -128,7 +128,9 @@ public class CartController{
 			commodity.setQuantity(new BigDecimal(quantity));
 		}
 		if(salPromotion!=null) {
-			commodity.setOrderType(salPromotion.getOrderType());
+			commodity.setSalPromotion(salPromotion);
+		} else {
+			commodity.setSalPromotion(new SalPromotion());
 		}
 		if(commodity.getPrice() == null) {
 			return Response.getResponseMap(2,"该产品正在上架，暂时不能加入购物车",null);
@@ -195,7 +197,9 @@ public class CartController{
 					salPromotion = salPromotionService.getSalPromotionByID(activityID);
 				}
 				if(salPromotion!=null) {
-					curtainCommodity.setOrderType(salPromotion.getOrderType());
+					curtainCommodity.setSalPromotion(salPromotion);
+				} else {
+					curtainCommodity.setSalPromotion(new SalPromotion());
 				}
 				curtainCommodity.setCartItemId(curtainCartItem.getCartItemId());
 			}
@@ -334,9 +338,10 @@ public class CartController{
 		}
 		if(salPromotion!=null) {
 		    commodity.setActivityId(salPromotion.getpId());
-		    commodity.setOrderType(salPromotion.getOrderType());
+		    commodity.setSalPromotion(salPromotion);
         } else {
 		    commodity.setActivityId(null);
+		    commodity.setSalPromotion(new SalPromotion());
         }
 		if(quantityString!=null&&!quantityString.equals("")) {
 			commodity.setQuantity(new BigDecimal(quantityString));
@@ -418,7 +423,9 @@ public class CartController{
 					salPromotion = salPromotionService.getSalPromotionByID(activityID);
 				}
 				if(salPromotion!=null) {
-					curtainCommodity.setOrderType(salPromotion.getOrderType());
+					curtainCommodity.setSalPromotion(salPromotion);
+				} else {
+					curtainCommodity.setSalPromotion(new SalPromotion());
 				}
 			}
 		}
