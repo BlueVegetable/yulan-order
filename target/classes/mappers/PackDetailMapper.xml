@@ -34,4 +34,8 @@
     <select id="getPackDetailAppoint" resultMap="PackDetailMap" parameterType="Map">
         select * from PACK_DETAIL where ITEM_NO = #{itemNo} and WEB_ORDER_NO = #{orderId}
     </select>
+
+    <select id="getCustomerBalancePackDetail" resultMap="PackDetailMap" parameterType="Map">
+        select * from PACK_DETAIL t where t.sale_no = #{saleNO}
+    </select>
 </mapper>

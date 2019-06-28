@@ -73,4 +73,15 @@ public class CustomerBalanceController {
         String customerCheckComment = (String)data.get("customerCheckComment");
         return customerBalanceService.customerCheck(cid,startDate,customerCheckState,customerCheckComment);
     }
+
+    /**
+     * 获取对账单详情里面提货单的提货信息
+     * @return
+     */
+    @RequestMapping(value = "getCustomerBalancePackDetail")
+    @ResponseBody
+    public Map getCustomerBalancePackDetail(@RequestBody Map<String,Object> data){
+        String saleNO = (String)data.get("saleNO");
+        return customerBalanceService.getCustomerBalancePackDetail(saleNO);
+    }
 }
