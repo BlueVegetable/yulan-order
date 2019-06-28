@@ -21,6 +21,7 @@ public class Commodity {
 	private Boolean activityEffective;
 	private BigDecimal priceAfterModified;
 	private String softType;
+	private SalPromotion salPromotion;
 
 	public static final Integer COMMODITY_EXIST_STATUS = 1;
 	public static final Integer COMMODITY_NONE_EXIST_STATUS = 0;
@@ -152,6 +153,14 @@ public class Commodity {
 
 	public void setSoftType(String softType) {
 		this.softType = softType;
+	}
+
+	public SalPromotion getSalPromotion() {
+		return salPromotion;
+	}
+
+	public void setSalPromotion(SalPromotion salPromotion) {
+		this.salPromotion = salPromotion;
 	}
 
 	@Override

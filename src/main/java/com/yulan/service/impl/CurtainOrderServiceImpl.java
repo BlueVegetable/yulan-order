@@ -121,6 +121,15 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
                 ctm_order_detail.setLineNo(lineNo);
 
+
+                /**
+                 * 为了窗帘订单还未选择优惠券时总价也不为零
+                 */
+                BigDecimal unitPrice=ctm_order_detail.getUnitPrice();//单价
+                BigDecimal qtyRequired=ctm_order_detail.getQtyRequired();//数量
+                BigDecimal finalCost=unitPrice.multiply(qtyRequired);//原总价
+                ctm_order_detail.setFinalCost(finalCost.setScale(2, BigDecimal.ROUND_HALF_UP));//四舍五入，保留两位小数
+
                 lineNos.put(cartItemIDs.get(lineNo-1),lineNo);//new
 
                 lineNo++;
@@ -296,8 +305,14 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                         }
 
                         if (oneAllCost.compareTo(BigDecimal.valueOf(0))!=0){//价格不为零
-                            if(ctm_orderDao.getCtmdeatailunitPrice(orderNo,lineNo).compareTo(oneAllCost)!=0){//（型号）价格变动
-                                if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost)){//更新价格
+                            Ctm_order_detail ctm_order_detail=ctm_orderDao.findCtmBbylineNo(orderNo,lineNo);
+                            if(ctm_order_detail.getUnitPrice().compareTo(oneAllCost)!=0){//（型号）价格变动
+                                BigDecimal unitPrice=ctm_order_detail.getUnitPrice();//单价
+                                BigDecimal qtyRequired=ctm_order_detail.getQtyRequired();//数量
+                                BigDecimal finalCost=unitPrice.multiply(qtyRequired);//原总价
+                                BigDecimal finalCost2=finalCost.setScale(2, BigDecimal.ROUND_HALF_UP);//四舍五入，保留两位小数
+
+                                if (!ctm_orderDao.updateCtmdeatailunitPrice(orderNo,lineNo,oneAllCost,finalCost2)){//更新价格
                                     m.put("code",1);
                                     m.put("msg","窗帘单价更新错误");
                                 }
@@ -455,6 +470,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         String product_group_tpye=map.get("product_group_tpye").toString();
         String companyId=map.get("companyId").toString();
 
+        String arrearsFlag=map.get("arrearsFlag").toString();//不选活动，要检查欠帐，选活动了，就判断状态是否为Y。当Y时，要检查欠帐，为N时，不检查余额，直接提交成功变成已提交
+
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
         Map<String ,Object> dataMap=new HashMap();
@@ -528,13 +545,27 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
-        if (resideMoney.compareTo(promotion_cost)!=-1){
+        if(arrearsFlag.equals("N")){//不选活动，要检查欠帐，选活动了，就判断状态是否为y。当y时，要检查欠帐，为n时，不检查余额，直接提交成功变成已提交
+
+            statusId="1";
+            ctm_order.setStatusId(statusId);//已经提交
+        }else {
+            if (resideMoney.compareTo(promotion_cost)!=-1){
+                statusId="1";
+                ctm_order.setStatusId(statusId);//已经提交
+            }else{
+                statusId="5";
+                ctm_order.setStatusId(statusId);//欠款待提交
+            }
+        }
+
+        /*if (resideMoney.compareTo(promotion_cost)!=-1){
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
         }else{
             statusId="5";
             ctm_order.setStatusId(statusId);//欠款待提交
-        }
+        }*/
 
 
         //统计所花券金额

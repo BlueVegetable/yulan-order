@@ -77,6 +77,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             for (Map<String,Object> m2:list2) {//将订单具体内容转码
                 String itemNo=m2.get("ITEM_NO").toString();//关联型号
                 Item item=itemDao.getItemByItemNO(itemNo);
+                String UNIT=itemDao.getUnit(item.getUnit());
+                UNIT=StringUtil.getUtf8(UNIT);//单位转码
+                m2.put("UNIT",UNIT);
                 m2.put("item",item);
 
                 List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
@@ -247,6 +250,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
         String companyId=map.get("companyId").toString();//公司id
+
+        String arrearsFlag=map.get("arrearsFlag").toString();
+
         List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
         if (userMaps.size()!=0){
@@ -339,12 +345,18 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 //        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
-        if (resideMoney.compareTo(promotion_cost)!=-1){
+        if(arrearsFlag.equals("N")){//不选活动，要检查欠帐，选活动了，就判断状态是否为y。当y时，要检查欠帐，为n时，不检查余额，直接提交成功变成已提交
+
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
-        }else{
-            statusId="5";
-            ctm_order.setStatusId(statusId);//欠款待提交
+        }else {
+            if (resideMoney.compareTo(promotion_cost)!=-1){
+                statusId="1";
+                ctm_order.setStatusId(statusId);//已经提交
+            }else{
+                statusId="5";
+                ctm_order.setStatusId(statusId);//欠款待提交
+            }
         }
 
 
@@ -552,7 +564,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     public Map getRebate(Map<String, Object> map) throws UnsupportedEncodingException {
         Map map1=new HashMap();
         java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());//当前时间
-        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
+//        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime()-(24*60*60*1000));//前一天
+        java.sql.Date beforeDate=new java.sql.Date(currentDate.getTime());
         String cid=map.get("cid").toString();
         String companyId=map.get("companyId").toString();
         String type=map.get("typeId").toString();
