@@ -470,7 +470,10 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         String product_group_tpye=map.get("product_group_tpye").toString();
         String companyId=map.get("companyId").toString();
 
-        String arrearsFlag=map.get("arrearsFlag").toString();//不选活动，要检查欠帐，选活动了，就判断状态是否为Y。当Y时，要检查欠帐，为N时，不检查余额，直接提交成功变成已提交
+        String arrearsFlag="";
+        if (map.get("arrearsFlag")!=null){//判断是否为null
+            arrearsFlag=map.get("arrearsFlag").toString();
+        }//不选活动，要检查欠帐，选活动了，就判断状态是否为Y。当Y时，要检查欠帐，为N时，不检查余额，直接提交成功变成已提交
 
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
