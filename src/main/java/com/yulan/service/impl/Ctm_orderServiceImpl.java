@@ -250,8 +250,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
         String companyId=map.get("companyId").toString();//公司id
+        String arrearsFlag="";
+        if (map.get("arrearsFlag")!=null){
+            arrearsFlag=map.get("arrearsFlag").toString();
+        }
 
-        String arrearsFlag=map.get("arrearsFlag").toString();
 
         List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
