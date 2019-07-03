@@ -884,6 +884,11 @@
         SELECT order_no FROM  CTM_ORDER t  WHERE t.date_cre = (SELECT MAX(date_cre) FROM  (SELECT * FROM  CTM_ORDER t  WHERE t.order_no like '%'||#{s}||'%'))
     </select>
 
+
+    <select id="getTodayOders" resultType="Map">
+       SELECT * FROM  CTM_ORDER t  WHERE t.order_no like '%'||#{s}||'%'
+    </select>
+
     <select id="getlinkpersonandTel" resultType="Map">
         select t.customer_agent,t.office_tel from CUSTOMER t where 1=1
         <if test="users !=null and users.size>0">

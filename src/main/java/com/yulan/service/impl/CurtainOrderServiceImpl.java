@@ -82,9 +82,10 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
         BeanUtils.populate(ctm_order,ctm_ordermap);//转为Ctm_order类
         ctm_order.setOrderNo(orderNo);
-        ctm_order.setWebTjTime(nowTime);//获取当前时间
+
         ctm_order.setDateCre(nowTime);//获取当前时间
         ctm_order.setDateUpdate(nowTime);//获取当前时间
+
         ctm_order.setCurtainStatusId("0");//待审核状态
         ctm_order.setCustomerCode(cid);
         Map<String,Object> linkpersonandTelmap=ctm_orderDao.getlinkpersonandTel(users);
@@ -552,10 +553,14 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
+            ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
+
         }else {
             if (resideMoney.compareTo(promotion_cost)!=-1){
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
+                ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
+
             }else{
                 statusId="5";
                 ctm_order.setStatusId(statusId);//欠款待提交

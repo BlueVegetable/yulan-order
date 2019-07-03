@@ -15,10 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class Ctm_orderServiceImpl implements Ctm_orderService {
@@ -301,9 +298,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
 
         List<Map<String,Object>> list=(List) map.get("ctm_orders");
-        ctm_order.setWebTjTime(nowTime);//获取当前时间
+
         ctm_order.setDateCre(nowTime);//获取当前时间
         ctm_order.setDateUpdate(nowTime);//获取当前时间
+
         ctm_order.setCurrencyId("RMB");
         ctm_order.setCustomerCode(cid);
         String promotion_costString=map.get("promotion_cost").toString();//先变字符串
@@ -352,10 +350,14 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
+            ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
+
         }else {
             if (resideMoney.compareTo(promotion_cost)!=-1){
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
+                ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
+
             }else{
                 statusId="5";
                 ctm_order.setStatusId(statusId);//欠款待提交
@@ -877,14 +879,26 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }else{//墙纸
             orderN="W";
         }
-        String order=ctm_orderDao.getBigNum(orderN+s);
-        if(order==null||order.equals("")){
+//        String order=ctm_orderDao.getBigNum(orderN+s);
+        List<Map<String,Object>> ordersMap=ctm_orderDao.getTodayOders(orderN+s);
+
+
+        if(ordersMap.size()==0){
             trueOrder=orderN+s+"0001b";
         }else{//截取自增
-            order=order.substring(7,11);
+            String order="";
+            List<Integer> nums=new ArrayList<>();
+            for (Map<String,Object> map:ordersMap){
+                String orderS=map.get("ORDER_NO").toString();
+                orderS=orderS.substring(7,11);
+                int orderI=Integer.parseInt(orderS);
+                nums.add(orderI);
+            }
+            int orderIMax= Collections.max(nums);
+//            order=order.substring(7,11);
             int o=10000;
-            Integer i=Integer.parseInt(order);
-            o=o+i+1;
+//            Integer i=Integer.parseInt(order);
+            o=o+orderIMax+1;
             String p=o+"";
             p=p.substring(1);
             trueOrder=orderN+s+p+"b";//b为b2b订单号标志

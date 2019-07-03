@@ -111,6 +111,13 @@ public interface Ctm_orderDao {
     String getBigNum(@Param("s")String s);
 
     /**
+     * 获取当天订单号
+     * @param s
+     * @return
+     */
+    List<Map<String,Object>> getTodayOders(@Param("s")String s);
+
+    /**
      * 获取订单头经办人和电话
      * @param users
      * @return
