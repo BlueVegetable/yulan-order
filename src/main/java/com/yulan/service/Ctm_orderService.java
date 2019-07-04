@@ -19,7 +19,7 @@ public interface Ctm_orderService {
    //获取用户余额
    BigDecimal getResidemoney(String companyId);
 
-   boolean updateOrderStatus(String orderNo, String customerCode, String statusId);
+   boolean updateOrderStatus(String orderNo, String statusId);
 
    //订单结算
    Map orderCount(Map<String,Object> map) throws InvocationTargetException, IllegalAccessException, UnsupportedEncodingException;

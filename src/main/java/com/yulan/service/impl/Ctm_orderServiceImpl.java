@@ -812,6 +812,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map putAgainOrder(Map<String, Object> map) {
+        Timestamp nowTime=new Timestamp(System.currentTimeMillis());//获取当前时间
         Map<String ,Object> m=new HashMap<>();
         String orderNo=map.get("orderNo").toString();
         String cid=map.get("cid").toString();
@@ -827,10 +828,12 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         if (statusId.equals("6")){
             statusId="1";
             ctm_order.setStatusId(statusId);
+            ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
         }else{
             if (resideMoney.compareTo(allSpend)!=-1){
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
+                ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
             }else{
                 statusId="5";
                 ctm_order.setStatusId(statusId);//欠款待提交
@@ -852,10 +855,17 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
-    public boolean updateOrderStatus(String orderNo, String customerCode,
+    public boolean updateOrderStatus(String orderNo,
                                      String statusId) {
         Timestamp dateUpdate= new Timestamp(System.currentTimeMillis());
-        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId,dateUpdate);
+        //更新订单头和详情状态
+        if (ctm_orderDao.updateOrderStatus(orderNo,statusId,dateUpdate)&&ctm_orderDao.updateOrderBStatus(orderNo,statusId,dateUpdate)){
+
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     /**
@@ -921,7 +931,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             java.sql.Timestamp dateCre=ctm_order.getDateCre();//提交时间
             java.sql.Timestamp dateCre24=new java.sql.Timestamp(dateCre.getTime()+(24*60*60*1000));//加24小时
             if (currentDate.after(dateCre24)){
-                if (!ctm_orderDao.updateOrderStatus(ctm_order.getOrderNo(),ctm_order.getCustomerCode(),"3",currentDate)){
+                if (!ctm_orderDao.updateOrderStatus(ctm_order.getOrderNo(),"3",currentDate)){
                    return 0;
                 }
             }else {

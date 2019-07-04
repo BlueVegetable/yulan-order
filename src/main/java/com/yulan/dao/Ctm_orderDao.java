@@ -93,15 +93,23 @@ public interface Ctm_orderDao {
     String getType_word(@Param("item_no")String item_no);//Y则是订单W
 
     /**
-     * 修改订单状态
+     * 修改订单头状态
      * @param orderNo
-     * @param customerCode
      * @param statusId
      * @return
      */
     boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,
-                              @Param("CUSTOMER_CODE")String customerCode,
+
                               @Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
+
+    /**
+     * 修改订单详情状态
+     * @param orderNo
+     * @param statusId
+     * @param dateUpdate
+     * @return
+     */
+    boolean updateOrderBStatus(@Param("ORDER_NO")String orderNo,@Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
 
     /**
      * 获取最大订单号自增
