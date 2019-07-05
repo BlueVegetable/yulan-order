@@ -98,9 +98,7 @@ public interface Ctm_orderDao {
      * @param statusId
      * @return
      */
-    boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,
-
-                              @Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
+    boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,@Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
 
     /**
      * 修改订单详情状态
