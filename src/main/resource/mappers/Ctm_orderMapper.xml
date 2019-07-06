@@ -1475,6 +1475,17 @@
         select * from CTM_ORDER_DETAIL t where t.ORDER_NO=#{orderNo} and t.LINE_NO=#{lineNo}
     </select>
 
+    <select id="getCtmBfinalCostsbyorderNo" resultType="Map">
+        select t.final_cost from CTM_ORDER_DETAIL t where t.ORDER_NO=#{orderNo}
+    </select>
+
+    <update id="updateOrderAllspend">
+        update CTM_ORDER t set
+          t.ALL_SPEND=#{allSpend}
+          where
+          t.ORDER_NO=#{orderNo}
+    </update>
+
 
 
 </mapper>

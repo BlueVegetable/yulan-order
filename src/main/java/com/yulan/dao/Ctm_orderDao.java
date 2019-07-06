@@ -270,6 +270,16 @@ public interface Ctm_orderDao {
     Ctm_order_detail findCtmBbylineNo(@Param("orderNo") String orderNo,@Param("lineNo") String lineNo);
 
 
+    /**
+     * 获取一个订单所有详情的总价
+     * @param orderNo
+     * @return
+     */
+    List<Map<String,Object>> getCtmBfinalCostsbyorderNo(@Param("orderNo") String orderNo);
+
+    boolean updateOrderAllspend(@Param("orderNo")String orderNo,@Param("allSpend")BigDecimal allSpend);
+
+
 
 
 }

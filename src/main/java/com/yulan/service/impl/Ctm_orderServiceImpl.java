@@ -771,6 +771,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         ctm_order.setOrderNo(orderNo);
         ctm_order.setStatusId("3");
         ctm_order.setDateUpdate(dateUpdate);
+        ctm_order.setCurtainStatusId("");//滞空窗帘审核状态
         BigDecimal allmony_y=BigDecimal.valueOf(0);//年返利
         BigDecimal allmony_m=BigDecimal.valueOf(0);//月返利
         String yesrId="";//年返利券编号
@@ -906,6 +907,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 orderS=orderS.substring(7,11);
                 int orderI=Integer.parseInt(orderS);
                 nums.add(orderI);
+
             }
             int orderIMax= Collections.max(nums);
 //            order=order.substring(7,11);
