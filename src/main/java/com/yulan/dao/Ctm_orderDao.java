@@ -93,15 +93,21 @@ public interface Ctm_orderDao {
     String getType_word(@Param("item_no")String item_no);//Y则是订单W
 
     /**
-     * 修改订单状态
+     * 修改订单头状态
      * @param orderNo
-     * @param customerCode
      * @param statusId
      * @return
      */
-    boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,
-                              @Param("CUSTOMER_CODE")String customerCode,
-                              @Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
+    boolean updateOrderStatus(@Param("ORDER_NO")String orderNo,@Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
+
+    /**
+     * 修改订单详情状态
+     * @param orderNo
+     * @param statusId
+     * @param dateUpdate
+     * @return
+     */
+    boolean updateOrderBStatus(@Param("ORDER_NO")String orderNo,@Param("STATUS_ID")String statusId,@Param("dateUpdate") Timestamp dateUpdate);
 
     /**
      * 获取最大订单号自增
@@ -109,6 +115,13 @@ public interface Ctm_orderDao {
      * @return
      */
     String getBigNum(@Param("s")String s);
+
+    /**
+     * 获取当天订单号
+     * @param s
+     * @return
+     */
+    List<Map<String,Object>> getTodayOders(@Param("s")String s);
 
     /**
      * 获取订单头经办人和电话
@@ -255,6 +268,16 @@ public interface Ctm_orderDao {
      * @return
      */
     Ctm_order_detail findCtmBbylineNo(@Param("orderNo") String orderNo,@Param("lineNo") String lineNo);
+
+
+    /**
+     * 获取一个订单所有详情的总价
+     * @param orderNo
+     * @return
+     */
+    List<Map<String,Object>> getCtmBfinalCostsbyorderNo(@Param("orderNo") String orderNo);
+
+    boolean updateOrderAllspend(@Param("orderNo")String orderNo,@Param("allSpend")BigDecimal allSpend);
 
 
 

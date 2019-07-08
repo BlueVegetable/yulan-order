@@ -10,4 +10,6 @@ public interface CustomerBalanceService {
 
     Map customerCheck(String cid, String startDate, String customerCheckState, String customerCheckComment);
 
+    Map getCustomerBalancePackDetail(String saleNO);
+
 }

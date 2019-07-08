@@ -1,12 +1,10 @@
 package com.yulan.service.impl;
 
-import com.yulan.dao.CustomerBalancePeriodDao;
-import com.yulan.dao.CustomerBalancePeriodDetailDao;
-import com.yulan.dao.CustomerDao;
-import com.yulan.dao.Web_userDao;
+import com.yulan.dao.*;
 import com.yulan.pojo.Customer;
 import com.yulan.pojo.CustomerBalancePeriod;
 import com.yulan.pojo.CustomerBalancePeriodDetail;
+import com.yulan.pojo.PackDetail;
 import com.yulan.service.CustomerBalanceService;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
@@ -24,6 +22,8 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
     private CustomerBalancePeriodDao customerBalancePeriodDao;
     @Autowired
     private CustomerBalancePeriodDetailDao customerBalancePeriodDetailDao;
+    @Autowired
+    private PackDetailDao packDetailDao;
     @Autowired
     private CustomerDao customerDao;
     @Autowired
@@ -90,6 +90,27 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
         }else{
             map.put("msg","FALSE");
         }
+        map.put("code",0);
+        return map;
+    }
+
+    @Override
+    public Map getCustomerBalancePackDetail(String saleNO) {
+        Map<String, Object> map = new HashMap<>();
+        List<PackDetail> packDetailList = packDetailDao.getCustomerBalancePackDetail(saleNO);
+        for(int i = 0; i<packDetailList.size() ; i++){
+            PackDetail packDetail = packDetailList.get(i);
+            if(packDetail.getTranscompany() != null){
+                packDetail.setTranscompany(stringUtil.GBKToUTF8(packDetail.getTranscompany()));
+            }
+            if(packDetail.getItemNote() != null){
+                packDetail.setItemNote(stringUtil.GBKToUTF8(packDetail.getItemNote()));
+            }
+            if(packDetail.getItemVersion() != null){
+                packDetail.setItemVersion(stringUtil.GBKToUTF8(packDetail.getItemVersion()));
+            }
+        }
+        map.put("packDetailList",packDetailList);
         map.put("code",0);
         return map;
     }
