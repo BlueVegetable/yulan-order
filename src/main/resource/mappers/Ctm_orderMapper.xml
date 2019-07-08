@@ -11,7 +11,7 @@
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
     BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND,
     NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y,NVL(CURTAIN_STATUS_ID,' ') CURTAIN_STATUS_ID,NVL(REBATE_MONEY,0) REBATE_MONEY,
-    NVL(REBATE_NOTES,' ') REBATE_NOTES,NVL(ALL_ADDRESS,' ') ALL_ADDRESS
+    NVL(REBATE_NOTES,' ') REBATE_NOTES,NVL(ALL_ADDRESS,' ') ALL_ADDRESS,NVL(ARREARSFLAG,' ') ARREARSFLAG
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
@@ -443,6 +443,9 @@
             <if test="allAddress != null" >
                 ALL_ADDRESS,
             </if>
+            <if test="arrearsFlag != null" >
+                ARREARSFLAG,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="orderNo != null" >
@@ -603,6 +606,9 @@
             </if>
             <if test="allAddress != null" >
                 #{allAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="arrearsFlag != null" >
+                #{arrearsFlag,jdbcType=VARCHAR},
             </if>
         </trim>
   </insert>
@@ -1196,6 +1202,9 @@
             </if>
             <if test="allAddress != null" >
                 ALL_ADDRESS = #{allAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="arrearsFlag != null" >
+                ARREARSFLAG = #{arrearsFlag,jdbcType=VARCHAR},
             </if>
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
