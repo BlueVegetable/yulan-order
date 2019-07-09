@@ -601,6 +601,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         BigDecimal allRebateMonth=BigDecimal.valueOf(0);
         BigDecimal allRebateYear=BigDecimal.valueOf(0);
 
+        BigDecimal allFinalCostB=BigDecimal.valueOf(0);//统计明显所有最终花费，更新头部总花费
+
         if (ctm_orderDao.updateOrder(ctm_order)){//订单头录入
 
             String order=ctm_order.getOrderNo();
@@ -695,6 +697,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
                 ctm_order_detail.setFinalCost(ctm_order_detail.getPromotionCost().subtract(rebateMonth).subtract(rebateYear));//最终金额
 
+                allFinalCostB=allFinalCostB.add(ctm_order_detail.getFinalCost());
+
 
 
                 if (!ctm_orderDao.updateOrderB(ctm_order_detail)){
@@ -715,6 +719,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
             ctm_order.setAllBackM(allRebateMonth);//订单头存总返利
             ctm_order.setAllBackY(allRebateYear);
+            ctm_order.setAllSpend(allFinalCostB);//更新总花费，避免一分之差
             ctm_orderDao.updateOrder(ctm_order);
 
             /**
