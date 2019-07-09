@@ -15,7 +15,6 @@
         <result column="MODEL_NUMBER" property="modelNumber" jdbcType="VARCHAR" />
         <result column="COUNT" property="count" jdbcType="DECIMAL" />
         <result column="FALSE_SHADE_HIGH" property="falseShadeHigh" jdbcType="DECIMAL" />
-        <association column="ACTIVITY_ID" property="salPromotion" select="com.yulan.dao.SalPromotionDao.getSalPromotionByID" />
     </resultMap>
 
     <insert id="addCartItem" parameterType="CurtainCartItem">
