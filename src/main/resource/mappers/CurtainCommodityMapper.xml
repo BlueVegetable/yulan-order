@@ -73,7 +73,7 @@
     </select>
 
     <select id="getCommoditiesByCartItemID" parameterType="String" resultMap="CurtainCommodityMap">
-        select * from COMMODITY where CART_ITEM_ID = #{cartItemID} and status = 1
+        select * from COMMODITY where CART_ITEM_ID = #{cartItemID} and status = 1 ORDER BY INLINE_NO
     </select>
 
     <update id="updateCommodity" parameterType="CurtainCommodity">
