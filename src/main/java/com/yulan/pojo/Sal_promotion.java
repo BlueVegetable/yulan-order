@@ -26,7 +26,7 @@ public class Sal_promotion {
 
     private BigDecimal price;
 
-    private String falgFl;
+    private String flagFl;
 
     private BigDecimal qtyOrder;
 
@@ -45,6 +45,19 @@ public class Sal_promotion {
     private String groupType;
 
     private String pId;
+
+    private String arrearsFlag;
+
+    public String getArrearsFlag() {
+        return arrearsFlag;
+    }
+
+    public void setArrearsFlag(String arrearsFlag) {
+        this.arrearsFlag = arrearsFlag;
+    }
+
+    public Sal_promotion() {
+    }
 
     public String getpId() {
         return pId;
@@ -142,12 +155,12 @@ public class Sal_promotion {
         this.price = price;
     }
 
-    public String getFalgFl() {
-        return falgFl;
+    public String getFlagFl() {
+        return flagFl;
     }
 
-    public void setFalgFl(String falgFl) {
-        this.falgFl = falgFl == null ? null : falgFl.trim();
+    public void setFlagFl(String falgFl) {
+        this.flagFl = falgFl == null ? null : falgFl.trim();
     }
 
     public BigDecimal getQtyOrder() {
