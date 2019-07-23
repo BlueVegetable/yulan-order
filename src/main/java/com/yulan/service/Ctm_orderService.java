@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface Ctm_orderService {
    //获取订单列表
-   Map getOrders(Integer st,Integer number,String cid,String state_id,String find,String beginTime,String finishTime,String orderType,String curtainStatusId,String companyId) throws UnsupportedEncodingException;
+   Map getOrders(Integer st,Integer number,String cid,String state_id,String find,String beginTime,String finishTime,String orderType,String curtainStatusId,String companyId,String customerMainId) throws UnsupportedEncodingException;
 
    //获取订单详情
    Map getOrderContent(String order_no,String cid) throws UnsupportedEncodingException;

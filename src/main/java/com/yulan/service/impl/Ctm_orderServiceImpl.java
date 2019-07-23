@@ -36,12 +36,12 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
     @Override
-    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType,String curtainStatusId,String companyId) throws UnsupportedEncodingException {
+    public Map getOrders(Integer start, Integer number, String cid, String state_id, String find,String beginTime,String finishTime,String orderType,String curtainStatusId,String companyId,String customerMainId) throws UnsupportedEncodingException {
         Map<String,Object> map=new HashMap<>();
         List<Map<String,Object>> list=new ArrayList<>();
         List<Map<String,Object>> data=new ArrayList<>();
-        if (!companyId.equals("")){
-            List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        if (!customerMainId.equals("")){
+            List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(customerMainId);//查找属于同个customerMainId的用户
             List<String> users=new ArrayList<>();
             if (userMaps.size()!=0){
                 for (Map<String,Object> map1:userMaps){
@@ -117,7 +117,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     @Override
     public Map getOrderContent(String order_no,String cid) throws UnsupportedEncodingException {
         if (order_no.indexOf("X")==-1){//非窗帘
-            return this.getOrders(1,1,cid,null,order_no,null,null,null,null,"");//公司id"补空"
+            return this.getOrders(1,1,cid,null,order_no,null,null,null,null,"","");//公司id"补空",customerMainId补空
         }else{
             Map<String,Object> map=new HashMap<>();
             List<Map<String,Object>> list=ctm_orderDao.getOrderContent(order_no);
