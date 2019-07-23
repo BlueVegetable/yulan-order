@@ -427,4 +427,42 @@ public class Item {
                 , saleId, unit, useId, productBrand, productFlag, itemFlag,
                 itemDz, fixType, fixGrade, rzStyle, rzGrade, highJia, wbhFlag, deleteFlag, mlModifyFlag, widthHh, highHh, duihua, oao, salePrice, priceSale, priceFx, priceHome, groupType, total, duihuaLoss, itemType, itemMLGY);
     }
+
+    @Override
+    public Item clone() {
+        Item item = new Item();
+        item.setItemNo(itemNo);
+        item.setOldItemNo(oldItemNo);
+        item.setItemVersion(itemVersion);
+        item.setProductType(productType);
+        item.setNote(note);
+        item.setSaleId(saleId);
+        item.setUnit(unit);
+        item.setUseId(useId);
+        item.setProductBrand(productBrand);
+        item.setProductFlag(productFlag);
+        item.setItemFlag(itemFlag);
+        item.setFixType(fixType);
+        item.setFixGrade(fixGrade);
+        item.setRzStyle(rzStyle);
+        item.setRzGrade(rzGrade);
+        item.setHighJia(highJia);
+        item.setWbhFlag(wbhFlag);
+        item.setDeleteFlag(deleteFlag);
+        item.setMlModifyFlag(mlModifyFlag);
+        item.setWidthHh(widthHh);
+        item.setHighHh(highHh);
+        item.setDuihua(duihua);
+        item.setOao(oao);
+        item.setSalePrice(salePrice);
+        item.setPriceSale(priceSale);
+        item.setPriceFx(priceFx);
+        item.setPriceHome(priceHome);
+        item.setGroupType(groupType);
+        item.setTotal(total);
+        item.setDuihuaLoss(duihuaLoss);
+        item.setItemType(itemType);
+        item.setItemMLGY(itemMLGY);
+        return item;
+    }
 }

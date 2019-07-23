@@ -9,7 +9,6 @@ import com.yulan.service.ItemService;
 import com.yulan.utils.Arith;
 import com.yulan.utils.MapUtils;
 import com.yulan.utils.StringUtil;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -411,8 +410,9 @@ public class ItemServiceImpl implements ItemService {
             //这行代码有问题是因为item如果型号一样的话，就会地址一样，然后后面的itemMLGY就会覆盖掉前面的，就会产生重复数据
             Item item;
             Item selectItem = itemDao.getItemByItemNO(itemMLGY.getItemNo());
-            JSONObject jsonObject = JSONObject.fromObject(selectItem);
-            item = (Item)JSONObject.toBean(jsonObject,Item.class);
+//            JSONObject jsonObject = JSONObject.fromObject(selectItem);
+//            item = (Item)JSONObject.toBean(jsonObject,Item.class);
+            item = selectItem.clone();
             item.setItemMLGY(itemMLGY);
             if (null != item.getNote()) {
                 item.setNote(stringUtil.getUtf8(item.getNote()));
