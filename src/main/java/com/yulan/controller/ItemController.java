@@ -166,8 +166,9 @@ public class ItemController {
         //褶皱倍数
         Double multiple =  Double.valueOf((String)data.get("multiple"));
         String location = (String)data.get("location");
+        Map result = itemService.getCurtainInfo(width,height,WBH,multiple,location,itemNO);
 
-        return  itemService.getCurtainInfo(width,height,WBH,multiple,location,itemNO);
+        return result;
     }
 
     /**

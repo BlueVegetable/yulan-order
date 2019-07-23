@@ -4,6 +4,7 @@ import com.yulan.pojo.Web_user;
 import com.yulan.service.CustomerTypeService;
 import com.yulan.service.Web_userService;
 import com.yulan.utils.Response;
+import com.yulan.utils.StringUtil;
 import com.yulan.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,20 @@ public class Web_userController {
     private Web_userService web_userService;
     @Autowired
     private CustomerTypeService customerTypeService;
+
+    @RequestMapping("getWebUserName")
+    @ResponseBody
+    public Map getWebUserName(String CID) {
+        Map result = Response.getResponseMap(0,"",null);
+        Web_user webUser = web_userService.getWebUserByCID(CID);
+        Map data = new HashMap();
+        data.put("CID",CID);
+        if(webUser!=null) {
+            data.put("name", StringUtil.GBKToUTF8(webUser.getRealName()));
+            result.put("data",data);
+        }
+        return result;
+    }
 
     @RequestMapping("login")
     @ResponseBody

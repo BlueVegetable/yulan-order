@@ -109,6 +109,16 @@ public class Ctm_order {
 
     private  String allAddress;
 
+    private String arrearsFlag;
+
+    public String getArrearsFlag() {
+        return arrearsFlag;
+    }
+
+    public void setArrearsFlag(String arrearsFlag) {
+        this.arrearsFlag = arrearsFlag;
+    }
+
     public String getAllAddress() {
         return allAddress;
     }

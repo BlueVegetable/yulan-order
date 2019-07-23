@@ -17,7 +17,7 @@ public class SalPromotion {
     private String type;
     private BigDecimal discount;
     private BigDecimal price;
-    private String falgFl;
+    private String flagFl;
     private BigDecimal qtyOrder;
     private Short qtyUse;
     private String flagXh;
@@ -118,11 +118,11 @@ public class SalPromotion {
     }
 
     public String getFalgFl() {
-        return falgFl;
+        return flagFl;
     }
 
     public void setFalgFl(String falgFl) {
-        this.falgFl = falgFl == null ? null : falgFl.trim();
+        this.flagFl = falgFl == null ? null : falgFl.trim();
     }
 
     public BigDecimal getQtyOrder() {
@@ -219,7 +219,7 @@ public class SalPromotion {
                 ", type='" + type + '\'' +
                 ", discount=" + discount +
                 ", price=" + price +
-                ", falgFl='" + falgFl + '\'' +
+                ", falgFl='" + flagFl + '\'' +
                 ", qtyOrder=" + qtyOrder +
                 ", qtyUse=" + qtyUse +
                 ", flagXh='" + flagXh + '\'' +

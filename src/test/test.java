@@ -1,5 +1,8 @@
+import com.yulan.dao.Ctm_orderDao;
+import com.yulan.pojo.Sal_promotion;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -8,6 +11,14 @@ import java.util.Scanner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class test {
+    @Autowired private Ctm_orderDao ctm_orderDao;
+
+    @Test
+    public void test1(){
+        Sal_promotion sal_promotion=ctm_orderDao.getPromotion("20190608493");
+    }
+
+
     @Test
    public  void main() {
         Scanner sc = new Scanner(System.in);

@@ -15,10 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class Ctm_orderServiceImpl implements Ctm_orderService {
@@ -250,8 +247,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         String rebateY=map.get("rebateY").toString();//年优惠券流水号
         String rebateM=map.get("rebateM").toString();//月优惠券流水号
         String companyId=map.get("companyId").toString();//公司id
+        String arrearsFlag="";
+        if (map.get("arrearsFlag")!=null){
+            arrearsFlag=map.get("arrearsFlag").toString();
+        }
 
-        String arrearsFlag=map.get("arrearsFlag").toString();
 
         List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
@@ -298,9 +298,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
 
         List<Map<String,Object>> list=(List) map.get("ctm_orders");
-        ctm_order.setWebTjTime(nowTime);//获取当前时间
+
         ctm_order.setDateCre(nowTime);//获取当前时间
         ctm_order.setDateUpdate(nowTime);//获取当前时间
+
         ctm_order.setCurrencyId("RMB");
         ctm_order.setCustomerCode(cid);
         String promotion_costString=map.get("promotion_cost").toString();//先变字符串
@@ -349,10 +350,14 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
             statusId="1";
             ctm_order.setStatusId(statusId);//已经提交
+            ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
+
         }else {
             if (resideMoney.compareTo(promotion_cost)!=-1){
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
+                ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
+
             }else{
                 statusId="5";
                 ctm_order.setStatusId(statusId);//欠款待提交
@@ -363,6 +368,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         //统计所花券金额
         BigDecimal allRebateMonth=BigDecimal.valueOf(0);
         BigDecimal allRebateYear=BigDecimal.valueOf(0);
+
+        BigDecimal allFinalCostB=BigDecimal.valueOf(0);//统计明显所有最终花费，更新头部总花费
+
 
         if (ctm_orderDao.insertOrderH(ctm_order)){//订单头录入
 
@@ -454,6 +462,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
                 ctm_order_detail.setFinalCost(ctm_order_detail.getPromotionCost().subtract(rebateMonth).subtract(rebateYear));//最终金额
 
+                allFinalCostB=allFinalCostB.add(ctm_order_detail.getFinalCost());
+
 
 
                 if (!ctm_orderDao.insertOrderB(ctm_order_detail)){
@@ -473,6 +483,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
             ctm_order.setAllBackM(allRebateMonth);//订单头存总返利
             ctm_order.setAllBackY(allRebateYear);
+            ctm_order.setAllSpend(allFinalCostB);//更新总花费，避免一分之差
+
             ctm_orderDao.updateOrder(ctm_order);
 
             /**
@@ -761,14 +773,18 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     public Map cancelOrder(Map<String, Object> map) {
         Map<String ,Object> m=new HashMap<>();
         String  orderNo=map.get("orderNo").toString();
+        Timestamp dateUpdate= new Timestamp(System.currentTimeMillis());
         Ctm_order ctm_order=new Ctm_order();
         ctm_order.setOrderNo(orderNo);
         ctm_order.setStatusId("3");
+        ctm_order.setDateUpdate(dateUpdate);
+        ctm_order.setCurtainStatusId("");//滞空窗帘审核状态
         BigDecimal allmony_y=BigDecimal.valueOf(0);//年返利
         BigDecimal allmony_m=BigDecimal.valueOf(0);//月返利
         String yesrId="";//年返利券编号
         String monthId="";//月返利券编号
         if (ctm_orderDao.updateOrder(ctm_order)){
+            ctm_orderDao.updateOrderBStatus(orderNo,"3",dateUpdate);//更新订单详情状态
             List<Sal_rebate_certificate_record> list=ctm_orderDao.findRecrod(orderNo);
             for (Sal_rebate_certificate_record s:list){
                 String id=s.getId();
@@ -807,6 +823,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map putAgainOrder(Map<String, Object> map) {
+        Timestamp nowTime=new Timestamp(System.currentTimeMillis());//获取当前时间
         Map<String ,Object> m=new HashMap<>();
         String orderNo=map.get("orderNo").toString();
         String cid=map.get("cid").toString();
@@ -822,10 +839,12 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         if (statusId.equals("6")){
             statusId="1";
             ctm_order.setStatusId(statusId);
+            ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
         }else{
             if (resideMoney.compareTo(allSpend)!=-1){
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
+                ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
             }else{
                 statusId="5";
                 ctm_order.setStatusId(statusId);//欠款待提交
@@ -847,10 +866,17 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
     }
 
     @Override
-    public boolean updateOrderStatus(String orderNo, String customerCode,
+    public boolean updateOrderStatus(String orderNo,
                                      String statusId) {
         Timestamp dateUpdate= new Timestamp(System.currentTimeMillis());
-        return ctm_orderDao.updateOrderStatus(orderNo,customerCode,statusId,dateUpdate);
+        //更新订单头和详情状态
+        if (ctm_orderDao.updateOrderStatus(orderNo,statusId,dateUpdate)&&ctm_orderDao.updateOrderBStatus(orderNo,statusId,dateUpdate)){
+
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     /**
@@ -874,14 +900,27 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }else{//墙纸
             orderN="W";
         }
-        String order=ctm_orderDao.getBigNum(orderN+s);
-        if(order==null||order.equals("")){
+//        String order=ctm_orderDao.getBigNum(orderN+s);
+        List<Map<String,Object>> ordersMap=ctm_orderDao.getTodayOders(orderN+s);
+
+
+        if(ordersMap.size()==0){
             trueOrder=orderN+s+"0001b";
         }else{//截取自增
-            order=order.substring(7,11);
+            String order="";
+            List<Integer> nums=new ArrayList<>();
+            for (Map<String,Object> map:ordersMap){
+                String orderS=map.get("ORDER_NO").toString();
+                orderS=orderS.substring(7,11);
+                int orderI=Integer.parseInt(orderS);
+                nums.add(orderI);
+
+            }
+            int orderIMax= Collections.max(nums);
+//            order=order.substring(7,11);
             int o=10000;
-            Integer i=Integer.parseInt(order);
-            o=o+i+1;
+//            Integer i=Integer.parseInt(order);
+            o=o+orderIMax+1;
             String p=o+"";
             p=p.substring(1);
             trueOrder=orderN+s+p+"b";//b为b2b订单号标志
@@ -903,8 +942,11 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         for (Ctm_order ctm_order:list){
             java.sql.Timestamp dateCre=ctm_order.getDateCre();//提交时间
             java.sql.Timestamp dateCre24=new java.sql.Timestamp(dateCre.getTime()+(24*60*60*1000));//加24小时
+            Map<String,Object> map=new HashMap<>();
             if (currentDate.after(dateCre24)){
-                if (!ctm_orderDao.updateOrderStatus(ctm_order.getOrderNo(),ctm_order.getCustomerCode(),"3",currentDate)){
+                map.put("orderNo",ctm_order.getOrderNo());
+                this.cancelOrder(map);
+                if (this.cancelOrder(map).get("code")!="0"){
                    return 0;
                 }
             }else {

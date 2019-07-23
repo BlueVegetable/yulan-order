@@ -11,7 +11,7 @@
     INVOICE_TITLE, NVL(WL_CONTACTS,' ') WL_CONTACTS, NVL(WL_TEL,' ') WL_TEL, RECIVER_AREA1, RECIVER_AREA2, RECIVER_AREA3,
     BILL_TYPE_X, DELIVERY_FLAG, OAO_FLAG, OAO_STATUS, OAO_PERSON,  to_char(OAO_TIME,'yyyy-mm-dd hh24:mi:ss') OAO_TIME,NVL(ALL_SPEND,0) ALL_SPEND,
     NVL(BUYUSER,' ') BUYUSER,NVL(BUYUSERPHONE,' ') BUYUSERPHONE,NVL(ALLBACK_M,0) ALLBACK_M,NVL(ALLBACK_Y,0) ALLBACK_Y,NVL(CURTAIN_STATUS_ID,' ') CURTAIN_STATUS_ID,NVL(REBATE_MONEY,0) REBATE_MONEY,
-    NVL(REBATE_NOTES,' ') REBATE_NOTES,NVL(ALL_ADDRESS,' ') ALL_ADDRESS
+    NVL(REBATE_NOTES,' ') REBATE_NOTES,NVL(ALL_ADDRESS,' ') ALL_ADDRESS,NVL(ARREARSFLAG,' ') ARREARSFLAG
   </sql>
     <sql id="Base_Column_List_B" >
     ORDER_NO, LINE_NO, d.ITEM_NO, ITEM_NO_SAMPLE, PRODUCTION_VERSION, QTY_REQUIRED, NVL(to_char(DATE_DELIVER,'yyyy-mm-dd hh24:mi:ss'),' ') DATE_DELIVER,
@@ -267,13 +267,7 @@
 
     <select id="getPromotion" resultType="Sal_promotion">
         select
-          CUSTOMER_CODE, CUSTOMER_TYPE, ORDER_TYPE,
-      ORDER_NAME, ITEM_NO, ITEM_VERSION,
-      PRODUCT_TYPE, PRODUCT_BRAND, TYPE,
-      DISCOUNT, PRICE, FALG_FL,
-      QTY_ORDER, QTY_USE, FLAG_XH,
-      FLAG_ZX, USE_ID,to_char(DATE_START,'yyyy-MM-dd') DATE_START,
-      to_char(DATE_END,'yyyy-MM-dd')DATE_END, GROUP_TYPE,P_ID
+          *
          from SAL_PROMOTION t where t.p_id=#{pId}
     </select>
     
@@ -443,6 +437,9 @@
             <if test="allAddress != null" >
                 ALL_ADDRESS,
             </if>
+            <if test="arrearsFlag != null" >
+                ARREARSFLAG,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="orderNo != null" >
@@ -603,6 +600,9 @@
             </if>
             <if test="allAddress != null" >
                 #{allAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="arrearsFlag != null" >
+                #{arrearsFlag,jdbcType=VARCHAR},
             </if>
         </trim>
   </insert>
@@ -869,7 +869,17 @@
             STATUS_ID = #{STATUS_ID,jdbcType=VARCHAR},DATE_UPDATE=#{dateUpdate,jdbcType=TIMESTAMP}
             </if>
         </set>
-        where ORDER_NO = #{ORDER_NO} and CUSTOMER_CODE = #{CUSTOMER_CODE}
+        where ORDER_NO = #{ORDER_NO}
+    </update>
+
+    <update id="updateOrderBStatus" parameterType="String">
+        update CTM_ORDER_DETAIL t
+        <set>
+            <if test="STATUS_ID != null">
+                STATUS_ID = #{STATUS_ID,jdbcType=VARCHAR},DATE_UPDATE=#{dateUpdate,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where ORDER_NO = #{ORDER_NO}
     </update>
 
     <select id="getType_word" resultType="String">
@@ -882,6 +892,11 @@
 
     <select id="getBigNum" resultType="String">
         SELECT order_no FROM  CTM_ORDER t  WHERE t.date_cre = (SELECT MAX(date_cre) FROM  (SELECT * FROM  CTM_ORDER t  WHERE t.order_no like '%'||#{s}||'%'))
+    </select>
+
+
+    <select id="getTodayOders" resultType="Map">
+       SELECT * FROM  CTM_ORDER t  WHERE t.order_no like '%'||#{s}||'%'
     </select>
 
     <select id="getlinkpersonandTel" resultType="Map">
@@ -1182,6 +1197,9 @@
             <if test="allAddress != null" >
                 ALL_ADDRESS = #{allAddress,jdbcType=VARCHAR},
             </if>
+            <if test="arrearsFlag != null" >
+                ARREARSFLAG = #{arrearsFlag,jdbcType=VARCHAR},
+            </if>
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
     </update>
@@ -1456,10 +1474,20 @@
         update CTM_ORDER_DETAIL t set t.UNIT_PRICE=#{unitPrice},t.FINAL_COST=#{finalCost} where t.ORDER_NO=#{orderNo} and t.LINE_NO=#{lineNo}
     </update>
 
-    <select id="findCtmBbylineNo
-" resultType="Ctm_order_detail">
+    <select id="findCtmBbylineNo" resultType="Ctm_order_detail">
         select * from CTM_ORDER_DETAIL t where t.ORDER_NO=#{orderNo} and t.LINE_NO=#{lineNo}
     </select>
+
+    <select id="getCtmBfinalCostsbyorderNo" resultType="Map">
+        select t.final_cost from CTM_ORDER_DETAIL t where t.ORDER_NO=#{orderNo}
+    </select>
+
+    <update id="updateOrderAllspend">
+        update CTM_ORDER t set
+          t.ALL_SPEND=#{allSpend}
+          where
+          t.ORDER_NO=#{orderNo}
+    </update>
 
 
 

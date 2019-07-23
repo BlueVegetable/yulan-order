@@ -26,7 +26,6 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
     public List<String> submitCommodityOrder(List<String> cartItemIDs, Map<String,Integer> lineNos) {
         List<String> orderItemIDs = new ArrayList<>();
         for (String cartItemID:cartItemIDs) {
-            int orderNumber = 1;
             List<CommodityOrder> commodityOrders = new ArrayList<>();
             List<Commodity> curtainCommodities = curtainCommodityDao.getCommoditiesByCartItemID(cartItemID);
             for (Commodity commodity:curtainCommodities) {
@@ -35,7 +34,7 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
                 CommodityOrder commodityOrder = (CommodityOrder) BlueVegetableBean.mapToObject(commodityMap,CommodityOrder.class);
                 commodityOrder.setOrderItemId(commodity.getCartItemId());
                 commodityOrder.setSaveTime(new Timestamp(System.currentTimeMillis()));
-                commodityOrder.setOrderItemNumber(orderNumber);
+                commodityOrder.setOrderItemNumber(commodityOrder.getInlineNo());
                 String curtainPartName = curtainCommodity.getCurtainPartName();
                 curtainPartName = StringUtil.GBKToUTF8(curtainPartName);
                 switch (curtainPartName) {
@@ -48,7 +47,6 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
                 }
                 commodityOrder.setLineNo(lineNos.get(cartItemID));
                 commodityOrder.setId(System.currentTimeMillis()+StringUtil.createStringID());
-                orderNumber++;
                 commodityOrders.add(commodityOrder);
             }
             if(curtainCommodities.size()!=0 && commodityOrderDao.addCommodityOrders(commodityOrders) > 0) {

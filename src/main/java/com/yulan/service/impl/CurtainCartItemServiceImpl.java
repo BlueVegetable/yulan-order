@@ -1,5 +1,6 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.SalPromotionDao;
 import com.yulan.encode.CurtainCartItemEncode;
 import com.yulan.encode.CurtainCommodityEncode;
 import com.yulan.pojo.*;
@@ -18,6 +19,8 @@ public class CurtainCartItemServiceImpl implements CartItemService {
     private CurtainCartItemEncode curtainCartItemEncode;
     @Autowired
     private CurtainCommodityEncode curtainCommodityEncode;
+    @Autowired
+    private SalPromotionDao salPromotionDao;
 
     @Override
     public boolean addCartItem(CartItem cartItem) {
@@ -66,6 +69,8 @@ public class CurtainCartItemServiceImpl implements CartItemService {
 
     @Override
     public List<CartItem> getCartItems(String cartID, String commodityType) {
+        String activityID = null;
+
         List<CartItem> cartItems = curtainCartItemEncode.getCartItems(cartID, commodityType);
         List<CartItem> result = new ArrayList<>();
         for (CartItem cartItem:cartItems) {
@@ -86,6 +91,9 @@ public class CurtainCartItemServiceImpl implements CartItemService {
                     case "帘身配布":lspb.add(curtainCommodity);break;
                     default:continue;
                 }
+                if(commodity.getActivityId()!=null&&activityID==null) {
+                    activityID = commodity.getActivityId();
+                }
             }
             curtainLists.add(new CurtainList("帘头",lt));
             curtainLists.add(new CurtainList("帘身",ls));
@@ -93,6 +101,11 @@ public class CurtainCartItemServiceImpl implements CartItemService {
             curtainLists.add(new CurtainList("配件",peijian));
             curtainLists.add(new CurtainList("帘身配布",lspb));
             CurtainCartItem curtainCartItem = (CurtainCartItem) cartItem;
+
+            SalPromotion salPromotion = null;
+            if(activityID!=null)
+                salPromotion = salPromotionDao.getSalPromotionByID(activityID);
+            curtainCartItem.setSalPromotion(salPromotion);
             curtainCartItem.setCurtainLists(curtainLists);
             if(lt.size()!=0||ls.size()!=0||sha.size()!=0||peijian.size()!=0) {
                 result.add(curtainCartItem);

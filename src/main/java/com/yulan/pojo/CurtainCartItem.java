@@ -19,6 +19,7 @@ public class CurtainCartItem extends CartItem {
     private Integer count;
     private BigDecimal price;
     private BigDecimal falseShadeHigh;
+    private SalPromotion salPromotion;
 
     public String getModelNumber() {
         return modelNumber;
@@ -125,6 +126,14 @@ public class CurtainCartItem extends CartItem {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public SalPromotion getSalPromotion() {
+        return salPromotion;
+    }
+
+    public void setSalPromotion(SalPromotion salPromotion) {
+        this.salPromotion = salPromotion;
     }
 
     @Override
