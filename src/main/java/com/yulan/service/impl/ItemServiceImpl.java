@@ -299,6 +299,7 @@ public class ItemServiceImpl implements ItemService {
                               Double multiple, String location,
                               String curtainNo) throws IOException {
         Map map = new HashMap<>();
+        BigDecimal curtainHighJia = new BigDecimal(0);
         List<ItemMLGY> curtainItemList = itemDao.getCurtainInfo(curtainNo);
 
         List<Item> itemList = new ArrayList<>();
@@ -306,9 +307,16 @@ public class ItemServiceImpl implements ItemService {
             ItemMLGY itemMLGY = curtainItemList.get(i);
             Item curtainItem =
                     itemDao.getItemByItemNO(itemMLGY.getItemNo());
-            if(curtainItem.getHighJia()== null){
+            //因为公式中的假帘高是总窗帘的假帘高，不是单个产品的假帘高
+            if(curtainItem.getHighJia()!= null && curtainItem.getItemNo().equals(curtainNo) ){
+                curtainHighJia = curtainItem.getHighJia();
+            }else{
                 curtainItem.setHighJia(BigDecimal.valueOf(0));
             }
+/*
+            if(curtainItem.getHighJia()== null){
+                curtainItem.setHighJia(BigDecimal.valueOf(0));
+            }*/
             Double usage;
 
             if (itemMLGY.getItemType().equals("lt")) {
@@ -358,7 +366,7 @@ public class ItemServiceImpl implements ItemService {
                                         "FixType,DuihuaLoss,HighJia");
 
                             } else {
-                                lsUsage = usageCalculation(width, multiple,height, curtainItem);
+                                lsUsage = usageCalculation(width, multiple,height, curtainItem, curtainHighJia);
                                 //获取每种产品的用量
                                 map.put("ls", lsUsage);
                             }
@@ -380,7 +388,7 @@ public class ItemServiceImpl implements ItemService {
 
                     } else {
 
-                        shaUsage = usageCalculation(width, multiple,height, curtainItem);
+                        shaUsage = usageCalculation(width, multiple,height, curtainItem, curtainHighJia);
                         map.put("sha", shaUsage);
                     }
                 }
@@ -447,7 +455,7 @@ public class ItemServiceImpl implements ItemService {
      * @return
      * getHighJia这里不需要转换单位，是因为在类里面已经转换了
      */
-    private BigDecimal usageCalculation(Double width, Double multiple,Double height, Item curtainItem){
+    private BigDecimal usageCalculation(Double width, Double multiple,Double height, Item curtainItem, BigDecimal curtainHighJia){
         BigDecimal usage = BigDecimal.valueOf(0);
         //定高
         if ("02".equals(curtainItem.getFixType())) {
@@ -458,12 +466,12 @@ public class ItemServiceImpl implements ItemService {
             //定宽
             if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
                 usage =
-                        arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
+                        arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainHighJia));
             } else if (curtainItem.getHighHh().doubleValue() > 0) {
                 //花回
                 usage =
                         arith.mul(arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0),
-                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
+                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainHighJia), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
                                 arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
             }
         }
@@ -476,11 +484,19 @@ public class ItemServiceImpl implements ItemService {
                                  Double multiple, String itemNO,
                                  String itemType, String parentItemNo, String fixType)  throws IOException{
         Map map = new HashMap<>();
+        BigDecimal curtainHighJia = new BigDecimal(0);
         Item curtainItem =
                 itemDao.getItemByItemNO(itemNO);
-        if(curtainItem.getHighJia()== null){
+
+        if(curtainItem.getHighJia()!= null && curtainItem.getItemNo().equals(parentItemNo) ){
+            curtainHighJia = curtainItem.getHighJia();
+        }else{
             curtainItem.setHighJia(BigDecimal.valueOf(0));
         }
+
+      /*  if(curtainItem.getHighJia()== null){
+            curtainItem.setHighJia(BigDecimal.valueOf(0));
+        }*/
         //绣花边
         if (curtainItem.getProductType().equals("XHB")) {
             Double XHBusage ;
@@ -515,7 +531,7 @@ public class ItemServiceImpl implements ItemService {
 
                     } else {
                         curtainItem.setFixType(fixType);
-                        lsUsage = usageCalculation(width, multiple, height, curtainItem);
+                        lsUsage = usageCalculation(width, multiple, height, curtainItem, curtainHighJia);
                         //获取每种产品的用量
                         map.put("ls", lsUsage);
                     }
@@ -534,7 +550,7 @@ public class ItemServiceImpl implements ItemService {
 
                 } else {
                     curtainItem.setFixType(fixType);
-                    shaUsage = usageCalculation(width, multiple, height, curtainItem);
+                    shaUsage = usageCalculation(width, multiple, height, curtainItem, curtainHighJia);
                     map.put("sha", shaUsage);
                 }
 

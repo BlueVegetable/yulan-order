@@ -28,23 +28,43 @@ public class UserTest {
     @Test
     public void test1() throws UnsupportedEncodingException {
 
+
         Double width = 3.00;
         Double multiple = 2.0;
         Double height = 2.0;
-        Item curtainItem = itemDao.getItemByItemNO("MLTB201742");
+        Item curtainItem = itemDao.getItemByItemNO("GMTB163010");
 
         if(curtainItem.getHighJia()== null){
             curtainItem.setHighJia(BigDecimal.valueOf(0));
         }
 
         BigDecimal usage =
-                arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
-
+               usageCalculation(width,multiple,height,curtainItem);
         System.out.println(usage);
-        System.out.println("arith.dbToBD(width * multiple)" + arith.dbToBD(width * multiple));
-        System.out.println("arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))" + arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))));
-        System.out.println("arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0)"+arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0));
-        System.out.println(" arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia())" +  arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
+    }
+
+    private BigDecimal usageCalculation(Double width, Double multiple,Double height, Item curtainItem){
+        BigDecimal usage = BigDecimal.valueOf(0);
+        //定高
+        if ("02".equals(curtainItem.getFixType())) {
+            usage =
+                    arith.add(arith.dbToBD(width * multiple),
+                            curtainItem.getDuihuaLoss());
+        } else {
+            //定宽
+            if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
+                usage =
+                        arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()));
+            } else if (curtainItem.getHighHh().doubleValue() > 0) {
+                //花回
+                usage =
+                        arith.mul(arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0),
+                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainItem.getHighJia()), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
+                                arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
+            }
+        }
+
+        return usage.setScale(2,BigDecimal.ROUND_HALF_UP);
     }
 }
 
