@@ -20,6 +20,17 @@ public class Web_user {
     private String userState;//账号状态，""第一次，“10”未修改初始名密码但已经阅读了网络签定提示书，“01”修改了初始密码，但未阅读网络签定书，‘11’修改
     private Integer isManager;
     private String companyId;//所属公司id
+    private String customerMainId;//新增主公司id
+
+    public String getCustomerMainId() {
+        return customerMainId;
+    }
+
+    public void setCustomerMainId(String customerMainId) {
+        this.customerMainId = customerMainId;
+    }
+
+
 
     public String getCompanyId() {
         return companyId;

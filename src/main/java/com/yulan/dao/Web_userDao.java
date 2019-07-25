@@ -26,7 +26,7 @@ public interface Web_userDao {
 
     List<Map<String,Object>> getArea_position(@Param("cid") String cid);//获取业务员职位
 
-    List<Map<String,Object>> getAllUserByComId(@Param("companyId") String companyId);//获取同个所有用户
+    List<Map<String,Object>> getAllUserByComId(@Param("customerMainId") String customerMainId);//获取同个所有用户
     //将操作员账号转换成公司ID
     String changeLoginNameToCompanyID(String cid);
 }
