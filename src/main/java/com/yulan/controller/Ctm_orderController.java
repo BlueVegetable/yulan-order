@@ -1,5 +1,6 @@
 package com.yulan.controller;
 
+import com.yulan.dao.Web_userDao;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.service.CurtainOrderService;
 import com.yulan.service.Sal_rebate_certificateService;
@@ -32,6 +33,9 @@ public class Ctm_orderController {
     @Autowired
     private CurtainOrderService curtainOrderService;
 
+    @Autowired
+    private Web_userDao web_userDao;//填获取订单列表坑
+
     /**
      * 订单列表获取
      * @param m
@@ -49,6 +53,10 @@ public class Ctm_orderController {
         String curtainStatusId=m.get("curtainStatusId").toString();
         String companyId=m.get("companyId").toString();//根据玉兰多次改需求后的最新需求，该字段失去作用
         String customerMainId= Objects.toString(m.get("customerMainId"));//Objects.toString当m.get("customerMainId")为null时返回"null"字符串
+
+        if(customerMainId.equals("null")){
+            customerMainId=web_userDao.changeCompanyIdToCurtainMainId(companyId);//转化填坑
+        }
 
 
 

@@ -77,4 +77,8 @@
     <select id="changeLoginNameToCompanyID" resultType="String">
         select t.company_id from WEB_USER t where t.loginname = #{cid}
     </select>
+
+    <select id="changeCompanyIdToCurtainMainId" resultType="String">
+        select t.CUSTOMER_MAIN_ID from WEB_USER t where t.COMPANY_ID = #{companyId} group by t.CUSTOMER_MAIN_ID
+    </select>
 </mapper>

@@ -29,4 +29,7 @@ public interface Web_userDao {
     List<Map<String,Object>> getAllUserByComId(@Param("customerMainId") String customerMainId);//获取同个所有用户
     //将操作员账号转换成公司ID
     String changeLoginNameToCompanyID(String cid);
+
+    //将操作员账号转换成CurtainMainId
+    String changeCompanyIdToCurtainMainId(@Param("companyId") String companyId);
 }
