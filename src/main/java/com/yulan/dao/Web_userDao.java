@@ -32,4 +32,7 @@ public interface Web_userDao {
 
     //将操作员账号转换成CurtainMainId
     String changeCompanyIdToCurtainMainId(@Param("companyId") String companyId);
+
+    //获取用户名
+    String getRealName(@Param("cid")String cid);
 }

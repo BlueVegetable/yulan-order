@@ -40,7 +40,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         Map<String,Object> map=new HashMap<>();
         List<Map<String,Object>> list=new ArrayList<>();
         List<Map<String,Object>> data=new ArrayList<>();
-        if (!customerMainId.equals("")){
+        if (customerMainId!=null&&!customerMainId.equals("")){
             List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(customerMainId);//查找属于同个customerMainId的用户
             List<String> users=new ArrayList<>();
             if (userMaps.size()!=0){
@@ -61,6 +61,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
         for (Map<String,Object> m:list) {
+
+//            String realName=web_userDao.getRealName(m.get("CUSTOMER_CODE").toString());//用户名
+//            realName=StringUtil.getUtf8(realName);//转码
+
 
             for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码
                 if (entry.getValue() instanceof String) {
@@ -104,6 +108,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             }
 
             m.put("OREDERB_NUM",orderB_num);//订单商品数量
+//            m.put("realName",realName);//客户吗，为了审核
             m.put("ORDERBODY",list2);
             data.add(m);
         }
