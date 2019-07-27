@@ -19,13 +19,14 @@
         <result column="USERSTATE" property="userState" jdbcType="VARCHAR" />
         <result column="IS_MANAGER" property="isManager" jdbcType="DECIMAL" />
         <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_MAIN_ID" property="customerMainId" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="login" parameterType="java.util.Map" resultType="Web_user">
         select
           LOGINNAME,PASSWORD,REALNAME,COMPANY, TEL
           ,EMAIL,MEMO,to_char(TS,'yyyy-mm-dd'),USERID,to_char(MODIFYDATE,'yyyy-mm-dd')
-          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE,IS_MANAGER,company_id
+          ,MACADDRESS,TYPE,PASSWORDX,STOPPED,CREATADMIN,USERSTATE,IS_MANAGER,company_id,CUSTOMER_MAIN_ID
         from WEB_USER where LOGINNAME = #{loginName} and PASSWORD=#{password}
     </select>
 
@@ -68,12 +69,16 @@
 
     <select id="getAllUserByComId" resultType="Map">
         select LOGINNAME from WEB_USER t where 1=1
-        <if test="companyId!=null">
-           and t.company_Id=#{companyId}
+        <if test="customerMainId!=null">
+           and t.customer_main_id=#{customerMainId}
         </if>
     </select>
 
     <select id="changeLoginNameToCompanyID" resultType="String">
         select t.company_id from WEB_USER t where t.loginname = #{cid}
+    </select>
+
+    <select id="changeCompanyIdToCurtainMainId" resultType="String">
+        select t.CUSTOMER_MAIN_ID from WEB_USER t where t.COMPANY_ID = #{companyId} group by t.CUSTOMER_MAIN_ID
     </select>
 </mapper>

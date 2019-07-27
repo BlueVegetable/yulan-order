@@ -1,5 +1,6 @@
 package com.yulan.controller;
 
+import com.yulan.dao.Web_userDao;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.service.CurtainOrderService;
 import com.yulan.service.Sal_rebate_certificateService;
@@ -15,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("order")
@@ -31,6 +33,9 @@ public class Ctm_orderController {
     @Autowired
     private CurtainOrderService curtainOrderService;
 
+    @Autowired
+    private Web_userDao web_userDao;//填获取订单列表坑
+
     /**
      * 订单列表获取
      * @param m
@@ -46,7 +51,12 @@ public class Ctm_orderController {
         String beginTime=m.get("beginTime").toString();
         String finishTime=m.get("finishTime").toString();
         String curtainStatusId=m.get("curtainStatusId").toString();
-        String companyId=m.get("companyId").toString();
+        String companyId=m.get("companyId").toString();//根据玉兰多次改需求后的最新需求，该字段失去作用
+        String customerMainId= Objects.toString(m.get("customerMainId"));//Objects.toString当m.get("customerMainId")为null时返回"null"字符串
+
+        if(customerMainId.equals("null")){
+            customerMainId=web_userDao.changeCompanyIdToCurtainMainId(companyId);//转化填坑
+        }
 
 
 
@@ -84,7 +94,7 @@ public class Ctm_orderController {
             lastNum=page+limit-1;
         }
 
-        Map map=ctm_orderService.getOrders(page,lastNum,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId,companyId);
+        Map map=ctm_orderService.getOrders(page,lastNum,cid,state_id,find,beginTime,finishTime,orderType,curtainStatusId,companyId,customerMainId);
         map.put("code",0);
         map.put("msg","");
 
