@@ -55,7 +55,7 @@
         (ID, PRICE, ACTIVITY_ID, ITEM_ID, ORDER_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,
         CURTAIN_ITEM_NAME,CURTAIN_PART_NAME,DOSAGE,MANUFACTURING_INSTRUCTIONS,CERTAIN_HEIGHT_WIDTH,
         SPECIFICATION,ILLUSTRATE,STATUS,ORDER_NO,ORDER_ITEM_NUMBER,SUGGESTION,SAVE_TIME,LINE_NO,INLINE_NO,
-        DELETE_FLAG,MODIFY_FLAG,CHANGE_FLAG)
+        DELETE_FLAG,MODIFY_FLAG,CHANGE_FLAG,SEQUENCE)
         (
         <foreach collection="commodityOrders" item="commodityOrder" separator="union all">
             select
@@ -73,7 +73,7 @@
             #{commodityOrder.suggestion,jdbcType=VARCHAR},#{commodityOrder.saveTime,jdbcType=TIMESTAMP},
             #{commodityOrder.lineNo,jdbcType=NUMERIC},#{commodityOrder.inlineNo,jdbcType=NUMERIC},
             #{commodityOrder.deleteFlag,jdbcType=VARCHAR},#{commodityOrder.modifyFlag,jdbcType=VARCHAR},
-            #{commodityOrder.changeFlag,jdbcType=VARCHAR}
+            #{commodityOrder.changeFlag,jdbcType=VARCHAR},#{commodityOrder.sequence,jdbcType=NUMERIC}
             from dual
         </foreach>
         )

@@ -36,6 +36,7 @@ public class CommodityOrder {
 	private String modifyFlag;
 	private String changeFlag;
 	private Integer inlineNo;
+	private Integer sequence;
 
 	public String getItemId() {
 		return itemId;
@@ -275,6 +276,14 @@ public class CommodityOrder {
 
 	public void setInlineNo(Integer inlineNo) {
 		this.inlineNo = inlineNo;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
 	@Override
