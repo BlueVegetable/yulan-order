@@ -441,6 +441,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         List<Map<String,Object>> data=new ArrayList<>();
         map.put("count",ctm_orderDao.countOrdersManager(null,"0",find,beginTime,finishTime,null,curtainStatusId));
         for (Map<String,Object> m1:list) {
+            String realName=web_userDao.getRealName(m1.get("CUSTOMER_CODE").toString());//用户名
+            realName=StringUtil.getUtf8(realName);//转码
 
             for (Map.Entry<String, Object> entry : m1.entrySet()) {//将订单头内容转码
                 if (entry.getValue() instanceof String) {
@@ -472,7 +474,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                 m2.put("all_cost",unit_price.multiply(num));
                 orderB_num++;
             }
-
+            m1.put("realName",realName);//客户吗，为了审核
             m1.put("OREDERB_NUM",orderB_num);//订单商品数量
             m1.put("ORDERBODY",list2);
             data.add(m1);
@@ -480,6 +482,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
 
         map.put("data",data);
+//        m.put("realName",realName);//客户吗，为了审核
         map.put("code",0);
         map.put("msg","SUCCESS");
         return map;
