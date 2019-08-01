@@ -350,7 +350,7 @@ public class ItemServiceImpl implements ItemService {
                                             " has null values and can not be " +
                                             "calculated,please checkout WidthHh");
                                 } else {
-                                    lsUsage = arith.add( arith.dbToBD(width),curtainItem.getWidthHh());
+                                    lsUsage = arith.add(arith.dbToBD(width), arith.div(curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
                                     map.put("ls", lsUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
                                 }
                             }
@@ -514,7 +514,7 @@ public class ItemServiceImpl implements ItemService {
 
                 if (parentItemNo.equals("Z340004") || parentItemNo.equals("U310111")) {
                     if (curtainItem.getWidthHh() != null) {
-                        lsUsage = arith.add(arith.dbToBD(width), curtainItem.getWidthHh());
+                        lsUsage = arith.add(arith.dbToBD(width), arith.div(curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
                         map.put("ls", lsUsage.setScale(2, BigDecimal.ROUND_HALF_UP));
                     } else {
                         map.put("ls ", itemNO +

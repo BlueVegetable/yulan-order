@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
@@ -115,6 +116,20 @@ public class Ctm_orderController {
     public Map getOrderContent(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
         String order_no = (String)m.get("order_no");
         String cid = (String)m.get("cid");
+
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderContent(order_no,cid));
+    }
+
+
+    /**
+     * 获取订单详情2,通过get方法
+
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    @RequestMapping("getOrderContent2")
+    @ResponseBody
+    public Map getOrderContent2(@RequestParam("order_no")String order_no,@RequestParam("cid")String cid) throws UnsupportedEncodingException {
 
         return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderContent(order_no,cid));
     }

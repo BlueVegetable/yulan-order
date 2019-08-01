@@ -855,11 +855,11 @@
         select SALE_NO,ITEM_NO,QTY_DELIVER,mc_get_ph(BATCH_NO)PH,to_char(DATE_OUT_STOCK,'yyyy-MM-dd HH:mm:ss')DATE_OUT_STOCK,TRANSCOMPANY,NVL(TRANS_ID,' ')TRANS_ID
        from PACK_DETAIL
        WHERE WEB_ORDER_NO =#{order_no}
-       and item_no = #{item_no}
+       and LINE_NO= #{lineNo}
     </select>
 
     <select id="getNum" resultType="BigDecimal">
-        select QTY_REQUIRED from CTM_ORDER_DETAIL t where t.order_no=#{order_no} and t.item_no=#{item_no}
+        select QTY_REQUIRED from CTM_ORDER_DETAIL t where t.order_no=#{order_no} and t.LINE_NO=#{lineNo}
     </select>
 
     <update id="updateOrderStatus" parameterType="map">
