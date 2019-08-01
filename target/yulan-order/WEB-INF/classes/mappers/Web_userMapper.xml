@@ -85,4 +85,11 @@
     <select id="getRealName" resultType="String">
         select t.REALNAME from WEB_USER t where  LOGINNAME = #{cid}
     </select>
+
+    <select id="getAllUserByComIdorFlink" resultType="Map">
+        select LOGINNAME from WEB_USER t where 1=1
+        <if test="companyId!=null">
+            and company_id = #{companyId}
+        </if>
+    </select>
 </mapper>

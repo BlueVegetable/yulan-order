@@ -83,7 +83,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 m2.put("UNIT",UNIT);
                 m2.put("item",item);
 
-                List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
+                List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("LINE_NO").toString());
                 if(list3.size()!=0){
                     m2.put("pack_id",1);//是否可以查看物流判断，1可以，0不可以
                 }else{
@@ -144,7 +144,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     Item item=itemDao.getItemByItemNO(itemNo);
                     m2.put("item",item);
 
-                    List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
+                    List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("LINE_NO").toString());
                     if(list3.size()!=0){
                         m2.put("pack_id",1);//是否可以查看物流判断，1可以，0不可以
                     }else{
@@ -528,12 +528,13 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map getPack(Map<String, Object> m) throws UnsupportedEncodingException {
-        String cid=m.get("cid").toString();
+
         String order_no=m.get("order_no").toString();
-        String item_no=m.get("item_no").toString();
-        BigDecimal allNum=ctm_orderDao.getNum(order_no,item_no);
+
+        String lineNo=Objects.toString(m.get("lineNo").toString());
+        BigDecimal allNum=ctm_orderDao.getNum(order_no,lineNo);
         m.put("all_num",allNum);//总数
-        List<Map<String,Object>> list=ctm_orderDao.getPackDetail(order_no,item_no);
+        List<Map<String,Object>> list=ctm_orderDao.getPackDetail(order_no,lineNo);
         for (Map<String,Object> m1:list){
             BigDecimal thisNum=(BigDecimal)m1.get("QTY_DELIVER");
             allNum=allNum.subtract(thisNum);
@@ -553,7 +554,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map getlinkpersonandTel(String companyId) throws UnsupportedEncodingException {
-        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComIdorFlink(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
         if (userMaps.size()!=0){
             for (Map<String,Object> map1:userMaps){

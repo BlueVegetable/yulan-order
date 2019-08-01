@@ -35,4 +35,7 @@ public interface Web_userDao {
 
     //获取用户名
     String getRealName(@Param("cid")String cid);
+
+    //获取同个companyId所有用户
+    List<Map<String,Object>> getAllUserByComIdorFlink(@Param("companyId") String companyId);
 }

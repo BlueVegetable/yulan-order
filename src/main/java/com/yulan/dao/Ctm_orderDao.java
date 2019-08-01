@@ -41,10 +41,10 @@ public interface Ctm_orderDao {
     List<PackDetail> findPackDetail(@Param("orderNo")String orderNo,@Param("itemNo")String itemNo );
 
     //获取订单提货单号及其订单运输详情
-    List<Map<String,Object>> getPackDetail(@Param("order_no")String order_no,@Param("item_no") String item_no);
+    List<Map<String,Object>> getPackDetail(@Param("order_no")String order_no,@Param("lineNo")String lineNo);
 
     //获取订单型号数量
-    BigDecimal getNum(@Param("order_no")String order_no,@Param("item_no")String item_no);
+    BigDecimal getNum(@Param("order_no")String order_no,@Param("lineNo")String lineNo);
 
     Integer countOrdersH(@Param("cid")String cid,@Param("state_id")String state_id,
                         @Param("find")String find,@Param("beginTime") String beginTime,
