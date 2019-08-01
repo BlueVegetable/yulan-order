@@ -25,6 +25,7 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
     @Override
     public List<String> submitCommodityOrder(List<String> cartItemIDs, Map<String,Integer> lineNos) {
         List<String> orderItemIDs = new ArrayList<>();
+        int sequence = 1;
         for (String cartItemID:cartItemIDs) {
             List<CommodityOrder> commodityOrders = new ArrayList<>();
             List<Commodity> curtainCommodities = curtainCommodityDao.getCommoditiesByCartItemID(cartItemID);
@@ -47,6 +48,8 @@ public class CommodityOrderServiceImpl implements CommodityOrderService {
                 }
                 commodityOrder.setLineNo(lineNos.get(cartItemID));
                 commodityOrder.setId(System.currentTimeMillis()+StringUtil.createStringID());
+                commodityOrder.setSequence(sequence);
+                sequence++;
                 commodityOrders.add(commodityOrder);
             }
             if(curtainCommodities.size()!=0 && commodityOrderDao.addCommodityOrders(commodityOrders) > 0) {

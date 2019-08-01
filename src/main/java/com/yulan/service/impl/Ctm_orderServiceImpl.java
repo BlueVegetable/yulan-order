@@ -40,7 +40,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         Map<String,Object> map=new HashMap<>();
         List<Map<String,Object>> list=new ArrayList<>();
         List<Map<String,Object>> data=new ArrayList<>();
-        if (!customerMainId.equals("")){
+        if (customerMainId!=null&&!customerMainId.equals("")){
             List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(customerMainId);//查找属于同个customerMainId的用户
             List<String> users=new ArrayList<>();
             if (userMaps.size()!=0){
@@ -62,6 +62,10 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         for (Map<String,Object> m:list) {
 
+//            String realName=web_userDao.getRealName(m.get("CUSTOMER_CODE").toString());//用户名
+//            realName=StringUtil.getUtf8(realName);//转码
+
+
             for (Map.Entry<String, Object> entry : m.entrySet()) {//将订单头内容转码
                 if (entry.getValue() instanceof String) {
                     String origin = StringUtil.getUtf8(String.valueOf(entry.getValue()));
@@ -79,7 +83,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 m2.put("UNIT",UNIT);
                 m2.put("item",item);
 
-                List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
+                List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("LINE_NO").toString());
                 if(list3.size()!=0){
                     m2.put("pack_id",1);//是否可以查看物流判断，1可以，0不可以
                 }else{
@@ -104,6 +108,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             }
 
             m.put("OREDERB_NUM",orderB_num);//订单商品数量
+//            m.put("realName",realName);//客户吗，为了审核
             m.put("ORDERBODY",list2);
             data.add(m);
         }
@@ -139,7 +144,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                     Item item=itemDao.getItemByItemNO(itemNo);
                     m2.put("item",item);
 
-                    List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("ITEM_NO").toString());
+                    List<Map<String,Object>> list3=ctm_orderDao.getPackDetail(order_no,m2.get("LINE_NO").toString());
                     if(list3.size()!=0){
                         m2.put("pack_id",1);//是否可以查看物流判断，1可以，0不可以
                     }else{
@@ -353,7 +358,9 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
             ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
 
         }else {
-            if (resideMoney.compareTo(promotion_cost)!=-1){
+
+
+            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(resideMoney.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
                 ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
@@ -521,12 +528,13 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map getPack(Map<String, Object> m) throws UnsupportedEncodingException {
-        String cid=m.get("cid").toString();
+
         String order_no=m.get("order_no").toString();
-        String item_no=m.get("item_no").toString();
-        BigDecimal allNum=ctm_orderDao.getNum(order_no,item_no);
+
+        String lineNo=Objects.toString(m.get("lineNo").toString());
+        BigDecimal allNum=ctm_orderDao.getNum(order_no,lineNo);
         m.put("all_num",allNum);//总数
-        List<Map<String,Object>> list=ctm_orderDao.getPackDetail(order_no,item_no);
+        List<Map<String,Object>> list=ctm_orderDao.getPackDetail(order_no,lineNo);
         for (Map<String,Object> m1:list){
             BigDecimal thisNum=(BigDecimal)m1.get("QTY_DELIVER");
             allNum=allNum.subtract(thisNum);
@@ -546,7 +554,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     @Override
     public Map getlinkpersonandTel(String companyId) throws UnsupportedEncodingException {
-        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComIdorFlink(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
         if (userMaps.size()!=0){
             for (Map<String,Object> map1:userMaps){

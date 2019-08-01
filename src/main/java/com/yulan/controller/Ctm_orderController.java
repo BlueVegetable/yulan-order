@@ -1,5 +1,6 @@
 package com.yulan.controller;
 
+import com.yulan.dao.Web_userDao;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.service.CurtainOrderService;
 import com.yulan.service.Sal_rebate_certificateService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
@@ -32,6 +34,9 @@ public class Ctm_orderController {
     @Autowired
     private CurtainOrderService curtainOrderService;
 
+    @Autowired
+    private Web_userDao web_userDao;//填获取订单列表坑
+
     /**
      * 订单列表获取
      * @param m
@@ -49,6 +54,10 @@ public class Ctm_orderController {
         String curtainStatusId=m.get("curtainStatusId").toString();
         String companyId=m.get("companyId").toString();//根据玉兰多次改需求后的最新需求，该字段失去作用
         String customerMainId= Objects.toString(m.get("customerMainId"));//Objects.toString当m.get("customerMainId")为null时返回"null"字符串
+
+        if(customerMainId.equals("null")){
+            customerMainId=web_userDao.changeCompanyIdToCurtainMainId(companyId);//转化填坑
+        }
 
 
 
@@ -107,6 +116,20 @@ public class Ctm_orderController {
     public Map getOrderContent(@RequestBody Map<String,Object> m) throws UnsupportedEncodingException {
         String order_no = (String)m.get("order_no");
         String cid = (String)m.get("cid");
+
+        return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderContent(order_no,cid));
+    }
+
+
+    /**
+     * 获取订单详情2,通过get方法
+
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    @RequestMapping("getOrderContent2")
+    @ResponseBody
+    public Map getOrderContent2(@RequestParam("order_no")String order_no,@RequestParam("cid")String cid) throws UnsupportedEncodingException {
 
         return response.getResponseMap(0,"SUCCESS" ,ctm_orderService.getOrderContent(order_no,cid));
     }
