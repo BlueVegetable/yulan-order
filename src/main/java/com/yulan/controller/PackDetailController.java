@@ -24,9 +24,10 @@ public class PackDetailController {
 	@ResponseBody@RequestMapping("getPackDetailAppoint")
 	public Map<String,Object> getPackDetailAppoint(@RequestBody Map<String,String> parameters) {
 		Map<String,Object> result = new HashMap<>();
-		String itemNo = parameters.get("itemNo");
+		String lineNo = parameters.get("lineNo");
 		String orderId = parameters.get("orderId");
-		List<PackDetail> packDetails = packDetailService.getPackDetailAppoint(itemNo,orderId);
+		String itemNo = parameters.get("itemNo");
+		List<PackDetail> packDetails = packDetailService.getPackDetailAppoint(lineNo,orderId);
 		CtmOrderDetail ctmOrderDetail = ctmOrderDetailService.getCtmOrderDetailAppoint(itemNo,orderId);
 		ctmOrderDetail = ctmOrderDetail==null?new CtmOrderDetail():ctmOrderDetail;
 		result.put("packDetails",packDetails);
