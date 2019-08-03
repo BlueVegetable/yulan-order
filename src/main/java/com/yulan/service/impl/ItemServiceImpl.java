@@ -331,14 +331,14 @@ public class ItemServiceImpl implements ItemService {
                     usage = (width + WBH * 2) * 1.5;
                 }
                 BigDecimal ltUsage = new BigDecimal(usage);
-                map.put("lt", ltUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
+                map.put("lt", ltUsage.setScale(1,BigDecimal.ROUND_HALF_UP));
             } else if (itemMLGY.getItemType().equals("ls")) {
                 BigDecimal lsUsage = BigDecimal.valueOf(0);
                 //判断是否是里衬布
                 if (itemMLGY.getProductType().equals("LCB")) {
                     Double LCBUsage = width * multiple + 0.2;
                     BigDecimal LCB = new BigDecimal(LCBUsage);
-                    map.put("LCB", LCB.setScale(2,BigDecimal.ROUND_HALF_UP));
+                    map.put("LCB", LCB.setScale(1,BigDecimal.ROUND_HALF_UP));
                 } else {
                     //帘身
                     //特殊款式
@@ -351,7 +351,7 @@ public class ItemServiceImpl implements ItemService {
                                             "calculated,please checkout WidthHh");
                                 } else {
                                     lsUsage = arith.add(arith.dbToBD(width), arith.div(curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
-                                    map.put("ls", lsUsage.setScale(2,BigDecimal.ROUND_HALF_UP));
+                                    map.put("ls", lsUsage.setScale(1,BigDecimal.ROUND_HALF_UP));
                                 }
                             }
                         }
@@ -476,7 +476,7 @@ public class ItemServiceImpl implements ItemService {
             }
         }
 
-        return usage.setScale(2,BigDecimal.ROUND_HALF_UP);
+        return usage.setScale(1,BigDecimal.ROUND_HALF_UP);
     }
 
     @Override
@@ -515,7 +515,7 @@ public class ItemServiceImpl implements ItemService {
                 if (parentItemNo.equals("Z340004") || parentItemNo.equals("U310111")) {
                     if (curtainItem.getWidthHh() != null) {
                         lsUsage = arith.add(arith.dbToBD(width), arith.div(curtainItem.getWidthHh(),arith.dbToBD(1000.0)));
-                        map.put("ls", lsUsage.setScale(2, BigDecimal.ROUND_HALF_UP));
+                        map.put("ls", lsUsage.setScale(1, BigDecimal.ROUND_HALF_UP));
                     } else {
                         map.put("ls ", itemNO +
                                 " has null values and can not be " +
