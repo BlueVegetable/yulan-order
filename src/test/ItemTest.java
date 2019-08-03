@@ -18,9 +18,9 @@ public class ItemTest {
     @Test
     public void test1() {
         List<String> cartItemIDs = new ArrayList<>();
-        cartItemIDs.add("15624003127520cf306061ec74a7190815bcb44557260");
+        cartItemIDs.add("15645798909038b5a8642ec83462093fc928e05982c1b");
         Map<String,Integer> lineNos = new HashMap<>();
-        lineNos.put("15624003127520cf306061ec74a7190815bcb44557260",1);
+        lineNos.put("15645798909038b5a8642ec83462093fc928e05982c1b",1);
         System.out.println(commodityOrderService.submitCommodityOrder(cartItemIDs,lineNos));
     }
 }

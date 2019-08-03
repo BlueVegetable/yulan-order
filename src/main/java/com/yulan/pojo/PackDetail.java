@@ -33,6 +33,7 @@ public class PackDetail{
     private String accouType;
     private String webOrderNo;
     private BigDecimal freight;
+    private BigDecimal lineNo;
 
     public String getSaleNo() {
         return saleNo;
@@ -248,6 +249,14 @@ public class PackDetail{
 
     public void setFreight(BigDecimal freight) {
         this.freight = freight;
+    }
+
+    public BigDecimal getLineNo() {
+        return lineNo;
+    }
+
+    public void setLineNo(BigDecimal lineNo) {
+        this.lineNo = lineNo;
     }
 
     @Override
