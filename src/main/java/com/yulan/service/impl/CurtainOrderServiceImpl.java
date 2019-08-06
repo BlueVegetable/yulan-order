@@ -240,7 +240,11 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
              */
             if (commodityOrderList!=null){
                 for (List<Map<String,Object>> commodityOrderMaps:commodityOrderList){
+
+                    oneAllCost=BigDecimal.valueOf(0);//窗帘价格重新置零
+
                     BigDecimal smallOne=BigDecimal.valueOf(0);//配件单价
+
                     String lineNo="";//商品行号
                     for (Map<String,Object> commodityOrderMap:commodityOrderMaps ){
                         lineNo=commodityOrderMap.get("lineNo").toString();
