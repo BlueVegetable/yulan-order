@@ -88,8 +88,16 @@ public class Ctm_order_detail  {
 
     private String ljSuggestion;
 
+    private String flagFlType;
 
 
+    public String getFlagFlType() {
+        return flagFlType;
+    }
+
+    public void setFlagFlType(String flagFlType) {
+        this.flagFlType = flagFlType;
+    }
 
 
 
