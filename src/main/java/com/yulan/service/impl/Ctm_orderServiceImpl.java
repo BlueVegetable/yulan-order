@@ -1005,19 +1005,19 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
     /**
      * 计算最后一个商品分利
-     * @param allMony 返利券总额
-     * @param lastgAllMoney 除最后一个商品的总额
+     * @param allMoney 返利券总额
+     * @param lastAllMoney 除最后一个商品的总额
      *
      * @return
      */
-    public BigDecimal getLastBackMony(BigDecimal allMony,BigDecimal lastgAllMoney,BigDecimal thisMoney){
-        if(allMony.compareTo(BigDecimal.valueOf(0))==0){
+    public BigDecimal getLastBackMony(BigDecimal allMoney,BigDecimal lastAllMoney,BigDecimal thisMoney){
+        if(allMoney.compareTo(BigDecimal.valueOf(0))==0){
             return BigDecimal.valueOf(0);
         }
-        if (allMony.subtract(lastgAllMoney).compareTo(thisMoney)==1){//大于商品价格
+        if (allMoney.subtract(lastAllMoney).compareTo(thisMoney)==1){//大于商品价格
             return thisMoney;
         }else {
-            return allMony.subtract(lastgAllMoney);
+            return allMoney.subtract(lastAllMoney);
         }
 
     }
