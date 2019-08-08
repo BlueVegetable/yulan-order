@@ -198,8 +198,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
 
 
-
-
+        /**
+         * 记得修改时间
+         */
         if (curtainOrderDao.updateCurOrderStatus(orderNo,curtainStatusId)){
 
             /**
