@@ -71,6 +71,9 @@ public class CustomerBalanceImpl implements CustomerBalanceService {
             if(customerBalancePeriodDetail.getNotes() != null) {
                 customerBalancePeriodDetail.setNotes(stringUtil.GBKToUTF8(customerBalancePeriodDetail.getNotes()));
             }
+            if(customerBalancePeriodDetail.getBillNo() != null){
+                customerBalancePeriodDetail.setBillNo(stringUtil.GBKToUTF8(customerBalancePeriodDetail.getBillNo()));
+            }
         }
         map.put("customerBalancePeriodDetailList",customerBalancePeriodDetailList);
         map.put("code",0);

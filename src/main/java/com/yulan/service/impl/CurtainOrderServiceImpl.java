@@ -198,8 +198,9 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
 
 
-
-
+        /**
+         * 记得修改时间
+         */
         if (curtainOrderDao.updateCurOrderStatus(orderNo,curtainStatusId)){
 
             /**
@@ -240,7 +241,11 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
              */
             if (commodityOrderList!=null){
                 for (List<Map<String,Object>> commodityOrderMaps:commodityOrderList){
+
+                    oneAllCost=BigDecimal.valueOf(0);//窗帘价格重新置零
+
                     BigDecimal smallOne=BigDecimal.valueOf(0);//配件单价
+
                     String lineNo="";//商品行号
                     for (Map<String,Object> commodityOrderMap:commodityOrderMaps ){
                         lineNo=commodityOrderMap.get("lineNo").toString();
@@ -611,6 +616,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             String order=ctm_order.getOrderNo();
 
             int lineNo=1;
+            int sizeNum=list.size();//统计所需
             for (Map<String,Object> m2:list){//订单详情录入
 
 
@@ -633,18 +639,23 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
                 //优惠券
                 BigDecimal rebateMonth =BigDecimal.valueOf(0);
                 BigDecimal rebateYear=BigDecimal.valueOf(0);
-                if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
-                    if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
-                        rebateMonth=BackUtil.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
+                if (lineNo!=sizeNum){
+                    if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
+                        if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
+                            rebateMonth=BackUtil.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
 
-                    }else {
-                        rebateMonth= BackUtil.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
-                        rebateYear=BackUtil.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
+                        }else {
+                            rebateMonth=BackUtil.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                            rebateYear=BackUtil.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
+                        }
+                    }else{//订单价格大于优惠券
+                        rebateMonth=BackUtil.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                        rebateYear=BackUtil.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
+
                     }
-                }else{//订单价格大于优惠券
-                    rebateMonth=BackUtil.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
-                    rebateYear=BackUtil.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
-
+                }else {//获取最后一个商品分利
+                    rebateMonth=BackUtil.getLastBackMoney(money_m,allRebateMonth,ctm_order_detail.getPromotionCost());
+                    rebateYear=BackUtil.getLastBackMoney(money_y,allRebateYear,ctm_order_detail.getPromotionCost());
                 }
 
                 /**
