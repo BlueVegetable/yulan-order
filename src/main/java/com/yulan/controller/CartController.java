@@ -84,6 +84,17 @@ public class CartController {
 
 		Item item = itemService.getItemByItemNO(itemNO);
 		Cart cart = getSimpleCartByCID(CID);
+
+		List<Commodity> commodityListWithoutCE = commodityService.getCommoditiesByCIDWithoutGroupCE(CID);
+		if(commodityListWithoutCE.size()!=0) {
+			for (Commodity commodity:commodityListWithoutCE) {
+				Item inlineItem = commodity.getItem();
+				if(inlineItem!=null&&inlineItem.getItemNo().equals(itemNO)) {
+					return Response.getResponseMap(2,"购物车有相同型号的产品未提交，不允许添加相同型号的产品",null);
+				}
+			}
+		}
+
 		SalPromotion salPromotion = null;
 		if(activityID != null) {
 			salPromotion = salPromotionService.getSalPromotionByID(activityID);
