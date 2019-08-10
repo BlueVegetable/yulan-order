@@ -67,7 +67,7 @@
         select loginname from web_user where company_id =
         (select company_id from web_user where loginname = #{CID})))
         and product_group_type != 'C' and product_group_type != 'E'
-        )
+        ) and status = 1
     </select>
 
     <update id="updateCommodity" parameterType="Commodity">
