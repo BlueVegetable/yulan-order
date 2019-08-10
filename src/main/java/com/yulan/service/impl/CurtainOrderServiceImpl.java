@@ -268,6 +268,10 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
                         BeanUtils.populate(commodityOrder,commodityOrderMap);
                         commodityOrder.setItem(item);
+
+//                        String curtainItemName = commodityOrder.getCurtainItemName();
+//                        curtainItemName = StringUtil.UTF8ToGBK(curtainItemName);
+//                        commodityOrder.setCurtainItemName(curtainItemName);
                         if (!commodityOrderDao.updateCommodityOrder(commodityOrder)){
                             m.put("code",1);
                             m.put("msg","窗帘详情修改错误");
