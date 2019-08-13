@@ -574,8 +574,8 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
         }
         ctm_order.setAllSpend(allSpend);
 
-        BigDecimal resideMoney=ctm_orderDao.getResideMoney(companyId).add(money);//加上优惠券
-//        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
+//        BigDecimal resideMoney=ctm_orderDao.getResideMoney(companyId).add(money);//加上优惠券
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
         if(arrearsFlag.equals("N")){//不选活动，要检查欠帐，选活动了，就判断状态是否为y。当y时，要检查欠帐，为n时，不检查余额，直接提交成功变成已提交
@@ -585,7 +585,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
 
         }else {
-            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(resideMoney.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交
+            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(money.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
                 ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
