@@ -589,7 +589,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
             ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
 
         }else {
-            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(money.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交
+            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(money.compareTo(promotion_cost)!=-1)||(resideMoney.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
                 ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
