@@ -360,7 +360,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }else {
 
 
-            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(money.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交,即优券金额大于
+            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(money.compareTo(promotion_cost)!=-1)||(resideMoney.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交,即优券金额大于
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
                 ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
