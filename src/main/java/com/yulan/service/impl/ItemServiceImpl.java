@@ -394,14 +394,15 @@ public class ItemServiceImpl implements ItemService {
                 }
             } else if (itemMLGY.getItemType().equals("pjb")) {
                 //配件
-                map.put("pjb", 1.00);
+                map.put("pjb", 1.0);
             }
 
             //工艺用量
             if (itemMLGY.getProductType().equals("GY")) {
                 //直接返回GY=003的有用量，因为其他的工艺用量等于帘身用量
                     Double GYusage = width * height;
-                    map.put("GY", GYusage);
+                    BigDecimal   b   =   new   BigDecimal(GYusage);
+                    map.put("GY", b.setScale(1,BigDecimal.ROUND_HALF_UP));
 
             }
             //绣花边
@@ -409,10 +410,12 @@ public class ItemServiceImpl implements ItemService {
                 Double XHBusage ;
                 if (itemMLGY.getItemType().equals("lt")) {
                     XHBusage = width * multiple + 0.3;
-                    map.put("XHBlt", XHBusage);
+                    BigDecimal   b   =   new   BigDecimal(XHBusage);
+                    map.put("XHBlt", b.setScale(1,BigDecimal.ROUND_HALF_UP));
                 } else if (itemMLGY.getItemType().equals("ls")) {
                     XHBusage = height * 2 + 0.4;
-                    map.put("XHBls", XHBusage);
+                    BigDecimal   b   =   new   BigDecimal(XHBusage);
+                    map.put("XHBls", b.setScale(1,BigDecimal.ROUND_HALF_UP));
                 }
             }
             //这行代码有问题是因为item如果型号一样的话，就会地址一样，然后后面的itemMLGY就会覆盖掉前面的，就会产生重复数据
@@ -502,10 +505,12 @@ public class ItemServiceImpl implements ItemService {
             Double XHBusage ;
             if (itemType.equals("lt")) {
                 XHBusage = width * multiple + 0.3;
-                map.put("XHBlt", XHBusage);
+                BigDecimal   b   =   new   BigDecimal(XHBusage);
+                map.put("XHBlt", b.setScale(1,BigDecimal.ROUND_HALF_UP));
             } else if (itemType.equals("ls")) {
                 XHBusage = height * 2 + 0.4;
-                map.put("XHBls", XHBusage);
+                BigDecimal   b   =   new   BigDecimal(XHBusage);
+                map.put("XHBls",b.setScale(1,BigDecimal.ROUND_HALF_UP));
             }
         }else {
 
