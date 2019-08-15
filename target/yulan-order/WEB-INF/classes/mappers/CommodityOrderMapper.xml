@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CommodityOrderDao">
+    <resultMap id="CommodityOrderMap" type="CommodityOrder" >
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="PRICE" property="price" jdbcType="DECIMAL" />
+        <result column="ACTIVITY_ID" property="activityId" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_PRICE" property="activityPrice" jdbcType="DECIMAL" />
+        <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+        <result column="ORDER_ITEM_ID" property="orderItemId" jdbcType="VARCHAR" />
+        <result column="QUANTITY" property="quantity" jdbcType="DECIMAL" />
+        <result column="WIDTH" property="width" jdbcType="DECIMAL" />
+        <result column="HEIGHT" property="height" jdbcType="DECIMAL" />
+        <result column="NOTE" property="note" jdbcType="VARCHAR" />
+        <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+        <result column="SPLIT_SHIPMENT" property="splitShipment" jdbcType="DECIMAL" />
+        <result column="CURTAIN_ITEM_NAME" property="curtainItemName" jdbcType="VARCHAR" />
+        <result column="CURTAIN_PART_NAME" property="curtainPartName" jdbcType="VARCHAR" />
+        <result column="DOSAGE" property="dosage" jdbcType="DECIMAL" />
+        <result column="MANUFACTURING_INSTRUCTIONS" property="manufacturingInstructions" jdbcType="VARCHAR" />
+        <result column="CERTAIN_HEIGHT_WIDTH" property="certainHeightWidth" jdbcType="DECIMAL" />
+        <result column="SPECIFICATION" property="specification" jdbcType="DECIMAL" />
+        <result column="ILLUSTRATE" property="illustrate" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="DECIMAL" />
+        <result column="SAVE_TIME" property="saveTime" jdbcType="TIMESTAMP" />
+        <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <result column="ORDER_ITEM_NUMBER" property="orderItemNumber" jdbcType="DECIMAL" />
+        <result column="SUGGESTION" property="suggestion" jdbcType="VARCHAR" />
+        <result column="DELETE_FLAG" property="deleteFlag" jdbcType="VARCHAR" />
+        <result column="MODIFY_FLAG" property="modifyFlag" jdbcType="VARCHAR" />
+        <result column="CHANGE_FLAG" property="changeFlag" jdbcType="VARCHAR" />
+        <result column="INLINE_NO" property="inlineNo" jdbcType="DECIMAL" />
+        <association column="ITEM_ID" property="item" select="com.yulan.dao.ItemDao.getItemByItemNO" />
+    </resultMap>
+
+    <insert id="addCommodityOrder" parameterType="CommodityOrder">
+        insert into COMMODITY_ORDER
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, ORDER_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,
+        CURTAIN_ITEM_NAME,CURTAIN_PART_NAME,DOSAGE,MANUFACTURING_INSTRUCTIONS,CERTAIN_HEIGHT_WIDTH,
+        SPECIFICATION,ILLUSTRATE,STATUS,ORDER_NO,ORDER_ITEM_NUMBER,SUGGESTION,SAVE_TIME,DELETE_FLAG,
+        MODIFY_FLAG,CHANGE_FLAG,INLINE_NO)
+        VALUES
+        (#{id},#{price,jdbcType=NUMERIC},#{activityId,jdbcType=VARCHAR},#{item.itemNo},#{orderItemId},#{quantity,jdbcType=NUMERIC},
+        #{width,jdbcType=NUMERIC},#{height,jdbcType=NUMERIC},#{note,jdbcType=VARCHAR},#{unit,jdbcType=VARCHAR},
+        #{splitShipment,jdbcType=NUMERIC},#{curtainItemName,jdbcType=VARCHAR},#{curtainPartName,jdbcType=VARCHAR},
+        #{dosage,jdbcType=NUMERIC},#{manufacturingInstructions,jdbcType=VARCHAR},
+        #{certainHeightWidth,jdbcType=NUMERIC},#{specification,jdbcType=NUMERIC},#{illustrate,jdbcType=VARCHAR},
+        #{status,jdbcType=NUMERIC},#{orderNo,jdbcType=VARCHAR},#{orderItemNumber,jdbcType=NUMERIC},
+        #{suggestion,jdbcType=VARCHAR},#{saveTime,jdbcType=TIMESTAMP},#{deleteFlag,jdbcType=VARCHAR},
+        #{modifyFlag,jdbcType=VARCHAR},#{changeFlag,jdbcType=VARCHAR},#{inlineNo,jdbcType=NUMERIC})
+    </insert>
+
+    <insert id="addCommodityOrders" parameterType="Map">
+        insert into COMMODITY_ORDER
+        (ID, PRICE, ACTIVITY_ID, ITEM_ID, ORDER_ITEM_ID, QUANTITY,WIDTH,HEIGHT,NOTE,UNIT,SPLIT_SHIPMENT,
+        CURTAIN_ITEM_NAME,CURTAIN_PART_NAME,DOSAGE,MANUFACTURING_INSTRUCTIONS,CERTAIN_HEIGHT_WIDTH,
+        SPECIFICATION,ILLUSTRATE,STATUS,ORDER_NO,ORDER_ITEM_NUMBER,SUGGESTION,SAVE_TIME,LINE_NO,INLINE_NO,
+        DELETE_FLAG,MODIFY_FLAG,CHANGE_FLAG,SEQUENCE)
+        (
+        <foreach collection="commodityOrders" item="commodityOrder" separator="union all">
+            select
+            #{commodityOrder.id},#{commodityOrder.price,jdbcType=NUMERIC},#{commodityOrder.activityId,jdbcType=VARCHAR},
+            #{commodityOrder.item.itemNo},#{commodityOrder.orderItemId},#{commodityOrder.quantity,jdbcType=NUMERIC},
+            #{commodityOrder.width,jdbcType=NUMERIC},#{commodityOrder.height,jdbcType=NUMERIC},#{commodityOrder.note,jdbcType=VARCHAR},
+            #{commodityOrder.unit,jdbcType=VARCHAR},
+            #{commodityOrder.splitShipment,jdbcType=NUMERIC},#{commodityOrder.curtainItemName,jdbcType=VARCHAR},
+            #{commodityOrder.curtainPartName,jdbcType=VARCHAR},
+            #{commodityOrder.dosage,jdbcType=NUMERIC},#{commodityOrder.manufacturingInstructions,jdbcType=VARCHAR},
+            #{commodityOrder.certainHeightWidth,jdbcType=NUMERIC},#{commodityOrder.specification,jdbcType=NUMERIC},
+            #{commodityOrder.illustrate,jdbcType=VARCHAR},
+            #{commodityOrder.status,jdbcType=NUMERIC},#{commodityOrder.orderNo,jdbcType=VARCHAR},
+            #{commodityOrder.orderItemNumber,jdbcType=NUMERIC},
+            #{commodityOrder.suggestion,jdbcType=VARCHAR},#{commodityOrder.saveTime,jdbcType=TIMESTAMP},
+            #{commodityOrder.lineNo,jdbcType=NUMERIC},#{commodityOrder.inlineNo,jdbcType=NUMERIC},
+            #{commodityOrder.deleteFlag,jdbcType=VARCHAR},#{commodityOrder.modifyFlag,jdbcType=VARCHAR},
+            #{commodityOrder.changeFlag,jdbcType=VARCHAR},#{commodityOrder.sequence,jdbcType=NUMERIC}
+            from dual
+        </foreach>
+        )
+    </insert>
+
+    <delete id="deleteCommodityOrdersByOrderItemID" parameterType="String">
+        delete from COMMODITY_ORDER where ORDER_ITEM_ID = #{orderItemID}
+    </delete>
+
+    <select id="getCommodityOrders" parameterType="Map" resultMap="CommodityOrderMap">
+        select * from COMMODITY_ORDER where ORDER_NO = #{orderNo} and LINE_NO = #{lineNo} order by INLINE_NO
+    </select>
+
+    <select id="getCommodityOrderByOrderItemID" parameterType="String" resultMap="CommodityOrderMap">
+        select * from COMMODITY_ORDER where ORDER_ITEM_ID = #{orderItemID}
+    </select>
+
+    <update id="addOrderNoByOrderItemIDs" parameterType="Map">
+        update COMMODITY_ORDER
+        set ORDER_NO = #{orderNo}
+        where ORDER_ITEM_ID = #{orderItemID}
+    </update>
+
+    <update id="updateCommodityOrder" parameterType="CommodityOrder" >
+        update COMMODITY_ORDER
+        <set >
+            <if test="lineNo != null" >
+                LINE_NO = #{lineNo,jdbcType=NUMERIC},
+            </if>
+            <if test="itemId != null" >
+                ITEM_ID = #{itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="dosage != null" >
+                DOSAGE = #{dosage,jdbcType=NUMERIC},
+            </if>
+            <if test="manufacturingInstructions != null" >
+                MANUFACTURING_INSTRUCTIONS = #{manufacturingInstructions,jdbcType=VARCHAR},
+            </if>
+            <if test="certainHeightWidth != null" >
+                CERTAIN_HEIGHT_WIDTH = #{certainHeightWidth,jdbcType=NUMERIC},
+            </if>
+            <if test="specification != null" >
+                SPECIFICATION = #{specification,jdbcType=NUMERIC},
+            </if>
+            <if test="illustrate != null" >
+                ILLUSTRATE = #{illustrate,jdbcType=VARCHAR},
+            </if>
+
+            <if test="suggestion != null" >
+                SUGGESTION = #{suggestion,jdbcType=VARCHAR},
+            </if>
+            <if test="note != null" >
+                NOTE = #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="curtainItemName != null">
+                CURTAIN_ITEM_NAME = #{curtainItemName,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+        and LINE_NO = #{lineNo,jdbcType=NUMERIC}
+        and order_item_number=#{orderItemNumber}
+    </update>
+
+    <update id="updateCommodityOrderSug" parameterType="CommodityOrder" >
+        update COMMODITY_ORDER
+        <set >
+            <if test="suggestion != null" >
+                SUGGESTION = #{suggestion,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+        and LINE_NO = #{lineNo,jdbcType=NUMERIC}
+        and order_item_number=#{orderItemNumber}
+    </update>
+
+    <delete id="deleteCommodityOrder" parameterType="String">
+       delete from COMMODITY_ORDER where ID = #{id}
+    </delete>
+</mapper>

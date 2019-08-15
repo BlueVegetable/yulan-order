@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CtmOrderDetailDao">
+    <resultMap id="BaseResultMap" type="CtmOrderDetail" >
+        <id column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <id column="LINE_NO" property="lineNo" jdbcType="DECIMAL" />
+        <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+        <result column="ITEM_NO_SAMPLE" property="itemNoSample" jdbcType="VARCHAR" />
+        <result column="PRODUCTION_VERSION" property="productionVersion" jdbcType="VARCHAR" />
+        <result column="QTY_REQUIRED" property="qtyRequired" jdbcType="DECIMAL" />
+        <result column="DATE_DELIVER" property="dateDeliver" jdbcType="TIMESTAMP" />
+        <result column="DATE_UPDATE" property="dateUpdate" jdbcType="TIMESTAMP" />
+        <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+        <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+        <result column="DISCOUNT" property="discount" jdbcType="DECIMAL" />
+        <result column="DISCOUNT_FLAG" property="discountFlag" jdbcType="VARCHAR" />
+        <result column="CURTAIN_KS" property="curtainKs" jdbcType="VARCHAR" />
+        <result column="CURTAIN_ROOM_NAME" property="curtainRoomName" jdbcType="VARCHAR" />
+        <result column="CURTAIN_ROOM_ID" property="curtainRoomId" jdbcType="DECIMAL" />
+        <result column="CURTAIN_ROOM_LINENO" property="curtainRoomLineno" jdbcType="DECIMAL" />
+        <result column="CURTAIN_WIDTH" property="curtainWidth" jdbcType="DECIMAL" />
+        <result column="CURTAIN_HEIGHT" property="curtainHeight" jdbcType="DECIMAL" />
+        <result column="CURTAIN_HEIGHT2" property="curtainHeight2" jdbcType="DECIMAL" />
+        <result column="CURTAIN_ITEM_MENU_NOTES" property="curtainItemMenuNotes" jdbcType="VARCHAR" />
+        <result column="CURTAIN_MENU_GROUP_ID" property="curtainMenuGroupId" jdbcType="VARCHAR" />
+        <result column="CURTAIN_SIZE_TIMES" property="curtainSizeTimes" jdbcType="DECIMAL" />
+        <result column="CURTAIN_SIZE_TIMES2" property="curtainSizeTimes2" jdbcType="DECIMAL" />
+        <result column="ML_NON_STANDARD" property="mlNonStandard" jdbcType="DECIMAL" />
+        <result column="CURTAIN_WBH_SIZE" property="curtainWbhSize" jdbcType="DECIMAL" />
+        <result column="TRANS_TYPE" property="transType" jdbcType="VARCHAR" />
+        <result column="TRANS_ID" property="transId" jdbcType="VARCHAR" />
+        <result column="DATE_DELIVER_KF" property="dateDeliverKf" jdbcType="TIMESTAMP" />
+        <result column="DATE_DELIVER_NB" property="dateDeliverNb" jdbcType="TIMESTAMP" />
+        <result column="DATE_DELIVER_FH" property="dateDeliverFh" jdbcType="TIMESTAMP" />
+        <result column="UNIT_PRICE" property="unitPrice" jdbcType="DECIMAL" />
+        <result column="PROMOTION_COST" property="promotionCost" jdbcType="DECIMAL" />
+        <result column="PROMOTION" property="promotion" jdbcType="VARCHAR" />
+        <result column="PART_SEND_ID" property="partSendId" jdbcType="VARCHAR" />
+        <result column="BACK_Y" property="backY" jdbcType="DECIMAL" />
+        <result column="BACK_M" property="backM" jdbcType="DECIMAL" />
+        <result column="FINAL_COST" property="finalCost" jdbcType="DECIMAL" />
+        <result column="PROMOTION_TYPE" property="promotionType" jdbcType="VARCHAR" />
+        <result column="LJ_SUGGESTION" property="ljSuggestion" jdbcType="VARCHAR" />
+        <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+        <result column="FLAG_FL_TYPE" property="flagFlType" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getCtmOrderDetailAppoint" resultMap="BaseResultMap" parameterType="Map">
+        select * from CTM_ORDER_DETAIL where ITEM_NO = #{itemNo} and ORDER_NO = #{orderId}
+    </select>
+</mapper>

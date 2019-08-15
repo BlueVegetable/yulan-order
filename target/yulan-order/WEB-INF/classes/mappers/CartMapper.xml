@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.CartDao">
+    <resultMap id="CartMap" type="Cart" >
+        <id column="CART_ID" property="cartId" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="addCart" parameterType="Cart" >
+        insert into cart
+        (cart_id, customer_id)
+        values
+        (#{cartId},#{customerId})
+    </insert>
+
+    <select id="countCartByCID" resultType="Long" parameterType="String">
+        select count(*) from cart where CUSTOMER_ID = #{CID}
+    </select>
+
+    <select id="getCartByCID" resultType="Cart" parameterType="String">
+        select * from cart where CUSTOMER_ID = #{CID}
+    </select>
+</mapper>
