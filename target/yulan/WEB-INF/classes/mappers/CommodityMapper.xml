@@ -59,6 +59,17 @@
         select * from COMMODITY where CART_ITEM_ID = #{cartItemID} and status = 1
     </select>
 
+    <select id="getCommoditiesByCIDWithoutGroupCE" parameterType="String" resultMap="CommodityMap">
+        select item_id from commodity where cart_item_id
+        in (select cart_item_id from cart_item
+        where cart_id in (
+        select cart_id from cart where customer_id in(
+        select loginname from web_user where company_id =
+        (select company_id from web_user where loginname = #{CID})))
+        and product_group_type != 'C' and product_group_type != 'E'
+        ) and status = 1
+    </select>
+
     <update id="updateCommodity" parameterType="Commodity">
         update COMMODITY
         set PRICE=#{price,jdbcType=VARCHAR},ACTIVITY_ID = #{activityId,jdbcType=VARCHAR},ITEM_ID = #{item.itemNo},

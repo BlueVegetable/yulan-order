@@ -347,8 +347,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
         ctm_order.setAllSpend(allSpend);
 
-        BigDecimal resideMoney=ctm_orderDao.getResideMoney(companyId).add(money);//加上优惠券
-//        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
+//        BigDecimal resideMoney=ctm_orderDao.getResideMoney(companyId).add(money);//加上优惠券
+        BigDecimal resideMoney=ctm_orderDao.getResideMoney(cid);
 
         String statusId=" ";
         if(arrearsFlag.equals("N")){//不选活动，要检查欠帐，选活动了，就判断状态是否为y。当y时，要检查欠帐，为n时，不检查余额，直接提交成功变成已提交
@@ -360,7 +360,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }else {
 
 
-            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(resideMoney.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交
+            if ((promotion_cost.compareTo(BigDecimal.valueOf(0))==0)||(money.compareTo(promotion_cost)!=-1)){//订单金额为0时可以直接提交,即优券金额大于
                 statusId="1";
                 ctm_order.setStatusId(statusId);//已经提交
                 ctm_order.setWebTjTime(nowTime);//获取当前时间（记录已经提交时间）
@@ -382,6 +382,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         if (ctm_orderDao.insertOrderH(ctm_order)){//订单头录入
 
                     int lineNo=1;
+                    int sizeNum=list.size();//统计所需
                     for (Map<String,Object> m2:list){//订单详情录入
 
 
@@ -402,19 +403,27 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 //优惠券
                 BigDecimal rebateMonth =BigDecimal.valueOf(0);
                 BigDecimal rebateYear=BigDecimal.valueOf(0);
-                if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
-                    if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
-                        rebateMonth=this.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
 
-                    }else {
+                if (lineNo!=sizeNum){
+                    if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
+                        if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
+                            rebateMonth=this.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
+
+                        }else {
+                            rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                            rebateYear=this.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
+                        }
+                    }else{//订单价格大于优惠券
                         rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
-                        rebateYear=this.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
-                    }
-                }else{//订单价格大于优惠券
-                    rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
-                    rebateYear=this.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
+                        rebateYear=this.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
 
+                    }
+                }else {//获取最后一个商品分利
+                    rebateMonth=this.getLastBackMony(money_m,allRebateMonth,ctm_order_detail.getPromotionCost());
+                    rebateYear=this.getLastBackMony(money_y,allRebateYear,ctm_order_detail.getPromotionCost());
                 }
+
+
 
                 /**
                  * 记录优惠券使用记录
@@ -707,8 +716,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         BigDecimal allRebateMonth=BigDecimal.valueOf(0);
         BigDecimal allRebateYear=BigDecimal.valueOf(0);
 
-
-
+            int lineNo=1;
+            int sizeNum=list.size();//统计所需
             for (Map<String,Object> m2:list){//订单详情遍历
                 Map<String,Object> returnMap=new HashMap<>();
 
@@ -723,19 +732,23 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
                 //优惠券
                 BigDecimal rebateMonth =BigDecimal.valueOf(0);
                 BigDecimal rebateYear=BigDecimal.valueOf(0);
-                if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
-                    if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
-                        rebateMonth=this.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
+                if (lineNo!=sizeNum){
+                    if(promotion_cost.compareTo(money)!=1){//订单价格小于优惠券
+                        if (promotion_cost.compareTo(money_m)!=1){//订单小于月券
+                            rebateMonth=this.getBackMoney(promotion_cost,money,promotion_cost,ctm_order_detail.getPromotionCost());//月返利
 
-                    }else {
+                        }else {
+                            rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                            rebateYear=this.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
+                        }
+                    }else{//订单价格大于优惠券
                         rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
+                        rebateYear=this.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
 
-                        rebateYear=this.getBackMoney(promotion_cost,money,promotion_cost.subtract(money_m),ctm_order_detail.getPromotionCost());
                     }
-                }else{//订单价格大于优惠券
-                    rebateMonth=this.getBackMoney(promotion_cost,money,money_m,ctm_order_detail.getPromotionCost());//月返利
-                    rebateYear=this.getBackMoney(promotion_cost,money,money_y,ctm_order_detail.getPromotionCost());
-
+                }else {//获取最后一个商品分利
+                    rebateMonth=this.getLastBackMony(money_m,allRebateMonth,ctm_order_detail.getPromotionCost());
+                    rebateYear=this.getLastBackMony(money_y,allRebateYear,ctm_order_detail.getPromotionCost());
                 }
                 returnMap.put("itemNo",ctm_order_detail.getItemNo());
                 returnMap.put("rebateYear",rebateYear);
@@ -753,7 +766,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
 
-
+                lineNo++;
 
             }
 
@@ -986,6 +999,26 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
         return backMoney;
 
+
+    }
+
+
+    /**
+     * 计算最后一个商品分利
+     * @param allMoney 返利券总额
+     * @param lastAllMoney 除最后一个商品的总额
+     *
+     * @return
+     */
+    public BigDecimal getLastBackMony(BigDecimal allMoney,BigDecimal lastAllMoney,BigDecimal thisMoney){
+        if(allMoney.compareTo(BigDecimal.valueOf(0))==0){
+            return BigDecimal.valueOf(0);
+        }
+        if (allMoney.subtract(lastAllMoney).compareTo(thisMoney)==1){//大于商品价格
+            return thisMoney;
+        }else {
+            return allMoney.subtract(lastAllMoney);
+        }
 
     }
 }

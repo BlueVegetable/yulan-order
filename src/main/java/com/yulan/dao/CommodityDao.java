@@ -19,6 +19,8 @@ public interface CommodityDao {
 	Commodity getCommodityAppoint(@Param("activityID") String activityID,@Param("itemID")String itemID,
 								  @Param("cartItemID") String cartItemID);
 
+	List<Commodity> getCommoditiesByCIDWithoutGroupCE(String CID);
+
 	long countByCartItemID(String cartItemID);
 
 	List<Commodity> getCommoditiesByCartItemID(String cartItemID);

@@ -34,6 +34,11 @@ public class CurtainCommodityServiceImpl implements CommodityService {
 	}
 
 	@Override
+	public List<Commodity> getCommoditiesByCIDWithoutGroupCE(String CID) {
+		return null;
+	}
+
+	@Override
 	public boolean deleteCommodityByID(String commodityID) {
 		return curtainCommodityEncode.deleteCommodityByID(commodityID);
 	}

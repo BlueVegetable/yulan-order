@@ -20,6 +20,8 @@ public interface CommodityService {
 
 	Commodity getCommodityAppoint(String activityID,String itemID,String cartItemID);
 
+	List<Commodity> getCommoditiesByCIDWithoutGroupCE(String CID);
+
 	long countByCartItemID(String cartItemID);
 
 	boolean updateCommodity(Commodity commodity) throws UnsupportedEncodingException;

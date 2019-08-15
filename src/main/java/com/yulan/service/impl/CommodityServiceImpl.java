@@ -1,5 +1,6 @@
 package com.yulan.service.impl;
 
+import com.yulan.dao.CommodityDao;
 import com.yulan.encode.CommodityEncode;
 import com.yulan.pojo.Commodity;
 import com.yulan.service.CommodityService;
@@ -15,6 +16,8 @@ public class CommodityServiceImpl implements CommodityService {
 
 	@Autowired
 	private CommodityEncode commodityEncode;
+	@Autowired
+	private CommodityDao commodityDao;
 
 	@Override
 	public boolean addCommodity(Commodity commodity) {
@@ -51,6 +54,11 @@ public class CommodityServiceImpl implements CommodityService {
 	@Override
 	public long countByCartItemID(String cartItemID) {
 		return commodityEncode.countByCartItemID(cartItemID);
+	}
+
+	@Override
+	public List<Commodity> getCommoditiesByCIDWithoutGroupCE(String CID) {
+		return commodityDao.getCommoditiesByCIDWithoutGroupCE(CID);
 	}
 
 	@Override

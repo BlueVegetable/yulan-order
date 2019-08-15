@@ -3,11 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!--    <bean id="SpringQtzJob" class="com.yulan.service.impl.SpringQtzJob" />
+    <bean id="SpringQtzJob" class="com.yulan.service.impl.SpringQtzJob" />
     <bean id="SpringQtzJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject">
-            <ref bean="SpringQtzJob"/>
-        </property>
+        <property name="targetObject" ref="SpringQtzJob" />
         <property name="targetMethod" value="execute" />
     </bean>
     <bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -20,6 +18,6 @@
                 <ref bean="CronTriggerBean"/>
             </list>
         </property>
-    </bean>-->
+    </bean>
 
 </beans>
