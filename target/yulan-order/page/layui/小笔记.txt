@@ -1,0 +1,6 @@
+导入2.0.3版本的css:
+<link rel="stylesheet" href="./layui/css/layui.css"  media="all">
+导入2.0.3版本的js:
+<script src="./layui/layui.js" charset="utf-8"></script>
+连接外部的url:
+<script src="./js/url.js" charset="utf-8"></script>

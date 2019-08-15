@@ -41,7 +41,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         List<Map<String,Object>> list=new ArrayList<>();
         List<Map<String,Object>> data=new ArrayList<>();
         if (customerMainId!=null&&!customerMainId.equals("")){
-            List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(customerMainId);//查找属于同个customerMainId的用户
+            List<Map<String,Object>> userMaps=web_userDao.getAllUserByCustomerMainId(customerMainId);//查找属于同个customerMainId的用户
             List<String> users=new ArrayList<>();
             if (userMaps.size()!=0){
                 for (Map<String,Object> map1:userMaps){
@@ -258,7 +258,7 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
         }
 
 
-        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComIdorFlink(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
         if (userMaps.size()!=0){
             for (Map<String,Object> map1:userMaps){
@@ -531,7 +531,8 @@ public class Ctm_orderServiceImpl implements Ctm_orderService {
 
 
 
-
+        m.put("code",0);
+        m.put("msg","SUCCESS");
         return m;
     }
 
