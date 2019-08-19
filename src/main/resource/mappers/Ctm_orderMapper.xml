@@ -20,7 +20,8 @@
     CURTAIN_ITEM_MENU_NOTES, CURTAIN_MENU_GROUP_ID, CURTAIN_SIZE_TIMES, CURTAIN_SIZE_TIMES2,
     ML_NON_STANDARD, CURTAIN_WBH_SIZE, TRANS_TYPE, TRANS_ID,to_char(DATE_DELIVER_KF,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_KF,to_char(DATE_DELIVER_NB,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_NB,
     to_char(DATE_DELIVER_FH,'yyyy-mm-dd hh24:mi:ss') DATE_DELIVER_FH,NVL(UNIT_PRICE,0) UNIT_PRICE,NVL(PROMOTION_COST,0) PROMOTION_COST,NVL(PROMOTION,' ') PROMOTION,NVL(PART_SEND_ID,' ')PART_SEND_ID,
-    NVL(BACK_Y,0)BACK_Y,NVL(BACK_M,0)BACK_M,NVL(FINAL_COST,0)FINAL_COST,NVL(PROMOTION_TYPE,' ')PROMOTION_TYPE,NVL(LJ_SUGGESTION,' ')LJ_SUGGESTION,NVL(FLAG_FL_TYPE,' ')FLAG_FL_TYPE
+    NVL(BACK_Y,0)BACK_Y,NVL(BACK_M,0)BACK_M,NVL(FINAL_COST,0)FINAL_COST,NVL(PROMOTION_TYPE,' ')PROMOTION_TYPE,NVL(LJ_SUGGESTION,' ')LJ_SUGGESTION,NVL(FLAG_FL_TYPE,' ')FLAG_FL_TYPE,
+    NVL(ONLINE_SALES_AMOUNT,-1) ONLINE_SALES_AMOUNT
   </sql>
 
     <select id="getOrders" resultType="Map">
@@ -730,6 +731,9 @@
             <if test="flagFlType != null" >
                 FLAG_FL_TYPE,
             </if>
+            <if test="onlineSalesAmount != null" >
+                ONLINE_SALES_AMOUNT,
+            </if>
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -852,6 +856,9 @@
             </if>
             <if test="flagFlType != null" >
                 #{flagFlType,jdbcType=VARCHAR},
+            </if>
+            <if test="onlineSalesAmount != null" >
+                #{onlineSalesAmount,jdbcType=DECIMAL},
             </if>
 
 
@@ -1332,6 +1339,9 @@
             <if test="flagFlType != null" >
                 FLAG_FL_TYPE = #{flagFlType,jdbcType=VARCHAR},
             </if>
+            <if test="onlineSalesAmount != null" >
+                ONLINE_SALES_AMOUNT = #{onlineSalesAmount,jdbcType=DECIMAL},
+            </if>
 
 
         </set>
@@ -1385,6 +1395,7 @@
         <result column="PROMOTION_TYPE" property="promotionType" jdbcType="VARCHAR" />
         <result column="LJ_SUGGESTION" property="ljSuggestion" jdbcType="VARCHAR" />
         <result column="FLAG_FL_TYPE" property="flagFlType" jdbcType="VARCHAR" />
+        <result column="ONLINE_SALES_AMOUNT" property="onlineSalesAmount" jdbcType="DECIMAL" />
 
     </resultMap>
     <select id="getOrderB" resultMap="Ctm_order_detailMap" >

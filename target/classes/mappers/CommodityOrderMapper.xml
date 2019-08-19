@@ -131,6 +131,9 @@
             <if test="curtainItemName != null">
                 CURTAIN_ITEM_NAME = #{curtainItemName,jdbcType=VARCHAR},
             </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
 
         </set>
         where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
