@@ -22,6 +22,7 @@ public class Commodity {
 	private BigDecimal priceAfterModified;
 	private String softType;
 	private SalPromotion salPromotion;
+	private BigDecimal onlineSalesAmount;
 
 	public static final Integer COMMODITY_EXIST_STATUS = 1;
 	public static final Integer COMMODITY_NONE_EXIST_STATUS = 0;
@@ -161,6 +162,14 @@ public class Commodity {
 
 	public void setSalPromotion(SalPromotion salPromotion) {
 		this.salPromotion = salPromotion;
+	}
+
+	public BigDecimal getOnlineSalesAmount() {
+		return onlineSalesAmount;
+	}
+
+	public void setOnlineSalesAmount(BigDecimal onlineSalesAmount) {
+		this.onlineSalesAmount = onlineSalesAmount;
 	}
 
 	@Override

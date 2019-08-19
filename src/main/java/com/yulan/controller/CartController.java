@@ -81,6 +81,7 @@ public class CartController {
 		String softType = (String) parameters.get("softType");
 		Integer splitShipment = parameters.get("splitShipment")==null||parameters.get("splitShipment").equals("")?
 				null:Integer.parseInt((String) parameters.get("splitShipment"));
+		String onlineSalesAmount = (String) parameters.get("onlineSalesAmount");
 
 		Item item = itemService.getItemByItemNO(itemNO);
 		Cart cart = getSimpleCartByCID(CID);
@@ -142,6 +143,9 @@ public class CartController {
 			commodity.setSalPromotion(salPromotion);
 		} else {
 			commodity.setSalPromotion(new SalPromotion());
+		}
+		if(onlineSalesAmount!=null&&!onlineSalesAmount.equals("")) {
+			commodity.setOnlineSalesAmount(new BigDecimal(onlineSalesAmount));
 		}
 		if(commodity.getPrice() == null) {
 			return Response.getResponseMap(2,"该产品正在上架，暂时不能加入购物车",null);
@@ -321,6 +325,7 @@ public class CartController {
 		String widthString = parameters.get("width");
 		String heightString = parameters.get("height");
 		String note = parameters.get("note");
+		String onlineSalesAmount = parameters.get("onlineSalesAmount");
 		Integer splitShipment = parameters.get("splitShipment")==null||parameters.get("splitShipment").equals("")?
 				null:Integer.parseInt(parameters.get("splitShipment"));
 		Commodity commodity = commodityService.getCommodityByID(commodityID);
@@ -359,6 +364,9 @@ public class CartController {
 		} else {
 			commodity.setHeight(new BigDecimal(heightString));
 			commodity.setWidth(new BigDecimal(widthString));
+		}
+		if(onlineSalesAmount!=null&&!onlineSalesAmount.equals("")) {
+			commodity.setOnlineSalesAmount(new BigDecimal(onlineSalesAmount));
 		}
 		commodity.setCartItemId(cartItemNew.getCartItemId());
 		if(note==null||note.equals("")) {
