@@ -90,6 +90,15 @@ public class Ctm_order_detail  {
 
     private String flagFlType;
 
+    private BigDecimal onlineSalesAmount;
+
+    public BigDecimal getOnlineSalesAmount() {
+        return onlineSalesAmount;
+    }
+
+    public void setOnlineSalesAmount(BigDecimal onlineSalesAmount) {
+        this.onlineSalesAmount = onlineSalesAmount;
+    }
 
     public String getFlagFlType() {
         return flagFlType;
