@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yulan.dao.AreaRegionDao">
+
+    <select id="getAreaRegionByID" parameterType="String" resultType="AreaRegion">
+        select * from AREA_REGION where region_id = #{areaRegionID}
+    </select>
+
+    <resultMap id="BaseResultMap" type="com.yulan.pojo.AreaRegion" >
+        <id column="REGION_ID" property="regionId" jdbcType="VARCHAR" />
+        <result column="REGION_NAME" property="regionName" jdbcType="VARCHAR" />
+        <result column="PARENT_CITY" property="parentCity" jdbcType="VARCHAR" />
+        <result column="PARENT_AREA" property="parentArea" jdbcType="VARCHAR" />
+        <result column="PARENT_PROVINCE" property="parentProvince" jdbcType="VARCHAR" />
+        <result column="REGION_LEVEL" property="regionLevel" jdbcType="DECIMAL" />
+        <result column="COUNTRY" property="country" jdbcType="VARCHAR" />
+        <result column="DATE_CRE" property="dateCre" jdbcType="TIMESTAMP" />
+        <result column="DATE_UPDATE" property="dateUpdate" jdbcType="TIMESTAMP" />
+        <result column="CITY_TYPE" property="cityType" jdbcType="VARCHAR" />
+        <result column="PARENT_DISTRICT" property="parentDistrict" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="AreaUserMap" type="com.yulan.pojo.AreaUser">
+        <id column="USERID" jdbcType="VARCHAR" property="userid" />
+        <id column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+        <result column="FLAG" jdbcType="VARCHAR" property="flag" />
+    </resultMap>
+
+    <resultMap id="AreaCodeMap" type="com.yulan.pojo.AreaCode">
+        <id column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+        <result column="AREA_BELONG" jdbcType="VARCHAR" property="areaBelong" />
+        <result column="AREA_NAME" jdbcType="VARCHAR" property="areaName" />
+        <result column="LEVEL_NO" jdbcType="DECIMAL" property="levelNo" />
+        <result column="USE_ID" jdbcType="VARCHAR" property="useId" />
+    </resultMap>
+
+    <select id="getProvince" resultMap="BaseResultMap">
+        select * from AREA_REGION t where t.region_level = 1
+    </select>
+
+    <select id="getCity" resultMap="BaseResultMap">
+        select * from AREA_REGION t where t.region_level = 2 and t.parent_province = #{PARENT_PROVINCE}
+    </select>
+
+    <select id="getCountry" resultMap="BaseResultMap">
+        select * from AREA_REGION t where t.region_level = 3 and t.parent_city = #{PARENT_CITY_ID}
+    </select>
+
+    <select id="getAreaUserCode" parameterType="java.util.Map" resultMap="AreaUserMap">
+        select * from AREA_USER t where t.userid = #{USERID}
+    </select>
+
+    <!--<select id="getAreaCodeName" parameterType="list" resultMap="AreaCodeMap">
+        select * from AREA_CODE t where t.area_code =
+        <foreach collection="list" item="list"  separator="or">
+        #{list}
+        </foreach>
+    </select>-->
+
+</mapper>
