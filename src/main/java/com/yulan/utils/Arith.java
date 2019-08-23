@@ -96,5 +96,18 @@ public class Arith {
         return v.divide(one,scale,BigDecimal.ROUND_CEILING);
     }
 
+    /**
+     * 直接舍弃小数取整
+     * @param v
+     * @return
+     */
+    public static BigDecimal rounddown(BigDecimal v,int scale){
+        if(scale<0){
+            throw new IllegalArgumentException("The scale must be a positive integer or zero");
+        }
+        BigDecimal one = new BigDecimal("1");
+        return v.divide(one,scale,BigDecimal.ROUND_DOWN);
+    }
+
 
 }
