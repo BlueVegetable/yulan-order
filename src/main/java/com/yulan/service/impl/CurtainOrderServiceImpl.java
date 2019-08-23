@@ -61,7 +61,7 @@ public class CurtainOrderServiceImpl implements CurtainOrderService {
 
         List<String> cartItemIDs=(List) map.get("cartItemIDs");//new
         String companyId=map.get("companyId").toString();//公司id
-        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComId(companyId);//查找属于同个公司的用户
+        List<Map<String,Object>> userMaps=web_userDao.getAllUserByComIdorFlink(companyId);//查找属于同个公司的用户
         List<String> users=new ArrayList<>();
         if (userMaps.size()!=0){
             for (Map<String,Object> map1:userMaps){
