@@ -1,6 +1,5 @@
 import com.yulan.dao.Ctm_orderDao;
 import com.yulan.dao.ItemDao;
-import com.yulan.pojo.Item;
 import com.yulan.service.Ctm_orderService;
 import com.yulan.utils.Arith;
 import org.junit.Test;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,7 +23,7 @@ public class UserTest {
     private ItemDao itemDao;
 
 
-    @Test
+   /* @Test
     public void test1() throws UnsupportedEncodingException {
 
 
@@ -40,8 +38,12 @@ public class UserTest {
 
         BigDecimal usage =
                usageCalculation(width,multiple,height,curtainItem);
+
         System.out.println(usage);
-    }
+        System.out.println("rounddown" + arith.rounddown(usage,2));
+        System.out.println("roundup" + arith.roundup(usage,2));
+        System.out.println("roundround" + arith.round(usage,2));
+}
 
     private BigDecimal usageCalculation(Double width, Double multiple,Double height, Item curtainItem){
         BigDecimal usage = BigDecimal.valueOf(0);
@@ -64,8 +66,17 @@ public class UserTest {
             }
         }
 
-        return usage.setScale(2,BigDecimal.ROUND_HALF_UP);
-    }
+        return usage.setScale(2,BigDecimal.ROUND_DOWN);
+    }*/
+   @Test
+   public void testBigDecimal(){
+       BigDecimal usage = new BigDecimal(2.943);
+
+       System.out.println(usage);
+       System.out.println("rounddown" + arith.rounddown(usage,0));
+       System.out.println("roundup" + arith.roundup(usage,0));
+       System.out.println("roundround" + arith.round(usage,0));
+   }
 }
 
 

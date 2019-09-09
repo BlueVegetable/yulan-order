@@ -467,16 +467,54 @@ public class ItemServiceImpl implements ItemService {
                             curtainItem.getDuihuaLoss());
         } else {
             //定宽
-            if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
-                usage =
-                        arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainHighJia));
-            } else if (curtainItem.getHighHh().doubleValue() > 0) {
-                //花回
-                usage =
-                        arith.mul(arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0),
-                                arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainHighJia), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
-                                arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
+            //面料幅宽>1.6
+            if(curtainItem.getFixGrade().compareTo(BigDecimal.valueOf(1600)) >= 0){
+
+                if(arith.sub(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))),
+                        arith.rounddown(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0)).compareTo(BigDecimal.valueOf(0.3))< 0){
+                    //rounddown
+                    if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
+                        usage =
+                                arith.mul(arith.rounddown(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainHighJia));
+                    } else if (curtainItem.getHighHh().doubleValue() > 0) {
+                        //花回
+                        usage =
+                                arith.mul(arith.mul(arith.rounddown(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0),
+                                        arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainHighJia), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
+                                        arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
+                    }
+
+                }else{
+                    //roundup
+                    if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
+                        usage =
+                                arith.mul(arith.roundup(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainHighJia));
+                    } else if (curtainItem.getHighHh().doubleValue() > 0) {
+                        //花回
+                        usage =
+                                arith.mul(arith.mul(arith.roundup(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0),
+                                        arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainHighJia), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
+                                        arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
+                    }
+
+                }
+
+            }else{
+             //面料幅宽<1.6
+                //round
+                if (curtainItem.getHighHh() == null || curtainItem.getHighHh().doubleValue() == 0) {
+                    usage =
+                            arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0), arith.sub(arith.dbToBD(height + 0.2), curtainHighJia));
+                } else if (curtainItem.getHighHh().doubleValue() > 0) {
+                    //花回
+                    usage =
+                            arith.mul(arith.mul(arith.round(arith.div(arith.dbToBD(width * multiple), arith.div(curtainItem.getFixGrade(), arith.dbToBD(1000.0))), 0),
+                                    arith.roundup(arith.div(arith.sub(arith.dbToBD(height + 0.2), curtainHighJia), arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0))), 0)),
+                                    arith.div( curtainItem.getHighHh(),arith.dbToBD(1000.0)));
+                }
+
             }
+
         }
 
         return usage.setScale(1,BigDecimal.ROUND_HALF_UP);
